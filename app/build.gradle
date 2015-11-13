@@ -6,7 +6,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "openwebnet.github.com.bticinoopenwebnet"
+        applicationId "com.github.openwebnet"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -16,6 +16,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
     }
 
     buildTypes {
@@ -31,4 +35,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
+
+    compile 'com.jakewharton:butterknife:7.0.1'
 }
