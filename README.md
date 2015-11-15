@@ -10,3 +10,7 @@ TODO
 * [Retrolambda](https://github.com/orfjackal/retrolambda)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [greenDAO](http://greendao-orm.com/)
+
+TODO ?
+* http://noveogroup.github.io/android-logger/
+* https://github.com/android10/frodo
