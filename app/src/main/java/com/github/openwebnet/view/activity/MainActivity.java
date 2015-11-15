@@ -12,10 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.openwebnet.R;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.github.openwebnet.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

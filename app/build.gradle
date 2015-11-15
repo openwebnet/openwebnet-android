@@ -23,6 +23,10 @@ android {
         disable 'InvalidPackage'
     }
 
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -45,4 +49,7 @@ dependencies {
     compile 'io.realm:realm-android:0.84.2'
 
     apt 'com.google.dagger:dagger-compiler:2.0.2'
+    apt 'org.projectlombok:lombok:1.16.6'
+
+    provided "org.projectlombok:lombok:1.16.6"
 }
