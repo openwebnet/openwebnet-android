@@ -15,6 +15,9 @@ import android.view.View;
 import com.github.openwebnet.R;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -23,6 +26,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
     @Inject
     RepositoryDomoticEnvironment repositoryEnvironment;
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        log.debug("MainActivity-onCreate");
+
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);

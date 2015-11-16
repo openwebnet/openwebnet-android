@@ -12,10 +12,9 @@ TODO
 * [Retrolambda](https://github.com/orfjackal/retrolambda)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Realm](https://realm.io)
+* [slf4j + android-logger](http://noveogroup.github.io/android-logger)
 
 > TEST!! framework
 
-TODO ?
-* http://noveogroup.github.io/android-logger/
-* https://github.com/android10/frodo
+TODO
 * travis - google play
