@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +23,9 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @Inject
+    RepositoryDomoticEnvironment repositoryEnvironment;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;

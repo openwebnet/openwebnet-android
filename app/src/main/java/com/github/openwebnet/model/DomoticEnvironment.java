@@ -1,19 +1,31 @@
 package com.github.openwebnet.model;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 /**
  * @author niqdev
- *
- * issue: realm doesn't support lombok
  */
 public class DomoticEnvironment extends RealmObject {
+
+    @PrimaryKey
+    private String uuid;
 
     @Required
     private String name;
 
     private String description;
+
+    /* getter|setter (issue: realm doesn't support lombok) */
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getName() {
         return name;
@@ -30,4 +42,5 @@ public class DomoticEnvironment extends RealmObject {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

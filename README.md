@@ -1,5 +1,7 @@
 # openwebnet-android
 
+[![Build Status](https://travis-ci.org/openwebnet/openwebnet-android.svg)](https://travis-ci.org/openwebnet/openwebnet-android)
+
 > work in progress
 
 TODO
