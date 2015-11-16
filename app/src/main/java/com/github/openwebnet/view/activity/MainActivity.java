@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
 
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log.debug("MainActivity-onCreate");
+        ((OpenWebNetApplication) getApplication()).getOpenWebNetComponent().inject(this);
+        repositoryEnvironment.findAll();
 
         setContentView(R.layout.activity_main);
 

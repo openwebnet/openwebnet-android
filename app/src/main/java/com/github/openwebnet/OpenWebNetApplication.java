@@ -29,4 +29,12 @@ public class OpenWebNetApplication extends Application {
         Realm.setDefaultConfiguration(realmConfiguration);
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        // TODO onCreate? Realm.getDefaultInstance()
+        // TODO onDestroy?
+        Realm.getDefaultInstance().close();
+    }
 }

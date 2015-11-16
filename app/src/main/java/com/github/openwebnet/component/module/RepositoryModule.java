@@ -2,6 +2,7 @@ package com.github.openwebnet.component.module;
 
 import com.github.openwebnet.repository.RepositoryDomoticDevice;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
+import com.github.openwebnet.repository.impl.RepositoryDomoticEnvironmentImpl;
 
 import javax.inject.Singleton;
 
@@ -14,7 +15,7 @@ public class RepositoryModule {
     @Provides
     @Singleton
     RepositoryDomoticEnvironment provideEnvironment() {
-        return null;
+        return new RepositoryDomoticEnvironmentImpl();
     }
 
     @Provides

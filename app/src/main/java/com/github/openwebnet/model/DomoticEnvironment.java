@@ -1,10 +1,15 @@
 package com.github.openwebnet.model;
 
+import javax.inject.Inject;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 /**
+ * TODO immutable
+ * @see <a href="https://realm.io/news/using-realm-with-rxjava">Using Realm with RxJava</a>
+ *
  * @author niqdev
  */
 public class DomoticEnvironment extends RealmObject {
@@ -42,5 +47,4 @@ public class DomoticEnvironment extends RealmObject {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
