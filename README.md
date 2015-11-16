@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/openwebnet/openwebnet-android.svg)](https://travis-ci.org/openwebnet/openwebnet-android)
 
-> work in progress
+> just work in progress!
 
 TODO
 
@@ -16,3 +16,4 @@ TODO
 TODO ?
 * http://noveogroup.github.io/android-logger/
 * https://github.com/android10/frodo
+* travis - google play
