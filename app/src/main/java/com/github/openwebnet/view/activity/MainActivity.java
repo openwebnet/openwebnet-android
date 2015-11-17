@@ -25,6 +25,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,10 +73,25 @@ public class MainActivity extends AppCompatActivity
         DomoticEnvironment environment = new DomoticEnvironment();
         environment.setName("name1");
         environment.setDescription("description1");
-        repositoryEnvironment.add(environment);
 
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        repositoryEnvironment.add(environment)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(s -> {
+                showSnackbar(view, "success: " + s);
+            }, throwable -> {
+                showSnackbar(view, "error");
+            });
+    }
+
+    // TODO lambda
+    private static void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    private static void showSnackbar(String message) {
+
     }
 
     @Override
@@ -128,5 +147,11 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Realm.getDefaultInstance().close();
     }
 }

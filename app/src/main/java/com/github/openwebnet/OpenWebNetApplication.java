@@ -33,16 +33,8 @@ public class OpenWebNetApplication extends Application {
 
         openWebNetComponent = DaggerOpenWebNetComponent.builder()
             .openWebNetModule(new OpenWebNetModule())
-            .repositoryModule(new RepositoryModule(Realm.getDefaultInstance()))
+            .repositoryModule(new RepositoryModule())
             .build();
     }
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-
-        // TODO onCreate? Realm.getDefaultInstance()
-        // TODO onDestroy?
-        Realm.getDefaultInstance().close();
-    }
 }

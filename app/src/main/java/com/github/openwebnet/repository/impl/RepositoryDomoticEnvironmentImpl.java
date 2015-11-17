@@ -18,24 +18,26 @@ import rx.Observable;
 public class RepositoryDomoticEnvironmentImpl implements RepositoryDomoticEnvironment {
 
     private static final Logger log = LoggerFactory.getLogger(RepositoryDomoticEnvironmentImpl.class);
-    private final Realm realm;
-
-    public RepositoryDomoticEnvironmentImpl(Realm realm) {
-        this.realm = realm;
-    }
 
     @Override
     public Observable<String> add(DomoticEnvironment environment) {
-        // TODO observable
-        String uuid = UUID.randomUUID().toString();
+        final String uuid = UUID.randomUUID().toString();
         environment.setUuid(uuid);
 
-        realm.executeTransaction(r -> {
-            r.copyToRealm(environment);
-        });
+        return Observable.create(subscriber -> {
+            try {
+                Realm realm  = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealm(environment);
+                realm.commitTransaction();
 
-        log.debug("Environment-ADD");
-        return null;
+                subscriber.onNext(uuid);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("ADD-environment", e);
+                subscriber.onError(e);
+            }
+        });
     }
 
     @Override
