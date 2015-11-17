@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.DomoticEnvironment;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
 
 import org.slf4j.Logger;
@@ -33,19 +34,22 @@ public class MainActivity extends AppCompatActivity
     @Inject
     RepositoryDomoticEnvironment repositoryEnvironment;
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.debug("MainActivity-onCreate");
-        ((OpenWebNetApplication) getApplication()).getOpenWebNetComponent().inject(this);
-        repositoryEnvironment.findAll();
-
         setContentView(R.layout.activity_main);
 
+        OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
+
+        log.debug("MainActivity-onCreate");
+
+        repositoryEnvironment.findAll();
 
         setSupportActionBar(toolbar);
 
@@ -60,6 +64,13 @@ public class MainActivity extends AppCompatActivity
 
     @OnClick(R.id.fab)
     public void floatingActionButtonClick(View view) {
+
+        // TODO observable
+        DomoticEnvironment environment = new DomoticEnvironment();
+        environment.setName("name1");
+        environment.setDescription("description1");
+        repositoryEnvironment.add(environment);
+
         Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
