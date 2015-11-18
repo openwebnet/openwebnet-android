@@ -26,7 +26,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -53,7 +52,13 @@ public class MainActivity extends AppCompatActivity
 
         log.debug("MainActivity-onCreate");
 
-        repositoryEnvironment.findAll();
+        repositoryEnvironment.findAll()
+            .subscribe(environments -> {
+                log.debug("findAll: {}", environments);
+            }, throwable -> {
+                log.debug("findAll: ", throwable);
+                showSnackbar("error FIND_ALL");
+            });
 
         setSupportActionBar(toolbar);
 
@@ -69,29 +74,20 @@ public class MainActivity extends AppCompatActivity
     @OnClick(R.id.fab)
     public void floatingActionButtonClick(View view) {
 
-        // TODO observable
-        DomoticEnvironment environment = new DomoticEnvironment();
-        environment.setName("name1");
-        environment.setDescription("description1");
-
-        repositoryEnvironment.add(environment)
+        repositoryEnvironment
+            .add(DomoticEnvironment.newInstance("name2").description("description2").build())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(s -> {
-                showSnackbar(view, "success: " + s);
+                showSnackbar("success: " + s);
             }, throwable -> {
-                showSnackbar(view, "error");
+                 showSnackbar("error ADD");
             });
     }
 
     // TODO lambda
-    private static void showSnackbar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-    }
-
-    private static void showSnackbar(String message) {
-
+    private void showSnackbar(String message) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

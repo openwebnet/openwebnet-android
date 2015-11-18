@@ -1,18 +1,17 @@
 package com.github.openwebnet.model;
 
-import javax.inject.Inject;
+import java.util.UUID;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-/**
- * TODO immutable
- * @see <a href="https://realm.io/news/using-realm-with-rxjava">Using Realm with RxJava</a>
- *
- * @author niqdev
+/*
+ * {@link lombok.Getter} and {@link lombok.Setter} doesn't work with {@link RealmObject}
  */
 public class DomoticEnvironment extends RealmObject {
+
+    public static final String NAME = "name";
 
     @PrimaryKey
     private String uuid;
@@ -22,7 +21,38 @@ public class DomoticEnvironment extends RealmObject {
 
     private String description;
 
-    /* getter|setter (issue: realm doesn't support lombok) */
+    public DomoticEnvironment() {}
+
+    private DomoticEnvironment(Builder builder) {
+        this.uuid = builder.uuid;
+        this.name = builder.name;
+        this.description = builder.description;
+    }
+
+    public static class Builder {
+
+        private final String uuid;
+        private final String name;
+        private String description;
+
+        public Builder(String name) {
+            this.uuid = UUID.randomUUID().toString();
+            this.name = name;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public DomoticEnvironment build() {
+            return new DomoticEnvironment(this);
+        }
+    }
+
+    public static Builder newInstance(String name) {
+        return new DomoticEnvironment.Builder(name);
+    }
 
     public String getUuid() {
         return uuid;
