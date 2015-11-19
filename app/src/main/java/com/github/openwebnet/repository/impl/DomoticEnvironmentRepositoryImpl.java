@@ -1,7 +1,7 @@
 package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.model.DomoticEnvironment;
-import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
+import com.github.openwebnet.repository.DomoticEnvironmentRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import rx.Observable;
 /**
  * @author niqdev
  */
-public class RepositoryDomoticEnvironmentImpl implements RepositoryDomoticEnvironment {
+public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(RepositoryDomoticEnvironmentImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DomoticEnvironmentRepositoryImpl.class);
 
     @Override
     public Observable<String> add(DomoticEnvironment environment) {

@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +15,8 @@ import android.view.View;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DomoticEnvironment;
-import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
+import com.github.openwebnet.repository.DomoticEnvironmentRepository;
+import com.github.openwebnet.service.PreferenceService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +32,15 @@ import io.realm.Realm;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+// TODO test
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
     @Inject
-    RepositoryDomoticEnvironment repositoryEnvironment;
+    PreferenceService preferenceService;
+    @Inject
+    DomoticEnvironmentRepository environmentRepository;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -54,32 +57,40 @@ public class MainActivity extends AppCompatActivity {
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
+        //initRepository();
+        initActionBar();
+        initNavigationDrawer();
+        // TODO pull to refresh
+    }
+
+    private void initRepository() {
+        if (preferenceService.isFirstRun()) {
+            preferenceService.initFirstRun();
+        }
+    }
+
+    private void initActionBar() {
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
-
-        initNavigationDrawer();
     }
 
     private void initNavigationDrawer() {
         navigationView.setNavigationItemSelectedListener(
             new NavigationItemSelectedListener(this, drawerLayout));
 
-        repositoryEnvironment.findAll()
+        environmentRepository.findAll()
             .subscribe(
-                    environments -> {
-                        addAllMenu(environments);
-                    },
-                    throwable -> {
-                        showSnackbar("error FIND_ALL");
-                    });
+                environments -> { addAllMenu(environments); },
+                throwable -> { showSnackbar("Error init navigation drawer"); });
     }
 
+    // TODO order -> key ?
     private void addAllMenu(List<DomoticEnvironment> environments) {
-        //log.debug("findAll: {}", environments);
+        log.debug("findAll: {}", environments);
         Menu menu = navigationView.getMenu();
         int order = 200;
         for (DomoticEnvironment environment: environments) {
@@ -89,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void floatingActionButtonClick(View view) {
-
-        repositoryEnvironment
+        // TODO add command
+        environmentRepository
             .add(DomoticEnvironment.newInstance("name2").description("description2").build())
             .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -101,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-    // TODO lambda
     private void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
@@ -125,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        // TODO floatingActionButtonClick or menuItem ?
         if (id == R.id.action_settings) {
             log.debug("action_settings");
             return true;

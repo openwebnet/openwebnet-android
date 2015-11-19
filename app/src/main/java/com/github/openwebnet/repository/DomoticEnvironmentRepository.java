@@ -9,7 +9,7 @@ import rx.Observable;
 /**
  * @author niqdev
  */
-public interface RepositoryDomoticEnvironment {
+public interface DomoticEnvironmentRepository {
 
     Observable<String> add(DomoticEnvironment environment);
 

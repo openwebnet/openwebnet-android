@@ -32,9 +32,11 @@ public class OpenWebNetApplication extends Application {
         Realm.setDefaultConfiguration(realmConfiguration);
 
         openWebNetComponent = DaggerOpenWebNetComponent.builder()
-            .openWebNetModule(new OpenWebNetModule())
+            .openWebNetModule(new OpenWebNetModule(this))
             .repositoryModule(new RepositoryModule())
             .build();
+
+        OpenWebNetApplication.component(this).inject(this);
     }
 
 }
