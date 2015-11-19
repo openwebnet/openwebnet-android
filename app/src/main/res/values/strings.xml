@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">BTicino OpenWebNet</string>
+    <string name="app_version">version 0.1</string>
+    <string name="app_github">github.com/openwebnet/openwebnet-android</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="drawer_menu_setting">Settings</string>
+    <string name="drawer_menu_preference">Preference</string>
+    <string name="drawer_menu_add">Add</string>
+    <string name="drawer_menu_home">Home</string>
 </resources>

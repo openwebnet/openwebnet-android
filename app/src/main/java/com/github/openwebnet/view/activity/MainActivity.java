@@ -16,9 +16,12 @@ import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DomoticEnvironment;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
+import com.github.openwebnet.view.activity.navigationdrawer.NavigationItemSelectedListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,8 +32,7 @@ import io.realm.Realm;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +54,32 @@ public class MainActivity extends AppCompatActivity
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
-        log.debug("MainActivity-onCreate");
-
-        repositoryEnvironment.findAll()
-            .subscribe(environments -> {
-                log.debug("findAll: {}", environments);
-            }, throwable -> {
-                log.debug("findAll: ", throwable);
-                showSnackbar("error FIND_ALL");
-            });
-
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        initNavigationDrawer();
+    }
+
+    private void initNavigationDrawer() {
+        navigationView.setNavigationItemSelectedListener(new NavigationItemSelectedListener(this, drawerLayout));
+
+        repositoryEnvironment.findAll()
+            .subscribe(
+                environments -> { addAllMenu(environments); },
+                throwable -> { showSnackbar("error FIND_ALL");});
+    }
+
+    private void addAllMenu(List<DomoticEnvironment> environments) {
+        //log.debug("findAll: {}", environments);
+        Menu menu = navigationView.getMenu();
+        int order = 200;
+        for (DomoticEnvironment environment: environments) {
+            menu.add(R.id.nav_group_environment, environment.getUuid().hashCode(), order++, environment.getName());
+        }
     }
 
     @OnClick(R.id.fab)
@@ -77,11 +88,11 @@ public class MainActivity extends AppCompatActivity
         repositoryEnvironment
             .add(DomoticEnvironment.newInstance("name2").description("description2").build())
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(s -> {
-                showSnackbar("success: " + s);
-            }, throwable -> {
-                 showSnackbar("error ADD");
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    showSnackbar("success: " + s);
+                }, throwable -> {
+                    showSnackbar("error ADD");
             });
     }
 
@@ -101,7 +112,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -121,33 +131,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // TODO ?
         Realm.getDefaultInstance().close();
     }
 }
