@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +17,6 @@ import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DomoticEnvironment;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
-import com.github.openwebnet.view.activity.navigationdrawer.NavigationItemSelectedListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,12 +65,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNavigationDrawer() {
-        navigationView.setNavigationItemSelectedListener(new NavigationItemSelectedListener(this, drawerLayout));
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationItemSelectedListener(this, drawerLayout));
 
         repositoryEnvironment.findAll()
             .subscribe(
-                environments -> { addAllMenu(environments); },
-                throwable -> { showSnackbar("error FIND_ALL");});
+                    environments -> {
+                        addAllMenu(environments);
+                    },
+                    throwable -> {
+                        showSnackbar("error FIND_ALL");
+                    });
     }
 
     private void addAllMenu(List<DomoticEnvironment> environments) {
@@ -118,13 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            log.debug("action_settings");
             return true;
         }
 

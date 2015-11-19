@@ -2,19 +2,13 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.model.DomoticEnvironment;
 import com.github.openwebnet.repository.RepositoryDomoticEnvironment;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.Observable;
 
@@ -29,7 +23,7 @@ public class RepositoryDomoticEnvironmentImpl implements RepositoryDomoticEnviro
     public Observable<String> add(DomoticEnvironment environment) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm  = Realm.getDefaultInstance();
+                Realm realm = Realm.getDefaultInstance();
                 realm.beginTransaction();
                 realm.copyToRealm(environment);
                 realm.commitTransaction();
@@ -54,7 +48,7 @@ public class RepositoryDomoticEnvironmentImpl implements RepositoryDomoticEnviro
         return Observable.create(subscriber -> {
             try {
                 RealmResults<DomoticEnvironment> environments =
-                    Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
+                        Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
                 environments.sort(DomoticEnvironment.NAME, RealmResults.SORT_ORDER_ASCENDING);
 
                 // from documentation: https://realm.io/docs/java/latest/#queries
