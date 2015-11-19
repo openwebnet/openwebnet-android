@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.github.openwebnet.OpenWebNetApplication;
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                     showSnackbar("success: " + s);
                 }, throwable -> {
                     showSnackbar("error ADD");
-            });
+                });
     }
 
     private void showSnackbar(String message) {
@@ -123,25 +122,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        // TODO floatingActionButtonClick or menuItem ?
-        if (id == R.id.action_settings) {
-            log.debug("action_settings");
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
