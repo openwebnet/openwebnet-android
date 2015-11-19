@@ -11,7 +11,9 @@ import rx.Observable;
  */
 public interface DomoticEnvironmentRepository {
 
-    Observable<String> add(DomoticEnvironment environment);
+    Observable<Integer> getNextId();
+
+    Observable<Integer> add(DomoticEnvironment environment);
 
     Observable<DomoticEnvironment> find(String uuid);
 

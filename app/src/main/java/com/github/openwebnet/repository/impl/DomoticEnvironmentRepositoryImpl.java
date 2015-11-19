@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -18,9 +19,25 @@ import rx.Observable;
 public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepository {
 
     private static final Logger log = LoggerFactory.getLogger(DomoticEnvironmentRepositoryImpl.class);
+    private static final Integer INITIAL_SEQ = 100;
 
     @Override
-    public Observable<String> add(DomoticEnvironment environment) {
+    public Observable<Integer> getNextId() {
+        return Observable.create(subscriber -> {
+            try {
+                Number maxId = Realm.getDefaultInstance().where(DomoticEnvironment.class).max("id");
+                Integer lastId = maxId == null ? INITIAL_SEQ : new AtomicInteger(maxId.intValue()).incrementAndGet();
+                subscriber.onNext(lastId);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("environment-NEXT_ID", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<Integer> add(DomoticEnvironment environment) {
         return Observable.create(subscriber -> {
             try {
                 Realm realm = Realm.getDefaultInstance();
@@ -28,7 +45,7 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
                 realm.copyToRealm(environment);
                 realm.commitTransaction();
 
-                subscriber.onNext(environment.getUuid());
+                subscriber.onNext(environment.getId());
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-ADD", e);
@@ -49,7 +66,7 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
             try {
                 RealmResults<DomoticEnvironment> environments =
                         Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
-                environments.sort(DomoticEnvironment.NAME, RealmResults.SORT_ORDER_ASCENDING);
+                environments.sort(DomoticEnvironment.FIELD_NAME, RealmResults.SORT_ORDER_ASCENDING);
 
                 // from documentation: https://realm.io/docs/java/latest/#queries
                 // 'Most queries in Realm are fast enough to be run synchronously - even on the UI thread'

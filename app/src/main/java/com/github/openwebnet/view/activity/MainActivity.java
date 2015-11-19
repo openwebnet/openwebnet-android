@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
-        //initRepository();
+        initRepository();
         initActionBar();
         initNavigationDrawer();
         // TODO pull to refresh
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initNavigationDrawer() {
         navigationView.setNavigationItemSelectedListener(
-            new NavigationItemSelectedListener(this, drawerLayout));
+                new NavigationItemSelectedListener(this, drawerLayout));
 
         environmentRepository.findAll()
             .subscribe(
@@ -87,28 +87,32 @@ public class MainActivity extends AppCompatActivity {
                 throwable -> { showSnackbar("Error init navigation drawer"); });
     }
 
-    // TODO order -> key ?
     private void addAllMenu(List<DomoticEnvironment> environments) {
         log.debug("findAll: {}", environments);
         Menu menu = navigationView.getMenu();
-        int order = 200;
         for (DomoticEnvironment environment: environments) {
-            menu.add(R.id.nav_group_environment, environment.getUuid().hashCode(), order++, environment.getName());
+            menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
         }
     }
 
     @OnClick(R.id.fab)
     public void floatingActionButtonClick(View view) {
         // TODO add command
-        environmentRepository
-            .add(DomoticEnvironment.newInstance("name2").description("description2").build())
+
+        environmentRepository.getNextId()
+            .map(id -> {
+                return DomoticEnvironment.newBuilder(id, "name-" + id).description("description" + id).build();
+            })
+            .flatMap(environment -> {
+                return environmentRepository.add(environment);
+            })
             .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    showSnackbar("success: " + s);
-                }, throwable -> {
-                    showSnackbar("error ADD");
-                });
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(s -> {
+                showSnackbar("success: " + s);
+            }, throwable -> {
+                showSnackbar("error ADD");
+            });
     }
 
     private void showSnackbar(String message) {

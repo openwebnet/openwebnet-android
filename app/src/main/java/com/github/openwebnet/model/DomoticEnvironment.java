@@ -1,20 +1,16 @@
 package com.github.openwebnet.model;
 
-import java.util.UUID;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-/*
- * {@link lombok.Getter} and {@link lombok.Setter} doesn't work with {@link RealmObject}
- */
 public class DomoticEnvironment extends RealmObject {
 
-    public static final String NAME = "name";
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_NAME = "name";
 
     @PrimaryKey
-    private String uuid;
+    private Integer id;
 
     @Required
     private String name;
@@ -23,20 +19,26 @@ public class DomoticEnvironment extends RealmObject {
 
     public DomoticEnvironment() {}
 
-    private DomoticEnvironment(Builder builder) {
-        this.uuid = builder.uuid;
+    public DomoticEnvironment(Builder builder) {
+        this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
     }
 
+    /**
+     * Prefer this builder to instantiate a new {@link DomoticEnvironment}.
+     *
+     * Note:
+     * {@link lombok.Getter} and {@link lombok.Setter} don't work with {@link RealmObject}
+     */
     public static class Builder {
 
-        private final String uuid;
+        private final Integer id;
         private final String name;
         private String description;
 
-        public Builder(String name) {
-            this.uuid = UUID.randomUUID().toString();
+        public Builder(Integer id, String name) {
+            this.id = id;
             this.name = name;
         }
 
@@ -50,16 +52,16 @@ public class DomoticEnvironment extends RealmObject {
         }
     }
 
-    public static Builder newInstance(String name) {
-        return new DomoticEnvironment.Builder(name);
+    public static Builder newBuilder(Integer id, String name) {
+        return new DomoticEnvironment.Builder(id, name);
     }
 
-    public String getUuid() {
-        return uuid;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
