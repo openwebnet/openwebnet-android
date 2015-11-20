@@ -9,7 +9,7 @@
     <string name="drawer_menu_setting">Settings</string>
     <string name="drawer_menu_preference">Preference</string>
     <string name="drawer_menu_add">Add</string>
-    <string name="drawer_menu_home">Home</string>
+    <!--<string name="drawer_menu_home">Home</string>-->
 
     <string name="dialog_add_environment_title">Add environment</string>
 

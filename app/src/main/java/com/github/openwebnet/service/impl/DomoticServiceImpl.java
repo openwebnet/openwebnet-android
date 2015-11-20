@@ -8,6 +8,9 @@ import com.github.openwebnet.repository.DomoticEnvironmentRepository;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.PreferenceService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,6 +23,8 @@ import rx.schedulers.Schedulers;
  * @author niqdev
  */
 public class DomoticServiceImpl implements DomoticService {
+
+    private static final Logger log = LoggerFactory.getLogger(DomoticServiceImpl.class);
 
     @Inject
     public DomoticServiceImpl(Application application) {
@@ -35,8 +40,13 @@ public class DomoticServiceImpl implements DomoticService {
     @Override
     public void initRepository() {
         if (preferenceService.isFirstRun()) {
-            // TODO
-            addEnvironment("HOME_NAME", "HOME_DESCRIPTION");
+            // TODO + refresh
+            addEnvironment("HOME_NAME", "HOME_DESCRIPTION")
+                .subscribe(id -> {
+                    log.debug("initRepository with success");
+                }, throwable -> {
+                    log.error("initRepository", throwable);
+                });
             preferenceService.initFirstRun();
         }
     }

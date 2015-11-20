@@ -37,9 +37,9 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         //public int getNextKey() {    realm.where(Child_pages.class).maximumInt("id_cp") + 1; }
         // .max("id").intValue()
 
-        if (id == R.id.nav_home) {
-            showDialogAddEnvironment();
-        }
+//        if (id == R.id.nav_home) {
+//            showDialogAddEnvironment();
+//        }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
