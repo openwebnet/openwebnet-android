@@ -15,7 +15,7 @@ public interface DomoticEnvironmentRepository {
 
     Observable<Integer> add(DomoticEnvironment environment);
 
-    Observable<DomoticEnvironment> find(String uuid);
+    Observable<DomoticEnvironment> find(Integer id);
 
     Observable<List<DomoticEnvironment>> findAll();
 

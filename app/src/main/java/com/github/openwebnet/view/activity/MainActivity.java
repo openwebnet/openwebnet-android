@@ -14,8 +14,7 @@ import android.view.View;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DomoticEnvironment;
-import com.github.openwebnet.repository.DomoticEnvironmentRepository;
-import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.DomoticService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +27,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 // TODO test
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
-
-    @Inject
-    PreferenceService preferenceService;
-    @Inject
-    DomoticEnvironmentRepository environmentRepository;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -47,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @Bind(R.id.nav_view)
     NavigationView navigationView;
+
+    @Inject
+    DomoticService domoticService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +51,10 @@ public class MainActivity extends AppCompatActivity {
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
-        initRepository();
+        domoticService.initRepository();
         initActionBar();
         initNavigationDrawer();
         // TODO pull to refresh
-    }
-
-    private void initRepository() {
-        if (preferenceService.isFirstRun()) {
-            preferenceService.initFirstRun();
-        }
     }
 
     private void initActionBar() {
@@ -81,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationItemSelectedListener(this, drawerLayout));
 
-        environmentRepository.findAll()
+        domoticService.findAllEnvironment()
             .subscribe(
                 environments -> { addAllMenu(environments); },
                 throwable -> { showSnackbar("Error init navigation drawer"); });
@@ -97,22 +86,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     public void floatingActionButtonClick(View view) {
-        // TODO add command
-
-        environmentRepository.getNextId()
-            .map(id -> {
-                return DomoticEnvironment.newBuilder(id, "name-" + id).description("description" + id).build();
-            })
-            .flatMap(environment -> {
-                return environmentRepository.add(environment);
-            })
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(s -> {
-                showSnackbar("success: " + s);
-            }, throwable -> {
-                showSnackbar("error ADD");
-            });
+        domoticService.addEnvironment("name_TODO", "description_TODO")
+            .subscribe(
+                id -> { showSnackbar("success: " + id); },
+                throwable -> { showSnackbar("error ADD"); });
     }
 
     private void showSnackbar(String message) {

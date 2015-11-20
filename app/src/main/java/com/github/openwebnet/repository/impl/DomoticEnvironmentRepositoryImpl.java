@@ -55,7 +55,7 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
     }
 
     @Override
-    public Observable<DomoticEnvironment> find(String uuid) {
+    public Observable<DomoticEnvironment> find(Integer id) {
         log.debug("environment-FIND");
         return null;
     }
@@ -65,7 +65,7 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
         return Observable.create(subscriber -> {
             try {
                 RealmResults<DomoticEnvironment> environments =
-                        Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
+                    Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
                 environments.sort(DomoticEnvironment.FIELD_NAME, RealmResults.SORT_ORDER_ASCENDING);
 
                 // from documentation: https://realm.io/docs/java/latest/#queries

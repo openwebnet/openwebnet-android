@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:orderInCategory="100" android:id="@+id/nav_group_environment" android:checkableBehavior="single">
+    <group android:orderInCategory="10" android:id="@+id/nav_group_environment" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:title="@string/drawer_menu_home"/>
