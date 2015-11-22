@@ -9,10 +9,8 @@
         android:id="@+id/editTextDialogEnvironmentName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:hint="@string/dialog_add_environment_name"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dialog_margin"/>
 
-    <EditText
-        android:id="@+id/editTextDialogEnvironmentDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 </LinearLayout>

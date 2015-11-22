@@ -4,17 +4,16 @@
     <group android:orderInCategory="10" android:id="@+id/nav_group_environment"
         android:checkableBehavior="single"></group>
 
-    <item android:orderInCategory="900" android:id="@+id/nav_group_setting" android:title="@string/drawer_menu_setting">
-        <menu>
-            <item
-                android:id="@+id/nav_add"
-                android:icon="@android:drawable/ic_menu_add"
-                android:title="@string/drawer_menu_add"/>
-            <item
-                android:id="@+id/nav_preference"
-                android:icon="@android:drawable/ic_menu_preferences"
-                android:title="@string/drawer_menu_preference"/>
-        </menu>
-    </item>
+    <group android:orderInCategory="900" android:id="@+id/nav_group_setting"
+           android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add"
+            android:icon="@drawable/plus_box"
+            android:title="@string/drawer_menu_add"/>
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/drawer_menu_settings"/>
+    </group>
 
 </menu>

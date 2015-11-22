@@ -6,6 +6,7 @@ import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.service.impl.DomoticServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.activity.MainActivity;
+import com.github.openwebnet.view.activity.NavigationItemSelectedListener;
 
 import javax.inject.Singleton;
 
@@ -22,5 +23,6 @@ public interface OpenWebNetComponent {
     // dagger needs concrete class
     void inject(PreferenceServiceImpl preferenceService);
     void inject(DomoticServiceImpl domoticService);
+    void inject(NavigationItemSelectedListener listener);
 
 }
