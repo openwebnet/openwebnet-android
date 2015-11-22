@@ -10,7 +10,7 @@ public interface DomoticService {
 
     void initRepository();
 
-    Observable<Integer> addEnvironment(String name, String description);
+    Observable<Integer> addEnvironment(String name);
 
     Observable<List<DomoticEnvironment>> findAllEnvironment();
 }

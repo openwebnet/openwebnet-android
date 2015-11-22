@@ -44,8 +44,7 @@ public class DomoticServiceImpl implements DomoticService {
     @Override
     public void initRepository() {
         if (preferenceService.isFirstRun()) {
-            // TODO icon + refresh
-            addEnvironment(getString(R.string.drawer_menu_example), "HOME_DESCRIPTION")
+            addEnvironment(getString(R.string.drawer_menu_example))
                 .subscribe(id -> {
                     log.debug("initRepository with success");
                 }, throwable -> {
@@ -56,10 +55,13 @@ public class DomoticServiceImpl implements DomoticService {
     }
 
     @Override
-    public Observable<Integer> addEnvironment(String name, String description) {
+    public Observable<Integer> addEnvironment(String name) {
         return environmentRepository.getNextId()
             .map(id -> {
-                return DomoticEnvironment.newBuilder(id, name).description(description).build();
+                DomoticEnvironment environment = new DomoticEnvironment();
+                environment.setId(id);
+                environment.setName(name);
+                return environment;
             })
             .flatMap(environment -> {
                 return environmentRepository.add(environment);

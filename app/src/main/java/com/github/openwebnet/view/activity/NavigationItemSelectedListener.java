@@ -67,25 +67,23 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             .setTitle(R.string.dialog_add_environment_title)
             .setPositiveButton(R.string.dialog_add_environment_btn, (dialog, which) -> {
                 EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
-                // TODO icon
-                addEnvironment(name.getText().toString(), "-");
-
-                //activity.invalidateOptionsMenu();
-                drawerLayout.openDrawer(GravityCompat.START);
+                // TODO validation notBlank setError()
+                addEnvironment(name.getText().toString());
             })
             .setNegativeButton(android.R.string.cancel, null);
         builder.show();
     }
 
-    // TODO icon
-    private void addEnvironment(String name, String description) {
-        log.debug("Dialog > addEnvironment: [{}][{}]", name, description);
-        domoticService.addEnvironment(name, description)
+    private void addEnvironment(String name) {
+        domoticService.addEnvironment(name)
             .subscribe(id -> {
-                showSnackbar("success: " + id);
+                // calls onPrepareOptionsMenu(): reload menu
+                activity.invalidateOptionsMenu();
+                drawerLayout.openDrawer(GravityCompat.START);
             },
             throwable -> {
-                showSnackbar("error ADD");
+                // TODO string resource
+                showSnackbar("Error adding environment");
             });
     }
 

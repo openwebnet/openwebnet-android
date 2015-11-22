@@ -58,13 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // calls onPrepareOptionsMenu(): reload menu
-                invalidateOptionsMenu();
-            }
-        };
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
@@ -99,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             },
             throwable -> {
+                // TODO string resource
                 showSnackbar("Error loading navigation drawer");
             });
     }
