@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
@@ -37,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @Bind(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindString(R.string.error_load_navigation_drawer)
+    String errorLoadNavigationDrawer;
 
     @Inject
     DomoticService domoticService;
@@ -93,8 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             },
             throwable -> {
-                // TODO string resource
-                showSnackbar("Error loading navigation drawer");
+                showSnackbar(errorLoadNavigationDrawer);
             });
     }
 

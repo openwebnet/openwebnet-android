@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,13 +66,21 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
             .setView(layout)
             .setTitle(R.string.dialog_add_environment_title)
-            .setPositiveButton(R.string.dialog_add_environment_btn, (dialog, which) -> {
-                EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
-                // TODO validation notBlank setError()
-                addEnvironment(name.getText().toString());
-            })
+            .setPositiveButton(R.string.dialog_add_environment_btn, null)
             .setNegativeButton(android.R.string.cancel, null);
-        builder.show();
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
+                if (TextUtils.isEmpty(name.getText())) {
+                    name.setError(getString(R.string.validation_required));
+                } else {
+                    addEnvironment(name.getText().toString());
+                    dialog.dismiss();
+                }
+            });
     }
 
     private void addEnvironment(String name) {
@@ -83,8 +92,12 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             },
             throwable -> {
                 // TODO string resource
-                showSnackbar("Error adding environment");
+                showSnackbar(getString(R.string.error_add_environment));
             });
+    }
+
+    private String getString(int id) {
+        return activity.getResources().getString(id);
     }
 
 }

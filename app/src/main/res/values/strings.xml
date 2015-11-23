@@ -14,4 +14,8 @@
     <string name="dialog_add_environment_name">Name</string>
     <string name="dialog_add_environment_btn">Add</string>
 
+    <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
+    <string name="error_add_environment">Error adding environment</string>
+    <string name="validation_required">Required field</string>
+
 </resources>
