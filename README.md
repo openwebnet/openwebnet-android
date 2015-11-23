@@ -4,7 +4,7 @@
 
 > work in progress!
 
-[![Trello](https://github.com/openwebnet/openwebnet-android/blob/master/images/trello.svg)](https://trello.com/b/KwVQLhoj/openwebnet-android)
+[Trello Board](https://trello.com/b/KwVQLhoj/openwebnet-android)
 
 Thanks to:
 
