@@ -1,4 +1,4 @@
-package com.github.openwebnet.view.activity;
+package com.github.openwebnet.view;
 
 import android.app.Activity;
 import android.support.design.widget.NavigationView;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.view.settings.SettingsFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,13 +43,13 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         log.debug("onNavigationItemSelected {}", id);
-        
+
         switch (id) {
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
             case R.id.nav_settings:
-                log.debug("nav_settings");
+                showSettings();
                 break;
         }
 
@@ -66,7 +67,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         AlertDialog.Builder builder = new AlertDialog.Builder(activity)
             .setView(layout)
             .setTitle(R.string.dialog_add_environment_title)
-            .setPositiveButton(R.string.dialog_add_environment_btn, null)
+            .setPositiveButton(R.string.button_add, null)
             .setNegativeButton(android.R.string.cancel, null);
 
         AlertDialog dialog = builder.create();
@@ -91,7 +92,6 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
                 drawerLayout.openDrawer(GravityCompat.START);
             },
             throwable -> {
-                // TODO string resource
                 showSnackbar(getString(R.string.error_add_environment));
             });
     }
@@ -100,4 +100,10 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         return activity.getResources().getString(id);
     }
 
+    private void showSettings() {
+        activity.getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.content_frame, new SettingsFragment())
+            .commit();
+    }
 }

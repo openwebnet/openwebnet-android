@@ -5,8 +5,8 @@ import com.github.openwebnet.component.module.OpenWebNetModule;
 import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.service.impl.DomoticServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
-import com.github.openwebnet.view.activity.MainActivity;
-import com.github.openwebnet.view.activity.NavigationItemSelectedListener;
+import com.github.openwebnet.view.MainActivity;
+import com.github.openwebnet.view.NavigationItemSelectedListener;
 
 import javax.inject.Singleton;
 

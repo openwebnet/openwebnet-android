@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- TODO shortcuts
+    <PreferenceCategory android:title="@string/settings_category_title">
+        <PreferenceScreen android:title="@string/settings_title_wireless">
+            <intent android:action="android.settings.WIRELESS_SETTINGS"/>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    -->
+
+    <PreferenceCategory android:title="@string/settings_gateway_title">
+
+        <com.github.openwebnet.view.settings.GatewayEditTextPreference
+            android:dialogTitle="@string/settings_gateway_add"
+            android:positiveButtonText="@string/button_add"
+            android:title="@string/settings_gateway_add"/>
+
+        <com.github.openwebnet.view.settings.GatewayListPreference
+            android:dialogTitle="@string/settings_gateway_default"
+            android:summary="TODO gateway"
+            android:entries="@array/preference_keys"
+            android:entryValues="@array/preference_values"
+            android:key="default_gateway"
+            android:title="@string/settings_gateway_default"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

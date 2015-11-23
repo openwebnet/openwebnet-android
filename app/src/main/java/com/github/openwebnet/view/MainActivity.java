@@ -1,4 +1,4 @@
-package com.github.openwebnet.view.activity;
+package com.github.openwebnet.view;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -90,15 +90,15 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
         domoticService.findAllEnvironment().subscribe(
-            environments -> {
-                log.debug("reloadMenu: {}", environments);
-                for (DomoticEnvironment environment : environments) {
-                    menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
-                }
-            },
-            throwable -> {
-                showSnackbar(errorLoadNavigationDrawer);
-            });
+                environments -> {
+                    log.debug("reloadMenu: {}", environments);
+                    for (DomoticEnvironment environment : environments) {
+                        menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
+                    }
+                },
+                throwable -> {
+                    showSnackbar(errorLoadNavigationDrawer);
+                });
     }
 
     @OnClick(R.id.fab)
