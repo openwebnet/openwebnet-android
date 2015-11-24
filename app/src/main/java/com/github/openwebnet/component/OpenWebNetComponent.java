@@ -7,6 +7,7 @@ import com.github.openwebnet.service.impl.DomoticServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationItemSelectedListener;
+import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 
 import javax.inject.Singleton;
 
@@ -23,5 +24,7 @@ public interface OpenWebNetComponent {
     void inject(PreferenceServiceImpl preferenceService);
     void inject(DomoticServiceImpl domoticService);
     void inject(NavigationItemSelectedListener listener);
+
+    void inject(GatewayEditTextPreference gateway);
 
 }

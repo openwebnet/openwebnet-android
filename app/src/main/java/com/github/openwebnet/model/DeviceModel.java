@@ -8,6 +8,7 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+// TODO use RealmObject for relationship i.e. EnvironmentModel and GatewayModel
 public class DeviceModel extends RealmObject {
 
     @PrimaryKey

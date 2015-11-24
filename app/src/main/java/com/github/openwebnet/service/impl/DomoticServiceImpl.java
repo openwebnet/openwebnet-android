@@ -5,7 +5,9 @@ import android.app.Application;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.repository.EnvironmentRepository;
+import com.github.openwebnet.repository.GatewayRepository;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.PreferenceService;
 
@@ -25,7 +27,7 @@ import rx.schedulers.Schedulers;
  */
 public class DomoticServiceImpl implements DomoticService {
 
-    private static final Logger log = LoggerFactory.getLogger(DomoticServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DomoticService.class);
 
     private final Application application;
 
@@ -40,6 +42,9 @@ public class DomoticServiceImpl implements DomoticService {
 
     @Inject
     EnvironmentRepository environmentRepository;
+
+    @Inject
+    GatewayRepository gatewayRepository;
 
     @Override
     public void initRepository() {
@@ -73,6 +78,18 @@ public class DomoticServiceImpl implements DomoticService {
     @Override
     public Observable<List<EnvironmentModel>> findAllEnvironment() {
         return environmentRepository.findAll();
+    }
+
+    @Override
+    public Observable<String> addGateway(String host, Integer port) {
+        return gatewayRepository.add(GatewayModel.newGateway(host, port))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<GatewayModel>> findAllGateway() {
+        return gatewayRepository.findAll();
     }
 
     private String getString(int id) {

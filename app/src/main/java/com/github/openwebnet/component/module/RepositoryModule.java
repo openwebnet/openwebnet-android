@@ -2,7 +2,9 @@ package com.github.openwebnet.component.module;
 
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
+import com.github.openwebnet.repository.GatewayRepository;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -22,6 +24,12 @@ public class RepositoryModule {
     @Singleton
     DeviceRepository provideDevice() {
         throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    @Provides
+    @Singleton
+    GatewayRepository provideGateway() {
+        return new GatewayRepositoryImpl();
     }
 
 }

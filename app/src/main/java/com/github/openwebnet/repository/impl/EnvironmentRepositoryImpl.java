@@ -15,7 +15,7 @@ import rx.Observable;
 
 public class EnvironmentRepositoryImpl implements EnvironmentRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(EnvironmentRepositoryImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EnvironmentRepository.class);
     private static final Integer INITIAL_SEQ = 100;
 
     @Override

@@ -16,6 +16,8 @@
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="error_add_environment">Error adding environment</string>
     <string name="validation_required">Required field</string>
+    <string name="validation_host">Invalid ip address</string>
+    <string name="validation_port">Invalid port range</string>
 
     <string name="settings_gateway_title">Gateway</string>
     <string name="settings_gateway_add">Add gateway</string>

@@ -14,7 +14,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="@dimen/dialog_margin"
         android:hint="@string/dialog_gateway_host"
-        />
+        android:maxLength="15"/>
 
     <EditText
         android:id="@+id/editTextDialogGatewayPort"
@@ -25,6 +25,8 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="@dimen/dialog_margin"
-        android:hint="@string/dialog_gateway_port"/>
+        android:hint="@string/dialog_gateway_port"
+        android:inputType="number"
+        android:maxLength="5"/>
 
 </LinearLayout>
