@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.model.DomoticEnvironment;
+import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.DomoticService;
 
 import org.slf4j.Logger;
@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-// TODO test
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
@@ -90,15 +89,15 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
         domoticService.findAllEnvironment().subscribe(
-                environments -> {
-                    log.debug("reloadMenu: {}", environments);
-                    for (DomoticEnvironment environment : environments) {
-                        menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
-                    }
-                },
-                throwable -> {
-                    showSnackbar(errorLoadNavigationDrawer);
-                });
+            environments -> {
+                log.debug("reloadMenu: {}", environments);
+                for (EnvironmentModel environment : environments) {
+                    menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
+                }
+            },
+            throwable -> {
+                showSnackbar(errorLoadNavigationDrawer);
+            });
     }
 
     @OnClick(R.id.fab)

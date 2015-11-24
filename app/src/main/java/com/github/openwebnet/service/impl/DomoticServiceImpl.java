@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.model.DomoticEnvironment;
-import com.github.openwebnet.repository.DomoticEnvironmentRepository;
+import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.PreferenceService;
 
@@ -39,7 +39,7 @@ public class DomoticServiceImpl implements DomoticService {
     PreferenceService preferenceService;
 
     @Inject
-    DomoticEnvironmentRepository environmentRepository;
+    EnvironmentRepository environmentRepository;
 
     @Override
     public void initRepository() {
@@ -58,7 +58,7 @@ public class DomoticServiceImpl implements DomoticService {
     public Observable<Integer> addEnvironment(String name) {
         return environmentRepository.getNextId()
             .map(id -> {
-                DomoticEnvironment environment = new DomoticEnvironment();
+                EnvironmentModel environment = new EnvironmentModel();
                 environment.setId(id);
                 environment.setName(name);
                 return environment;
@@ -71,7 +71,7 @@ public class DomoticServiceImpl implements DomoticService {
     }
 
     @Override
-    public Observable<List<DomoticEnvironment>> findAllEnvironment() {
+    public Observable<List<EnvironmentModel>> findAllEnvironment() {
         return environmentRepository.findAll();
     }
 

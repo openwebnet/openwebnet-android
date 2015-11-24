@@ -1,6 +1,6 @@
 package com.github.openwebnet.service;
 
-import com.github.openwebnet.model.DomoticEnvironment;
+import com.github.openwebnet.model.EnvironmentModel;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ public interface DomoticService {
 
     Observable<Integer> addEnvironment(String name);
 
-    Observable<List<DomoticEnvironment>> findAllEnvironment();
+    Observable<List<EnvironmentModel>> findAllEnvironment();
 }

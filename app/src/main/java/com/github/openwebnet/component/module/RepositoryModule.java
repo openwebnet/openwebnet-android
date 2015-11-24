@@ -1,8 +1,8 @@
 package com.github.openwebnet.component.module;
 
-import com.github.openwebnet.repository.DomoticDeviceRepository;
-import com.github.openwebnet.repository.DomoticEnvironmentRepository;
-import com.github.openwebnet.repository.impl.DomoticEnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.DeviceRepository;
+import com.github.openwebnet.repository.EnvironmentRepository;
+import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -14,14 +14,14 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    DomoticEnvironmentRepository provideEnvironment() {
-        return new DomoticEnvironmentRepositoryImpl();
+    EnvironmentRepository provideEnvironment() {
+        return new EnvironmentRepositoryImpl();
     }
 
     @Provides
     @Singleton
-    DomoticDeviceRepository provideDevice() {
-        return null;
+    DeviceRepository provideDevice() {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
 }

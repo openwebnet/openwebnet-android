@@ -1,7 +1,7 @@
 package com.github.openwebnet.repository.impl;
 
-import com.github.openwebnet.model.DomoticEnvironment;
-import com.github.openwebnet.repository.DomoticEnvironmentRepository;
+import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,19 +13,16 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
 
-/**
- * @author niqdev
- */
-public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepository {
+public class EnvironmentRepositoryImpl implements EnvironmentRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(DomoticEnvironmentRepositoryImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(EnvironmentRepositoryImpl.class);
     private static final Integer INITIAL_SEQ = 100;
 
     @Override
     public Observable<Integer> getNextId() {
         return Observable.create(subscriber -> {
             try {
-                Number maxId = Realm.getDefaultInstance().where(DomoticEnvironment.class).max("id");
+                Number maxId = Realm.getDefaultInstance().where(EnvironmentModel.class).max("id");
                 Integer lastId = maxId == null ? INITIAL_SEQ : new AtomicInteger(maxId.intValue()).incrementAndGet();
                 subscriber.onNext(lastId);
                 subscriber.onCompleted();
@@ -37,7 +34,7 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
     }
 
     @Override
-    public Observable<Integer> add(DomoticEnvironment environment) {
+    public Observable<Integer> add(EnvironmentModel environment) {
         return Observable.create(subscriber -> {
             try {
                 Realm realm = Realm.getDefaultInstance();
@@ -55,18 +52,18 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
     }
 
     @Override
-    public Observable<DomoticEnvironment> find(Integer id) {
+    public Observable<EnvironmentModel> find(Integer id) {
         log.debug("environment-FIND");
-        return null;
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     @Override
-    public Observable<List<DomoticEnvironment>> findAll() {
+    public Observable<List<EnvironmentModel>> findAll() {
         return Observable.create(subscriber -> {
             try {
-                RealmResults<DomoticEnvironment> environments =
-                    Realm.getDefaultInstance().where(DomoticEnvironment.class).findAll();
-                environments.sort(DomoticEnvironment.FIELD_NAME, RealmResults.SORT_ORDER_ASCENDING);
+                RealmResults<EnvironmentModel> environments =
+                    Realm.getDefaultInstance().where(EnvironmentModel.class).findAll();
+                environments.sort(EnvironmentModel.FIELD_NAME, RealmResults.SORT_ORDER_ASCENDING);
 
                 // from documentation: https://realm.io/docs/java/latest/#queries
                 // 'Most queries in Realm are fast enough to be run synchronously - even on the UI thread'
@@ -79,4 +76,5 @@ public class DomoticEnvironmentRepositoryImpl implements DomoticEnvironmentRepos
             }
         });
     }
+
 }

@@ -17,7 +17,6 @@ import dagger.Component;
 public interface OpenWebNetComponent {
 
     void inject(OpenWebNetApplication application);
-
     void inject(MainActivity activity);
 
     // dagger needs concrete class
