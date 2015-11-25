@@ -3,7 +3,6 @@ package com.github.openwebnet.view.settings;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.TextUtils;

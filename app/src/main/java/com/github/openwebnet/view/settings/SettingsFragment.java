@@ -10,6 +10,9 @@ public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getPreferenceManager().setSharedPreferencesName(SettingsFragment.class.getSimpleName());
         addPreferencesFromResource(R.xml.settings);
+
+        // TODO GatewayListPreference summary with default
     }
 }

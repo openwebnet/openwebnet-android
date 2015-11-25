@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         domoticService.findAllEnvironment().subscribe(
             environments -> {
                 log.debug("reloadMenu: {}", environments);
+                // TODO streams
                 for (EnvironmentModel environment : environments) {
                     menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
                 }

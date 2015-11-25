@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Observable;
 
 public class GatewayRepositoryImpl implements GatewayRepository {
@@ -35,8 +36,17 @@ public class GatewayRepositoryImpl implements GatewayRepository {
 
     @Override
     public Observable<List<GatewayModel>> findAll() {
-        log.debug("gateway-FIND_ALL");
-        throw new UnsupportedOperationException("not implemented yet");
+        return Observable.create(subscriber -> {
+            try {
+                RealmResults<GatewayModel> gateways =
+                    Realm.getDefaultInstance().where(GatewayModel.class).findAll();
+                subscriber.onNext(gateways);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("gateway-FIND_ALL", e);
+                subscriber.onError(e);
+            }
+        });
     }
 
 }

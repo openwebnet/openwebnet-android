@@ -22,10 +22,12 @@
     <string name="settings_gateway_title">Gateway</string>
     <string name="settings_gateway_add">Add gateway</string>
     <string name="settings_gateway_default">Default gateway</string>
+    <string name="settings_gateway_default_dialog">Choose default gateway</string>
     <string name="dialog_gateway_host">Host</string>
     <string name="dialog_gateway_port">Port</string>
 
     <string name="button_add">Add</string>
+    <string name="label_none">None</string>
 
     <!-- TODO -->
     <string name="settings_category_title">Settings</string>
