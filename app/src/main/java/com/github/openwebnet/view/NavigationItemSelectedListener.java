@@ -1,10 +1,10 @@
 package com.github.openwebnet.view;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
@@ -33,11 +33,11 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     @Inject
     DomoticService domoticService;
 
-    private final Activity activity;
+    private final FragmentActivity activity;
     private final DrawerLayout drawerLayout;
 
     @Inject
-    public NavigationItemSelectedListener(Activity activity, DrawerLayout drawerLayout) {
+    public NavigationItemSelectedListener(FragmentActivity activity, DrawerLayout drawerLayout) {
         OpenWebNetApplication.component(activity).inject(this);
         this.activity = activity;
         this.drawerLayout = drawerLayout;
@@ -70,7 +70,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         args.putInt(ARG_ENVIRONMENT, id);
         fragment.setArguments(args);
 
-        activity.getFragmentManager()
+        activity.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, fragment)
             //.addToBackStack(null)
