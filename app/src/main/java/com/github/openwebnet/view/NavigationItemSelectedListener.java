@@ -1,6 +1,8 @@
 package com.github.openwebnet.view;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +24,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
+import static com.github.openwebnet.view.DeviceListFragment.ARG_ENVIRONMENT;
+
 public class NavigationItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final Logger log = LoggerFactory.getLogger(NavigationItemSelectedListener.class);
@@ -42,7 +46,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        log.debug("onNavigationItemSelected {}", id);
+        log.debug("MENU selected [id={}]", id);
 
         switch (id) {
             case R.id.nav_add:
@@ -51,10 +55,26 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             case R.id.nav_settings:
                 showSettings();
                 break;
+            default:
+                showEnvironment(id);
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showEnvironment(Integer id) {
+        Fragment fragment = new DeviceListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_ENVIRONMENT, id);
+        fragment.setArguments(args);
+
+        activity.getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.content_frame, fragment)
+            //.addToBackStack(null)
+            .commit();
     }
 
     private void showSnackbar(String message) {

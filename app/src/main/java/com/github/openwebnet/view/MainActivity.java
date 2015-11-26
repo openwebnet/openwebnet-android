@@ -11,9 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 
+import com.annimon.stream.Stream;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.DomoticService;
 
 import org.slf4j.Logger;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(
-            new NavigationItemSelectedListener(this, drawerLayout));
+                new NavigationItemSelectedListener(this, drawerLayout));
     }
 
     @Override
@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
         domoticService.findAllEnvironment().subscribe(
             environments -> {
                 log.debug("reloadMenu: {}", environments);
-                // TODO streams
-                for (EnvironmentModel environment : environments) {
-                    menu.add(R.id.nav_group_environment, environment.getId(), Menu.NONE, environment.getName());
-                }
+                Stream.of(environments).forEach(environment -> {
+                    menu.add(R.id.nav_group_environment, environment.getId(),
+                        Menu.NONE, environment.getName());
+                });
             },
             throwable -> {
                 showSnackbar(errorLoadNavigationDrawer);
