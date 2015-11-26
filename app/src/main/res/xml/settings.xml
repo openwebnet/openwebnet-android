@@ -20,9 +20,6 @@
         <com.github.openwebnet.view.settings.GatewayListPreference
             android:dialogTitle="@string/settings_gateway_default_dialog"
             android:summary="@string/label_none"
-            android:entries="@array/preference_keys"
-            android:entryValues="@array/preference_values"
-            android:key="default_gateway"
             android:title="@string/settings_gateway_default"/>
 
     </PreferenceCategory>

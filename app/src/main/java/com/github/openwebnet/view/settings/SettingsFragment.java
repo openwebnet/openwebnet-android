@@ -1,18 +1,45 @@
 package com.github.openwebnet.view.settings;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
+import android.text.TextUtils;
 
 import com.github.openwebnet.R;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
+
 public class SettingsFragment extends PreferenceFragment {
+
+    private static final Logger log = LoggerFactory.getLogger(SettingsFragment.class);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesName(SettingsFragment.class.getSimpleName());
         addPreferencesFromResource(R.xml.settings);
+        updatePreferenceSummary(getPreferenceScreen());
+    }
 
-        // TODO GatewayListPreference summary with default
+    private void updatePreferenceSummary(Preference preference) {
+        if (preference instanceof PreferenceGroup) {
+            PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+            for (int i=0; i<preferenceGroup.getPreferenceCount(); i++) {
+                // recursive
+                updatePreferenceSummary(preferenceGroup.getPreference(i));
+            }
+        } else if (preference instanceof GatewayListPreference) {
+            updateGatewayListPreferenceSummary((GatewayListPreference) preference);
+        }
+    }
+
+    private void updateGatewayListPreferenceSummary(GatewayListPreference preference) {
+        String value = preference.getSharedPreferences().getString(PREF_DEFAULT_GATEWAY_VALUE, "");
+        if (!TextUtils.isEmpty(value)) {
+            preference.setSummary(value);
+        }
     }
 }
