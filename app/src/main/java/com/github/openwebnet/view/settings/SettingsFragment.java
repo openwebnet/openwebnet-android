@@ -8,14 +8,9 @@ import android.text.TextUtils;
 
 import com.github.openwebnet.R;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 
 public class SettingsFragment extends PreferenceFragment {
-
-    private static final Logger log = LoggerFactory.getLogger(SettingsFragment.class);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

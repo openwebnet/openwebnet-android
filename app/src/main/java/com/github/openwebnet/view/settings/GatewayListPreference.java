@@ -73,6 +73,7 @@ public class GatewayListPreference extends ListPreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
         if (positiveResult && !isEmpty(getEntry()) && !isEmpty(getValue())) {
+            log.debug("DEFAULT gateway: [KEY={}][VALUE={}]", getEntry(), getValue());
             setSummary(getEntry());
             getSharedPreferences()
                 .edit()

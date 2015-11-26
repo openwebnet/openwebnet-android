@@ -93,7 +93,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
         Integer port = Integer.parseInt(mEditTextPort.getText().toString());
         domoticService.addGateway(host, port)
             .subscribe(uuid -> {
-                log.debug("addGateway: {}", uuid);
+                log.debug("NEW gateway: {}", uuid);
                 dialog.dismiss();
             });
     }
