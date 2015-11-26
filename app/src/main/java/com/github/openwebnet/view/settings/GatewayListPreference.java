@@ -38,6 +38,7 @@ public class GatewayListPreference extends ListPreference {
     protected View onCreateDialogView() {
         setKey(PREF_DEFAULT_GATEWAY_KEY);
         initEntries();
+        initIndex();
         return super.onCreateDialogView();
     }
 
@@ -59,6 +60,13 @@ public class GatewayListPreference extends ListPreference {
 
     private CharSequence[] listToCharSequence(List<String> list) {
         return list.toArray(new CharSequence[list.size()]);
+    }
+
+    private void initIndex() {
+        String value = getSharedPreferences().getString(PREF_DEFAULT_GATEWAY_KEY, "");
+        if (!isEmpty(value)) {
+            setValueIndex(findIndexOfValue(value));
+        }
     }
 
     @Override
