@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.DeviceModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,9 +51,20 @@ public class DeviceListFragment extends Fragment {
         Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
         log.debug("environment {}", environment);
 
-        mAdapter = new DeviceListAdapter(new ArrayList<>());
+        List<DeviceModel> devices = new ArrayList<>();
+        devices.add(DeviceModel.newBuilder().environment(100).gateway("uuid0").name("name0").raw("command0").build());
+        devices.add(DeviceModel.newBuilder().environment(101).gateway("uuid1").name("name1").raw("command1").build());
+        devices.add(DeviceModel.newBuilder().environment(102).gateway("uuid2").name("name2").raw("command2").build());
+
+        mAdapter = new DeviceListAdapter(devices);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

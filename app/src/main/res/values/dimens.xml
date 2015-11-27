@@ -8,4 +8,14 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="dialog_margin">16dp</dimen>
+
+    <!-- deviceCard -->
+    <dimen name="deviceCard_marginTop">12dp</dimen>
+    <dimen name="deviceCard_marginBottom">12dp</dimen>
+    <dimen name="deviceCard_marginLeft">8dp</dimen>
+    <dimen name="deviceCard_marginRight">8dp</dimen>
+    <dimen name="deviceCard_paddingTop">2dp</dimen>
+    <dimen name="deviceCard_paddingBottom">6dp</dimen>
+    <dimen name="deviceCard_paddingLeft">8dp</dimen>
+    <dimen name="deviceCard_paddingRight">8dp</dimen>
 </resources>

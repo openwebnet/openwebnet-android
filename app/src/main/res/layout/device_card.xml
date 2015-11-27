@@ -5,12 +5,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--style="@style/deviceCard"-->
+    <!--
     <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardViewDevice"
+
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:minHeight="100dp"
+        card_view:cardBackgroundColor="#FFF"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/textViewCardDevice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="cards"/>
+    </android.support.v7.widget.CardView>
+    -->
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardViewDevice"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
         android:minHeight="100dp"
         card_view:cardCornerRadius="4dp">
 
