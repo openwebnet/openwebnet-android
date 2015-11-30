@@ -121,6 +121,16 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     }
 
     private void showSettings() {
+        Fragment compactFragment = activity.getSupportFragmentManager()
+            .findFragmentById(R.id.content_frame);
+
+        if (compactFragment != null) {
+            activity.getSupportFragmentManager()
+                .beginTransaction().
+                remove(compactFragment).commit();
+        }
+
+        // refactor with android.support.v4 when stable
         activity.getFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, new SettingsFragment())
