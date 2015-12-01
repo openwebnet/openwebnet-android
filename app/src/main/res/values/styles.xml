@@ -21,10 +21,30 @@
     <style name="deviceCard"></style>
 
     <style name="deviceCard.layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">@dimen/deviceCard_marginTop</item>
         <item name="android:layout_marginBottom">@dimen/deviceCard_marginBottom</item>
         <item name="android:layout_marginLeft">@dimen/deviceCard_marginLeft</item>
         <item name="android:layout_marginRight">@dimen/deviceCard_marginRight</item>
+    </style>
+
+    <style name="deviceCard.textView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/deviceCard_textView_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/deviceCard_textView_paddingRight</item>
+    </style>
+
+    <style name="deviceCard.imageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/deviceCard_imageButton_marginTop</item>
+        <item name="android:layout_marginBottom">@dimen/deviceCard_imageButton_marginBottom</item>
+        <item name="android:layout_marginLeft">@dimen/deviceCard_imageButton_marginLeft</item>
+        <item name="android:layout_marginRight">@dimen/deviceCard_imageButton_marginRight</item>
+        <item name="android:background">@null</item>
     </style>
 
 </resources>

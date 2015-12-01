@@ -6,95 +6,66 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--style="@style/deviceCard"-->
-    <!--
     <android.support.v7.widget.CardView
         android:id="@+id/cardViewDevice"
-
+        style="@style/deviceCard.layout"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:minHeight="100dp"
-        card_view:cardBackgroundColor="#FFF"
-        card_view:cardCornerRadius="4dp">
-
-        <TextView
-            android:id="@+id/textViewCardDevice"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="cards"/>
-    </android.support.v7.widget.CardView>
-    -->
-
-    <android.support.v7.widget.CardView
-        android:layout_margin="8dp"
-        android:id="@+id/cardViewDevice"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        card_view:cardPreventCornerOverlap="true"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="4dp"
+        card_view:cardPreventCornerOverlap="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewCardDeviceTitle"
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@color/yellow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="Title"
-                android:textSize="24sp"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textViewCardDeviceTitle"
+                    style="@style/deviceCard.textView"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="16dp"
+                    android:text="Title"
+                    android:textSize="24sp"/>
 
-            <TextView
-                android:id="@+id/textViewCardDeviceSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingBottom="16dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="Subtitle"
-                android:textSize="14sp"/>
+                <TextView
+                    android:id="@+id/textViewCardDeviceSubtitle"
+                    style="@style/deviceCard.textView"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="4dp"
+                    android:text="Subtitle"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/star_outline"
-                    android:layout_margin="8dp"
-                    android:background="@null"
-                    android:id="@+id/button11"/>
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="center"
+                    android:id="@+id/imageButtonCardDeviceFavourite"
+                    style="@style/deviceCard.imageButton"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:src="@drawable/star_outline"/>
+
+                <ImageButton
+                    android:id="@+id/imageButtonCardDeviceSend"
+                    style="@style/deviceCard.imageButton"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/send"
-                    android:background="@null"
-                    android:id="@+id/imageButton1"/>
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/send"/>
             </RelativeLayout>
 
         </LinearLayout>
 
-
     </android.support.v7.widget.CardView>
-
 
 </LinearLayout>

@@ -17,9 +17,12 @@
     <dimen name="deviceCard_marginLeft">8dp</dimen>
     <dimen name="deviceCard_marginRight">8dp</dimen>
 
-    <dimen name="deviceCard_paddingTop">2dp</dimen>
-    <dimen name="deviceCard_paddingBottom">6dp</dimen>
-    <dimen name="deviceCard_paddingLeft">8dp</dimen>
-    <dimen name="deviceCard_paddingRight">8dp</dimen>
+    <dimen name="deviceCard_textView_paddingLeft">16dp</dimen>
+    <dimen name="deviceCard_textView_paddingRight">16dp</dimen>
+
+    <dimen name="deviceCard_imageButton_marginTop">8dp</dimen>
+    <dimen name="deviceCard_imageButton_marginBottom">8dp</dimen>
+    <dimen name="deviceCard_imageButton_marginLeft">8dp</dimen>
+    <dimen name="deviceCard_imageButton_marginRight">8dp</dimen>
 
 </resources>
