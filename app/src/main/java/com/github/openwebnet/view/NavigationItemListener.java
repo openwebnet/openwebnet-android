@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
@@ -24,21 +25,35 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.BindString;
+import butterknife.ButterKnife;
+
 import static com.github.openwebnet.view.DeviceListFragment.ARG_ENVIRONMENT;
 
-public class NavigationItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
+public class NavigationItemListener implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final Logger log = LoggerFactory.getLogger(NavigationItemSelectedListener.class);
+    private static final Logger log = LoggerFactory.getLogger(NavigationItemListener.class);
 
     @Inject
     DomoticService domoticService;
+
+    @Bind(R.id.floatingActionsMenuMain)
+    FloatingActionsMenu floatingActionsMenuMain;
+
+    @BindString(R.string.validation_required)
+    String labelValidationRequired;
+    @BindString(R.string.error_add_environment)
+    String labelErrorAddEnvironment;
 
     private final FragmentActivity activity;
     private final DrawerLayout drawerLayout;
 
     @Inject
-    public NavigationItemSelectedListener(FragmentActivity activity, DrawerLayout drawerLayout) {
+    public NavigationItemListener(FragmentActivity activity, DrawerLayout drawerLayout) {
         OpenWebNetApplication.component(activity).inject(this);
+        ButterKnife.bind(this, activity);
+
         this.activity = activity;
         this.drawerLayout = drawerLayout;
     }
@@ -49,6 +64,9 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
         log.debug("MENU selected [id={}]", id);
 
         switch (id) {
+            case R.id.nav_favourite:
+                log.debug("TODO favourite");
+                break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
@@ -65,6 +83,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     }
 
     public void showEnvironment(Integer id) {
+        floatingActionsMenuMain.setVisibility(View.VISIBLE);
         removeFragment();
 
         Fragment fragment = new DeviceListFragment();
@@ -80,7 +99,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     }
 
     private void showSnackbar(String message) {
-        Snackbar.make(activity.findViewById(R.id.fab), message, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(floatingActionsMenuMain, message, Snackbar.LENGTH_LONG).show();
     }
 
     private void showDialogAddEnvironment() {
@@ -98,7 +117,7 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             .setOnClickListener(v -> {
                 EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
                 if (TextUtils.isEmpty(name.getText())) {
-                    name.setError(getString(R.string.validation_required));
+                    name.setError(labelValidationRequired);
                 } else {
                     addEnvironment(name.getText().toString());
                     dialog.dismiss();
@@ -109,22 +128,20 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     private void addEnvironment(String name) {
         domoticService.addEnvironment(name)
             .subscribe(id -> {
-                        // calls onPrepareOptionsMenu(): reload menu
-                        activity.invalidateOptionsMenu();
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    },
-                    throwable -> {
-                        showSnackbar(getString(R.string.error_add_environment));
-                    });
-    }
-
-    private String getString(int id) {
-        return activity.getResources().getString(id);
+                // calls onPrepareOptionsMenu(): reload menu
+                activity.invalidateOptionsMenu();
+                drawerLayout.openDrawer(GravityCompat.START);
+            },
+            throwable -> {
+                showSnackbar(labelErrorAddEnvironment);
+            });
     }
 
     private void showSettings() {
+        floatingActionsMenuMain.setVisibility(View.INVISIBLE);
         removeCompactFragment();
-        // refactor with android.support.v4 when stable
+
+        // refactor with android.support.v4 when will be stable
         activity.getFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, new SettingsFragment())
@@ -136,8 +153,8 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             .findFragmentById(R.id.content_frame);
         if (fragment != null) {
             activity.getFragmentManager()
-                .beginTransaction().
-                remove(fragment).commit();
+                .beginTransaction()
+                .remove(fragment).commit();
         }
     }
 
@@ -146,8 +163,8 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
             .findFragmentById(R.id.content_frame);
         if (compactFragment != null) {
             activity.getSupportFragmentManager()
-                .beginTransaction().
-                remove(compactFragment).commit();
+                .beginTransaction()
+                .remove(compactFragment).commit();
         }
     }
 }

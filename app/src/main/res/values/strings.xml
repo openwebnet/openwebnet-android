@@ -32,4 +32,6 @@
     <string name="button_add">Add</string>
     <string name="label_none">None</string>
 
+    <string name="fab_label_add_raw">Add device</string>
+
 </resources>

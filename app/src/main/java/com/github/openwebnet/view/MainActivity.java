@@ -9,9 +9,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
 
 import com.annimon.stream.Stream;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(
-                new NavigationItemSelectedListener(this, drawerLayout));
+            new NavigationItemListener(this, drawerLayout));
     }
 
     @Override
@@ -102,13 +102,15 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-    @OnClick(R.id.fab)
-    public void floatingActionButtonClick(View view) {
-        // TODO
-    }
-
     private void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.floatingActionButtonAddRaw)
+    public void onClickFloatingActionButtonAddRaw(FloatingActionButton fab) {
+        fab.setOnClickListener(view -> {
+            showSnackbar("clicked");
+        });
     }
 
     @Override
