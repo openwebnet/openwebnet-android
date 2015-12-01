@@ -20,7 +20,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.textViewCardDevice)
+        // TODO
+        @Bind(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
         public ViewHolder(View view) {

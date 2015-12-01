@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:orderInCategory="10" android:id="@+id/nav_group_environment"
-        android:checkableBehavior="single"></group>
+    <group
+        android:id="@+id/nav_group_main"
+        android:checkableBehavior="single"
+        android:orderInCategory="10">
+        <item
+            android:id="@+id/nav_favourite"
+            android:icon="@drawable/star"
+            android:title="@string/drawer_menu_favourite"/>
+    </group>
 
-    <group android:orderInCategory="900" android:id="@+id/nav_group_setting"
-           android:checkableBehavior="single">
+    <!-- dynamic -->
+    <group
+        android:id="@+id/nav_group_environment"
+        android:checkableBehavior="single"
+        android:orderInCategory="100"></group>
+
+    <group
+        android:id="@+id/nav_group_setting"
+        android:checkableBehavior="single"
+        android:orderInCategory="900">
         <item
             android:id="@+id/nav_add"
             android:icon="@drawable/plus_box"

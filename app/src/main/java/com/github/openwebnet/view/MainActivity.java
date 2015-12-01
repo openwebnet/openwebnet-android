@@ -91,9 +91,10 @@ public class MainActivity extends AppCompatActivity {
         domoticService.findAllEnvironment().subscribe(
             environments -> {
                 log.debug("reloadMenu: {}", environments);
+                // TODO orderBy name
                 Stream.of(environments).forEach(environment -> {
                     menu.add(R.id.nav_group_environment, environment.getId(),
-                        Menu.NONE, environment.getName());
+                        environment.getId(), environment.getName());
                 });
             },
             throwable -> {

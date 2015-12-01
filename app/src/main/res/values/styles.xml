@@ -17,15 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
-    <style name="deviceCard">
+    <!-- Device Card Style -->
+    <style name="deviceCard"></style>
+
+    <style name="deviceCard.layout">
         <item name="android:layout_marginTop">@dimen/deviceCard_marginTop</item>
         <item name="android:layout_marginBottom">@dimen/deviceCard_marginBottom</item>
         <item name="android:layout_marginLeft">@dimen/deviceCard_marginLeft</item>
         <item name="android:layout_marginRight">@dimen/deviceCard_marginRight</item>
-        <item name="android:paddingTop">@dimen/deviceCard_paddingTop</item>
-        <item name="android:paddingBottom">@dimen/deviceCard_paddingBottom</item>
-        <item name="android:paddingLeft">@dimen/deviceCard_paddingLeft</item>
-        <item name="android:paddingRight">@dimen/deviceCard_paddingRight</item>
     </style>
 
 </resources>

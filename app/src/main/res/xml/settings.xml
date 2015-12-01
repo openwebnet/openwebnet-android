@@ -2,13 +2,11 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO shortcuts
     <PreferenceCategory android:title="@string/settings_category_title">
         <PreferenceScreen android:title="@string/settings_title_wireless">
             <intent android:action="android.settings.WIRELESS_SETTINGS"/>
         </PreferenceScreen>
     </PreferenceCategory>
-    -->
 
     <PreferenceCategory android:title="@string/settings_gateway_title">
 
