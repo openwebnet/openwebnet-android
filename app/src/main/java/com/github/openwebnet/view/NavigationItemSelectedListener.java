@@ -65,6 +65,8 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     }
 
     public void showEnvironment(Integer id) {
+        removeFragment();
+
         Fragment fragment = new DeviceListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_ENVIRONMENT, id);
@@ -107,13 +109,13 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     private void addEnvironment(String name) {
         domoticService.addEnvironment(name)
             .subscribe(id -> {
-                // calls onPrepareOptionsMenu(): reload menu
-                activity.invalidateOptionsMenu();
-                drawerLayout.openDrawer(GravityCompat.START);
-            },
-            throwable -> {
-                showSnackbar(getString(R.string.error_add_environment));
-            });
+                        // calls onPrepareOptionsMenu(): reload menu
+                        activity.invalidateOptionsMenu();
+                        drawerLayout.openDrawer(GravityCompat.START);
+                    },
+                    throwable -> {
+                        showSnackbar(getString(R.string.error_add_environment));
+                    });
     }
 
     private String getString(int id) {
@@ -121,19 +123,31 @@ public class NavigationItemSelectedListener implements NavigationView.OnNavigati
     }
 
     private void showSettings() {
-        Fragment compactFragment = activity.getSupportFragmentManager()
-            .findFragmentById(R.id.content_frame);
-
-        if (compactFragment != null) {
-            activity.getSupportFragmentManager()
-                .beginTransaction().
-                remove(compactFragment).commit();
-        }
-
+        removeCompactFragment();
         // refactor with android.support.v4 when stable
         activity.getFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, new SettingsFragment())
             .commit();
+    }
+
+    private void removeFragment() {
+        android.app.Fragment fragment = activity.getFragmentManager()
+            .findFragmentById(R.id.content_frame);
+        if (fragment != null) {
+            activity.getFragmentManager()
+                .beginTransaction().
+                remove(fragment).commit();
+        }
+    }
+
+    private void removeCompactFragment() {
+        Fragment compactFragment = activity.getSupportFragmentManager()
+            .findFragmentById(R.id.content_frame);
+        if (compactFragment != null) {
+            activity.getSupportFragmentManager()
+                .beginTransaction().
+                remove(compactFragment).commit();
+        }
     }
 }

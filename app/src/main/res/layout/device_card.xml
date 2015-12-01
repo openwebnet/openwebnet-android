@@ -10,6 +10,7 @@
         android:id="@+id/cardViewDevice"
         style="@style/deviceCard.layout"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardBackgroundColor="@color/yellow"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
         card_view:cardPreventCornerOverlap="true">
@@ -19,29 +20,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/yellow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/textViewCardDeviceTitle"
-                    style="@style/deviceCard.textView"
-                    android:paddingBottom="4dp"
-                    android:paddingTop="16dp"
-                    android:text="Title"
-                    android:textSize="24sp"/>
+            <TextView
+                android:id="@+id/textViewCardDeviceTitle"
+                style="@style/deviceCard.textView"
+                android:paddingBottom="4dp"
+                android:paddingTop="16dp"
+                android:text="Title"
+                android:textSize="24sp"/>
 
-                <TextView
-                    android:id="@+id/textViewCardDeviceSubtitle"
-                    style="@style/deviceCard.textView"
-                    android:paddingBottom="16dp"
-                    android:paddingTop="4dp"
-                    android:text="Subtitle"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-
+            <TextView
+                android:id="@+id/textViewCardDeviceSubtitle"
+                style="@style/deviceCard.textView"
+                android:paddingBottom="16dp"
+                android:paddingTop="4dp"
+                android:text="Subtitle"
+                android:textSize="14sp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
