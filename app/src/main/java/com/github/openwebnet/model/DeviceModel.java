@@ -6,37 +6,60 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
-// TODO use RealmObject for relationship i.e. EnvironmentModel and GatewayModel
 public class DeviceModel extends RealmObject {
+
+    public enum Type {
+        LIGHTING,
+        //TEMPERATURE_CONTROL,
+        //SOUND_SYSTEM,
+        GENERIC;
+    }
 
     @PrimaryKey
     private String uuid;
 
     @Required
-    private Integer environment;
+    private EnvironmentModel environment;
 
     @Required
-    private String gateway;
+    private Type type;
+
+    @Required
+    private GatewayModel gateway;
 
     @Required
     private String name;
 
-    @Required
-    private String raw;
-
     private String description;
+
+    @Required
+    private String command;
+
+    @Required
+    private Boolean verifyStatusOnLoad;
+
+    private String status;
+
+    private String messagePositiveStatus;
+
+    private String messageNegativeStatus;
 
     public DeviceModel(){}
 
     public DeviceModel(Builder builder) {
         this.uuid = builder.uuid;
         this.environment = builder.environment;
+        this.type = builder.type;
         this.gateway = builder.gateway;
         this.name = builder.name;
-        this.raw = builder.raw;
         this.description = builder.description;
+        this.command = builder.command;
+        this.verifyStatusOnLoad = builder.verifyStatusOnLoad;
+        this.status = builder.status;
+        this.messagePositiveStatus = builder.messagePositiveStatus;
+        this.messageNegativeStatus = builder.messageNegativeStatus;
     }
 
     /**
@@ -49,23 +72,33 @@ public class DeviceModel extends RealmObject {
     public static class Builder {
 
         private final String uuid;
-        private Integer environment;
-        private String gateway;
+        private EnvironmentModel environment;
+        private Type type;
+        private GatewayModel gateway;
         private String name;
-        private String raw;
         private String description;
+        private String command;
+        private Boolean verifyStatusOnLoad;
+        private String status;
+        private String messagePositiveStatus;
+        private String messageNegativeStatus;
 
         public Builder() {
             this.uuid = UUID.randomUUID().toString();
         }
 
-        public Builder environment(Integer id) {
-            this.environment = id;
+        public Builder environment(EnvironmentModel environment) {
+            this.environment = environment;
             return this;
         }
 
-        public Builder gateway(String uuid) {
-            this.gateway = uuid;
+        public Builder type(Type type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder gateway(GatewayModel gateway) {
+            this.gateway = gateway;
             return this;
         }
 
@@ -74,21 +107,50 @@ public class DeviceModel extends RealmObject {
             return this;
         }
 
-        public Builder raw(String value) {
-            this.raw = value;
-            return this;
-        }
-
         public Builder description(String description) {
             this.description = description;
             return this;
         }
 
+        public Builder command(String command) {
+            this.command = command;
+            return this;
+        }
+
+        public Builder verifyStatusOnLoad(Boolean value) {
+            this.verifyStatusOnLoad = value;
+            return this;
+        }
+
+        public Builder status(String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder messagePositiveStatus(String message) {
+            this.messagePositiveStatus = message;
+            return this;
+        }
+
+        public Builder messageNegativeStatus(String message) {
+            this.messageNegativeStatus = message;
+            return this;
+        }
+
         public DeviceModel build() {
-            checkNotNull(environment, "invalid DeviceModel:environment");
-            checkNotNull(gateway, "invalid DeviceModel:gateway");
-            checkNotNull(name, "invalid DeviceModel:name");
-            checkNotNull(raw, "invalid DeviceModel:raw");
+            requireNonNull(environment, "environment is null");
+            requireNonNull(type, "type is null");
+            requireNonNull(gateway, "gateway is null");
+            requireNonNull(name, "name is null");
+            requireNonNull(command, "command is null");
+            requireNonNull(verifyStatusOnLoad, "verifyStatusOnLoad is null");
+
+            if (verifyStatusOnLoad) {
+                requireNonNull(status, "status is null");
+                requireNonNull(messagePositiveStatus, "messagePositiveStatus is null");
+                requireNonNull(messageNegativeStatus, "messageNegativeStatus is null");
+            }
+
             return new DeviceModel(this);
         }
     }
@@ -105,19 +167,27 @@ public class DeviceModel extends RealmObject {
         this.uuid = uuid;
     }
 
-    public Integer getEnvironment() {
+    public EnvironmentModel getEnvironment() {
         return environment;
     }
 
-    public void setEnvironment(Integer environment) {
+    public void setEnvironment(EnvironmentModel environment) {
         this.environment = environment;
     }
 
-    public String getGateway() {
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public GatewayModel getGateway() {
         return gateway;
     }
 
-    public void setGateway(String gateway) {
+    public void setGateway(GatewayModel gateway) {
         this.gateway = gateway;
     }
 
@@ -129,19 +199,51 @@ public class DeviceModel extends RealmObject {
         this.name = name;
     }
 
-    public String getRaw() {
-        return raw;
-    }
-
-    public void setRaw(String raw) {
-        this.raw = raw;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public Boolean getVerifyStatusOnLoad() {
+        return verifyStatusOnLoad;
+    }
+
+    public void setVerifyStatusOnLoad(Boolean verifyStatusOnLoad) {
+        this.verifyStatusOnLoad = verifyStatusOnLoad;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMessagePositiveStatus() {
+        return messagePositiveStatus;
+    }
+
+    public void setMessagePositiveStatus(String messagePositiveStatus) {
+        this.messagePositiveStatus = messagePositiveStatus;
+    }
+
+    public String getMessageNegativeStatus() {
+        return messageNegativeStatus;
+    }
+
+    public void setMessageNegativeStatus(String messageNegativeStatus) {
+        this.messageNegativeStatus = messageNegativeStatus;
     }
 }

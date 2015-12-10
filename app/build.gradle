@@ -35,6 +35,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/niqdev/maven"
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -45,17 +51,17 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.0'
     //compile 'com.android.support:preference-v7:23.1.0'
 
+    compile 'com.github.openwebnet:rx-openwebnet:0.4.1'
+
     compile 'org.slf4j:slf4j-api:1.7.13'
     compile 'com.noveogroup.android:android-logger:1.3.6'
-    compile 'com.google.guava:guava:18.0'
     compile 'com.annimon:stream:1.0.5'
 
     compile 'com.google.dagger:dagger:2.0.2'
     compile 'javax.inject:javax.inject:1'
-    //compile 'javax.annotation:javax.annotation-api:1.2'
-    //compile 'javax.annotation:jsr250-api:1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'io.realm:realm-android:0.85.1'
+
+    compile 'io.realm:realm-android:0.86.0'
 
     compile 'io.reactivex:rxjava:1.0.16'
     compile 'io.reactivex:rxandroid:1.0.1'

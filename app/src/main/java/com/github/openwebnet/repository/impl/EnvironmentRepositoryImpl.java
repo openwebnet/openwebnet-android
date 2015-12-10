@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import rx.Observable;
 
 public class EnvironmentRepositoryImpl implements EnvironmentRepository {
@@ -63,7 +64,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
             try {
                 RealmResults<EnvironmentModel> environments =
                     Realm.getDefaultInstance().where(EnvironmentModel.class).findAll();
-                environments.sort(EnvironmentModel.FIELD_NAME, RealmResults.SORT_ORDER_ASCENDING);
+                environments.sort(EnvironmentModel.FIELD_NAME, Sort.ASCENDING);
 
                 // from documentation: https://realm.io/docs/java/latest/#queries
                 // 'Most queries in Realm are fast enough to be run synchronously - even on the UI thread'
