@@ -34,4 +34,6 @@
 
     <string name="fab_label_add_raw">Add device</string>
 
+    <string name="fa_asterisk">&#xf069;</string>
+
 </resources>

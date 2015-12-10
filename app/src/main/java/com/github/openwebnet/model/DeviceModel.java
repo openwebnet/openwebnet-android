@@ -3,6 +3,7 @@ package com.github.openwebnet.model;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -20,13 +21,14 @@ public class DeviceModel extends RealmObject {
     @PrimaryKey
     private String uuid;
 
-    @Required
+    //@Required
     private EnvironmentModel environment;
 
-    @Required
+    //@Required
+    @Ignore
     private Type type;
 
-    @Required
+    //@Required
     private GatewayModel gateway;
 
     @Required

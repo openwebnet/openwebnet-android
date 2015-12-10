@@ -1,5 +1,6 @@
 package com.github.openwebnet.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.view.device.DeviceActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.floatingActionButtonAddRaw)
     public void onClickFloatingActionButtonAddRaw(FloatingActionButton fab) {
         fab.setOnClickListener(view -> {
-            showSnackbar("clicked");
+            //showSnackbar("clicked");
+            startActivity(new Intent(this, DeviceActivity.class));
         });
     }
 

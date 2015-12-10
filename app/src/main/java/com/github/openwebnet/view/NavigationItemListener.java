@@ -18,6 +18,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 
-import static com.github.openwebnet.view.DeviceListFragment.ARG_ENVIRONMENT;
+import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 
 public class NavigationItemListener implements NavigationView.OnNavigationItemSelectedListener {
 

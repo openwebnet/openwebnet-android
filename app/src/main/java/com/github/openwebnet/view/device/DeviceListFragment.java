@@ -1,9 +1,8 @@
-package com.github.openwebnet.view;
+package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class DeviceListFragment extends Fragment {
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);
     private static final int GRID_COLUMNS = 2;
 
-    public static final String ARG_ENVIRONMENT = "com.github.openwebnet.view.DeviceListFragment.ARG_ENVIRONMENT";
+    public static final String ARG_ENVIRONMENT = "com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT";
 
     @Bind(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;

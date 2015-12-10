@@ -1,4 +1,4 @@
-package com.github.openwebnet.view;
+package com.github.openwebnet.view.device;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
