@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinnerDeviceEnvironment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Spinner
-        android:id="@+id/spinnerDeviceGateway"
+    <include
+        layout="@layout/common_device"
+        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
         style="@style/message.linearLayout"
-        android:elevation="6dp">
+        android:elevation="4dp">
 
         <com.github.openwebnet.view.custom.TextViewCustom
             style="@style/message.textViewFontAwesome"

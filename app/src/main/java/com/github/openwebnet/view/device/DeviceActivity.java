@@ -51,20 +51,9 @@ ACK:
 NACK:
 *#*0##
 */
-public class DeviceActivity extends AppCompatActivity {
+public class DeviceActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceActivity.class);
-
-    @Bind(R.id.spinnerDeviceEnvironment)
-    Spinner spinnerDeviceEnvironment;
-
-    @Bind(R.id.spinnerDeviceGateway)
-    Spinner spinnerDeviceGateway;
-
-    @Inject
-    DomoticService domoticService;
-
-    private SparseArray<EnvironmentModel> environmentArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,33 +63,9 @@ public class DeviceActivity extends AppCompatActivity {
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
-        initViews();
+        initSpinnerEnvironment();
+        initSpinnerGateway();
     }
 
-    private void initViews() {
-        domoticService.findAllEnvironment().subscribe(environments -> {
 
-            environmentArray = initSparseArray(environments);
-
-            List<String> environmentValues = Stream.of(environments)
-                .map(environment -> environment.getName()).collect(Collectors.toList());
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item, environmentValues);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerDeviceEnvironment.setAdapter(adapter);
-
-            // TODO
-            EnvironmentModel environment = environmentArray.get(spinnerDeviceEnvironment.getSelectedItemPosition());
-            log.debug("environment: {}", environment);
-        });
-    }
-
-    private <T> SparseArray<T> initSparseArray(List<T> items) {
-        SparseArray<T> array = new SparseArray<>();
-        for (int index = 0; index < items.size(); index ++) {
-            array.put(index++, items.get(index));
-        }
-        return array;
-    }
 }
