@@ -35,5 +35,11 @@
     <string name="fab_label_add_raw">Add device</string>
 
     <string name="fa_asterisk">&#xf069;</string>
+    <string name="fa_hashtag">&#xf292;</string>
+    <string name="fa_hashtag_double">&#xf292;&#xf292;</string>
+
+    <string name="device_who">who</string>
+    <string name="device_what">what</string>
+    <string name="device_where">where</string>
 
 </resources>

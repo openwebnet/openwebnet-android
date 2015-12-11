@@ -3,7 +3,6 @@ package com.github.openwebnet.model;
 import java.util.UUID;
 
 import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -11,62 +10,44 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceModel extends RealmObject {
 
-    public enum Type {
-        LIGHTING,
-        //TEMPERATURE_CONTROL,
-        //SOUND_SYSTEM,
-        GENERIC;
-    }
-
     @PrimaryKey
     private String uuid;
 
-    //@Required
     private EnvironmentModel environment;
 
-    //@Required
-    @Ignore
-    private Type type;
-
-    //@Required
     private GatewayModel gateway;
 
     @Required
     private String name;
 
-    private String description;
-
     @Required
-    private String command;
+    private String request;
 
-    @Required
-    private Boolean verifyStatusOnLoad;
+    private String response;
 
-    private String status;
+    private String positiveMessage;
 
-    private String messagePositiveStatus;
+    private String negativeMessage;
 
-    private String messageNegativeStatus;
+    private boolean runOnLoad;
 
-    public DeviceModel(){}
+    public DeviceModel() {}
 
     public DeviceModel(Builder builder) {
         this.uuid = builder.uuid;
         this.environment = builder.environment;
-        this.type = builder.type;
         this.gateway = builder.gateway;
         this.name = builder.name;
-        this.description = builder.description;
-        this.command = builder.command;
-        this.verifyStatusOnLoad = builder.verifyStatusOnLoad;
-        this.status = builder.status;
-        this.messagePositiveStatus = builder.messagePositiveStatus;
-        this.messageNegativeStatus = builder.messageNegativeStatus;
+        this.request = builder.request;
+        this.response = builder.response;
+        this.positiveMessage = builder.positiveMessage;
+        this.negativeMessage = builder.negativeMessage;
+        this.runOnLoad = builder.runOnLoad;
     }
 
     /**
      * Prefer this builder to instantiate a new {@link DeviceModel}.
-     *
+     * <p>
      * Note:
      * {@link lombok.Getter} and {@link lombok.Setter} don't work with {@link RealmObject}.
      * Avoid to use setXXX, {@link DeviceModel} should be immutable.
@@ -75,15 +56,13 @@ public class DeviceModel extends RealmObject {
 
         private final String uuid;
         private EnvironmentModel environment;
-        private Type type;
         private GatewayModel gateway;
         private String name;
-        private String description;
-        private String command;
-        private Boolean verifyStatusOnLoad;
-        private String status;
-        private String messagePositiveStatus;
-        private String messageNegativeStatus;
+        private String request;
+        private String response;
+        private String positiveMessage;
+        private String negativeMessage;
+        private boolean runOnLoad;
 
         public Builder() {
             this.uuid = UUID.randomUUID().toString();
@@ -91,11 +70,6 @@ public class DeviceModel extends RealmObject {
 
         public Builder environment(EnvironmentModel environment) {
             this.environment = environment;
-            return this;
-        }
-
-        public Builder type(Type type) {
-            this.type = type;
             return this;
         }
 
@@ -109,56 +83,39 @@ public class DeviceModel extends RealmObject {
             return this;
         }
 
-        public Builder description(String description) {
-            this.description = description;
+        public Builder request(String request) {
+            this.request = request;
             return this;
         }
 
-        public Builder command(String command) {
-            this.command = command;
+        public Builder response(String response) {
+            this.response = response;
             return this;
         }
 
-        public Builder verifyStatusOnLoad(Boolean value) {
-            this.verifyStatusOnLoad = value;
+        public Builder positiveMessage(String message) {
+            this.positiveMessage = message;
             return this;
         }
 
-        public Builder status(String status) {
-            this.status = status;
+        public Builder negativeMessage(String message) {
+            this.positiveMessage = message;
             return this;
         }
 
-        public Builder messagePositiveStatus(String message) {
-            this.messagePositiveStatus = message;
-            return this;
-        }
-
-        public Builder messageNegativeStatus(String message) {
-            this.messageNegativeStatus = message;
+        public Builder runOnLoad(boolean value) {
+            this.runOnLoad = value;
             return this;
         }
 
         public DeviceModel build() {
             requireNonNull(environment, "environment is null");
-            requireNonNull(type, "type is null");
             requireNonNull(gateway, "gateway is null");
             requireNonNull(name, "name is null");
-            requireNonNull(command, "command is null");
-            requireNonNull(verifyStatusOnLoad, "verifyStatusOnLoad is null");
-
-            if (verifyStatusOnLoad) {
-                requireNonNull(status, "status is null");
-                requireNonNull(messagePositiveStatus, "messagePositiveStatus is null");
-                requireNonNull(messageNegativeStatus, "messageNegativeStatus is null");
-            }
+            requireNonNull(request, "request is null");
 
             return new DeviceModel(this);
         }
-    }
-
-    public static Builder newBuilder() {
-        return new DeviceModel.Builder();
     }
 
     public String getUuid() {
@@ -177,14 +134,6 @@ public class DeviceModel extends RealmObject {
         this.environment = environment;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
     public GatewayModel getGateway() {
         return gateway;
     }
@@ -201,51 +150,43 @@ public class DeviceModel extends RealmObject {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getRequest() {
+        return request;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setRequest(String request) {
+        this.request = request;
     }
 
-    public String getCommand() {
-        return command;
+    public String getResponse() {
+        return response;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
+    public void setResponse(String response) {
+        this.response = response;
     }
 
-    public Boolean getVerifyStatusOnLoad() {
-        return verifyStatusOnLoad;
+    public String getPositiveMessage() {
+        return positiveMessage;
     }
 
-    public void setVerifyStatusOnLoad(Boolean verifyStatusOnLoad) {
-        this.verifyStatusOnLoad = verifyStatusOnLoad;
+    public void setPositiveMessage(String positiveMessage) {
+        this.positiveMessage = positiveMessage;
     }
 
-    public String getStatus() {
-        return status;
+    public String getNegativeMessage() {
+        return negativeMessage;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNegativeMessage(String negativeMessage) {
+        this.negativeMessage = negativeMessage;
     }
 
-    public String getMessagePositiveStatus() {
-        return messagePositiveStatus;
+    public boolean isRunOnLoad() {
+        return runOnLoad;
     }
 
-    public void setMessagePositiveStatus(String messagePositiveStatus) {
-        this.messagePositiveStatus = messagePositiveStatus;
-    }
-
-    public String getMessageNegativeStatus() {
-        return messageNegativeStatus;
-    }
-
-    public void setMessageNegativeStatus(String messageNegativeStatus) {
-        this.messageNegativeStatus = messageNegativeStatus;
+    public void setRunOnLoad(boolean runOnLoad) {
+        this.runOnLoad = runOnLoad;
     }
 }

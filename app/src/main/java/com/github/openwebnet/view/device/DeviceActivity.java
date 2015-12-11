@@ -18,5 +18,27 @@ public class DeviceActivity extends AppCompatActivity {
 
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
+
+        /*
+        actionMessage: *CHI*COSA*DOVE##
+        statusMessage: *#CHI*DOVE##
+
+        Messaggi di Comando / Stato
+                *CHI*COSA*DOVE##
+        Messaggi di Richiesta Stato
+        *#CHI*DOVE##
+        Messaggi di Richiesta/Lettura/Scrittura Grandezza
+        Richiesta:
+        *#CHI*DOVE*GRANDEZZA##
+        Lettura:
+        *#CHI*DOVE*GRANDEZZA*VALORE1*...*VALOREn##
+        Scrittura:
+        *#CHI*DOVE*#GRANDEZZA*VALORE1*...*VALOREn##
+        Messaggi di Acknowledge
+        ACK:
+        *#*1##
+        NACK:
+        *#*0##
+        * */
     }
 }

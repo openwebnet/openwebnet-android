@@ -15,73 +15,41 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <!--
-    Messaggi di Comando / Stato
-    *CHI*COSA*DOVE##
-    Messaggi di Richiesta Stato
-    *#CHI*DOVE##
-    Messaggi di Richiesta/Lettura/Scrittura Grandezza
-    Richiesta:
-    *#CHI*DOVE*GRANDEZZA##
-    Lettura:
-    *#CHI*DOVE*GRANDEZZA*VALORE1*...*VALOREn##
-    Scrittura:
-    *#CHI*DOVE*#GRANDEZZA*VALORE1*...*VALOREn##
-    Messaggi di Acknowledge
-    ACK:
-    *#*1##
-    NACK:
-    *#*0##
-    -->
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/message.linearLayout"
+        android:elevation="6dp">
 
         <com.github.openwebnet.view.device.TextViewFontAwesome
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/message.textViewFontAwesome"
             android:text="@string/fa_asterisk"/>
 
         <EditText
             android:id="@+id/editTextDeviceWho"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"/>
+            style="@style/message.editText"
+            android:hint="@string/device_who"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"/>
+        <com.github.openwebnet.view.device.TextViewFontAwesome
+            style="@style/message.textViewFontAwesome"
+            android:text="@string/fa_asterisk"/>
 
         <EditText
             android:id="@+id/editTextDeviceWhat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"/>
+            style="@style/message.editText"
+            android:hint="@string/device_what"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"/>
+        <com.github.openwebnet.view.device.TextViewFontAwesome
+            style="@style/message.textViewFontAwesome"
+            android:text="@string/fa_asterisk"/>
 
         <EditText
             android:id="@+id/editTextDeviceWhere"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number"/>
+            style="@style/message.editText"
+            android:hint="@string/device_where"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"/>
+        <com.github.openwebnet.view.device.TextViewFontAwesome
+            style="@style/message.textViewFontAwesome"
+            android:text="@string/fa_hashtag_double"/>
+
     </LinearLayout>
 
 </LinearLayout>
