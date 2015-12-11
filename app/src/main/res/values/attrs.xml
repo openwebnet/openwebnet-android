@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextViewCustom">
+        <attr name="font"/>
+    </declare-styleable>
+    <declare-styleable name="EditTextCustom">
+        <attr name="font"/>
+    </declare-styleable>
+
+    <attr name="font" format="enum">
+        <enum name="awesome" value="0"/>
+        <enum name="daggersquare" value="1"/>
+    </attr>
+</resources>

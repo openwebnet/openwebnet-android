@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:typeface="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Spinner
-        android:id="@+id/spinner_environment"
+        android:id="@+id/spinnerDeviceEnvironment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <Spinner
-        android:id="@+id/spinner_gateway"
+        android:id="@+id/spinnerDeviceGateway"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -19,36 +20,21 @@
         style="@style/message.linearLayout"
         android:elevation="6dp">
 
-        <com.github.openwebnet.view.device.TextViewFontAwesome
+        <com.github.openwebnet.view.custom.TextViewCustom
             style="@style/message.textViewFontAwesome"
-            android:text="@string/fa_asterisk"/>
+            android:text="*1*1*"
+            typeface:font="daggersquare"/>
 
-        <EditText
-            android:id="@+id/editTextDeviceWho"
-            style="@style/message.editText"
-            android:hint="@string/device_who"/>
-
-        <com.github.openwebnet.view.device.TextViewFontAwesome
-            style="@style/message.textViewFontAwesome"
-            android:text="@string/fa_asterisk"/>
-
-        <EditText
-            android:id="@+id/editTextDeviceWhat"
-            style="@style/message.editText"
-            android:hint="@string/device_what"/>
-
-        <com.github.openwebnet.view.device.TextViewFontAwesome
-            style="@style/message.textViewFontAwesome"
-            android:text="@string/fa_asterisk"/>
-
-        <EditText
+        <com.github.openwebnet.view.custom.EditTextCustom
             android:id="@+id/editTextDeviceWhere"
             style="@style/message.editText"
-            android:hint="@string/device_where"/>
+            android:hint="@string/device_where"
+            typeface:font="daggersquare"/>
 
-        <com.github.openwebnet.view.device.TextViewFontAwesome
+        <com.github.openwebnet.view.custom.TextViewCustom
             style="@style/message.textViewFontAwesome"
-            android:text="@string/fa_hashtag_double"/>
+            android:text="##"
+            typeface:font="daggersquare"/>
 
     </LinearLayout>
 

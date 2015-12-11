@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
+    // TODO
     @OnClick(R.id.floatingActionButtonAddRaw)
     public void onClickFloatingActionButtonAddRaw(FloatingActionButton fab) {
         fab.setOnClickListener(view -> {
