@@ -1,32 +1,15 @@
 package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.SparseArray;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.model.EnvironmentModel;
-import com.github.openwebnet.service.DomoticService;
-import com.google.common.collect.Lists;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
 
 // TODO
@@ -60,6 +43,8 @@ public class DeviceActivity extends AbstractDeviceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
@@ -67,5 +52,9 @@ public class DeviceActivity extends AbstractDeviceActivity {
         initSpinnerGateway();
     }
 
-
+    @Override
+    protected void onMenuSave() {
+        log.debug("environment: {}", getSelectedEnvironment());
+        log.debug("gateway: {}", getSelectedGateway());
+    }
 }

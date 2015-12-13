@@ -2,6 +2,8 @@ package com.github.openwebnet.view.device;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -18,7 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
-public class AbstractDeviceActivity extends AppCompatActivity {
+public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     @Bind(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
@@ -31,6 +33,8 @@ public class AbstractDeviceActivity extends AppCompatActivity {
 
     private SparseArray<EnvironmentModel> environmentArray;
     private SparseArray<GatewayModel> gatewayArray;
+
+    protected abstract void onMenuSave();
 
     protected void initSpinnerEnvironment() {
         domoticService.findAllEnvironment().subscribe(environments -> {
@@ -77,6 +81,23 @@ public class AbstractDeviceActivity extends AppCompatActivity {
 
     protected GatewayModel getSelectedGateway() {
         return gatewayArray.get(spinnerDeviceGateway.getSelectedItemPosition());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_device_save:
+                onMenuSave();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_device, menu);
+        return true;
     }
 
 }
