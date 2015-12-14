@@ -4,9 +4,10 @@ import com.github.openwebnet.model.RealmModel;
 
 import java.util.List;
 
+import io.realm.RealmObject;
 import rx.Observable;
 
-public interface CommonRealmRepository<M extends RealmModel> {
+public interface CommonRealmRepository<M extends RealmObject & RealmModel> {
 
     Observable<String> add(M model);
 

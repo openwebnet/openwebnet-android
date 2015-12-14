@@ -8,7 +8,7 @@ import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
-public class LightModel extends RealmModel {
+public class LightModel extends RealmObject implements RealmModel {
 
     @PrimaryKey
     private String uuid;

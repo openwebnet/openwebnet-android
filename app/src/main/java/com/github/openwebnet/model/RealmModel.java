@@ -1,9 +1,13 @@
 package com.github.openwebnet.model;
 
-import io.realm.RealmObject;
+/**
+ * From https://realm.io/docs/java/latest
+ *
+ * It is currently not possible to extend anything else
+ * than RealmObject or to override methods.
+ */
+public interface RealmModel {
 
-public abstract class RealmModel extends RealmObject {
-
-    public abstract String getUuid();
+    String getUuid();
 
 }

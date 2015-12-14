@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rx.Observable;
 
-public abstract class CommonRealmRepositoryImpl<M extends RealmModel> implements CommonRealmRepository<M> {
+public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmModel>
+        implements CommonRealmRepository<M> {
 
     private static final Logger log = LoggerFactory.getLogger(CommonRealmRepositoryImpl.class);
 

@@ -8,7 +8,7 @@ import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
-public class DeviceModel extends RealmModel {
+public class DeviceModel extends RealmObject implements RealmModel {
 
     @PrimaryKey
     private String uuid;
