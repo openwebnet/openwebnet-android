@@ -34,7 +34,8 @@
     <string name="button_add">Add</string>
     <string name="label_none">None</string>
 
-    <string name="fab_label_add_raw">Add device</string>
+    <string name="fab_label_add_device">Add device</string>
+    <string name="fab_label_add_light">Add light</string>
 
     <string name="fa_asterisk">&#xf069;</string>
     <string name="fa_hashtag">&#xf292;</string>

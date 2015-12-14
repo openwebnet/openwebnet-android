@@ -109,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO
-    @OnClick(R.id.floatingActionButtonAddRaw)
-    public void onClickFloatingActionButtonAddRaw(FloatingActionButton fab) {
+    @OnClick(R.id.floatingActionButtonAddLight)
+    public void onClickFloatingActionButtonAddLight(FloatingActionButton fab) {
         fab.setOnClickListener(view -> {
             //showSnackbar("clicked");
             startActivity(new Intent(this, DeviceActivity.class));
