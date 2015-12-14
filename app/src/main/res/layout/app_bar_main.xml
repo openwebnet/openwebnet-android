@@ -34,24 +34,18 @@
         fab:fab_addButtonColorNormal="@color/accent"
         fab:fab_addButtonColorPressed="@color/primary"
         fab:fab_addButtonPlusIconColor="@android:color/white"
-        fab:fab_labelStyle="@style/fab_menu_labels_style">
+        fab:fab_labelStyle="@style/fab_menu.labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/primary"
+            style="@style/fab_menu.button_mini"
             fab:fab_icon="@drawable/lightbulb"
             fab:fab_size="mini"
             fab:fab_title="@string/fab_label_add_light"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddDevice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/primary"
+            style="@style/fab_menu.button_mini"
             fab:fab_icon="@drawable/remote"
             fab:fab_size="mini"
             fab:fab_title="@string/fab_label_add_device"/>

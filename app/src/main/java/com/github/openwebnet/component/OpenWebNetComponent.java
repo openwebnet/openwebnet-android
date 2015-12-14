@@ -8,6 +8,7 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationItemListener;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
 
@@ -22,6 +23,7 @@ public interface OpenWebNetComponent {
     void inject(OpenWebNetApplication application);
     void inject(MainActivity activity);
     void inject(DeviceActivity activity);
+    void inject(LightActivity activity);
 
     // dagger needs concrete class
     void inject(PreferenceServiceImpl preferenceService);

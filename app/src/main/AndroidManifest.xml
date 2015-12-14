@@ -26,7 +26,15 @@
             android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.MainActivity"/>
+                android:value="com.github.openwebnet.view.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".view.device.LightActivity"
+            android:label="@string/activity_light"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity"/>
         </activity>
     </application>
 

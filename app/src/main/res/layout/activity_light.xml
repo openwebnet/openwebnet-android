@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/common_device"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        style="@style/message.linearLayout"
+        android:elevation="4dp">
+
+        <com.github.openwebnet.view.custom.TextViewCustom
+            style="@style/message.textViewFontAwesome"
+            android:text="*1*1*"
+            typeface:font="daggersquare"/>
+
+        <com.github.openwebnet.view.custom.EditTextCustom
+            android:id="@+id/editTextDeviceWhere"
+            style="@style/message.editText"
+            android:hint="@string/device_where"
+            typeface:font="daggersquare"/>
+
+        <com.github.openwebnet.view.custom.TextViewCustom
+            style="@style/message.textViewFontAwesome"
+            android:text="##"
+            typeface:font="daggersquare"/>
+
+    </LinearLayout>
+
+</LinearLayout>

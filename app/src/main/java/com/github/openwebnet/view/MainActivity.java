@@ -17,6 +17,7 @@ import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.LightActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
-    // TODO
+    @OnClick(R.id.floatingActionButtonAddDevice)
+    public void onClickAddDevice(FloatingActionButton fab) {
+        startActivity(new Intent(this, DeviceActivity.class));
+    }
+
     @OnClick(R.id.floatingActionButtonAddLight)
-    public void onClickFloatingActionButtonAddLight(FloatingActionButton fab) {
-        fab.setOnClickListener(view -> {
-            //showSnackbar("clicked");
-            startActivity(new Intent(this, DeviceActivity.class));
-        });
+    public void onClickAddLight(FloatingActionButton fab) {
+        startActivity(new Intent(this, LightActivity.class));
     }
 
     @Override

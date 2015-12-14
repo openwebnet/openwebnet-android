@@ -3,6 +3,7 @@
     <string name="app_version">version 0.1</string>
     <string name="app_github">github.com/openwebnet/openwebnet-android</string>
     <string name="activity_device">Device</string>
+    <string name="activity_light">Light</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
