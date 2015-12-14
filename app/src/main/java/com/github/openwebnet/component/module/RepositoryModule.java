@@ -3,8 +3,11 @@ package com.github.openwebnet.component.module;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
+import com.github.openwebnet.repository.LightRepository;
+import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
+import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 
 import javax.inject.Singleton;
 
@@ -22,14 +25,20 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    DeviceRepository provideDevice() {
-        throw new UnsupportedOperationException("not implemented yet");
+    GatewayRepository provideGateway() {
+        return new GatewayRepositoryImpl();
     }
 
     @Provides
     @Singleton
-    GatewayRepository provideGateway() {
-        return new GatewayRepositoryImpl();
+    LightRepository provideLight() {
+        return new LightRepositoryImpl();
+    }
+
+    @Provides
+    @Singleton
+    DeviceRepository provideDevice() {
+        return new DeviceRepositoryImpl();
     }
 
 }

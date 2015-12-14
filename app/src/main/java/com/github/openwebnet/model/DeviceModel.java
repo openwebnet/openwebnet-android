@@ -8,7 +8,7 @@ import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
-public class DeviceModel extends RealmObject {
+public class DeviceModel extends RealmModel {
 
     @PrimaryKey
     private String uuid;
@@ -31,7 +31,10 @@ public class DeviceModel extends RealmObject {
 
     private boolean runOnLoad;
 
-    public DeviceModel() {}
+    private boolean favourite;
+
+    public DeviceModel() {
+    }
 
     public DeviceModel(Builder builder) {
         this.uuid = builder.uuid;
@@ -43,6 +46,7 @@ public class DeviceModel extends RealmObject {
         this.positiveMessage = builder.positiveMessage;
         this.negativeMessage = builder.negativeMessage;
         this.runOnLoad = builder.runOnLoad;
+        this.favourite = builder.favourite;
     }
 
     /**
@@ -63,6 +67,7 @@ public class DeviceModel extends RealmObject {
         private String positiveMessage;
         private String negativeMessage;
         private boolean runOnLoad;
+        private boolean favourite;
 
         public Builder() {
             this.uuid = UUID.randomUUID().toString();
@@ -108,6 +113,11 @@ public class DeviceModel extends RealmObject {
             return this;
         }
 
+        public Builder favourite(boolean favourite) {
+            this.favourite = favourite;
+            return this;
+        }
+
         public DeviceModel build() {
             requireNonNull(environment, "environment is null");
             requireNonNull(gateway, "gateway is null");
@@ -118,6 +128,11 @@ public class DeviceModel extends RealmObject {
         }
     }
 
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -188,5 +203,13 @@ public class DeviceModel extends RealmObject {
 
     public void setRunOnLoad(boolean runOnLoad) {
         this.runOnLoad = runOnLoad;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }

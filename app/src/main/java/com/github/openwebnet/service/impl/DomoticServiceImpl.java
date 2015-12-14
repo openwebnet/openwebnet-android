@@ -4,10 +4,14 @@ import android.app.Application;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
+import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
+import com.github.openwebnet.repository.LightRepository;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.PreferenceService;
 
@@ -37,14 +41,15 @@ public class DomoticServiceImpl implements DomoticService {
         this.application = application;
     }
 
-    @Inject
-    PreferenceService preferenceService;
+    @Inject PreferenceService preferenceService;
 
-    @Inject
-    EnvironmentRepository environmentRepository;
+    @Inject EnvironmentRepository environmentRepository;
 
-    @Inject
-    GatewayRepository gatewayRepository;
+    @Inject GatewayRepository gatewayRepository;
+
+    @Inject LightRepository lightRepository;
+
+    @Inject DeviceRepository deviceRepository;
 
     @Override
     public void initRepository() {
@@ -68,9 +73,7 @@ public class DomoticServiceImpl implements DomoticService {
                 environment.setName(name);
                 return environment;
             })
-            .flatMap(environment -> {
-                return environmentRepository.add(environment);
-            })
+            .flatMap(environment -> environmentRepository.add(environment))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
     }
@@ -90,6 +93,30 @@ public class DomoticServiceImpl implements DomoticService {
     @Override
     public Observable<List<GatewayModel>> findAllGateway() {
         return gatewayRepository.findAll();
+    }
+
+    @Override
+    public Observable<String> addLight(LightModel.Builder light) {
+        return lightRepository.add(light.build())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<LightModel>> findAllLight() {
+        return lightRepository.findAll();
+    }
+
+    @Override
+    public Observable<String> addDevice(DeviceModel.Builder device) {
+        return deviceRepository.add(device.build())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<List<DeviceModel>> findAllDevice() {
+        return deviceRepository.findAll();
     }
 
     private String getString(int id) {

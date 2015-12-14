@@ -8,7 +8,7 @@ import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
-public class LightModel extends RealmObject {
+public class LightModel extends RealmModel {
 
     @PrimaryKey
     private String uuid;
@@ -25,6 +25,8 @@ public class LightModel extends RealmObject {
 
     private boolean dimmer;
 
+    private boolean favourite;
+
     public LightModel() {}
 
     private LightModel(Builder builder) {
@@ -34,6 +36,7 @@ public class LightModel extends RealmObject {
         this.name = builder.name;
         this.where = builder.where;
         this.dimmer = builder.dimmer;
+        this.favourite = builder.favourite;
     }
 
     public static class Builder {
@@ -44,6 +47,7 @@ public class LightModel extends RealmObject {
         private String name;
         private Integer where;
         private boolean dimmer;
+        private boolean favourite;
 
         public Builder() {
             this.uuid = UUID.randomUUID().toString();
@@ -74,6 +78,11 @@ public class LightModel extends RealmObject {
             return this;
         }
 
+        public Builder favourite(boolean favourite) {
+            this.favourite = favourite;
+            return this;
+        }
+
         public LightModel build() {
             requireNonNull(environment, "environment is null");
             requireNonNull(gateway, "gateway is null");
@@ -88,6 +97,7 @@ public class LightModel extends RealmObject {
         return new Builder();
     }
 
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -134,5 +144,13 @@ public class LightModel extends RealmObject {
 
     public void setDimmer(boolean dimmer) {
         this.dimmer = dimmer;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }

@@ -1,5 +1,7 @@
 package com.github.openwebnet.repository;
 
-public interface DeviceRepository {
+import com.github.openwebnet.model.DeviceModel;
+
+public interface DeviceRepository extends CommonRealmRepository<DeviceModel> {
 
 }
