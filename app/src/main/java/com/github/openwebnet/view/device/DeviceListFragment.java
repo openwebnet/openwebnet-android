@@ -9,14 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.service.DomoticService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +38,9 @@ public class DeviceListFragment extends Fragment {
     @Bind(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
 
+    @Inject
+    DomoticService domoticService;
+
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -41,6 +48,8 @@ public class DeviceListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.device_list_fragment, container, false);
+
+        OpenWebNetApplication.component(getContext()).inject(this);
         ButterKnife.bind(this, view);
 
         //mRecyclerView.setHasFixedSize(true);
@@ -51,6 +60,10 @@ public class DeviceListFragment extends Fragment {
 
         // TODO
         Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
+
+//        domoticService.findLightByEnvironment(environment)
+//            .subscribe(lightModels -> );
+
         log.debug("environment {}", environment);
 
         List<DeviceModel> devices = new ArrayList<>();

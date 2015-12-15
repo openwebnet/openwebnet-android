@@ -115,7 +115,6 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         return isValidRequired((TextView) spinnerDeviceGateway.getSelectedView());
     }
 
-    // TODO
     protected boolean isValidRequired(TextView view) {
         if (view != null && (TextUtils.isEmpty(view.getText()) || view.getText().equals(labelNone))) {
             view.setError(validationRequired);

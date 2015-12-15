@@ -10,6 +10,8 @@ import static java.util.Objects.requireNonNull;
 
 public class LightModel extends RealmObject implements RealmModel {
 
+    public static final String FIELD_ENVIRONMENT_ID = "environmentId";
+
     @PrimaryKey
     private String uuid;
 

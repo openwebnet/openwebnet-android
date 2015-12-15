@@ -3,8 +3,10 @@ package com.github.openwebnet.component.module;
 import android.app.Application;
 
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.service.OpenWebNetService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.impl.DomoticServiceImpl;
+import com.github.openwebnet.service.impl.OpenWebNetServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import javax.inject.Singleton;
@@ -37,6 +39,12 @@ public class OpenWebNetModule {
     @Singleton
     DomoticService provideDomoticService(Application application) {
         return new DomoticServiceImpl(application);
+    }
+
+    @Provides
+    @Singleton
+    OpenWebNetService provideOpenWebNetService() {
+        return new OpenWebNetServiceImpl();
     }
 
 }

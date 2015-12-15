@@ -29,4 +29,6 @@ public interface DomoticService {
 
     Observable<List<DeviceModel>> findAllDevice();
 
+    Observable<List<LightModel>> findLightByEnvironment(Integer id);
+
 }

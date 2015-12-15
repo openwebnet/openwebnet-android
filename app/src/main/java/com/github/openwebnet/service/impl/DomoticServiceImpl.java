@@ -119,6 +119,11 @@ public class DomoticServiceImpl implements DomoticService {
         return deviceRepository.findAll();
     }
 
+    @Override
+    public Observable<List<LightModel>> findLightByEnvironment(Integer id) {
+        return lightRepository.findByEnvironment(id);
+    }
+
     private String getString(int id) {
         return application.getResources().getString(id);
     }
