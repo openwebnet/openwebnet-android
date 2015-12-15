@@ -1,23 +1,37 @@
 package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.service.DomoticService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class LightActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(LightActivity.class);
+
+    @Inject
+    DomoticService domoticService;
+
+    @Bind(R.id.editTextLightName)
+    EditText editTextLightName;
+
+    @Bind(R.id.editTextLightWhere)
+    EditText editTextLightWhere;
+
+    @Bind(R.id.checkBoxLightDimmer)
+    CheckBox checkBoxLightDimmer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +48,30 @@ public class LightActivity extends AbstractDeviceActivity {
 
     @Override
     protected void onMenuSave() {
+        log.debug("name: {}", editTextLightName.getText());
+        log.debug("where: {}", editTextLightWhere.getText());
+        log.debug("dimmer: {}", checkBoxLightDimmer.isChecked());
         log.debug("environment: {}", getSelectedEnvironment());
         log.debug("gateway: {}", getSelectedGateway());
+        log.debug("favourite: {}", isFavourite());
+
+        if (isValidLight()) {
+            domoticService.addLight(lightBuilder()).subscribe(uuid -> finish());
+        }
+    }
+
+    private boolean isValidLight() {
+        return isValidRequired(editTextLightName) && isValidRequired(editTextLightWhere) &&
+            isValidDeviceEnvironment() && isValidDeviceGateway();
+    }
+
+    private LightModel.Builder lightBuilder() {
+        return LightModel.newBuilder()
+            .name(editTextLightName.getText().toString())
+            .where(Integer.parseInt(editTextLightWhere.getText().toString()))
+            .dimmer(checkBoxLightDimmer.isChecked())
+            .environment(getSelectedEnvironment().getId())
+            .gateway(getSelectedGateway().getUuid())
+            .favourite(isFavourite());
     }
 }

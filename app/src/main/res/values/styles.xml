@@ -80,7 +80,7 @@
     <style name="message.textViewFontAwesome">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
     <style name="message.editText">
@@ -88,9 +88,11 @@
         <item name="android:layout_height">wrap_content</item>
 
         <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
         <item name="android:maxLength">4</item>
-        <item name="android:ems">10</item>
+        <item name="android:maxEms">4</item>
         <item name="android:inputType">number</item>
+        <item name="android:textSize">32sp</item>
     </style>
 
 </resources>

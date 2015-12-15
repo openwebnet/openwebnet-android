@@ -13,9 +13,9 @@ public class LightModel extends RealmObject implements RealmModel {
     @PrimaryKey
     private String uuid;
 
-    private EnvironmentModel environment;
+    private Integer environmentId;
 
-    private GatewayModel gateway;
+    private String gatewayUuid;
 
     @Required
     private String name;
@@ -31,8 +31,8 @@ public class LightModel extends RealmObject implements RealmModel {
 
     private LightModel(Builder builder) {
         this.uuid = builder.uuid;
-        this.environment = builder.environment;
-        this.gateway = builder.gateway;
+        this.environmentId = builder.environmentId;
+        this.gatewayUuid = builder.gatewayUuid;
         this.name = builder.name;
         this.where = builder.where;
         this.dimmer = builder.dimmer;
@@ -42,8 +42,8 @@ public class LightModel extends RealmObject implements RealmModel {
     public static class Builder {
 
         private final String uuid;
-        private EnvironmentModel environment;
-        private GatewayModel gateway;
+        private Integer environmentId;
+        private String gatewayUuid;
         private String name;
         private Integer where;
         private boolean dimmer;
@@ -53,13 +53,13 @@ public class LightModel extends RealmObject implements RealmModel {
             this.uuid = UUID.randomUUID().toString();
         }
 
-        public Builder environment(EnvironmentModel environment) {
-            this.environment = environment;
+        public Builder environment(Integer environmentId) {
+            this.environmentId = environmentId;
             return this;
         }
 
-        public Builder gateway(GatewayModel gateway) {
-            this.gateway = gateway;
+        public Builder gateway(String gatewayUuid) {
+            this.gatewayUuid = gatewayUuid;
             return this;
         }
 
@@ -84,8 +84,8 @@ public class LightModel extends RealmObject implements RealmModel {
         }
 
         public LightModel build() {
-            requireNonNull(environment, "environment is null");
-            requireNonNull(gateway, "gateway is null");
+            requireNonNull(environmentId, "environmentId is null");
+            requireNonNull(gatewayUuid, "gatewayUuid is null");
             requireNonNull(name, "name is null");
             requireNonNull(where, "where is null");
 
@@ -106,20 +106,20 @@ public class LightModel extends RealmObject implements RealmModel {
         this.uuid = uuid;
     }
 
-    public EnvironmentModel getEnvironment() {
-        return environment;
+    public Integer getEnvironmentId() {
+        return environmentId;
     }
 
-    public void setEnvironment(EnvironmentModel environment) {
-        this.environment = environment;
+    public void setEnvironmentId(Integer environmentId) {
+        this.environmentId = environmentId;
     }
 
-    public GatewayModel getGateway() {
-        return gateway;
+    public String getGatewayUuid() {
+        return gatewayUuid;
     }
 
-    public void setGateway(GatewayModel gateway) {
-        this.gateway = gateway;
+    public void setGatewayUuid(String gatewayUuid) {
+        this.gatewayUuid = gatewayUuid;
     }
 
     public String getName() {

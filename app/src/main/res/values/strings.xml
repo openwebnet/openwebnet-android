@@ -34,6 +34,7 @@
 
     <string name="button_add">Add</string>
     <string name="label_none">None</string>
+    <string name="label_name">Name</string>
 
     <string name="fab_label_add_device">Add device</string>
     <string name="fab_label_add_light">Add light</string>
@@ -45,5 +46,9 @@
     <string name="device_who">who</string>
     <string name="device_what">what</string>
     <string name="device_where">where</string>
+    <string name="device_favourite">Favourite</string>
+    <string name="light_dimmer">Dimer</string>
+    <string name="light_prefix">*1*1*</string>
+    <string name="light_suffix">##</string>
 
 </resources>

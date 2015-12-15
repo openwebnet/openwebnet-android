@@ -1,11 +1,14 @@
 package com.github.openwebnet.view.device;
 
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -19,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindString;
 
 public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
@@ -28,12 +32,24 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     @Bind(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
+    @Bind(R.id.checkBoxDeviceFavourite)
+    CheckBox checkBoxDeviceFavourite;
+
+    @BindString(R.string.validation_required)
+    String validationRequired;
+
+    @BindString(R.string.label_none)
+    String labelNone;
+
     @Inject
     DomoticService domoticService;
 
     private SparseArray<EnvironmentModel> environmentArray;
     private SparseArray<GatewayModel> gatewayArray;
 
+    /**
+     *
+     */
     protected abstract void onMenuSave();
 
     protected void initSpinnerEnvironment() {
@@ -43,6 +59,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
             List<String> environmentValues = Stream.of(environments)
                 .map(environment -> environment.getName()).collect(Collectors.toList());
 
+            initEmptyList(environmentValues);
             initSpinnerAdapter(spinnerDeviceEnvironment, environmentValues);
         });
     }
@@ -55,6 +72,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
                 .map(gateway -> String.format("%s:%d", gateway.getHost(),
                     gateway.getPort())).collect(Collectors.toList());
 
+            initEmptyList(gatewayValues);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
         });
     }
@@ -65,6 +83,12 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
             array.put(index, items.get(index));
         }
         return array;
+    }
+
+    private void initEmptyList(List<String> values) {
+        if (values.isEmpty()) {
+            values.add(labelNone);
+        }
     }
 
     private void initSpinnerAdapter(Spinner spinner, List<String> values) {
@@ -83,6 +107,27 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         return gatewayArray.get(spinnerDeviceGateway.getSelectedItemPosition());
     }
 
+    protected boolean isValidDeviceEnvironment() {
+        return isValidRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
+    }
+
+    protected boolean isValidDeviceGateway() {
+        return isValidRequired((TextView) spinnerDeviceGateway.getSelectedView());
+    }
+
+    // TODO
+    protected boolean isValidRequired(TextView view) {
+        if (view != null && (TextUtils.isEmpty(view.getText()) || view.getText().equals(labelNone))) {
+            view.setError(validationRequired);
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean isFavourite() {
+        return checkBoxDeviceFavourite.isChecked();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -96,7 +141,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_device, menu);
+        getMenuInflater().inflate(R.menu.menu_device_save, menu);
         return true;
     }
 
