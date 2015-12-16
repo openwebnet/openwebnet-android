@@ -1,5 +1,6 @@
 package com.github.openwebnet.model;
 
+import static java.util.Objects.requireNonNull;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -18,6 +19,9 @@ public class GatewayModel extends RealmObject implements RealmModel {
     private Integer port;
 
     public static GatewayModel newGateway(String host, Integer port) {
+        requireNonNull(host, "host is null");
+        requireNonNull(port, "port is null");
+
         GatewayModel gateway = new GatewayModel();
         gateway.setUuid(UUID.randomUUID().toString());
         gateway.setHost(host);
