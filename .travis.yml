@@ -16,6 +16,7 @@ before_install:
   - export JAVA_HOME=$JAVA8_HOME
 
 before_script:
+  - pip install --user codecov
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
@@ -23,3 +24,6 @@ before_script:
 
 script:
   - ./gradlew build connectedCheck
+
+after_success:
+  - codecov
