@@ -23,6 +23,7 @@ public class GatewayModelTest {
         Integer GATEWAY_PORT = 123;
 
         GatewayModel gateway = GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT);
+
         assertNotNull("invalid uuid", gateway.getUuid());
         assertEquals("invalid host", GATEWAY_HOST, gateway.getHost());
         assertEquals("invalid port", GATEWAY_PORT, gateway.getPort());
