@@ -76,7 +76,7 @@ public class DeviceListFragment extends Fragment {
         devices.add(DeviceModel.newBuilder().environment(105).gateway("uuid5").name("name5").raw("command5").build());
         */
 
-        mAdapter = new DeviceListAdapter(devices);
+        //mAdapter = new DeviceListAdapter(devices);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
