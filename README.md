@@ -10,7 +10,7 @@ Thanks to:
 
 * [Dagger 2](http://google.github.io/dagger)
 * [Butter Knife](http://jakewharton.github.io/butterknife)
-* [Lombok](https://projectlombok.org)
+* ~~[Lombok](https://projectlombok.org)~~
 * [Retrolambda](https://github.com/orfjackal/retrolambda)
 * [Lightweight-Stream-API](https://github.com/aNNiMON/Lightweight-Stream-API)
 * [RxJava](https://github.com/ReactiveX/RxJava)

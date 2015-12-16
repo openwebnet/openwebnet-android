@@ -10,14 +10,12 @@ import com.github.openwebnet.component.module.RepositoryModule;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import lombok.Getter;
 
 /**
  * @author niqdev
  */
 public class OpenWebNetApplication extends Application {
 
-    @Getter
     private OpenWebNetComponent openWebNetComponent;
 
     public static OpenWebNetComponent component(Context context) {
@@ -39,4 +37,7 @@ public class OpenWebNetApplication extends Application {
         OpenWebNetApplication.component(this).inject(this);
     }
 
+    public OpenWebNetComponent getOpenWebNetComponent() {
+        return openWebNetComponent;
+    }
 }
