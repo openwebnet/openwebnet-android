@@ -13,7 +13,7 @@ android:
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
-  - export JAVA_HOME=$JAVA7_HOME
+  - export JAVA_HOME=$JAVA8_HOME
 
 before_script:
   - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
