@@ -40,6 +40,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.robolectric.Shadows.shadowOf;
 
+//https://bitbucket.org/hvisser/android-apt/issues/22/dagger-robolectric-gradle-apt-source-not
 // https://stackoverflow.com/questions/26939340/how-do-you-override-a-module-dependency-in-a-unit-test-with-dagger-2-0?lq=1
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
@@ -55,10 +56,7 @@ public class MainActivityTest {
 
     @Before
     public void initialize() {
-        
-
         mockRealm = MockSupport.mockRealm();
-        domoticServiceMock = mock(DomoticService.class);
     }
 
     @Test
@@ -68,70 +66,5 @@ public class MainActivityTest {
 
         Intent expectedIntent = new Intent(activity, MainActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
-
-    @Component(modules = {RepositoryModuleTest.class})
-    interface OpenWebNetComponentTest extends OpenWebNetComponent {
-
-    }
-
-    @Module
-    static class RepositoryModuleTest {
-
-        @Provides
-        @Singleton
-        DomoticService provideDomoticService(Application application) {
-            return new DomoticService() {
-                @Override
-                public void initRepository() {
-                    // TODO
-                }
-
-                @Override
-                public Observable<Integer> addEnvironment(String name) {
-                    return null;
-                }
-
-                @Override
-                public Observable<List<EnvironmentModel>> findAllEnvironment() {
-                    return null;
-                }
-
-                @Override
-                public Observable<String> addGateway(String host, Integer port) {
-                    return null;
-                }
-
-                @Override
-                public Observable<List<GatewayModel>> findAllGateway() {
-                    return null;
-                }
-
-                @Override
-                public Observable<String> addLight(LightModel.Builder light) {
-                    return null;
-                }
-
-                @Override
-                public Observable<List<LightModel>> findAllLight() {
-                    return null;
-                }
-
-                @Override
-                public Observable<String> addDevice(DeviceModel.Builder device) {
-                    return null;
-                }
-
-                @Override
-                public Observable<List<DeviceModel>> findAllDevice() {
-                    return null;
-                }
-
-                @Override
-                public Observable<List<LightModel>> findLightByEnvironment(Integer id) {
-                    return null;
-                }
-            };
-        }
     }
 }

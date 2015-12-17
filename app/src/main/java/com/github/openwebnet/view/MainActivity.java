@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        OpenWebNetApplication.component(this).inject(this);
+        ((OpenWebNetApplication) getApplication()).getOpenWebNetComponent().inject(this);
+
+        //OpenWebNetApplication.component(this).inject(this);
         ButterKnife.bind(this);
 
         domoticService.initRepository();
