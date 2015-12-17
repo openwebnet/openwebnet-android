@@ -2,6 +2,7 @@ package com.github.openwebnet;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 
 import com.github.openwebnet.component.DaggerOpenWebNetComponent;
 import com.github.openwebnet.component.OpenWebNetComponent;
@@ -39,5 +40,10 @@ public class OpenWebNetApplication extends Application {
 
     public OpenWebNetComponent getOpenWebNetComponent() {
         return openWebNetComponent;
+    }
+
+    @VisibleForTesting
+    public void setOpenWebNetComponent(OpenWebNetComponent openWebNetComponent) {
+        this.openWebNetComponent = openWebNetComponent;
     }
 }

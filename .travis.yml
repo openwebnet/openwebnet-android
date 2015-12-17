@@ -25,5 +25,6 @@ before_script:
 script:
   - ./gradlew build connectedCheck
 
+# TODO
 after_success:
   - bash <(curl -s https://codecov.io/bash)
