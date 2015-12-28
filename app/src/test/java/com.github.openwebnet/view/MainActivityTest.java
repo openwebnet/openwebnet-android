@@ -1,8 +1,8 @@
 package com.github.openwebnet.view;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponentTest;
@@ -60,7 +60,7 @@ public class MainActivityTest {
     }
 
     private void setupActivity() {
-       activity = Robolectric.setupActivity(MainActivity.class);
+        activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);
     }
 

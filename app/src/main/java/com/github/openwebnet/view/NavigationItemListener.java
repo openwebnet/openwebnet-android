@@ -50,7 +50,6 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     private final FragmentActivity activity;
     private final DrawerLayout drawerLayout;
 
-    @Inject
     public NavigationItemListener(FragmentActivity activity, DrawerLayout drawerLayout) {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
