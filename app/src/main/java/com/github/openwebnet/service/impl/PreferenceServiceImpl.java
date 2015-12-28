@@ -1,10 +1,9 @@
 package com.github.openwebnet.service.impl;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.github.openwebnet.OpenWebNetApplication;
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.PreferenceService;
 
 import javax.inject.Inject;
@@ -17,9 +16,11 @@ public class PreferenceServiceImpl implements PreferenceService {
     private final SharedPreferences sharedPreferences;
 
     @Inject
-    public PreferenceServiceImpl(Application application) {
-        OpenWebNetApplication.component(application).inject(this);
-        this.sharedPreferences = application.getSharedPreferences(PREFERENCE_MAIN, Context.MODE_PRIVATE);
+    Context context;
+
+    public PreferenceServiceImpl() {
+        Injector.getApplicationComponent().inject(this);
+        this.sharedPreferences = context.getSharedPreferences(PREFERENCE_MAIN, Context.MODE_PRIVATE);
     }
 
     @Override

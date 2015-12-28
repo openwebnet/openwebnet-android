@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.service.GatewayService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
     private static final Logger log = LoggerFactory.getLogger(GatewayEditTextPreference.class);
 
     @Inject
-    DomoticService domoticService;
+    GatewayService gatewayService;
 
     private View mDialogView;
     private EditText mEditTextHost;
@@ -34,7 +34,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
 
     public GatewayEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        OpenWebNetApplication.component(context).inject(this);
+        Injector.getApplicationComponent().inject(this);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
     private void addGateway(Dialog dialog) {
         String host = mEditTextHost.getText().toString();
         Integer port = Integer.parseInt(mEditTextPort.getText().toString());
-        domoticService.addGateway(host, port)
+        gatewayService.addGateway(host, port)
             .subscribe(uuid -> {
                 log.debug("NEW gateway: {}", uuid);
                 dialog.dismiss();

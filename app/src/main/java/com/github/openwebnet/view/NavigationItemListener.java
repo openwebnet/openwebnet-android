@@ -15,9 +15,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
@@ -37,7 +37,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     private static final Logger log = LoggerFactory.getLogger(NavigationItemListener.class);
 
     @Inject
-    DomoticService domoticService;
+    EnvironmentService environmentService;
 
     @Bind(R.id.floatingActionsMenuMain)
     FloatingActionsMenu floatingActionsMenuMain;
@@ -52,7 +52,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
 
     @Inject
     public NavigationItemListener(FragmentActivity activity, DrawerLayout drawerLayout) {
-        OpenWebNetApplication.component(activity).inject(this);
+        Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
 
         this.activity = activity;
@@ -127,7 +127,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     }
 
     private void addEnvironment(String name) {
-        domoticService.addEnvironment(name)
+        environmentService.addEnvironment(name)
             .subscribe(id -> {
                 // calls onPrepareOptionsMenu(): reload menu
                 activity.invalidateOptionsMenu();

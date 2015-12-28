@@ -15,7 +15,8 @@ import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.GatewayService;
 
 import java.util.List;
 
@@ -42,7 +43,10 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     String labelNone;
 
     @Inject
-    DomoticService domoticService;
+    EnvironmentService environmentService;
+
+    @Inject
+    GatewayService gatewayService;
 
     private SparseArray<EnvironmentModel> environmentArray;
     private SparseArray<GatewayModel> gatewayArray;
@@ -53,7 +57,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     protected abstract void onMenuSave();
 
     protected void initSpinnerEnvironment() {
-        domoticService.findAllEnvironment().subscribe(environments -> {
+        environmentService.findAllEnvironment().subscribe(environments -> {
             environmentArray = initSparseArray(environments);
 
             List<String> environmentValues = Stream.of(environments)
@@ -65,7 +69,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     }
 
     protected void initSpinnerGateway() {
-        domoticService.findAllGateway().subscribe(gateways -> {
+        gatewayService.findAllGateway().subscribe(gateways -> {
             gatewayArray = initSparseArray(gateways);
 
             List<String> gatewayValues = Stream.of(gateways)

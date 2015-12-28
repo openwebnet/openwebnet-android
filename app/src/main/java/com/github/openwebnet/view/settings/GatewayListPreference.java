@@ -6,8 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.annimon.stream.Stream;
-import com.github.openwebnet.OpenWebNetApplication;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.service.GatewayService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +27,11 @@ public class GatewayListPreference extends ListPreference {
     public static final String PREF_DEFAULT_GATEWAY_VALUE = "com.github.openwebnet.view.settings.DEFAULT_GATEWAY_VALUE";
 
     @Inject
-    DomoticService domoticService;
+    GatewayService gatewayService;
 
     public GatewayListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        OpenWebNetApplication.component(context).inject(this);
+        Injector.getApplicationComponent().inject(this);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class GatewayListPreference extends ListPreference {
         final List<String> entries = new ArrayList<>();
         final List<String> entryValues = new ArrayList<>();
 
-        domoticService.findAllGateway()
+        gatewayService.findAllGateway()
             .subscribe(gateways -> {
                 // split stream
                 Stream.of(gateways).forEach(gateway -> {

@@ -1,13 +1,8 @@
 package com.github.openwebnet;
 
 import android.app.Application;
-import android.content.Context;
-import android.support.annotation.VisibleForTesting;
 
-import com.github.openwebnet.component.DaggerOpenWebNetComponent;
-import com.github.openwebnet.component.OpenWebNetComponent;
-import com.github.openwebnet.component.module.OpenWebNetModule;
-import com.github.openwebnet.component.module.RepositoryModule;
+import com.github.openwebnet.component.Injector;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -17,12 +12,6 @@ import io.realm.RealmConfiguration;
  */
 public class OpenWebNetApplication extends Application {
 
-    private OpenWebNetComponent openWebNetComponent;
-
-    public static OpenWebNetComponent component(Context context) {
-        return ((OpenWebNetApplication) context.getApplicationContext()).getOpenWebNetComponent();
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,20 +19,6 @@ public class OpenWebNetApplication extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
-        openWebNetComponent = DaggerOpenWebNetComponent.builder()
-            .openWebNetModule(new OpenWebNetModule(this))
-            .repositoryModule(new RepositoryModule())
-            .build();
-
-        OpenWebNetApplication.component(this).inject(this);
-    }
-
-    public OpenWebNetComponent getOpenWebNetComponent() {
-        return openWebNetComponent;
-    }
-
-    @VisibleForTesting
-    public void setOpenWebNetComponent(OpenWebNetComponent openWebNetComponent) {
-        this.openWebNetComponent = openWebNetComponent;
+        Injector.initializeApplicationComponent(this);
     }
 }

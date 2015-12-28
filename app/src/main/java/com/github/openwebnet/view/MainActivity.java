@@ -13,9 +13,10 @@ import android.view.Menu;
 
 import com.annimon.stream.Stream;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.service.CommonService;
+import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 
@@ -45,19 +46,19 @@ public class MainActivity extends AppCompatActivity {
     String errorLoadNavigationDrawer;
 
     @Inject
-    DomoticService domoticService;
+    CommonService commonService;
+    @Inject
+    EnvironmentService environmentService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((OpenWebNetApplication) getApplication()).getOpenWebNetComponent().inject(this);
-
-        //OpenWebNetApplication.component(this).inject(this);
+        Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
-        domoticService.initRepository();
+        commonService.initRepository();
         initNavigationDrawer();
         // TODO pull to refresh
     }
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void reloadMenu() {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
-        domoticService.findAllEnvironment().subscribe(
+        environmentService.findAllEnvironment().subscribe(
             environments -> {
                 log.debug("reloadMenu: {}", environments);
                 // TODO orderBy name

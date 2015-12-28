@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
-import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.service.LightService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class LightActivity extends AbstractDeviceActivity {
     private static final Logger log = LoggerFactory.getLogger(LightActivity.class);
 
     @Inject
-    DomoticService domoticService;
+    LightService lightService;
 
     @Bind(R.id.editTextLightName)
     EditText editTextLightName;
@@ -39,7 +39,7 @@ public class LightActivity extends AbstractDeviceActivity {
         setContentView(R.layout.activity_light);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        OpenWebNetApplication.component(this).inject(this);
+        Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
         initSpinnerEnvironment();
@@ -56,7 +56,7 @@ public class LightActivity extends AbstractDeviceActivity {
         log.debug("favourite: {}", isFavourite());
 
         if (isValidLight()) {
-            domoticService.addLight(lightBuilder()).subscribe(uuid -> finish());
+            lightService.addLight(lightBuilder()).subscribe(uuid -> finish());
         }
     }
 

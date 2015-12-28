@@ -1,9 +1,14 @@
 package com.github.openwebnet.component;
 
 import com.github.openwebnet.OpenWebNetApplication;
-import com.github.openwebnet.component.module.OpenWebNetModule;
+import com.github.openwebnet.component.module.ApplicationContextModule;
+import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
-import com.github.openwebnet.service.impl.DomoticServiceImpl;
+import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.GatewayServiceImpl;
+import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationItemListener;
@@ -18,21 +23,26 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {OpenWebNetModule.class, RepositoryModule.class})
-public interface OpenWebNetComponent {
+@Component(modules = {ApplicationContextModule.class, DomoticModule.class, RepositoryModule.class})
+public interface ApplicationComponent {
 
+    // view
     void inject(OpenWebNetApplication application);
     void inject(MainActivity activity);
     void inject(DeviceActivity activity);
     void inject(LightActivity activity);
     void inject(DeviceListFragment fragment);
 
-    // dagger needs concrete class
-    void inject(PreferenceServiceImpl preferenceService);
-    void inject(DomoticServiceImpl domoticService);
     void inject(NavigationItemListener listener);
-
     void inject(GatewayEditTextPreference editTextPreference);
     void inject(GatewayListPreference listPreference);
+
+    // service
+    void inject(CommonServiceImpl commonService);
+    void inject(DeviceServiceImpl deviceService);
+    void inject(EnvironmentServiceImpl environmentService);
+    void inject(GatewayServiceImpl gatewayService);
+    void inject(LightServiceImpl lightService);
+    void inject(PreferenceServiceImpl preferenceService);
 
 }

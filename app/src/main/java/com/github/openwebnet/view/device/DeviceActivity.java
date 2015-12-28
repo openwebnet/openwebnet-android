@@ -1,11 +1,9 @@
 package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
+import com.github.openwebnet.component.Injector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +20,7 @@ public class DeviceActivity extends AbstractDeviceActivity {
         setContentView(R.layout.activity_device);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        OpenWebNetApplication.component(this).inject(this);
+        Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
         initSpinnerEnvironment();
