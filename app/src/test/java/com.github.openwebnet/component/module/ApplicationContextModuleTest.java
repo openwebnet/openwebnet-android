@@ -2,9 +2,10 @@ package com.github.openwebnet.component.module;
 
 import android.content.Context;
 
-import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.PreferenceService;
+
+import org.robolectric.RuntimeEnvironment;
 
 import javax.inject.Singleton;
 
@@ -16,16 +17,10 @@ import static org.mockito.Mockito.mock;
 @Module
 public class ApplicationContextModuleTest {
 
-    private final OpenWebNetApplication application;
-
-    public ApplicationContextModuleTest(OpenWebNetApplication application) {
-        this.application = application;
-    }
-
     @Provides
     @Singleton
     public Context applicationContext() {
-        return application.getApplicationContext();
+        return RuntimeEnvironment.application.getApplicationContext();
     }
 
     @Provides

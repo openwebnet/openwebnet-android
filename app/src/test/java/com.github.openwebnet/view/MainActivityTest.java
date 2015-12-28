@@ -1,8 +1,9 @@
 package com.github.openwebnet.view;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponentTest;
@@ -13,6 +14,7 @@ import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,12 +45,15 @@ public class MainActivityTest {
     @Bind(R.id.floatingActionButtonAddLight)
     FloatingActionButton floatingActionButtonAddLight;
 
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
+
     MainActivity activity;
 
     @Before
     public void setup() {
         ApplicationComponentTest applicationComponentTest = DaggerApplicationComponentTest.builder()
-            .applicationContextModuleTest(new ApplicationContextModuleTest(null))
+            .applicationContextModuleTest(new ApplicationContextModuleTest())
             .domoticModuleTest(new DomoticModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest())
             .build();
@@ -64,7 +69,14 @@ public class MainActivityTest {
         ButterKnife.bind(this, activity);
     }
 
-    // TODO
+    @Ignore
+    @Test
+    public void shouldInitNavigationDrawer() {
+        setupActivity();
+        // TODO
+    }
+
+    @Ignore
     @Test
     public void clickingAddLight_shouldStartLightActivity() {
         setupActivity();
@@ -73,4 +85,5 @@ public class MainActivityTest {
         Intent expectedIntent = new Intent(activity, MainActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
+
 }
