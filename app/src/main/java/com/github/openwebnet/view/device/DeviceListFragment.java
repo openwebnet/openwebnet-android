@@ -31,6 +31,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+// http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
 public class DeviceListFragment extends Fragment {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);

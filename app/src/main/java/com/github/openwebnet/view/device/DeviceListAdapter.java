@@ -12,6 +12,9 @@ import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,6 +23,8 @@ import butterknife.ButterKnife;
 import static java.util.Objects.requireNonNull;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final Logger log = LoggerFactory.getLogger(DeviceListAdapter.class);
 
     private List<RealmModel> mItems;
 
@@ -55,13 +60,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        // TODO
-        @Bind(R.id.imageButtonCardDeviceFavourite)
-        ImageButton imageButtonCardDeviceFavourite;
+        @Bind(R.id.imageButtonCardLightFavourite)
+        ImageButton imageButtonCardLightFavourite;
 
-        // TODO
-        @Bind(R.id.imageButtonCardDeviceSend)
-        ImageButton imageButtonCardDeviceSend;
+        @Bind(R.id.imageButtonCardLightSend)
+        ImageButton imageButtonCardLightSend;
 
         public LightViewHolder(View view) {
             super(view);
@@ -119,8 +122,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void initCardLight(LightViewHolder holder, LightModel light) {
         holder.textViewCardLightTitle.setText(light.getName());
-        holder.imageButtonCardDeviceSend.setOnClickListener(v -> {
-
+        holder.imageButtonCardLightSend.setOnClickListener(v -> {
+            log.debug("imageButtonCardDeviceSend {}", light.getName());
         });
     }
 

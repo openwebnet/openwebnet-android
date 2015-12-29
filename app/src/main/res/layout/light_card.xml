@@ -19,13 +19,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewCardLightTitle"
-                style="@style/deviceCard.textView"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingBottom="4dp"
-                android:paddingTop="16dp"
-                android:text="TODO Title"
-                android:textSize="24sp"/>
+                android:paddingTop="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/lightbulb_outline"/>
+
+                <TextView
+                    android:id="@+id/textViewCardLightTitle"
+                    style="@style/deviceCard.textView"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textSize="24sp"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -33,14 +47,14 @@
                 android:layout_margin="8dp">
 
                 <ImageButton
-                    android:id="@+id/imageButtonCardDeviceFavourite"
+                    android:id="@+id/imageButtonCardLightFavourite"
                     style="@style/deviceCard.imageButton"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/star_outline"/>
 
                 <ImageButton
-                    android:id="@+id/imageButtonCardDeviceSend"
+                    android:id="@+id/imageButtonCardLightSend"
                     style="@style/deviceCard.imageButton"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
