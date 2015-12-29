@@ -8,10 +8,12 @@ import rx.Observable;
 
 public interface LightService {
 
-    Observable<String> addLight(LightModel.Builder light);
+    Observable<String> add(LightModel.Builder light);
 
-    Observable<List<LightModel>> findAllLight();
+    Observable<List<LightModel>> findAll();
 
-    Observable<List<LightModel>> findLightByEnvironment(Integer id);
+    Observable<List<LightModel>> findByEnvironment(Integer id);
+
+    Observable<Void> update(LightModel light);
 
 }

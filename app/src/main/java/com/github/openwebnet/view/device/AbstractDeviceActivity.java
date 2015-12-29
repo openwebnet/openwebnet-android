@@ -57,7 +57,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     protected abstract void onMenuSave();
 
     protected void initSpinnerEnvironment() {
-        environmentService.findAllEnvironment().subscribe(environments -> {
+        environmentService.findAll().subscribe(environments -> {
             environmentArray = initSparseArray(environments);
 
             List<String> environmentValues = Stream.of(environments)
@@ -69,7 +69,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     }
 
     protected void initSpinnerGateway() {
-        gatewayService.findAllGateway().subscribe(gateways -> {
+        gatewayService.findAll().subscribe(gateways -> {
             gatewayArray = initSparseArray(gateways);
 
             List<String> gatewayValues = Stream.of(gateways)

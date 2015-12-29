@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void reloadMenu() {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
-        environmentService.findAllEnvironment().subscribe(
+        environmentService.findAll().subscribe(
             environments -> {
                 log.debug("reloadMenu: {}", environments);
                 // TODO orderBy name

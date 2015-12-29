@@ -8,14 +8,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.service.LightService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,9 +30,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListAdapter.class);
 
+    @Inject
+    LightService lightService;
+
     private List<RealmModel> mItems;
 
     public DeviceListAdapter(List<RealmModel> items) {
+        Injector.getApplicationComponent().inject(this);
+
         requireNonNull(items, "items is null");
         this.mItems = items;
     }

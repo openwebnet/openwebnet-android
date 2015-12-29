@@ -46,7 +46,7 @@ public class GatewayListPreference extends ListPreference {
         final List<String> entries = new ArrayList<>();
         final List<String> entryValues = new ArrayList<>();
 
-        gatewayService.findAllGateway()
+        gatewayService.findAll()
             .subscribe(gateways -> {
                 // split stream
                 Stream.of(gateways).forEach(gateway -> {

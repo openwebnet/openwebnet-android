@@ -8,8 +8,10 @@ import rx.Observable;
 
 public interface DeviceService {
 
-    Observable<String> addDevice(DeviceModel.Builder device);
+    Observable<String> add(DeviceModel.Builder device);
 
-    Observable<List<DeviceModel>> findAllDevice();
+    Observable<List<DeviceModel>> findAll();
+
+    Observable<List<DeviceModel>> findByEnvironment(Integer id);
 
 }

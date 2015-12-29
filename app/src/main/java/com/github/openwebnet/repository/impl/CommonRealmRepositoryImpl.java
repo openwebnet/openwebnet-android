@@ -52,4 +52,21 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
             }
         });
     }
+
+    @Override
+    public Observable<Void> update(M model) {
+        return Observable.create(subscriber -> {
+            try {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(model);
+                realm.commitTransaction();
+
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("UPDATE", e);
+                subscriber.onError(e);
+            }
+        });
+    }
 }

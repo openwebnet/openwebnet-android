@@ -33,7 +33,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public void initRepository() {
         if (preferenceService.isFirstRun()) {
-            environmentService.addEnvironment(getString(R.string.drawer_menu_example))
+            environmentService.add(getString(R.string.drawer_menu_example))
                 .subscribe(id -> {
                     log.debug("initRepository with success");
                 }, throwable -> {

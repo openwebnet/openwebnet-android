@@ -8,8 +8,8 @@ import rx.Observable;
 
 public interface EnvironmentService {
 
-    Observable<Integer> addEnvironment(String name);
+    Observable<Integer> add(String name);
 
-    Observable<List<EnvironmentModel>> findAllEnvironment();
+    Observable<List<EnvironmentModel>> findAll();
 
 }

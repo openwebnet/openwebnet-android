@@ -23,20 +23,25 @@ public class LightServiceImpl implements LightService {
     }
 
     @Override
-    public Observable<String> addLight(LightModel.Builder light) {
+    public Observable<String> add(LightModel.Builder light) {
         return lightRepository.add(light.build())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<List<LightModel>> findAllLight() {
+    public Observable<List<LightModel>> findAll() {
         return lightRepository.findAll();
     }
 
     @Override
-    public Observable<List<LightModel>> findLightByEnvironment(Integer id) {
+    public Observable<List<LightModel>> findByEnvironment(Integer id) {
         return lightRepository.findByEnvironment(id);
+    }
+
+    @Override
+    public Observable<Void> update(LightModel light) {
+        return lightRepository.update(light);
     }
 
 }

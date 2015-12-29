@@ -91,7 +91,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
     private void addGateway(Dialog dialog) {
         String host = mEditTextHost.getText().toString();
         Integer port = Integer.parseInt(mEditTextPort.getText().toString());
-        gatewayService.addGateway(host, port)
+        gatewayService.add(host, port)
             .subscribe(uuid -> {
                 log.debug("NEW gateway: {}", uuid);
                 dialog.dismiss();

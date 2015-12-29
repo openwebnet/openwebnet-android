@@ -13,6 +13,7 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationItemListener;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.DeviceListAdapter;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
@@ -36,6 +37,7 @@ public interface ApplicationComponent {
     void inject(NavigationItemListener listener);
     void inject(GatewayEditTextPreference editTextPreference);
     void inject(GatewayListPreference listPreference);
+    void inject(DeviceListAdapter deviceListAdapter);
 
     // service
     void inject(CommonServiceImpl commonService);

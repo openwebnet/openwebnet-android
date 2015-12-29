@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.RealmModel;
-import com.github.openwebnet.repository.DeviceRepository;
-import com.github.openwebnet.repository.LightRepository;
+import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.LightService;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -28,8 +28,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
 public class DeviceListFragment extends Fragment {
@@ -43,9 +41,9 @@ public class DeviceListFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     @Inject
-    LightRepository lightRepository;
+    LightService lightService;
     @Inject
-    DeviceRepository deviceRepository;
+    DeviceService deviceService;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -79,8 +77,8 @@ public class DeviceListFragment extends Fragment {
     private void initCards() {
         Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
         Observable.zip(
-            lightRepository.findByEnvironment(environment),
-            deviceRepository.findByEnvironment(environment),
+            lightService.findByEnvironment(environment),
+            deviceService.findByEnvironment(environment),
             (lights, devices) -> Lists.<RealmModel>newArrayList(Iterables.concat(lights, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {

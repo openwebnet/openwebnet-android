@@ -23,15 +23,20 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Observable<String> addDevice(DeviceModel.Builder device) {
+    public Observable<String> add(DeviceModel.Builder device) {
         return deviceRepository.add(device.build())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<List<DeviceModel>> findAllDevice() {
+    public Observable<List<DeviceModel>> findAll() {
         return deviceRepository.findAll();
+    }
+
+    @Override
+    public Observable<List<DeviceModel>> findByEnvironment(Integer id) {
+        return deviceRepository.findByEnvironment(id);
     }
 
 }

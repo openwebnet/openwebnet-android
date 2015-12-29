@@ -23,14 +23,14 @@ public class GatewayServiceImpl implements GatewayService {
     }
 
     @Override
-    public Observable<String> addGateway(String host, Integer port) {
+    public Observable<String> add(String host, Integer port) {
         return gatewayRepository.add(GatewayModel.newGateway(host, port))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public Observable<List<GatewayModel>> findAllGateway() {
+    public Observable<List<GatewayModel>> findAll() {
         return gatewayRepository.findAll();
     }
 

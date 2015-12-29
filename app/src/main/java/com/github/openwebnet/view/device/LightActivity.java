@@ -56,7 +56,7 @@ public class LightActivity extends AbstractDeviceActivity {
         log.debug("favourite: {}", isFavourite());
 
         if (isValidLight()) {
-            lightService.addLight(lightBuilder()).subscribe(uuid -> finish());
+            lightService.add(lightBuilder()).subscribe(uuid -> finish());
         }
     }
 

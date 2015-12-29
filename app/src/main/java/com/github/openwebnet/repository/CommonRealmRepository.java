@@ -12,4 +12,6 @@ public interface CommonRealmRepository<M extends RealmObject & RealmModel> {
     Observable<String> add(M model);
 
     Observable<List<M>> findAll();
+
+    Observable<Void> update(M model);
 }

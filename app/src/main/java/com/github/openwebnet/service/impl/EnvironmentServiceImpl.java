@@ -23,7 +23,7 @@ public class EnvironmentServiceImpl implements EnvironmentService {
     }
 
     @Override
-    public Observable<Integer> addEnvironment(String name) {
+    public Observable<Integer> add(String name) {
         return environmentRepository.getNextId()
             .map(id -> {
                 EnvironmentModel environment = new EnvironmentModel();
@@ -37,7 +37,7 @@ public class EnvironmentServiceImpl implements EnvironmentService {
     }
 
     @Override
-    public Observable<List<EnvironmentModel>> findAllEnvironment() {
+    public Observable<List<EnvironmentModel>> findAll() {
         return environmentRepository.findAll();
     }
 

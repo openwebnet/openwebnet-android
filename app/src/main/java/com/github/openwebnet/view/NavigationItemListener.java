@@ -126,7 +126,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     }
 
     private void addEnvironment(String name) {
-        environmentService.addEnvironment(name)
+        environmentService.add(name)
             .subscribe(id -> {
                 // calls onPrepareOptionsMenu(): reload menu
                 activity.invalidateOptionsMenu();
