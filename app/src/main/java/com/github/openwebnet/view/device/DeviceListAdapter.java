@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.RealmModel;
 
 import java.util.List;
 
@@ -20,8 +21,12 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<DeviceModel> mDevices;
-    private List<LightModel> mLights;
+    private List<RealmModel> mItems;
+
+    public DeviceListAdapter(List<RealmModel> items) {
+        requireNonNull(items, "items is null");
+        this.mItems = items;
+    }
 
     /**
      *
@@ -64,19 +69,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public DeviceListAdapter(List<DeviceModel> devices, List<LightModel> lights) {
-        requireNonNull(devices, "devices is null");
-        requireNonNull(lights, "lights is null");
-        this.mDevices = devices;
-        this.mLights = lights;
-    }
-
     @Override
     public int getItemViewType(int position) {
-        if (position <= mDevices.size()) {
+        if (mItems.get(position) instanceof DeviceModel) {
             return DeviceViewHolder.VIEW_TYPE;
         }
-        if (position <= mLights.size()) {
+        if (mItems.get(position) instanceof LightModel) {
             return LightViewHolder.VIEW_TYPE;
         }
         throw new IllegalStateException("invalid item position");
@@ -98,17 +96,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        // TODO
-        switch (position) {
+        switch (holder.getItemViewType()) {
             case DeviceViewHolder.VIEW_TYPE:
-                //holder.textViewCardDevice.setText(mDevices.get(position).getName());
+                initCardDevice((DeviceViewHolder) holder, (DeviceModel) mItems.get(position));
+                break;
             case LightViewHolder.VIEW_TYPE:
-                LightViewHolder lightViewHolder = (LightViewHolder) holder;
-                lightViewHolder.textViewCardLightTitle.setText(mLights.get(position).getName());
-                // TODO
-                lightViewHolder.imageButtonCardDeviceSend.setOnClickListener(v -> {
-
-                });
+                initCardLight((LightViewHolder) holder, (LightModel) mItems.get(position));
+                break;
             default:
                 throw new IllegalStateException("invalid item position");
         }
@@ -116,7 +110,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mDevices.size();
+        return mItems.size();
+    }
+
+    private void initCardDevice(DeviceViewHolder holder, DeviceModel device) {
+        //holder.textViewCardDevice.setText(device.getName());
+    }
+
+    private void initCardLight(LightViewHolder holder, LightModel light) {
+        holder.textViewCardLightTitle.setText(light.getName());
+        holder.imageButtonCardDeviceSend.setOnClickListener(v -> {
+
+        });
     }
 
 }

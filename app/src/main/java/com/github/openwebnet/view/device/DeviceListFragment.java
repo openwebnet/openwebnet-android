@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.repository.DeviceRepository;
+import com.github.openwebnet.repository.LightRepository;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +23,13 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class DeviceListFragment extends Fragment {
 
@@ -32,8 +41,14 @@ public class DeviceListFragment extends Fragment {
     @Bind(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
 
-    private RecyclerView.Adapter mAdapter;
+    @Inject
+    LightRepository lightRepository;
+    @Inject
+    DeviceRepository deviceRepository;
+
     private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
+    private List<RealmModel> realmModels = new ArrayList<>();
 
     @Nullable
     @Override
@@ -44,33 +59,34 @@ public class DeviceListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         //mRecyclerView.setHasFixedSize(true);
-
         //mLayoutManager = new GridLayoutManager(getContext(), GRID_COLUMNS);
+
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // TODO
-        Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
-
-//        domoticService.findLightByEnvironment(environment)
-//            .subscribe(lightModels -> );
-
-        log.debug("environment {}", environment);
-
-        List<DeviceModel> devices = new ArrayList<>();
-        /*
-        devices.add(DeviceModel.newBuilder().environment(100).gateway("uuid0").name("name0").raw("command0").build());
-        devices.add(DeviceModel.newBuilder().environment(101).gateway("uuid1").name("name1").raw("command1").build());
-        devices.add(DeviceModel.newBuilder().environment(102).gateway("uuid2").name("name2").raw("command2").build());
-        devices.add(DeviceModel.newBuilder().environment(103).gateway("uuid3").name("name3").raw("command3").build());
-        devices.add(DeviceModel.newBuilder().environment(104).gateway("uuid4").name("name4").raw("command4").build());
-        devices.add(DeviceModel.newBuilder().environment(105).gateway("uuid5").name("name5").raw("command5").build());
-        */
-
-        //mAdapter = new DeviceListAdapter(devices);
+        mAdapter = new DeviceListAdapter(realmModels);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initCards();
+    }
+
+    private void initCards() {
+        Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
+        Observable.zip(
+            lightRepository.findByEnvironment(environment),
+            deviceRepository.findByEnvironment(environment),
+            (lights, devices) -> Lists.<RealmModel>newArrayList(Iterables.concat(lights, devices)))
+            .doOnError(throwable -> log.error("ERROR initCards", throwable))
+            .subscribe(results -> {
+                realmModels.addAll(results);
+                mAdapter.notifyDataSetChanged();
+                log.debug("initCards environment={} realmModels={}", environment, realmModels);
+            });
     }
 
     @Override
