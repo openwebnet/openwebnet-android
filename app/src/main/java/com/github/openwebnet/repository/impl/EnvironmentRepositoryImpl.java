@@ -62,14 +62,11 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     public Observable<List<EnvironmentModel>> findAll() {
         return Observable.create(subscriber -> {
             try {
-                RealmResults<EnvironmentModel> environments =
-                    Realm.getDefaultInstance().where(EnvironmentModel.class).findAll();
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<EnvironmentModel> environments = realm.where(EnvironmentModel.class).findAll();
                 environments.sort(EnvironmentModel.FIELD_NAME, Sort.ASCENDING);
 
-                // from documentation: https://realm.io/docs/java/latest/#queries
-                // 'Most queries in Realm are fast enough to be run synchronously - even on the UI thread'
-                // so avoid deep copy and schedulers
-                subscriber.onNext(environments);
+                subscriber.onNext(realm.copyFromRealm(environments));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-FIND_ALL", e);

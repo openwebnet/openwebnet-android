@@ -31,17 +31,23 @@ public class LightServiceImpl implements LightService {
 
     @Override
     public Observable<List<LightModel>> findAll() {
-        return lightRepository.findAll();
+        return lightRepository.findAll()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<List<LightModel>> findByEnvironment(Integer id) {
-        return lightRepository.findByEnvironment(id);
+        return lightRepository.findByEnvironment(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
     public Observable<Void> update(LightModel light) {
-        return lightRepository.update(light);
+        return lightRepository.update(light)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

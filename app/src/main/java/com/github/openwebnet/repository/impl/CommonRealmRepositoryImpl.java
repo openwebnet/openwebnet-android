@@ -42,8 +42,9 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<List<M>> findAll() {
         return Observable.create(subscriber -> {
             try {
-                RealmResults<M> models =
-                    Realm.getDefaultInstance().where(getRealmModelClass()).findAll();
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<M> models = realm.where(getRealmModelClass()).findAll();
+
                 subscriber.onNext(models);
                 subscriber.onCompleted();
             } catch (Exception e) {

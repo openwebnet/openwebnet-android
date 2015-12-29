@@ -82,6 +82,7 @@ public class DeviceListFragment extends Fragment {
             (lights, devices) -> Lists.<RealmModel>newArrayList(Iterables.concat(lights, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
+                realmModels.clear();
                 realmModels.addAll(results);
                 mAdapter.notifyDataSetChanged();
                 log.debug("initCards environment={} realmModels={}", environment, realmModels);

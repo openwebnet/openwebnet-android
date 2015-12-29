@@ -28,9 +28,11 @@ public class LightRepositoryImpl extends CommonRealmRepositoryImpl<LightModel>
     public Observable<List<LightModel>> findByEnvironment(Integer id) {
         return Observable.create(subscriber -> {
             try {
-                RealmResults<LightModel> models = Realm.getDefaultInstance()
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<LightModel> models = realm
                     .where(LightModel.class).equalTo(FIELD_ENVIRONMENT_ID, id).findAll();
-                subscriber.onNext(models);
+
+                subscriber.onNext(realm.copyFromRealm(models));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("FIND_BY_ENVIRONMENT", e);

@@ -131,9 +131,23 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void initCardLight(LightViewHolder holder, LightModel light) {
         holder.textViewCardLightTitle.setText(light.getName());
-        holder.imageButtonCardLightSend.setOnClickListener(v -> {
-            log.debug("imageButtonCardDeviceSend {}", light.getName());
+
+        updateLightFavourite(holder, light.isFavourite());
+        holder.imageButtonCardLightFavourite.setOnClickListener(v -> {
+            light.setFavourite(!light.isFavourite());
+            lightService.update(light)
+                .doOnCompleted(() -> updateLightFavourite(holder, light.isFavourite()))
+                .subscribe();
         });
+
+        holder.imageButtonCardLightSend.setOnClickListener(v -> {
+            log.debug("imageButtonCardLightSend {}", light.getUuid());
+        });
+    }
+
+    private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
+        int starDrawable = favourite ? R.drawable.star_outline : R.drawable.star;
+        holder.imageButtonCardLightFavourite.setImageResource(starDrawable);
     }
 
 }
