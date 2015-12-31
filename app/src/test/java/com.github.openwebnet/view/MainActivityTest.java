@@ -2,6 +2,7 @@ package com.github.openwebnet.view;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.view.Menu;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.BuildConfig;
@@ -13,9 +14,11 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -38,7 +41,9 @@ import butterknife.ButterKnife;
 import rx.Observable;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
@@ -51,6 +56,8 @@ public class MainActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
+    @Inject
+    CommonService commonService;
     @Inject
     EnvironmentService environmentService;
 
@@ -86,9 +93,33 @@ public class MainActivityTest {
     }
 
     @Test
-    public void shouldInitNavigationDrawer() {
-        setupActivity();
-        // TODO
+    public void shouldInitNavigationDrawerMenu() {
+        EnvironmentModel environment1 = new EnvironmentModel();
+        environment1.setId(100);
+        environment1.setName("environment1");
+        EnvironmentModel environment2 = new EnvironmentModel();
+        environment2.setId(101);
+        environment2.setName("environment2");
+        List<EnvironmentModel> environments = Lists.newArrayList(environment1, environment2);
+
+        when(environmentService.findAll()).thenReturn(Observable.just(environments));
+
+        ButterKnife.bind(this, Robolectric.setupActivity(MainActivity.class));
+
+        verify(commonService).initRepository();
+        verify(environmentService).findAll();
+
+        Menu menu = navigationView.getMenu();
+        assertEquals("invalid menu title", "Favourite", menu.getItem(0).getTitle());
+        assertEquals("invalid menu order", 10, menu.getItem(0).getOrder());
+        assertEquals("invalid menu title", "environment1", menu.getItem(1).getTitle());
+        assertEquals("invalid menu order", 100, menu.getItem(1).getOrder());
+        assertEquals("invalid menu title", "environment2", menu.getItem(2).getTitle());
+        assertEquals("invalid menu order", 101, menu.getItem(2).getOrder());
+        assertEquals("invalid menu title", "Add environment", menu.getItem(3).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(3).getOrder());
+        assertEquals("invalid menu title", "Settings", menu.getItem(4).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(4).getOrder());
     }
 
     @Test

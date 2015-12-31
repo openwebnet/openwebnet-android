@@ -98,14 +98,12 @@ public class MainActivity extends AppCompatActivity {
             environments -> {
                 log.debug("reloadMenu: {}", environments);
                 // TODO orderBy name
-                Stream.of(environments).forEach(environment -> {
+                Stream.of(environments).forEach(environment ->
                     menu.add(R.id.nav_group_environment, environment.getId(),
-                        environment.getId(), environment.getName());
-                });
+                        environment.getId(), environment.getName())
+                );
             },
-            throwable -> {
-                showSnackbar(errorLoadNavigationDrawer);
-            });
+            throwable -> showSnackbar(errorLoadNavigationDrawer));
     }
 
     private void showSnackbar(String message) {
