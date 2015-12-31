@@ -17,6 +17,6 @@ Thanks to:
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Realm](https://realm.io)
 * [slf4j + android-logger](http://noveogroup.github.io/android-logger)
-* [Robolectric](https://github.com/robolectric/robolectric)
-* [mockito](https://github.com/mockito/mockito)
+* [Robolectric](http://robolectric.org/)
+* [mockito](http://mockito.org/)
 * [PowerMock](https://github.com/jayway/powermock)
