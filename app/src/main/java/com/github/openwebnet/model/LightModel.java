@@ -3,14 +3,19 @@ package com.github.openwebnet.model;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
-public class LightModel extends RealmObject implements RealmModel {
+public class LightModel extends RealmObject implements RealmModel, DomoticModel {
 
     public static final String FIELD_ENVIRONMENT_ID = "environmentId";
+
+    public enum Status {
+        ON, OFF
+    }
 
     @PrimaryKey
     private String uuid;
@@ -28,6 +33,11 @@ public class LightModel extends RealmObject implements RealmModel {
     private boolean dimmer;
 
     private boolean favourite;
+
+    @Ignore
+    private Status status;
+
+    // TODO @Ignore dimmerValue
 
     public LightModel() {}
 
@@ -154,5 +164,13 @@ public class LightModel extends RealmObject implements RealmModel {
 
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

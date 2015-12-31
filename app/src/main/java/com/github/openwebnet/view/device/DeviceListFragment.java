@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
@@ -47,7 +48,7 @@ public class DeviceListFragment extends Fragment {
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    private List<RealmModel> realmModels = new ArrayList<>();
+    private List<DomoticModel> domoticItems = new ArrayList<>();
 
     @Nullable
     @Override
@@ -62,7 +63,7 @@ public class DeviceListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new DeviceListAdapter(realmModels);
+        mAdapter = new DeviceListAdapter(domoticItems);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
@@ -74,18 +75,19 @@ public class DeviceListFragment extends Fragment {
         initCards();
     }
 
+    // TODO init status
     private void initCards() {
         Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
         Observable.zip(
             lightService.findByEnvironment(environment),
             deviceService.findByEnvironment(environment),
-            (lights, devices) -> Lists.<RealmModel>newArrayList(Iterables.concat(lights, devices)))
+            (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
-                realmModels.clear();
-                realmModels.addAll(results);
+                domoticItems.clear();
+                domoticItems.addAll(results);
                 mAdapter.notifyDataSetChanged();
-                log.debug("initCards environment={} realmModels={}", environment, realmModels);
+                log.debug("initCards environment={} domoticItems={}", environment, domoticItems);
             });
     }
 

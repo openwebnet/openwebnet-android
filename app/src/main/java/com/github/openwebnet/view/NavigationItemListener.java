@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,20 +42,24 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     @Bind(R.id.floatingActionsMenuMain)
     FloatingActionsMenu floatingActionsMenuMain;
 
+    @BindString(R.string.app_name)
+    String labelApplicationName;
+    @BindString(R.string.activity_settings)
+    String labelSettings;
     @BindString(R.string.validation_required)
     String labelValidationRequired;
     @BindString(R.string.error_add_environment)
     String labelErrorAddEnvironment;
 
-    private final FragmentActivity activity;
-    private final DrawerLayout drawerLayout;
+    private final AppCompatActivity mActivity;
+    private final DrawerLayout mDrawerLayout;
 
-    public NavigationItemListener(FragmentActivity activity, DrawerLayout drawerLayout) {
+    public NavigationItemListener(AppCompatActivity activity, DrawerLayout drawerLayout) {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
 
-        this.activity = activity;
-        this.drawerLayout = drawerLayout;
+        this.mActivity = activity;
+        this.mDrawerLayout = drawerLayout;
     }
 
     @Override
@@ -65,20 +69,23 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
 
         switch (id) {
             case R.id.nav_favourite:
+                mActivity.getSupportActionBar().setTitle(labelApplicationName);
                 log.debug("TODO favourite");
                 break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
             case R.id.nav_settings:
+                mActivity.getSupportActionBar().setTitle(labelSettings);
                 showSettings();
                 break;
             default:
+                mActivity.getSupportActionBar().setTitle(item.getTitle());
                 showEnvironment(id);
                 break;
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -91,7 +98,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
         args.putInt(ARG_ENVIRONMENT, id);
         fragment.setArguments(args);
 
-        activity.getSupportFragmentManager()
+        mActivity.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, fragment)
             //.addToBackStack(null)
@@ -103,9 +110,9 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     }
 
     private void showDialogAddEnvironment() {
-        View layout = LayoutInflater.from(activity).inflate(R.layout.dialog_environment, null);
+        View layout = LayoutInflater.from(mActivity).inflate(R.layout.dialog_environment, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
             .setView(layout)
             .setTitle(R.string.dialog_add_environment_title)
             .setPositiveButton(R.string.button_add, null)
@@ -129,8 +136,8 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
         environmentService.add(name)
             .subscribe(id -> {
                 // calls onPrepareOptionsMenu(): reload menu
-                activity.invalidateOptionsMenu();
-                drawerLayout.openDrawer(GravityCompat.START);
+                mActivity.invalidateOptionsMenu();
+                mDrawerLayout.openDrawer(GravityCompat.START);
             },
             throwable -> {
                 showSnackbar(labelErrorAddEnvironment);
@@ -142,27 +149,27 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
         removeCompactFragment();
 
         // refactor with android.support.v4 when will be stable
-        activity.getFragmentManager()
+        mActivity.getFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, new SettingsFragment())
             .commit();
     }
 
     private void removeFragment() {
-        android.app.Fragment fragment = activity.getFragmentManager()
+        android.app.Fragment fragment = mActivity.getFragmentManager()
             .findFragmentById(R.id.content_frame);
         if (fragment != null) {
-            activity.getFragmentManager()
+            mActivity.getFragmentManager()
                 .beginTransaction()
                 .remove(fragment).commit();
         }
     }
 
     private void removeCompactFragment() {
-        Fragment compactFragment = activity.getSupportFragmentManager()
+        Fragment compactFragment = mActivity.getSupportFragmentManager()
             .findFragmentById(R.id.content_frame);
         if (compactFragment != null) {
-            activity.getSupportFragmentManager()
+            mActivity.getSupportFragmentManager()
                 .beginTransaction()
                 .remove(compactFragment).commit();
         }

@@ -1,5 +1,6 @@
 package com.github.openwebnet.view.device;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.LightService;
@@ -33,9 +35,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Inject
     LightService lightService;
 
-    private List<RealmModel> mItems;
+    private List<DomoticModel> mItems;
 
-    public DeviceListAdapter(List<RealmModel> items) {
+    public DeviceListAdapter(List<DomoticModel> items) {
         Injector.getApplicationComponent().inject(this);
 
         requireNonNull(items, "items is null");
@@ -65,6 +67,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static class LightViewHolder extends RecyclerView.ViewHolder {
 
         public static final int VIEW_TYPE = 200;
+
+        @Bind(R.id.cardViewLight)
+        CardView cardViewLight;
 
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
@@ -142,6 +147,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.imageButtonCardLightSend.setOnClickListener(v -> {
             log.debug("imageButtonCardLightSend {}", light.getUuid());
+            holder.cardViewLight.setBackgroundColor(v.getResources().getColor(R.color.yellow));
+            //holder.cardViewLight.setCardBackgroundColor(R.color.yellow);
+            // TODO turnOn/Off
         });
     }
 
