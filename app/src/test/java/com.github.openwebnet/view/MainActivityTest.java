@@ -12,9 +12,12 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.LightActivity;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,25 +29,35 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
+@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*", "com.getbase.*"})
 @PrepareForTest({Injector.class})
 public class MainActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
+    @Inject
+    EnvironmentService environmentService;
+
+    @Bind(R.id.floatingActionButtonAddDevice)
+    FloatingActionButton floatingActionButtonAddDevice;
     @Bind(R.id.floatingActionButtonAddLight)
     FloatingActionButton floatingActionButtonAddLight;
-
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
@@ -65,24 +78,34 @@ public class MainActivityTest {
     }
 
     private void setupActivity() {
+        // mock reloadMenu
+        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+
         activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);
     }
 
-    @Ignore
     @Test
     public void shouldInitNavigationDrawer() {
         setupActivity();
         // TODO
     }
 
-    @Ignore
+    @Test
+    public void clickingAddLight_shouldStartDeviceActivity() {
+        setupActivity();
+
+        floatingActionButtonAddDevice.performClick();
+        Intent expectedIntent = new Intent(activity, DeviceActivity.class);
+        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+    }
+
     @Test
     public void clickingAddLight_shouldStartLightActivity() {
         setupActivity();
 
         floatingActionButtonAddLight.performClick();
-        Intent expectedIntent = new Intent(activity, MainActivity.class);
+        Intent expectedIntent = new Intent(activity, LightActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
 
