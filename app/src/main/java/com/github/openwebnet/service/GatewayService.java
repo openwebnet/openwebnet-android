@@ -12,4 +12,6 @@ public interface GatewayService {
 
     Observable<List<GatewayModel>> findAll();
 
+    Observable<GatewayModel> findById(String uuid);
+
 }

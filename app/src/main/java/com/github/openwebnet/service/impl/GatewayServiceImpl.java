@@ -34,4 +34,9 @@ public class GatewayServiceImpl implements GatewayService {
         return gatewayRepository.findAll();
     }
 
+    @Override
+    public Observable<GatewayModel> findById(String uuid) {
+        return gatewayRepository.findById(uuid);
+    }
+
 }

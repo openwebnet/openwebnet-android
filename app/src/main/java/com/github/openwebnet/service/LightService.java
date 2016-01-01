@@ -10,10 +10,12 @@ public interface LightService {
 
     Observable<String> add(LightModel.Builder light);
 
+    Observable<Void> update(LightModel light);
+
     Observable<List<LightModel>> findAll();
 
     Observable<List<LightModel>> findByEnvironment(Integer id);
 
-    Observable<Void> update(LightModel light);
+    Observable<List<LightModel>> requestByEnvironment(Integer id);
 
 }

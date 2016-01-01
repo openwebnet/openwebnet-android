@@ -8,6 +8,8 @@ package com.github.openwebnet.model;
  */
 public interface RealmModel {
 
+    String FIELD_UUID = "uuid";
+
     String getUuid();
 
 }

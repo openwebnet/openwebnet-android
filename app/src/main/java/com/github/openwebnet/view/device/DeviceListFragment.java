@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DomoticModel;
-import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
 import com.google.common.collect.Iterables;
@@ -79,7 +78,7 @@ public class DeviceListFragment extends Fragment {
     private void initCards() {
         Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
         Observable.zip(
-            lightService.findByEnvironment(environment),
+            lightService.requestByEnvironment(environment),
             deviceService.findByEnvironment(environment),
             (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
@@ -88,6 +87,8 @@ public class DeviceListFragment extends Fragment {
                 domoticItems.addAll(results);
                 mAdapter.notifyDataSetChanged();
                 log.debug("initCards environment={} domoticItems={}", environment, domoticItems);
+            }, throwable -> {
+
             });
     }
 

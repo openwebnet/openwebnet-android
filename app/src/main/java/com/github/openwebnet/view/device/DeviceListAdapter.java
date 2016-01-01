@@ -13,7 +13,6 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
-import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.LightService;
 
 import org.slf4j.Logger;
@@ -24,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 
 import static java.util.Objects.requireNonNull;
@@ -67,6 +67,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static class LightViewHolder extends RecyclerView.ViewHolder {
 
         public static final int VIEW_TYPE = 200;
+
+        @BindColor(R.color.yellow)
+        int colorStatusOn;
+        @BindColor(R.color.white)
+        int colorStatusOff;
 
         @Bind(R.id.cardViewLight)
         CardView cardViewLight;
@@ -145,17 +150,28 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .subscribe();
         });
 
+        updateLightStatus(holder, light.getStatus());
         holder.imageButtonCardLightSend.setOnClickListener(v -> {
             log.debug("imageButtonCardLightSend {}", light.getUuid());
-            holder.cardViewLight.setBackgroundColor(v.getResources().getColor(R.color.yellow));
-            //holder.cardViewLight.setCardBackgroundColor(R.color.yellow);
             // TODO turnOn/Off
+            updateLightStatus(holder, LightModel.Status.ON);
         });
     }
 
     private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
         int starDrawable = favourite ? R.drawable.star_outline : R.drawable.star;
         holder.imageButtonCardLightFavourite.setImageResource(starDrawable);
+    }
+
+    private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
+        if (status == null) {
+            log.warn("updateLightStatus: status is null");
+            return;
+        }
+        switch (status) {
+            case ON: holder.cardViewLight.setBackgroundColor(holder.colorStatusOn); break;
+            case OFF: holder.cardViewLight.setBackgroundColor(holder.colorStatusOff); break;
+        }
     }
 
 }

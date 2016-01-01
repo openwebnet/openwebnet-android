@@ -13,6 +13,8 @@ import io.realm.RealmObject;
 import io.realm.RealmResults;
 import rx.Observable;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmModel>
         implements CommonRealmRepository<M> {
 
@@ -39,6 +41,23 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     }
 
     @Override
+    public Observable<Void> update(M model) {
+        return Observable.create(subscriber -> {
+            try {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(model);
+                realm.commitTransaction();
+
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("UPDATE", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
     public Observable<List<M>> findAll() {
         return Observable.create(subscriber -> {
             try {
@@ -55,17 +74,19 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     }
 
     @Override
-    public Observable<Void> update(M model) {
+    public Observable<M> findById(String uuid) {
         return Observable.create(subscriber -> {
             try {
                 Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(model);
-                realm.commitTransaction();
+                RealmResults<M> models = realm.where(getRealmModelClass())
+                    .equalTo(RealmModel.FIELD_UUID, uuid).findAll();
 
+                checkState(models.size() == 1, "primary key violation: invalid uuid");
+
+                subscriber.onNext(models.get(0));
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("UPDATE", e);
+                log.error("FIND_BY_ID", e);
                 subscriber.onError(e);
             }
         });

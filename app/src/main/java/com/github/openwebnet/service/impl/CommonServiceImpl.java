@@ -2,6 +2,7 @@ package com.github.openwebnet.service.impl;
 
 import android.content.Context;
 
+import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.CommonService;
@@ -41,6 +42,11 @@ public class CommonServiceImpl implements CommonService {
                 });
             preferenceService.initFirstRun();
         }
+    }
+
+    @Override
+    public OpenWebNet findClient(String gatewayUuid) {
+        return null;
     }
 
     private String getString(int id) {

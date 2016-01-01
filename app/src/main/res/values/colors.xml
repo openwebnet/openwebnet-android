@@ -8,6 +8,7 @@
     <color name="yellow">#FFEB3B</color>
     <color name="amber">#FFC107</color>
     <color name="black_semi_transparent">#B2000000</color>
+    <color name="white">#FFF</color>
 
     <!-- material palette -->
     <color name="primary">#FF9800</color>
