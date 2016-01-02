@@ -38,9 +38,7 @@ public class EnvironmentServiceImpl implements EnvironmentService {
 
     @Override
     public Observable<List<EnvironmentModel>> findAll() {
-        return environmentRepository.findAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return environmentRepository.findAll();
     }
 
 }

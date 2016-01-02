@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
-        commonService.initRepository();
+        commonService.initApplication();
         initNavigationDrawer();
         // TODO pull to refresh
     }

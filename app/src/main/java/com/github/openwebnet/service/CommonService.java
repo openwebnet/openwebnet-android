@@ -4,7 +4,7 @@ import com.github.niqdev.openwebnet.OpenWebNet;
 
 public interface CommonService {
 
-    void initRepository();
+    void initApplication();
 
     OpenWebNet findClient(String gatewayUuid);
 

@@ -1,11 +1,14 @@
 package com.github.openwebnet.service.impl;
 
-import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.niqdev.openwebnet.message.Lighting;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.repository.LightRepository;
+import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.LightService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +16,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class LightServiceImpl implements LightService {
 
+    private static final Logger log = LoggerFactory.getLogger(LightService.class);
+
     @Inject
     LightRepository lightRepository;
+
+    @Inject
+    CommonService commonService;
 
     public LightServiceImpl() {
         Injector.getApplicationComponent().inject(this);
@@ -57,20 +63,21 @@ public class LightServiceImpl implements LightService {
 
     @Override
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
-        // TODO group by gateway and for each gateway create a new client
-
-        // findClientByGateway
-        OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway("10.0.2.2", 20000));
-
+        // TODO improvement: group by gateway and for each gateway send all requests together
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(lightModel -> client.send(Lighting.requestStatus(lightModel.getWhere()))
+            .flatMap(light -> commonService.findClient(light.getGatewayUuid())
+                .send(Lighting.requestStatus(light.getWhere()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(Lighting.handleStatus(
-                    () -> lightModel.setStatus(LightModel.Status.ON),
-                    () -> lightModel.setStatus(LightModel.Status.OFF)))
-                .map(openSession -> Observable.just(lightModel)))
+                    () -> light.setStatus(LightModel.Status.ON),
+                    () -> light.setStatus(LightModel.Status.OFF)))
+                .map(openSession -> Observable.just(light))
+                .onErrorReturn(throwable -> {
+                    log.warn("fail to request status for light={}", light.getUuid());
+                    return Observable.just(light);
+                }))
             .collect(() -> new ArrayList<>(), (lightModels, lightModelObservable) ->
                 lightModelObservable.subscribe(lightModel -> lightModels.add(lightModel)));
     }

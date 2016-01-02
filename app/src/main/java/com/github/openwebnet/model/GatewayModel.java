@@ -1,11 +1,12 @@
 package com.github.openwebnet.model;
 
-import static java.util.Objects.requireNonNull;
 import java.util.UUID;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
+
+import static java.util.Objects.requireNonNull;
 
 public class GatewayModel extends RealmObject implements RealmModel {
 

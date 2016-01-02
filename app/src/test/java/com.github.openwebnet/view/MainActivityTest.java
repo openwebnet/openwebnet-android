@@ -106,7 +106,7 @@ public class MainActivityTest {
 
         ButterKnife.bind(this, Robolectric.setupActivity(MainActivity.class));
 
-        verify(commonService).initRepository();
+        verify(commonService).initApplication();
         verify(environmentService).findAll();
 
         Menu menu = navigationView.getMenu();

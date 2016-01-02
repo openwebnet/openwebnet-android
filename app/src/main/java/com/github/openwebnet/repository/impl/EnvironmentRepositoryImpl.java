@@ -66,7 +66,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
                 RealmResults<EnvironmentModel> environments = realm.where(EnvironmentModel.class).findAll();
                 environments.sort(EnvironmentModel.FIELD_NAME, Sort.ASCENDING);
 
-                subscriber.onNext(realm.copyFromRealm(environments));
+                subscriber.onNext(environments);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-FIND_ALL", e);
