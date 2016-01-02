@@ -19,18 +19,18 @@
         <com.github.openwebnet.view.custom.TextViewCustom
             style="@style/message.textViewFontAwesome"
             android:text="@string/light_prefix"
-            typeface:font="daggersquare"/>
+            typeface:font="inconsolata"/>
 
         <com.github.openwebnet.view.custom.EditTextCustom
             android:id="@+id/editTextLightWhere"
             style="@style/message.editText"
             android:hint="@string/device_where"
-            typeface:font="daggersquare"/>
+            typeface:font="inconsolata"/>
 
         <com.github.openwebnet.view.custom.TextViewCustom
             style="@style/message.textViewFontAwesome"
             android:text="@string/light_suffix"
-            typeface:font="daggersquare"/>
+            typeface:font="inconsolata"/>
 
     </LinearLayout>
 

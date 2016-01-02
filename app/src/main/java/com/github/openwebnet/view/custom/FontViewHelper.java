@@ -18,6 +18,7 @@ public class FontViewHelper {
         FONTS = new SparseArray<>();
         FONTS.put(0, "fonts/fontawesome-webfont.ttf");
         FONTS.put(1, "fonts/DAGGERSQUARE-OBLIQUE.otf");
+        FONTS.put(2, "fonts/Inconsolata-Regular.ttf");
     }
 
     public static void initCustomFont(TextView view, AttributeSet attributeSet,
