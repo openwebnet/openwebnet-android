@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
@@ -89,6 +90,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageButtonCardLightSend)
         ImageButton imageButtonCardLightSend;
 
+        @Bind(R.id.imageViewCardLightAlert)
+        ImageView imageViewCardLightAlert;
+
         public LightViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -164,9 +168,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
+        holder.imageButtonCardLightSend.setVisibility(View.VISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
-            // TODO show warning - disable button send
+            holder.imageButtonCardLightSend.setVisibility(View.INVISIBLE);
+            holder.imageViewCardLightAlert.setVisibility(View.VISIBLE);
             return;
         }
         switch (status) {
@@ -179,7 +185,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         log.debug("toggle light {}", light.getUuid());
         if (light.getStatus() == null) {
             log.warn("light status is null: unable to toggle");
-            // TODO show warning - disable button send
             return;
         }
         Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
