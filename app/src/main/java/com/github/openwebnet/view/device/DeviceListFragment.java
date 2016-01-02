@@ -87,8 +87,6 @@ public class DeviceListFragment extends Fragment {
                 domoticItems.addAll(results);
                 mAdapter.notifyDataSetChanged();
                 log.debug("initCards environment={} domoticItems={}", environment, domoticItems);
-            }, throwable -> {
-
             });
     }
 

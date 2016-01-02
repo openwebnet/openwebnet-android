@@ -18,6 +18,7 @@ import com.github.openwebnet.service.LightService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,6 +26,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
+import rx.Statement;
+import rx.functions.Action0;
+import rx.functions.Func0;
 
 import static java.util.Objects.requireNonNull;
 
@@ -151,11 +155,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 
         updateLightStatus(holder, light.getStatus());
-        holder.imageButtonCardLightSend.setOnClickListener(v -> {
-            log.debug("imageButtonCardLightSend {}", light.getUuid());
-            // TODO turnOn/Off
-            updateLightStatus(holder, LightModel.Status.ON);
-        });
+        holder.imageButtonCardLightSend.setOnClickListener(v -> toggleLight(holder, light));
     }
 
     private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
@@ -165,12 +165,28 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
         if (status == null) {
-            log.warn("updateLightStatus: status is null");
+            log.warn("light status is null: unable to update");
+            // TODO show warning - disable button send
             return;
         }
         switch (status) {
             case ON: holder.cardViewLight.setBackgroundColor(holder.colorStatusOn); break;
             case OFF: holder.cardViewLight.setBackgroundColor(holder.colorStatusOff); break;
+        }
+    }
+
+    private void toggleLight(LightViewHolder holder, LightModel light) {
+        log.debug("toggle light {}", light.getUuid());
+        if (light.getStatus() == null) {
+            log.warn("light status is null: unable to toggle");
+            // TODO show warning - disable button send
+            return;
+        }
+        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
+
+        switch (light.getStatus()) {
+            case ON: lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
+            case OFF: lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
         }
     }
 

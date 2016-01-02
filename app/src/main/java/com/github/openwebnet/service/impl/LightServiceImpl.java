@@ -76,10 +76,35 @@ public class LightServiceImpl implements LightService {
                 .map(openSession -> Observable.just(light))
                 .onErrorReturn(throwable -> {
                     log.warn("fail to request status for light={}", light.getUuid());
+                    // unreadable status
                     return Observable.just(light);
                 }))
             .collect(() -> new ArrayList<>(), (lightModels, lightModelObservable) ->
                 lightModelObservable.subscribe(lightModel -> lightModels.add(lightModel)));
+    }
+
+    @Override
+    public Observable<LightModel> turnOn(LightModel light) {
+        return commonService.findClient(light.getGatewayUuid())
+            .send(Lighting.requestTurnOn(light.getWhere()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(Lighting.handleResponse(
+                () -> light.setStatus(LightModel.Status.ON),
+                () -> light.setStatus(null)))
+            .map(openSession -> light);
+    }
+
+    @Override
+    public Observable<LightModel> turnOff(LightModel light) {
+        return commonService.findClient(light.getGatewayUuid())
+            .send(Lighting.requestTurnOff(light.getWhere()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(Lighting.handleResponse(
+                () -> light.setStatus(LightModel.Status.OFF),
+                () -> light.setStatus(null)))
+            .map(openSession -> light);
     }
 
 }

@@ -18,4 +18,8 @@ public interface LightService {
 
     Observable<List<LightModel>> requestByEnvironment(Integer id);
 
+    Observable<LightModel> turnOn(LightModel light);
+
+    Observable<LightModel> turnOff(LightModel light);
+
 }
