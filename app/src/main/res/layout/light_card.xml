@@ -36,9 +36,18 @@
                 <TextView
                     android:id="@+id/textViewCardLightTitle"
                     style="@style/deviceCard.textView"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textSize="24sp"/>
+
+                <ImageView
+                    android:id="@+id/imageViewCardLightMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="16dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/dots_vertical"/>
             </LinearLayout>
 
             <RelativeLayout
