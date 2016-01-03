@@ -1,5 +1,6 @@
 package com.github.openwebnet.view.device;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
@@ -39,6 +41,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     LightService lightService;
+
+    @Inject
+    Context mContext;
 
     private List<DomoticModel> mItems;
 
@@ -83,6 +88,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
+
+        @Bind(R.id.imageViewCardLightMenu)
+        ImageView imageViewCardLightMenu;
 
         @Bind(R.id.imageButtonCardLightFavourite)
         ImageButton imageButtonCardLightFavourite;
@@ -160,6 +168,26 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateLightStatus(holder, light.getStatus());
         holder.imageButtonCardLightSend.setOnClickListener(v -> toggleLight(holder, light));
+
+        holder.imageViewCardLightMenu.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(mContext, v);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_card, popupMenu.getMenu());
+            popupMenu.show();
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                log.debug("CARD MENU selected [id={}]", id);
+
+                switch (id) {
+                    case R.id.action_card_edit:
+                        log.debug("EDIT");
+                        break;
+                    case R.id.action_card_delete:
+                        log.debug("DELETE");
+                        break;
+                }
+                return true;
+            });
+        });
     }
 
     private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
