@@ -58,16 +58,20 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     }
 
     @Override
-    public Observable<List<M>> findAll() {
+    public Observable<Void> delete(String uuid) {
         return Observable.create(subscriber -> {
             try {
                 Realm realm = Realm.getDefaultInstance();
-                RealmResults<M> models = realm.where(getRealmModelClass()).findAll();
+                RealmResults<M> models = realm.where(getRealmModelClass())
+                    .equalTo(RealmModel.FIELD_UUID, uuid).findAll();
 
-                subscriber.onNext(models);
+                realm.beginTransaction();
+                models.clear();
+                realm.commitTransaction();
+
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("FIND_ALL", e);
+                log.error("DELETE", e);
                 subscriber.onError(e);
             }
         });
@@ -91,4 +95,21 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
             }
         });
     }
+
+    @Override
+    public Observable<List<M>> findAll() {
+        return Observable.create(subscriber -> {
+            try {
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<M> models = realm.where(getRealmModelClass()).findAll();
+
+                subscriber.onNext(models);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("FIND_ALL", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
 }

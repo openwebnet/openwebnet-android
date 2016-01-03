@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.LightService;
 
 import org.slf4j.Logger;
@@ -33,6 +34,8 @@ public class LightActivity extends AbstractDeviceActivity {
     @Bind(R.id.checkBoxLightDimmer)
     CheckBox checkBoxLightDimmer;
 
+    private String lightUuid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,25 @@ public class LightActivity extends AbstractDeviceActivity {
 
         initSpinnerEnvironment();
         initSpinnerGateway();
+        initEditLight();
+    }
+
+    private void initEditLight() {
+        lightUuid = getIntent().getStringExtra(RealmModel.FIELD_UUID);
+        log.debug("initEditLight: {}", lightUuid);
+        if (lightUuid != null) {
+            lightService.findById(lightUuid).subscribe(light -> {
+                editTextLightName.setText(light.getName());
+                editTextLightWhere.setText(light.getWhere());
+
+                checkBoxLightDimmer.setChecked(light.isDimmer());
+                // TODO
+                selectEnvironment(light.getEnvironmentId());
+                // TODO
+                selectGateway(light.getGatewayUuid());
+                setFavourite(light.isFavourite());
+            });
+        }
     }
 
     @Override
@@ -56,7 +78,11 @@ public class LightActivity extends AbstractDeviceActivity {
         log.debug("favourite: {}", isFavourite());
 
         if (isValidLight()) {
-            lightService.add(lightBuilder()).subscribe(uuid -> finish());
+            if (lightUuid == null) {
+                lightService.add(parseLight()).subscribe(uuid -> finish());
+            } else {
+                lightService.update(parseLight()).subscribe(uuid -> finish());
+            }
         }
     }
 
@@ -65,13 +91,14 @@ public class LightActivity extends AbstractDeviceActivity {
             isValidDeviceEnvironment() && isValidDeviceGateway();
     }
 
-    private LightModel.Builder lightBuilder() {
-        return LightModel.newBuilder()
+    private LightModel parseLight() {
+        return (lightUuid == null ? LightModel.addBuilder() : LightModel.updateBuilder(lightUuid))
             .name(editTextLightName.getText().toString())
             .where(Integer.parseInt(editTextLightWhere.getText().toString()))
             .dimmer(checkBoxLightDimmer.isChecked())
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
-            .favourite(isFavourite());
+            .favourite(isFavourite())
+            .build();
     }
 }

@@ -74,7 +74,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             List<String> gatewayValues = Stream.of(gateways)
                 .map(gateway -> String.format("%s:%d", gateway.getHost(),
-                    gateway.getPort())).collect(Collectors.toList());
+                        gateway.getPort())).collect(Collectors.toList());
 
             initEmptyList(gatewayValues);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
@@ -107,8 +107,18 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         return environmentArray.get(spinnerDeviceEnvironment.getSelectedItemPosition());
     }
 
+    // TODO
+    protected void selectEnvironment(Integer environmentId) {
+        // spinnerDeviceEnvironment
+    }
+
     protected GatewayModel getSelectedGateway() {
         return gatewayArray.get(spinnerDeviceGateway.getSelectedItemPosition());
+    }
+
+    // TODO
+    protected void selectGateway(String gatewayUuid) {
+        // spinnerDeviceGateway
     }
 
     protected boolean isValidDeviceEnvironment() {
@@ -129,6 +139,10 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     protected boolean isFavourite() {
         return checkBoxDeviceFavourite.isChecked();
+    }
+
+    protected void setFavourite(boolean checked) {
+        checkBoxDeviceFavourite.setChecked(checked);
     }
 
     @Override

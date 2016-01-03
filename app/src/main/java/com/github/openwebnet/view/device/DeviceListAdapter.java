@@ -1,6 +1,7 @@
 package com.github.openwebnet.view.device;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,12 +17,12 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.LightService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,9 +30,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
-import rx.Statement;
 import rx.functions.Action0;
-import rx.functions.Func0;
 
 import static java.util.Objects.requireNonNull;
 
@@ -179,10 +178,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 switch (id) {
                     case R.id.action_card_edit:
-                        log.debug("EDIT");
+                        Intent intentEditLight = new Intent(mContext, LightActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra(RealmModel.FIELD_UUID, light.getUuid());
+                        mContext.startActivity(intentEditLight);
                         break;
                     case R.id.action_card_delete:
-                        log.debug("DELETE");
+                        lightService.delete(light.getUuid())
+                            .doOnCompleted(() -> {
+                                // TODO refresh list
+                            })
+                            .subscribe();
                         break;
                 }
                 return true;

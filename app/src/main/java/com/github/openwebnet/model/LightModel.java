@@ -61,8 +61,8 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         private boolean dimmer;
         private boolean favourite;
 
-        public Builder() {
-            this.uuid = UUID.randomUUID().toString();
+        public Builder(String uuid) {
+            this.uuid = uuid;
         }
 
         public Builder environment(Integer environmentId) {
@@ -105,8 +105,12 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         }
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
+    public static Builder addBuilder() {
+        return new Builder(UUID.randomUUID().toString());
+    }
+
+    public static Builder updateBuilder(String uuid) {
+        return new Builder(uuid);
     }
 
     @Override

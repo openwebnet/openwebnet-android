@@ -34,8 +34,8 @@ public class LightServiceImpl implements LightService {
     }
 
     @Override
-    public Observable<String> add(LightModel.Builder light) {
-        return lightRepository.add(light.build())
+    public Observable<String> add(LightModel light) {
+        return lightRepository.add(light)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
     }
@@ -43,6 +43,20 @@ public class LightServiceImpl implements LightService {
     @Override
     public Observable<Void> update(LightModel light) {
         return lightRepository.update(light)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<Void> delete(String uuid) {
+        return lightRepository.delete(uuid)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<LightModel> findById(String uuid) {
+        return lightRepository.findById(uuid)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread());
     }

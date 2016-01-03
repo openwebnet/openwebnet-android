@@ -8,22 +8,22 @@ public class LightModelTest {
 
     @Test(expected = NullPointerException.class)
     public void testLightModelBuilder_nullEnvironmentId() {
-        LightModel.newBuilder().environment(null).build();
+        LightModel.addBuilder().environment(null).build();
     }
 
     @Test(expected = NullPointerException.class)
     public void testLightModelBuilder_nullGatewayUuid() {
-        LightModel.newBuilder().gateway(null).build();
+        LightModel.addBuilder().gateway(null).build();
     }
 
     @Test(expected = NullPointerException.class)
     public void testLightModelBuilder_nullName() {
-        LightModel.newBuilder().name(null).build();
+        LightModel.addBuilder().name(null).build();
     }
 
     @Test(expected = NullPointerException.class)
     public void testLightModelBuilder_nullWhere() {
-        LightModel.newBuilder().where(null).build();
+        LightModel.addBuilder().where(null).build();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class LightModelTest {
         String LIGHT_GATEWAY = "gateway";
         boolean LIGHT_FAVOURITE = true;
 
-        LightModel light = LightModel.newBuilder()
+        LightModel light = LightModel.addBuilder()
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .dimmer(LIGHT_DIMMER)

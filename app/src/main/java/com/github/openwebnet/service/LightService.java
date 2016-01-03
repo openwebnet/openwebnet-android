@@ -8,9 +8,13 @@ import rx.Observable;
 
 public interface LightService {
 
-    Observable<String> add(LightModel.Builder light);
+    Observable<String> add(LightModel light);
 
     Observable<Void> update(LightModel light);
+
+    Observable<Void> delete(String uuid);
+
+    Observable<LightModel> findById(String uuid);
 
     Observable<List<LightModel>> findAll();
 
