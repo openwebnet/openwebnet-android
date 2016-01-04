@@ -87,7 +87,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
 
                 checkState(models.size() == 1, "primary key violation: invalid uuid");
 
-                subscriber.onNext(models.get(0));
+                subscriber.onNext(realm.copyFromRealm(models.get(0)));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("FIND_BY_ID", e);

@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
@@ -62,32 +63,28 @@ public class DeviceListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new DeviceListAdapter(domoticItems);
+        mAdapter = new DeviceListAdapter(getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        initCards();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
-    // TODO init status
-    private void initCards() {
-        Integer environment = getArguments().getInt(ARG_ENVIRONMENT);
-        Observable.zip(
-            lightService.requestByEnvironment(environment),
-            deviceService.findByEnvironment(environment),
-            (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
-            .doOnError(throwable -> log.error("ERROR initCards", throwable))
-            .subscribe(results -> {
-                domoticItems.clear();
-                domoticItems.addAll(results);
-                mAdapter.notifyDataSetChanged();
-                log.debug("initCards environment={} domoticItems={}", environment, domoticItems);
-            });
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -95,4 +92,36 @@ public class DeviceListFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+    /**
+     *
+     */
+    public static class UpdateDeviceListEvent {
+
+        private final Integer environmentId;
+
+        public UpdateDeviceListEvent(Integer environmentId) {
+            this.environmentId = environmentId;
+        }
+
+        public Integer getEnvironmentId() {
+            return environmentId;
+        }
+    }
+
+    public void onEvent(UpdateDeviceListEvent event) {
+        Observable.zip(
+            lightService.requestByEnvironment(event.getEnvironmentId()),
+            deviceService.findByEnvironment(event.getEnvironmentId()),
+                (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
+                .doOnError(throwable -> log.error("ERROR initCards", throwable))
+                .subscribe(results -> {
+                    domoticItems.clear();
+                    domoticItems.addAll(results);
+                    mAdapter.notifyDataSetChanged();
+                    log.debug("initCards environment={} domoticItems={}", event.getEnvironmentId(), domoticItems);
+            });
+
+    }
+
 }

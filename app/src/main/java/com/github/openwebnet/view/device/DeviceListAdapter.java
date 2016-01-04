@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
 
 import static java.util.Objects.requireNonNull;
@@ -44,12 +45,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Inject
     Context mContext;
 
+    private final Integer mEnvironmentId;
     private List<DomoticModel> mItems;
 
-    public DeviceListAdapter(List<DomoticModel> items) {
+    public DeviceListAdapter(Integer environmentId, List<DomoticModel> items) {
         Injector.getApplicationComponent().inject(this);
 
+        requireNonNull(environmentId, "environmentId is null");
         requireNonNull(items, "items is null");
+        this.mEnvironmentId = environmentId;
         this.mItems = items;
     }
 
@@ -182,12 +186,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .putExtra(RealmModel.FIELD_UUID, light.getUuid());
                         mContext.startActivity(intentEditLight);
+                        // TODO
                         break;
                     case R.id.action_card_delete:
                         lightService.delete(light.getUuid())
-                            .doOnCompleted(() -> {
-                                // TODO refresh list
-                            })
+                            .doOnCompleted(() -> updateDeviceListEvent())
                             .subscribe();
                         break;
                 }
@@ -227,6 +230,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case ON: lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
             case OFF: lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
         }
+    }
+
+    private void updateDeviceListEvent() {
+        EventBus.getDefault().post(new DeviceListFragment.UpdateDeviceListEvent(mEnvironmentId));
     }
 
 }

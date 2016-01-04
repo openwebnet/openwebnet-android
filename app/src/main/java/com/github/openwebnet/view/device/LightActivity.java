@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class LightActivity extends AbstractDeviceActivity {
 
@@ -55,8 +56,8 @@ public class LightActivity extends AbstractDeviceActivity {
         log.debug("initEditLight: {}", lightUuid);
         if (lightUuid != null) {
             lightService.findById(lightUuid).subscribe(light -> {
-                editTextLightName.setText(light.getName());
-                editTextLightWhere.setText(light.getWhere());
+                editTextLightName.setText(String.valueOf(light.getName()));
+                editTextLightWhere.setText(String.valueOf(light.getWhere()));
 
                 checkBoxLightDimmer.setChecked(light.isDimmer());
                 // TODO
@@ -79,9 +80,11 @@ public class LightActivity extends AbstractDeviceActivity {
 
         if (isValidLight()) {
             if (lightUuid == null) {
-                lightService.add(parseLight()).subscribe(uuid -> finish());
+                lightService.add(parseLight()).subscribe(uuid -> updateDeviceListEvent());
             } else {
-                lightService.update(parseLight()).subscribe(uuid -> finish());
+                lightService.update(parseLight())
+                    .doOnCompleted(() -> updateDeviceListEvent())
+                    .subscribe();
             }
         }
     }
@@ -100,5 +103,11 @@ public class LightActivity extends AbstractDeviceActivity {
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())
             .build();
+    }
+
+    private void updateDeviceListEvent() {
+        EventBus.getDefault()
+            .post(new DeviceListFragment.UpdateDeviceListEvent(getSelectedEnvironment().getId()));
+        finish();
     }
 }
