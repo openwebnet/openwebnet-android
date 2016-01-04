@@ -200,7 +200,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
-        int starDrawable = favourite ? R.drawable.star_outline : R.drawable.star;
+        int starDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardLightFavourite.setImageResource(starDrawable);
     }
 

@@ -57,6 +57,7 @@ public class DeviceListFragment extends Fragment {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
 
         //mRecyclerView.setHasFixedSize(true);
         //mLayoutManager = new GridLayoutManager(getContext(), GRID_COLUMNS);
@@ -70,27 +71,16 @@ public class DeviceListFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
     }
 
     @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     /**
