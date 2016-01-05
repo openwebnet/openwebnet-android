@@ -81,7 +81,6 @@ public class LightActivity extends AbstractDeviceActivity {
             if (lightUuid == null) {
                 lightService.add(parseLight()).subscribe(uuid -> finish());
             } else {
-                // TODO error update
                 lightService.update(parseLight())
                     .doOnCompleted(() -> finish())
                     .subscribe();

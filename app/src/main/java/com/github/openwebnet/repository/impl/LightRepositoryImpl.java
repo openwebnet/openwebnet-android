@@ -32,7 +32,7 @@ public class LightRepositoryImpl extends CommonRealmRepositoryImpl<LightModel>
                 RealmResults<LightModel> models = realm
                     .where(LightModel.class).equalTo(FIELD_ENVIRONMENT_ID, id).findAll();
 
-                subscriber.onNext(models);
+                subscriber.onNext(realm.copyFromRealm(models));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("FIND_BY_ENVIRONMENT", e);
