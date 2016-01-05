@@ -10,9 +10,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
+// TODO
 public class DeviceServiceImpl implements DeviceService {
 
     @Inject
@@ -24,23 +23,17 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Observable<String> add(DeviceModel.Builder device) {
-        return deviceRepository.add(device.build())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return deviceRepository.add(device.build());
     }
 
     @Override
     public Observable<List<DeviceModel>> findAll() {
-        return deviceRepository.findAll()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return deviceRepository.findAll();
     }
 
     @Override
     public Observable<List<DeviceModel>> findByEnvironment(Integer id) {
-        return deviceRepository.findByEnvironment(id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return deviceRepository.findByEnvironment(id);
     }
 
 }

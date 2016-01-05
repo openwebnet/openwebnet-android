@@ -10,8 +10,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class GatewayServiceImpl implements GatewayService {
 
@@ -24,9 +22,7 @@ public class GatewayServiceImpl implements GatewayService {
 
     @Override
     public Observable<String> add(String host, Integer port) {
-        return gatewayRepository.add(GatewayModel.newGateway(host, port))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+        return gatewayRepository.add(GatewayModel.newGateway(host, port));
     }
 
     @Override

@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
 import rx.Observable;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
@@ -57,7 +58,6 @@ public class DeviceListFragment extends Fragment {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
 
         //mRecyclerView.setHasFixedSize(true);
         //mLayoutManager = new GridLayoutManager(getContext(), GRID_COLUMNS);
@@ -71,16 +71,27 @@ public class DeviceListFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public void onStop() {
         EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     /**
@@ -99,17 +110,21 @@ public class DeviceListFragment extends Fragment {
         }
     }
 
+    @Subscribe
     public void onEvent(UpdateDeviceListEvent event) {
+        initCards(event.getEnvironmentId());
+    }
+
+    public void initCards(Integer environmentId) {
         Observable.zip(
-            lightService.requestByEnvironment(event.getEnvironmentId()),
-            deviceService.findByEnvironment(event.getEnvironmentId()),
+            lightService.findByEnvironment(environmentId),
+            deviceService.findByEnvironment(environmentId),
                 (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
                 .doOnError(throwable -> log.error("ERROR initCards", throwable))
                 .subscribe(results -> {
                     domoticItems.clear();
                     domoticItems.addAll(results);
                     mAdapter.notifyDataSetChanged();
-                    log.debug("initCards environment={} domoticItems={}", event.getEnvironmentId(), domoticItems);
             });
 
     }

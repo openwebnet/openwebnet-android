@@ -93,10 +93,14 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
         floatingActionsMenuMain.setVisibility(View.VISIBLE);
         removeFragment();
 
-        Fragment fragment = new DeviceListFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_ENVIRONMENT, id);
-        fragment.setArguments(args);
+        Fragment fragment = mActivity.getSupportFragmentManager()
+            .findFragmentById(R.id.content_frame);
+        if (fragment == null || fragment.getArguments().getInt(ARG_ENVIRONMENT) != id) {
+            fragment = new DeviceListFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_ENVIRONMENT, id);
+            fragment.setArguments(args);
+        }
 
         mActivity.getSupportFragmentManager()
             .beginTransaction()

@@ -186,7 +186,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             .putExtra(RealmModel.FIELD_UUID, light.getUuid());
                         mContext.startActivity(intentEditLight);
-                        // TODO
                         break;
                     case R.id.action_card_delete:
                         lightService.delete(light.getUuid())

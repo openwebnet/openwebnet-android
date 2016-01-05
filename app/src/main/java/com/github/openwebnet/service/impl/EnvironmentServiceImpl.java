@@ -10,8 +10,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class EnvironmentServiceImpl implements EnvironmentService {
 
@@ -31,9 +29,7 @@ public class EnvironmentServiceImpl implements EnvironmentService {
                 environment.setName(name);
                 return environment;
             })
-            .flatMap(environment -> environmentRepository.add(environment))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
+            .flatMap(environment -> environmentRepository.add(environment));
     }
 
     @Override

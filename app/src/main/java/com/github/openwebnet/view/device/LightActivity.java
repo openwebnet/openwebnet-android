@@ -17,7 +17,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 public class LightActivity extends AbstractDeviceActivity {
 
@@ -80,10 +79,11 @@ public class LightActivity extends AbstractDeviceActivity {
 
         if (isValidLight()) {
             if (lightUuid == null) {
-                lightService.add(parseLight()).subscribe(uuid -> updateDeviceListEvent());
+                lightService.add(parseLight()).subscribe(uuid -> finish());
             } else {
+                // TODO error update
                 lightService.update(parseLight())
-                    .doOnCompleted(() -> updateDeviceListEvent())
+                    .doOnCompleted(() -> finish())
                     .subscribe();
             }
         }
@@ -105,9 +105,4 @@ public class LightActivity extends AbstractDeviceActivity {
             .build();
     }
 
-    private void updateDeviceListEvent() {
-        EventBus.getDefault()
-            .post(new DeviceListFragment.UpdateDeviceListEvent(getSelectedEnvironment().getId()));
-        finish();
-    }
 }

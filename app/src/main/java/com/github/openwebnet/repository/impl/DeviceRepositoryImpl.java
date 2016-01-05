@@ -8,6 +8,7 @@ import java.util.List;
 
 import rx.Observable;
 
+// TODO
 public class DeviceRepositoryImpl extends CommonRealmRepositoryImpl<DeviceModel>
         implements DeviceRepository {
 

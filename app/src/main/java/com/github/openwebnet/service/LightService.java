@@ -16,9 +16,9 @@ public interface LightService {
 
     Observable<LightModel> findById(String uuid);
 
-    Observable<List<LightModel>> findAll();
-
     Observable<List<LightModel>> findByEnvironment(Integer id);
+
+    /* operate on background threads */
 
     Observable<List<LightModel>> requestByEnvironment(Integer id);
 

@@ -25,6 +25,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
             try {
                 Number maxId = Realm.getDefaultInstance().where(EnvironmentModel.class).max("id");
                 Integer lastId = maxId == null ? INITIAL_SEQ : new AtomicInteger(maxId.intValue()).incrementAndGet();
+
                 subscriber.onNext(lastId);
                 subscriber.onCompleted();
             } catch (Exception e) {

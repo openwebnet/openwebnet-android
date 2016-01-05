@@ -3,7 +3,6 @@ package com.github.openwebnet.service.impl;
 import android.content.Context;
 
 import com.github.niqdev.openwebnet.OpenWebNet;
-import static com.github.niqdev.openwebnet.OpenWebNet.*;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.CommonService;
@@ -17,6 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+
+import static com.github.niqdev.openwebnet.OpenWebNet.gateway;
+import static com.github.niqdev.openwebnet.OpenWebNet.newClient;
 
 public class CommonServiceImpl implements CommonService {
 

@@ -16,6 +16,7 @@ Thanks to:
 * [Lightweight-Stream-API](https://github.com/aNNiMON/Lightweight-Stream-API)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [Realm](https://realm.io)
+* [EventBus](https://github.com/greenrobot/EventBus)
 * [slf4j + android-logger](http://noveogroup.github.io/android-logger)
 * [Robolectric](http://robolectric.org/)
 * [mockito](http://mockito.org/)
