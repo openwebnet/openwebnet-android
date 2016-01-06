@@ -117,7 +117,7 @@ public class DeviceListFragment extends Fragment {
 
     public void initCards(Integer environmentId) {
         Observable.zip(
-            lightService.findByEnvironment(environmentId),
+            lightService.requestByEnvironment(environmentId),
             deviceService.findByEnvironment(environmentId),
                 (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
                 .doOnError(throwable -> log.error("ERROR initCards", throwable))

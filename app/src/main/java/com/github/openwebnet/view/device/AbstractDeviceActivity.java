@@ -12,11 +12,15 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.Function;
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -26,6 +30,8 @@ import butterknife.Bind;
 import butterknife.BindString;
 
 public abstract class AbstractDeviceActivity extends AppCompatActivity {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractDeviceActivity.class);
 
     @Bind(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
@@ -74,7 +80,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             List<String> gatewayValues = Stream.of(gateways)
                 .map(gateway -> String.format("%s:%d", gateway.getHost(),
-                        gateway.getPort())).collect(Collectors.toList());
+                    gateway.getPort())).collect(Collectors.toList());
 
             initEmptyList(gatewayValues);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
@@ -107,18 +113,32 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         return environmentArray.get(spinnerDeviceEnvironment.getSelectedItemPosition());
     }
 
-    // TODO
     protected void selectEnvironment(Integer environmentId) {
-        // spinnerDeviceEnvironment
+        Function <Integer, Integer> findSelectedEnvironment = id -> {
+            for (int i=0; i<environmentArray.size(); i++) {
+                if (environmentArray.valueAt(i).getId() == id) {
+                    return i;
+                }
+            }
+            throw new IllegalStateException("unable to find a valid environment");
+        };
+        spinnerDeviceEnvironment.setSelection(findSelectedEnvironment.apply(environmentId));
     }
 
     protected GatewayModel getSelectedGateway() {
         return gatewayArray.get(spinnerDeviceGateway.getSelectedItemPosition());
     }
 
-    // TODO
     protected void selectGateway(String gatewayUuid) {
-        // spinnerDeviceGateway
+        Function <String, Integer> findSelectedGateway = uuid -> {
+            for (int i=0; i<gatewayArray.size(); i++) {
+                if (gatewayArray.valueAt(i).getUuid().equals(uuid)) {
+                    return i;
+                }
+            }
+            throw new IllegalStateException("unable to find a valid gateway");
+        };
+        spinnerDeviceGateway.setSelection(findSelectedGateway.apply(gatewayUuid));
     }
 
     protected boolean isValidDeviceEnvironment() {

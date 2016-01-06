@@ -46,7 +46,9 @@ public class LightActivity extends AbstractDeviceActivity {
         ButterKnife.bind(this);
 
         initSpinnerEnvironment();
+        //selectEnvironment(); TODO current environment
         initSpinnerGateway();
+        //selectGateway(); TODO default gateway
         initEditLight();
     }
 
@@ -59,9 +61,7 @@ public class LightActivity extends AbstractDeviceActivity {
                 editTextLightWhere.setText(String.valueOf(light.getWhere()));
 
                 checkBoxLightDimmer.setChecked(light.isDimmer());
-                // TODO
                 selectEnvironment(light.getEnvironmentId());
-                // TODO
                 selectGateway(light.getGatewayUuid());
                 setFavourite(light.isFavourite());
             });
