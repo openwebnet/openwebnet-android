@@ -13,6 +13,7 @@ import android.view.Menu;
 
 import com.annimon.stream.Stream;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.CommonService;
@@ -37,10 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+
     @Bind(R.id.nav_view)
     NavigationView navigationView;
+
+    @Bind(R.id.floatingActionsMenuMain)
+    FloatingActionsMenu floatingActionsMenuMain;
 
     @BindString(R.string.error_load_navigation_drawer)
     String errorLoadNavigationDrawer;
@@ -112,11 +118,15 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.floatingActionButtonAddDevice)
     public void onClickAddDevice(FloatingActionButton fab) {
+        // TODO show background opaque layer
+        floatingActionsMenuMain.collapse();
         startActivity(new Intent(this, DeviceActivity.class));
     }
 
     @OnClick(R.id.floatingActionButtonAddLight)
     public void onClickAddLight(FloatingActionButton fab) {
+        // TODO show background opaque layer
+        floatingActionsMenuMain.collapse();
         startActivity(new Intent(this, LightActivity.class));
     }
 

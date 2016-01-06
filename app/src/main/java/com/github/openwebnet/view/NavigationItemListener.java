@@ -69,22 +69,26 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
 
         switch (id) {
             case R.id.nav_favourite:
+                // TODO favourite
+                // TODO handle no favourites found
                 mActivity.getSupportActionBar().setTitle(labelApplicationName);
+                floatingActionsMenuMain.setVisibility(View.INVISIBLE);
                 log.debug("TODO favourite");
                 break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
             case R.id.nav_settings:
-                mActivity.getSupportActionBar().setTitle(labelSettings);
                 showSettings();
                 break;
             default:
+                // TODO handle no items found
                 mActivity.getSupportActionBar().setTitle(item.getTitle());
                 showEnvironment(id);
                 break;
         }
 
+        floatingActionsMenuMain.collapse();
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -149,6 +153,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     }
 
     private void showSettings() {
+        mActivity.getSupportActionBar().setTitle(labelSettings);
         floatingActionsMenuMain.setVisibility(View.INVISIBLE);
         removeCompactFragment();
 
