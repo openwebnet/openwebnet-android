@@ -152,6 +152,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     protected boolean isValidRequired(TextView view) {
         if (view != null && (TextUtils.isEmpty(view.getText()) || view.getText().equals(labelNone))) {
             view.setError(validationRequired);
+            view.requestFocus();
             return false;
         }
         return true;

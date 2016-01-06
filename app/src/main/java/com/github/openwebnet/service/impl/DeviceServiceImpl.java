@@ -23,26 +23,26 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Observable<String> add(DeviceModel device) {
-        return null;
+        return deviceRepository.add(device);
     }
 
     @Override
     public Observable<Void> update(DeviceModel device) {
-        return null;
+        return deviceRepository.update(device);
     }
 
     @Override
     public Observable<Void> delete(String uuid) {
-        return null;
+        return deviceRepository.delete(uuid);
     }
 
     @Override
     public Observable<DeviceModel> findById(String uuid) {
-        return null;
+        return deviceRepository.findById(uuid);
     }
 
     @Override
     public Observable<List<DeviceModel>> findByEnvironment(Integer id) {
-        return null;
+        return deviceRepository.findByEnvironment(id);
     }
 }

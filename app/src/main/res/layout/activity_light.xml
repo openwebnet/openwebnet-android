@@ -15,6 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="@string/label_name"/>
 
         <LinearLayout

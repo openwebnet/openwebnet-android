@@ -13,13 +13,17 @@
         android:id="@+id/spinnerDeviceEnvironment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <Spinner
         android:id="@+id/spinnerDeviceGateway"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
     <CheckBox
         android:id="@+id/checkBoxDeviceFavourite"

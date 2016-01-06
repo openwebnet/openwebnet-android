@@ -11,6 +11,8 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
 
+    public static final String FIELD_ENVIRONMENT_ID = "environmentId";
+
     public enum Status {
         SUCCESS, FAIL
     }

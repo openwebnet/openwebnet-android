@@ -39,7 +39,7 @@
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
     <string name="label_default_success">SUCCESS</string>
-    <string name="label_default_fail">FAILS</string>
+    <string name="label_default_fail">FAIL</string>
 
     <string name="fab_label_add_device">Add device</string>
     <string name="fab_label_add_light">Add light</string>

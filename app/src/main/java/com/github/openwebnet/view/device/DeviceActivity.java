@@ -112,6 +112,9 @@ public class DeviceActivity extends AbstractDeviceActivity {
     private boolean isValidDevice() {
         if (!checkBoxDeviceAccept.isChecked()) {
             checkBoxDeviceAccept.setError(validationRequired);
+            checkBoxDeviceAccept.requestFocus();
+        } else {
+            checkBoxDeviceAccept.setError(null);
         }
         return checkBoxDeviceAccept.isChecked() &&
             isValidRequired(editTextDeviceName) &&
