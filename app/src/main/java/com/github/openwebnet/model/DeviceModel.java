@@ -3,6 +3,7 @@ package com.github.openwebnet.model;
 import java.util.UUID;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
@@ -10,12 +11,18 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
 
+    public enum Status {
+        SUCCESS, FAIL
+    }
+
     @PrimaryKey
     private String uuid;
 
-    private EnvironmentModel environment;
+    @Required
+    private Integer environmentId;
 
-    private GatewayModel gateway;
+    @Required
+    private String gatewayUuid;
 
     @Required
     private String name;
@@ -23,63 +30,63 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
     @Required
     private String request;
 
+    @Required
     private String response;
 
-    private String positiveMessage;
+    private String messageSuccess;
 
-    private String negativeMessage;
-
-    private boolean runOnLoad;
+    private String messageFail;
 
     private boolean favourite;
 
-    public DeviceModel() {
-    }
+    private boolean runOnLoad;
+
+    private boolean showConfirmation;
+
+    @Ignore
+    private Status status;
+
+    public DeviceModel() {}
 
     public DeviceModel(Builder builder) {
         this.uuid = builder.uuid;
-        this.environment = builder.environment;
-        this.gateway = builder.gateway;
+        this.environmentId = builder.environmentId;
+        this.gatewayUuid = builder.gatewayUuid;
         this.name = builder.name;
         this.request = builder.request;
         this.response = builder.response;
-        this.positiveMessage = builder.positiveMessage;
-        this.negativeMessage = builder.negativeMessage;
-        this.runOnLoad = builder.runOnLoad;
+        this.messageSuccess = builder.messageSuccess;
+        this.messageFail = builder.messageFail;
         this.favourite = builder.favourite;
+        this.runOnLoad = builder.runOnLoad;
+        this.showConfirmation = builder.showConfirmation;
     }
 
-    /**
-     * Prefer this builder to instantiate a new {@link DeviceModel}.
-     * <p>
-     * Note:
-     * {@link lombok.Getter} and {@link lombok.Setter} don't work with {@link RealmObject}.
-     * Avoid to use setXXX, {@link DeviceModel} should be immutable.
-     */
     public static class Builder {
 
         private final String uuid;
-        private EnvironmentModel environment;
-        private GatewayModel gateway;
+        private Integer environmentId;
+        private String gatewayUuid;
         private String name;
         private String request;
         private String response;
-        private String positiveMessage;
-        private String negativeMessage;
-        private boolean runOnLoad;
+        private String messageSuccess;
+        private String messageFail;
         private boolean favourite;
+        private boolean runOnLoad;
+        private boolean showConfirmation;
 
-        public Builder() {
-            this.uuid = UUID.randomUUID().toString();
+        public Builder(String uuid) {
+            this.uuid = uuid;
         }
 
-        public Builder environment(EnvironmentModel environment) {
-            this.environment = environment;
+        public Builder environment(Integer environmentId) {
+            this.environmentId = environmentId;
             return this;
         }
 
-        public Builder gateway(GatewayModel gateway) {
-            this.gateway = gateway;
+        public Builder gateway(String gatewayUuid) {
+            this.gatewayUuid = gatewayUuid;
             return this;
         }
 
@@ -98,18 +105,13 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
             return this;
         }
 
-        public Builder positiveMessage(String message) {
-            this.positiveMessage = message;
+        public Builder messageSuccess(String message) {
+            this.messageSuccess = message;
             return this;
         }
 
-        public Builder negativeMessage(String message) {
-            this.positiveMessage = message;
-            return this;
-        }
-
-        public Builder runOnLoad(boolean value) {
-            this.runOnLoad = value;
+        public Builder messageFail(String message) {
+            this.messageFail = message;
             return this;
         }
 
@@ -118,18 +120,33 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
             return this;
         }
 
+        public Builder runOnLoad(boolean value) {
+            this.runOnLoad = value;
+            return this;
+        }
+
+        public Builder showConfirmation(boolean value) {
+            this.showConfirmation = value;
+            return this;
+        }
+
         public DeviceModel build() {
-            requireNonNull(environment, "environment is null");
-            requireNonNull(gateway, "gateway is null");
+            requireNonNull(environmentId, "environmentId is null");
+            requireNonNull(gatewayUuid, "gatewayUuid is null");
             requireNonNull(name, "name is null");
             requireNonNull(request, "request is null");
+            requireNonNull(response, "response is null");
 
             return new DeviceModel(this);
         }
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
+    public static Builder addBuilder() {
+        return new Builder(UUID.randomUUID().toString());
+    }
+
+    public static Builder updateBuilder(String uuid) {
+        return new Builder(uuid);
     }
 
     @Override
@@ -141,20 +158,20 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.uuid = uuid;
     }
 
-    public EnvironmentModel getEnvironment() {
-        return environment;
+    public Integer getEnvironmentId() {
+        return environmentId;
     }
 
-    public void setEnvironment(EnvironmentModel environment) {
-        this.environment = environment;
+    public void setEnvironmentId(Integer environmentId) {
+        this.environmentId = environmentId;
     }
 
-    public GatewayModel getGateway() {
-        return gateway;
+    public String getGatewayUuid() {
+        return gatewayUuid;
     }
 
-    public void setGateway(GatewayModel gateway) {
-        this.gateway = gateway;
+    public void setGatewayUuid(String gatewayUuid) {
+        this.gatewayUuid = gatewayUuid;
     }
 
     public String getName() {
@@ -181,20 +198,28 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.response = response;
     }
 
-    public String getPositiveMessage() {
-        return positiveMessage;
+    public String getMessageSuccess() {
+        return messageSuccess;
     }
 
-    public void setPositiveMessage(String positiveMessage) {
-        this.positiveMessage = positiveMessage;
+    public void setMessageSuccess(String messageSuccess) {
+        this.messageSuccess = messageSuccess;
     }
 
-    public String getNegativeMessage() {
-        return negativeMessage;
+    public String getMessageFail() {
+        return messageFail;
     }
 
-    public void setNegativeMessage(String negativeMessage) {
-        this.negativeMessage = negativeMessage;
+    public void setMessageFail(String messageFail) {
+        this.messageFail = messageFail;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 
     public boolean isRunOnLoad() {
@@ -205,11 +230,19 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.runOnLoad = runOnLoad;
     }
 
-    public boolean isFavourite() {
-        return favourite;
+    public boolean isShowConfirmation() {
+        return showConfirmation;
     }
 
-    public void setFavourite(boolean favourite) {
-        this.favourite = favourite;
+    public void setShowConfirmation(boolean showConfirmation) {
+        this.showConfirmation = showConfirmation;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

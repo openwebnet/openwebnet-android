@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"/>
 
         <CheckBox
-            android:id="@+id/checkBoxDeviceOnLoad"
+            android:id="@+id/checkBoxDeviceRunOnLoad"
             style="@style/device.checkBox"
             android:text="@string/device_on_load"/>
 

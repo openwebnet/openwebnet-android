@@ -8,9 +8,13 @@ import rx.Observable;
 
 public interface DeviceService {
 
-    Observable<String> add(DeviceModel.Builder device);
+    Observable<String> add(DeviceModel device);
 
-    Observable<List<DeviceModel>> findAll();
+    Observable<Void> update(DeviceModel device);
+
+    Observable<Void> delete(String uuid);
+
+    Observable<DeviceModel> findById(String uuid);
 
     Observable<List<DeviceModel>> findByEnvironment(Integer id);
 

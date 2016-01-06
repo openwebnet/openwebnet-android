@@ -89,8 +89,10 @@ public class LightActivity extends AbstractDeviceActivity {
     }
 
     private boolean isValidLight() {
-        return isValidRequired(editTextLightName) && isValidRequired(editTextLightWhere) &&
-            isValidDeviceEnvironment() && isValidDeviceGateway();
+        return isValidRequired(editTextLightName) &&
+            isValidRequired(editTextLightWhere) &&
+            isValidDeviceEnvironment() &&
+            isValidDeviceGateway();
     }
 
     private LightModel parseLight() {

@@ -11,7 +11,6 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-// TODO
 public class DeviceServiceImpl implements DeviceService {
 
     @Inject
@@ -21,19 +20,29 @@ public class DeviceServiceImpl implements DeviceService {
         Injector.getApplicationComponent().inject(this);
     }
 
+
     @Override
-    public Observable<String> add(DeviceModel.Builder device) {
-        return deviceRepository.add(device.build());
+    public Observable<String> add(DeviceModel device) {
+        return null;
     }
 
     @Override
-    public Observable<List<DeviceModel>> findAll() {
-        return deviceRepository.findAll();
+    public Observable<Void> update(DeviceModel device) {
+        return null;
+    }
+
+    @Override
+    public Observable<Void> delete(String uuid) {
+        return null;
+    }
+
+    @Override
+    public Observable<DeviceModel> findById(String uuid) {
+        return null;
     }
 
     @Override
     public Observable<List<DeviceModel>> findByEnvironment(Integer id) {
-        return deviceRepository.findByEnvironment(id);
+        return null;
     }
-
 }

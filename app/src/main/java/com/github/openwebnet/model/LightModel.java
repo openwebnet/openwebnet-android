@@ -20,8 +20,10 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     @PrimaryKey
     private String uuid;
 
+    @Required
     private Integer environmentId;
 
+    @Required
     private String gatewayUuid;
 
     @Required
