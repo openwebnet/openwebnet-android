@@ -1,37 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:typeface="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <include
-        layout="@layout/common_device"
-        android:layout_margin="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/message.linearLayout"
-        android:elevation="4dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="32dp"
+        android:orientation="vertical">
 
-        <com.github.openwebnet.view.custom.TextViewCustom
-            style="@style/message.textViewFontAwesome"
-            android:text="*1*1*"
-            typeface:font="daggersquare"/>
+        <EditText
+            android:id="@+id/editTextDeviceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/label_name"/>
 
-        <com.github.openwebnet.view.custom.EditTextCustom
-            android:id="@+id/editTextDeviceWhere"
-            style="@style/message.editText"
-            android:hint="@string/device_where"
-            typeface:font="daggersquare"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="@string/device_request"
+            android:textStyle="bold|italic"/>
 
-        <com.github.openwebnet.view.custom.TextViewCustom
-            style="@style/message.textViewFontAwesome"
-            android:text="##"
-            typeface:font="daggersquare"/>
+        <LinearLayout
+            style="@style/device.linearLayout">
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextDeviceRequest"
+                style="@style/device.editText"
+                android:hint="@string/device_value"
+                typeface:font="inconsolata"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="@string/device_response"
+            android:textStyle="bold|italic"/>
+
+        <LinearLayout
+            style="@style/device.linearLayout">
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextDeviceResponse"
+                style="@style/device.editText"
+                android:hint="@string/device_expected_value"
+                typeface:font="inconsolata"/>
+
+            <EditText
+                android:id="@+id/editTextDeviceMessageSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:hint="@string/device_message_success"/>
+
+            <EditText
+                android:id="@+id/editTextDeviceMessageFail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:hint="@string/device_message_fail"/>
+        </LinearLayout>
+
+        <include
+            layout="@layout/common_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxDeviceOnLoad"
+            style="@style/device.checkBox"
+            android:text="@string/device_on_load"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxDeviceConfirm"
+            style="@style/device.checkBox"
+            android:text="@string/device_confirm"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxDeviceAccept"
+            style="@style/device.checkBox"
+            android:text="@string/device_accept"/>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

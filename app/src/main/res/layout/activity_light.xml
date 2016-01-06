@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:typeface="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/editTextLightName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="@string/label_name"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/message.linearLayout">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.github.openwebnet.view.custom.TextViewCustom
-            style="@style/message.textViewFontAwesome"
-            android:text="@string/light_prefix"
-            typeface:font="inconsolata"/>
+        <EditText
+            android:id="@+id/editTextLightName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/label_name"/>
 
-        <com.github.openwebnet.view.custom.EditTextCustom
-            android:id="@+id/editTextLightWhere"
-            style="@style/message.editText"
-            android:hint="@string/device_where"
-            typeface:font="inconsolata"/>
+        <LinearLayout
+            style="@style/message.linearLayout">
 
-        <com.github.openwebnet.view.custom.TextViewCustom
-            style="@style/message.textViewFontAwesome"
-            android:text="@string/light_suffix"
-            typeface:font="inconsolata"/>
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/light_prefix"
+                typeface:font="inconsolata"/>
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextLightWhere"
+                style="@style/message.editText"
+                android:hint="@string/device_where"
+                typeface:font="inconsolata"/>
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/light_suffix"
+                typeface:font="inconsolata"/>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBoxLightDimmer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/light_dimmer"/>
+
+        <include
+            layout="@layout/common_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkBoxLightDimmer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/light_dimmer"/>
-
-    <include
-        layout="@layout/common_device"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
+</ScrollView>

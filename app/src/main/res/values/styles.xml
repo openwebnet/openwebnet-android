@@ -76,10 +76,18 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
-    <style name="message.textViewFontAwesome">
+    <style name="message.textViewFontCustom">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="message.editTextFontCustom">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
     <style name="message.editText">
@@ -90,6 +98,38 @@
         <item name="android:maxLength">4</item>
         <item name="android:maxEms">4</item>
         <item name="android:inputType">number</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="device"></style>
+
+    <style name="device.linearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:background">@drawable/layout_border</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="device.checkBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
+
+    <style name="device.editText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:digits">0123456789*#</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:inputType">textMultiLine</item>
         <item name="android:textSize">32sp</item>
     </style>
 

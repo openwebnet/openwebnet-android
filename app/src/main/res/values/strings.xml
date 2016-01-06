@@ -46,10 +46,17 @@
     <string name="fa_hashtag">&#xf292;</string>
     <string name="fa_hashtag_double">&#xf292;&#xf292;</string>
 
-    <string name="device_who">who</string>
-    <string name="device_what">what</string>
     <string name="device_where">where</string>
     <string name="device_favourite">Favourite</string>
+    <string name="device_confirm">Show confirmation alert</string>
+    <string name="device_on_load">Run on load events</string>
+    <string name="device_accept">I know what I\'m doing! (Disclaimer)</string>
+    <string name="device_request">Request</string>
+    <string name="device_response">Response</string>
+    <string name="device_value">value</string>
+    <string name="device_expected_value">expected value</string>
+    <string name="device_message_success">Message success</string>
+    <string name="device_message_fail">Message fail</string>
     <string name="light_dimmer">Dimer</string>
     <string name="light_prefix">*1*1*</string>
     <string name="light_suffix">##</string>
