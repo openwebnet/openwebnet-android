@@ -57,8 +57,6 @@
     <string name="device_response">Response</string>
     <string name="device_value">value</string>
     <string name="device_expected_value">expected value</string>
-    <string name="device_message_success">Message success</string>
-    <string name="device_message_fail">Message fail</string>
     <string name="light_dimmer">Dimer</string>
     <string name="light_prefix">*1*1*</string>
     <string name="light_suffix">##</string>

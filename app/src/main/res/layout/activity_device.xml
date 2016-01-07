@@ -52,16 +52,6 @@
                 style="@style/device.editText"
                 android:hint="@string/device_expected_value"
                 typeface:font="inconsolata"/>
-
-            <EditText
-                android:id="@+id/editTextDeviceMessageSuccess"
-                style="@style/device.editTextMessage"
-                android:hint="@string/device_message_success"/>
-
-            <EditText
-                android:id="@+id/editTextDeviceMessageFail"
-                style="@style/device.editTextMessage"
-                android:hint="@string/device_message_fail"/>
         </LinearLayout>
 
         <include

@@ -1,10 +1,8 @@
 package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -36,12 +34,6 @@ public class DeviceActivity extends AbstractDeviceActivity {
 
     @Bind(R.id.editTextDeviceResponse)
     EditText editTextDeviceResponse;
-
-    @Bind(R.id.editTextDeviceMessageSuccess)
-    EditText editTextDeviceMessageSuccess;
-
-    @Bind(R.id.editTextDeviceMessageFail)
-    EditText editTextDeviceMessageFail;
 
     @Bind(R.id.checkBoxDeviceRunOnLoad)
     CheckBox checkBoxDeviceRunOnLoad;
@@ -89,8 +81,6 @@ public class DeviceActivity extends AbstractDeviceActivity {
         log.debug("name: {}", editTextDeviceName.getText());
         log.debug("request: {}", editTextDeviceRequest.getText());
         log.debug("response: {}", editTextDeviceResponse.getText());
-        log.debug("message-success: {}", editTextDeviceMessageSuccess.getText());
-        log.debug("message-fail: {}", editTextDeviceMessageFail.getText());
         log.debug("environment: {}", getSelectedEnvironment());
         log.debug("gateway: {}", getSelectedGateway());
         log.debug("favourite: {}", isFavourite());
@@ -129,19 +119,12 @@ public class DeviceActivity extends AbstractDeviceActivity {
             .name(editTextDeviceName.getText().toString())
             .request(editTextDeviceRequest.getText().toString())
             .response(editTextDeviceResponse.getText().toString())
-            .messageSuccess(getMessage(editTextDeviceMessageSuccess, labelDefaultSuccess))
-            .messageFail(getMessage(editTextDeviceMessageFail, labelDefaultFail))
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())
             .runOnLoad(checkBoxDeviceRunOnLoad.isChecked())
             .showConfirmation(checkBoxDeviceConfirm.isChecked())
             .build();
-    }
-
-    private String getMessage(TextView textView, String defaultMessage) {
-        return TextUtils.isEmpty(textView.getText()) ? defaultMessage :
-            textView.getText().toString();
     }
 
 }

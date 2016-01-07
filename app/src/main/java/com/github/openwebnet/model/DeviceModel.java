@@ -35,10 +35,6 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
     @Required
     private String response;
 
-    private String messageSuccess;
-
-    private String messageFail;
-
     private boolean favourite;
 
     private boolean runOnLoad;
@@ -57,8 +53,6 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.name = builder.name;
         this.request = builder.request;
         this.response = builder.response;
-        this.messageSuccess = builder.messageSuccess;
-        this.messageFail = builder.messageFail;
         this.favourite = builder.favourite;
         this.runOnLoad = builder.runOnLoad;
         this.showConfirmation = builder.showConfirmation;
@@ -72,8 +66,6 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         private String name;
         private String request;
         private String response;
-        private String messageSuccess;
-        private String messageFail;
         private boolean favourite;
         private boolean runOnLoad;
         private boolean showConfirmation;
@@ -104,16 +96,6 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
 
         public Builder response(String response) {
             this.response = response;
-            return this;
-        }
-
-        public Builder messageSuccess(String message) {
-            this.messageSuccess = message;
-            return this;
-        }
-
-        public Builder messageFail(String message) {
-            this.messageFail = message;
             return this;
         }
 
@@ -198,22 +180,6 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
 
     public void setResponse(String response) {
         this.response = response;
-    }
-
-    public String getMessageSuccess() {
-        return messageSuccess;
-    }
-
-    public void setMessageSuccess(String messageSuccess) {
-        this.messageSuccess = messageSuccess;
-    }
-
-    public String getMessageFail() {
-        return messageFail;
-    }
-
-    public void setMessageFail(String messageFail) {
-        this.messageFail = messageFail;
     }
 
     public boolean isFavourite() {
