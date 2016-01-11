@@ -31,7 +31,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.BindColor;
-import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
@@ -51,12 +50,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Inject
     Context mContext;
 
-    @BindDrawable(R.drawable.star)
-    int drawableStar;
-
-    @BindDrawable(R.drawable.star_outline)
-    int drawableStarOutline;
-
     private final Integer mEnvironmentId;
     private List<DomoticModel> mItems;
 
@@ -72,7 +65,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class DeviceViewHolder extends RecyclerView.ViewHolder {
+    public static class DeviceViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 100;
 
@@ -85,17 +78,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardDeviceMenu)
         ImageView imageViewCardDeviceMenu;
 
-        /* commons */
-
-        @Bind(R.id.imageButtonCardFavourite)
-        ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageButtonCardSend)
-        ImageButton imageButtonCardSend;
-
-        @Bind(R.id.imageViewCardAlert)
-        ImageView imageViewCardAlert;
-
         public DeviceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -105,7 +87,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class LightViewHolder extends RecyclerView.ViewHolder {
+    public static class LightViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 200;
 
@@ -123,7 +105,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardLightMenu)
         ImageView imageViewCardLightMenu;
 
-        /* commons */
+        public LightViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
@@ -134,7 +122,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
 
-        public LightViewHolder(View view) {
+        public CommonViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -188,10 +176,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void initCardDevice(DeviceViewHolder holder, DeviceModel device) {
         holder.textViewCardDevice.setText(device.getName());
-    }
 
-    private void updateDeviceFavourite(DeviceViewHolder holder, boolean favourite) {
-        holder.imageButtonCardFavourite.setImageResource(getFavouriteDrawable(favourite));
+        // TODO abstract
+        updateFavourite(holder, device.isFavourite());
+        holder.imageButtonCardFavourite.setOnClickListener(v -> {
+            device.setFavourite(!device.isFavourite());
+            deviceService.update(device)
+                .doOnCompleted(() -> updateFavourite(holder, device.isFavourite()))
+                .subscribe();
+        });
     }
 
     /* Light */
@@ -199,11 +192,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initCardLight(LightViewHolder holder, LightModel light) {
         holder.textViewCardLightTitle.setText(light.getName());
 
-        updateLightFavourite(holder, light.isFavourite());
+        // TODO abstract
+        updateFavourite(holder, light.isFavourite());
         holder.imageButtonCardFavourite.setOnClickListener(v -> {
             light.setFavourite(!light.isFavourite());
             lightService.update(light)
-                .doOnCompleted(() -> updateLightFavourite(holder, light.isFavourite()))
+                .doOnCompleted(() -> updateFavourite(holder, light.isFavourite()))
                 .subscribe();
         });
 
@@ -234,10 +228,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 return true;
             });
         });
-    }
-
-    private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
-        holder.imageButtonCardFavourite.setImageResource(getFavouriteDrawable(favourite));
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -274,8 +264,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         EventBus.getDefault().post(new DeviceListFragment.UpdateDeviceListEvent(mEnvironmentId));
     }
 
-    private int getFavouriteDrawable(boolean favourite) {
-        return favourite ? drawableStar : drawableStarOutline;
+    private void updateFavourite(CommonViewHolder holder, boolean favourite) {
+        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
+        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
     }
 
 }

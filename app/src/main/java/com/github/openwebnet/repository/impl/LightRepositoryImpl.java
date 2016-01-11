@@ -17,7 +17,7 @@ import static com.github.openwebnet.model.LightModel.FIELD_ENVIRONMENT_ID;
 public class LightRepositoryImpl extends CommonRealmRepositoryImpl<LightModel>
         implements LightRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(LightRepositoryImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(LightRepository.class);
 
     @Override
     protected Class<LightModel> getRealmModelClass() {
