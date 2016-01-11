@@ -13,6 +13,7 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
 
     public static final String FIELD_ENVIRONMENT_ID = "environmentId";
 
+    // TODO handle also WAIT and ERROR
     public enum Status {
         SUCCESS, FAIL
     }

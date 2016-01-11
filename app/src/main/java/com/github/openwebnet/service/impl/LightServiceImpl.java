@@ -89,7 +89,12 @@ public class LightServiceImpl implements LightService {
             .map(Lighting.handleResponse(
                 () -> light.setStatus(LightModel.Status.ON),
                 () -> light.setStatus(null)))
-            .map(openSession -> light);
+            .map(openSession -> light)
+            .onErrorReturn(throwable -> {
+                log.error("fail to turnOn light={}", light.getUuid());
+                light.setStatus(null);
+                return light;
+            });
     }
 
     @Override
@@ -101,7 +106,12 @@ public class LightServiceImpl implements LightService {
             .map(Lighting.handleResponse(
                 () -> light.setStatus(LightModel.Status.OFF),
                 () -> light.setStatus(null)))
-            .map(openSession -> light);
+            .map(openSession -> light)
+            .onErrorReturn(throwable -> {
+                log.error("fail to turnOff light={}", light.getUuid());
+                light.setStatus(null);
+                return light;
+            });
     }
 
 }

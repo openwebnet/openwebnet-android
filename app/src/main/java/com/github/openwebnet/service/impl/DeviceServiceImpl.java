@@ -1,9 +1,13 @@
 package com.github.openwebnet.service.impl;
 
+import android.text.TextUtils;
+
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.github.niqdev.openwebnet.OpenSession;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
+import static com.github.openwebnet.model.DeviceModel.Status.*;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
@@ -18,6 +22,7 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class DeviceServiceImpl implements DeviceService {
@@ -72,14 +77,14 @@ public class DeviceServiceImpl implements DeviceService {
                     .collect(Collectors.toList())))
             .map(response -> {
                 boolean isExpectedResponse = device.getResponse().equals(response);
+                device.setStatus(isExpectedResponse ? SUCCESS: FAIL);
                 log.debug("SEND_REQUEST: [isExpected={}][response={}][value={}]",
                     isExpectedResponse, device.getResponse(), response);
-
-                if (isExpectedResponse) {
-                    device.setStatus(DeviceModel.Status.SUCCESS);
-                } else {
-                    device.setStatus(DeviceModel.Status.FAIL);
-                }
+                return device;
+            })
+            .onErrorReturn(throwable1 -> {
+                log.error("fail to send request for device={}", device.getUuid());
+                device.setStatus(null);
                 return device;
             });
     }

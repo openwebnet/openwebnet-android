@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -200,29 +201,30 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .subscribe();
         });
 
-        updateDeviceStatus(holder, device);
-        holder.imageButtonCardSend.setOnClickListener(v -> updateDeviceStatus(holder, device));
-    }
-
-    private void updateDeviceStatus(DeviceViewHolder holder, DeviceModel device) {
-        /* TODO
-        if (status == null) {
-            log.warn("light status is null: unable to update");
-            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
-            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
-            return;
-        }
-        */
-
         holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
         if (device.isRunOnLoad()) {
-            deviceService.sendRequest(device).subscribe(deviceModel -> {
-                switch (deviceModel.getStatus()) {
-                    case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
-                    case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
-                }
-            });
+            sendDeviceRequest(holder, device);
         }
+
+        holder.imageButtonCardSend.setOnClickListener(v -> sendDeviceRequest(holder, device));
+    }
+
+    private void sendDeviceRequest(DeviceViewHolder holder, DeviceModel device) {
+        deviceService.sendRequest(device).subscribe(deviceModel -> {
+            if (deviceModel.getStatus() == null) {
+                holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
+                holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+                holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+                return;
+            }
+
+            holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+            switch (deviceModel.getStatus()) {
+                case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
+                case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
+            }
+        });
     }
 
     /* Light */
