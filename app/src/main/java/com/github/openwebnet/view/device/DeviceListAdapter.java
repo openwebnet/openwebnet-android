@@ -2,6 +2,7 @@ package com.github.openwebnet.view.device;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindDrawable;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
@@ -68,6 +70,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public static class DeviceViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 100;
+
+        @BindDrawable(R.drawable.triangle_wait)
+        Drawable drawableStatusWait;
+
+        @BindDrawable(R.drawable.triangle_success)
+        Drawable drawableStatusSuccess;
+
+        @BindDrawable(R.drawable.triangle_fail)
+        Drawable drawableStatusFail;
 
         @Bind(R.id.relativeLayoutCardDeviceStatus)
         RelativeLayout relativeLayoutCardDeviceStatus;
@@ -188,6 +199,30 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .doOnCompleted(() -> updateFavourite(holder, device.isFavourite()))
                 .subscribe();
         });
+
+        updateDeviceStatus(holder, device);
+        holder.imageButtonCardSend.setOnClickListener(v -> updateDeviceStatus(holder, device));
+    }
+
+    private void updateDeviceStatus(DeviceViewHolder holder, DeviceModel device) {
+        /* TODO
+        if (status == null) {
+            log.warn("light status is null: unable to update");
+            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        */
+
+        holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
+        if (device.isRunOnLoad()) {
+            deviceService.sendRequest(device).subscribe(deviceModel -> {
+                switch (deviceModel.getStatus()) {
+                    case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
+                    case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
+                }
+            });
+        }
     }
 
     /* Light */

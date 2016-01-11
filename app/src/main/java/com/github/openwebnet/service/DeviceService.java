@@ -18,4 +18,8 @@ public interface DeviceService {
 
     Observable<List<DeviceModel>> findByEnvironment(Integer id);
 
+    /* operate on background threads */
+
+    Observable<DeviceModel> sendRequest(DeviceModel device);
+
 }

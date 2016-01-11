@@ -36,9 +36,9 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:paddingBottom="4dp"
+                    android:paddingLeft="6dp"
                     android:paddingTop="16dp"
                     android:singleLine="true"
-                    android:text="Title TODO"
                     android:textSize="24sp"/>
 
                 <ImageView
