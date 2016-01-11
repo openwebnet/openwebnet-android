@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,9 +86,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
-        @Bind(R.id.imageViewCardDeviceMenu)
-        ImageView imageViewCardDeviceMenu;
-
         public DeviceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -114,9 +110,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        @Bind(R.id.imageViewCardLightMenu)
-        ImageView imageViewCardLightMenu;
-
         public LightViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -127,6 +120,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      *
      */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
+
+        /* different layout */
+
+        @Bind(R.id.imageViewCardMenu)
+        ImageView imageViewCardMenu;
+
+        /* common layout */
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
@@ -207,6 +207,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         holder.imageButtonCardSend.setOnClickListener(v -> sendDeviceRequest(holder, device));
+
+        holder.imageViewCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditDevice = new Intent(mContext, LightActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, device.getUuid());
+                mContext.startActivity(intentEditDevice);
+            },
+            () -> deviceService.delete(device.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
     }
 
     private void sendDeviceRequest(DeviceViewHolder holder, DeviceModel device) {
@@ -244,30 +255,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateLightStatus(holder, light.getStatus());
         holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
 
-        holder.imageViewCardLightMenu.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(mContext, v);
-            popupMenu.getMenuInflater().inflate(R.menu.menu_card, popupMenu.getMenu());
-            popupMenu.show();
-            popupMenu.setOnMenuItemClickListener(item -> {
-                int id = item.getItemId();
-                log.debug("CARD MENU selected [id={}]", id);
-
-                switch (id) {
-                    case R.id.action_card_edit:
-                        Intent intentEditLight = new Intent(mContext, LightActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(RealmModel.FIELD_UUID, light.getUuid());
-                        mContext.startActivity(intentEditLight);
-                        break;
-                    case R.id.action_card_delete:
-                        lightService.delete(light.getUuid())
-                            .doOnCompleted(() -> updateDeviceListEvent())
-                            .subscribe();
-                        break;
-                }
-                return true;
-            });
-        });
+        holder.imageViewCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditLight = new Intent(mContext, LightActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, light.getUuid());
+                mContext.startActivity(intentEditLight);
+            },
+            () -> lightService.delete(light.getUuid())
+                    .doOnCompleted(() -> updateDeviceListEvent())
+                    .subscribe()));
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -307,6 +304,21 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
+    }
+
+    private void showCardMenu(View view, Action0 onMenuEdit, Action0 onMenuDelete) {
+        PopupMenu popupMenu = new PopupMenu(mContext, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_card, popupMenu.getMenu());
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            log.debug("CARD MENU selected [id={}]", id);
+            switch (id) {
+                case R.id.action_card_edit: onMenuEdit.call(); break;
+                case R.id.action_card_delete: onMenuDelete.call(); break;
+            }
+            return true;
+        });
     }
 
 }
