@@ -54,7 +54,7 @@ public class DeviceListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.device_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_device, container, false);
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);

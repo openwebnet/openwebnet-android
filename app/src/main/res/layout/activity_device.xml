@@ -55,7 +55,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/common_device"
+            layout="@layout/activity_common_device"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

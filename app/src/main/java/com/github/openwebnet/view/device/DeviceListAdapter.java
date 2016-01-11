@@ -111,6 +111,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageButtonCardFavourite)
@@ -144,10 +147,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case DeviceViewHolder.VIEW_TYPE:
                 return new DeviceViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.device_card, parent, false));
+                    .inflate(R.layout.card_device, parent, false));
             case LightViewHolder.VIEW_TYPE:
                 return new LightViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.light_card, parent, false));
+                    .inflate(R.layout.card_light, parent, false));
             default:
                 throw new IllegalStateException("invalid view type");
         }
