@@ -72,7 +72,18 @@ public class DeviceActivity extends AbstractDeviceActivity {
         deviceUuid = getIntent().getStringExtra(RealmModel.FIELD_UUID);
         log.debug("initEditDevice: {}", deviceUuid);
         if (deviceUuid != null) {
-            // TODO edit
+            deviceService.findById(deviceUuid).subscribe(device -> {
+                editTextDeviceName.setText(String.valueOf(device.getName()));
+                editTextDeviceRequest.setText(String.valueOf(device.getRequest()));
+                editTextDeviceResponse.setText(String.valueOf(device.getResponse()));
+
+                selectEnvironment(device.getEnvironmentId());
+                selectGateway(device.getGatewayUuid());
+                setFavourite(device.isFavourite());
+
+                checkBoxDeviceRunOnLoad.setChecked(device.isRunOnLoad());
+                checkBoxDeviceConfirm.setChecked(device.isShowConfirmation());
+            });
         }
     }
 

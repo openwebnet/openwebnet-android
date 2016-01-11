@@ -42,7 +42,7 @@
                     android:textSize="24sp"/>
 
                 <ImageView
-                    android:id="@+id/imageViewCardMenu"
+                    android:id="@+id/imageViewCardDeviceMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="4dp"

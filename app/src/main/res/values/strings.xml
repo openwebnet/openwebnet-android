@@ -51,7 +51,7 @@
     <string name="device_where">where</string>
     <string name="device_favourite">Favourite</string>
     <string name="device_confirm">Show confirmation alert</string>
-    <string name="device_on_load">Run on load events</string>
+    <string name="device_on_load">Run on event load</string>
     <string name="device_accept">I know what I\'m doing! (Disclaimer)</string>
     <string name="device_request">Request</string>
     <string name="device_response">Response</string>
