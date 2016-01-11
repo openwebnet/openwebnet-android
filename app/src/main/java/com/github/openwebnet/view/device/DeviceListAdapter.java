@@ -95,14 +95,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardLightMenu)
         ImageView imageViewCardLightMenu;
 
-        @Bind(R.id.imageButtonCardLightFavourite)
-        ImageButton imageButtonCardLightFavourite;
+        @Bind(R.id.imageButtonCardFavourite)
+        ImageButton imageButtonCardFavourite;
 
-        @Bind(R.id.imageButtonCardLightSend)
-        ImageButton imageButtonCardLightSend;
+        @Bind(R.id.imageButtonCardSend)
+        ImageButton imageButtonCardSend;
 
-        @Bind(R.id.imageViewCardLightAlert)
-        ImageView imageViewCardLightAlert;
+        @Bind(R.id.imageViewCardAlert)
+        ImageView imageViewCardAlert;
 
         public LightViewHolder(View view) {
             super(view);
@@ -162,15 +162,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.textViewCardLightTitle.setText(light.getName());
 
         updateLightFavourite(holder, light.isFavourite());
-        holder.imageButtonCardLightFavourite.setOnClickListener(v -> {
+        holder.imageButtonCardFavourite.setOnClickListener(v -> {
             light.setFavourite(!light.isFavourite());
             lightService.update(light)
-                .doOnCompleted(() -> updateLightFavourite(holder, light.isFavourite()))
-                .subscribe();
+                    .doOnCompleted(() -> updateLightFavourite(holder, light.isFavourite()))
+                    .subscribe();
         });
 
         updateLightStatus(holder, light.getStatus());
-        holder.imageButtonCardLightSend.setOnClickListener(v -> toggleLight(holder, light));
+        holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
 
         holder.imageViewCardLightMenu.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(mContext, v);
@@ -200,15 +200,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void updateLightFavourite(LightViewHolder holder, boolean favourite) {
         int starDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
-        holder.imageButtonCardLightFavourite.setImageResource(starDrawable);
+        holder.imageButtonCardFavourite.setImageResource(starDrawable);
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
-        holder.imageButtonCardLightSend.setVisibility(View.VISIBLE);
+        holder.imageButtonCardSend.setVisibility(View.VISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
-            holder.imageButtonCardLightSend.setVisibility(View.INVISIBLE);
-            holder.imageViewCardLightAlert.setVisibility(View.VISIBLE);
+            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
         switch (status) {

@@ -22,10 +22,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+                android:layout_height="wrap_content"
+                >
 
                 <RelativeLayout
                     android:layout_width="48dp"
@@ -35,42 +33,23 @@
                 <TextView
                     android:id="@+id/textViewCardDeviceTitle"
                     style="@style/deviceCard.textView"
+                    android:layout_weight="1"
+                    android:text="Title TODO"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:paddingBottom="4dp"
                     android:paddingTop="16dp"
-                    android:text="Title"
                     android:textSize="24sp"/>
+
+                <ImageView
+                    android:id="@+id/imageViewCardDeviceMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="20dp"
+                    android:src="@drawable/dots_vertical"/>
             </LinearLayout>
-
-
-
-            <TextView
-                android:id="@+id/textViewCardDeviceSubtitle"
-                style="@style/deviceCard.textView"
-                android:paddingBottom="16dp"
-                android:paddingTop="4dp"
-                android:text="Subtitle"
-                android:textSize="14sp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp">
-
-                <ImageButton
-                    android:id="@+id/imageButtonCardDeviceFavourite"
-                    style="@style/deviceCard.imageButton"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/star_outline"/>
-
-                <ImageButton
-                    android:id="@+id/imageButtonCardDeviceSend"
-                    style="@style/deviceCard.imageButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/send"/>
-            </RelativeLayout>
 
         </LinearLayout>
 

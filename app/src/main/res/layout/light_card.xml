@@ -50,35 +50,11 @@
                     android:src="@drawable/dots_vertical"/>
             </LinearLayout>
 
-            <RelativeLayout
+            <include
+                layout="@layout/card_common_action"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp">
-
-                <ImageButton
-                    android:id="@+id/imageButtonCardLightFavourite"
-                    style="@style/deviceCard.imageButton"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/star_outline"/>
-
-                <ImageView
-                    android:id="@+id/imageViewCardLightAlert"
-                    style="@style/deviceCard.imageButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/alert"
-                    android:visibility="invisible"/>
-
-                <ImageButton
-                    android:id="@+id/imageButtonCardLightSend"
-                    style="@style/deviceCard.imageButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/send"/>
-            </RelativeLayout>
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
