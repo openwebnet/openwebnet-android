@@ -20,36 +20,42 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal">
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutCardDeviceStatus"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/triangle_wait" />
+                    android:background="@drawable/triangle_wait"/>
 
                 <TextView
                     android:id="@+id/textViewCardDeviceTitle"
                     style="@style/deviceCard.textView"
                     android:layout_weight="1"
-                    android:text="Title TODO"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:paddingBottom="4dp"
                     android:paddingTop="16dp"
+                    android:singleLine="true"
+                    android:text="Title TODO"
                     android:textSize="24sp"/>
 
                 <ImageView
                     android:id="@+id/imageViewCardDeviceMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
                     android:paddingBottom="4dp"
+                    android:paddingRight="16dp"
                     android:paddingTop="20dp"
                     android:src="@drawable/dots_vertical"/>
             </LinearLayout>
+
+            <include
+                layout="@layout/card_common_action"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"/>
 
         </LinearLayout>
 
