@@ -75,7 +75,7 @@ public class MainActivityTest {
         ApplicationComponentTest applicationComponentTest = DaggerApplicationComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
             .domoticModuleTest(new DomoticModuleTest())
-            .repositoryModuleTest(new RepositoryModuleTest())
+            .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
