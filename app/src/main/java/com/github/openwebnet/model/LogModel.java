@@ -7,6 +7,7 @@ import io.realm.annotations.Required;
 
 import static java.util.Objects.requireNonNull;
 
+// TODO
 public class LogModel extends RealmObject {
 
     @Required

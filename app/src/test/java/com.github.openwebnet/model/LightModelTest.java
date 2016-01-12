@@ -3,8 +3,17 @@ package com.github.openwebnet.model;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class LightModelTest {
+
+    private final Integer LIGHT_ENVIRONMENT = 100;
+    private final String LIGHT_GATEWAY = "gatewayUuid";
+    private final String LIGHT_NAME = "name";
+    private final Integer LIGHT_WHERE = 8;
+    private final boolean LIGHT_DIMMER = true;
+    private final boolean LIGHT_FAVOURITE = true;
 
     @Test(expected = NullPointerException.class)
     public void testLightModelBuilder_nullEnvironmentId() {
@@ -27,28 +36,44 @@ public class LightModelTest {
     }
 
     @Test
-    public void testLightModelBuilder_success() {
-        String LIGHT_NAME = "name";
-        Integer LIGHT_WHERE = 8;
-        boolean LIGHT_DIMMER = true;
-        Integer LIGHT_ENVIRONMENT = 100;
-        String LIGHT_GATEWAY = "gateway";
-        boolean LIGHT_FAVOURITE = true;
-
+    public void testLightModelAddBuilder_success() {
         LightModel light = LightModel.addBuilder()
+            .environment(LIGHT_ENVIRONMENT)
+            .gateway(LIGHT_GATEWAY)
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .dimmer(LIGHT_DIMMER)
+            .favourite(LIGHT_FAVOURITE)
+            .build();
+
+        assertNotNull("invalid uuid", light.getUuid());
+        assertCommonFields(light);
+    }
+
+    @Test
+    public void testLightModelUpdateBuilder_success() {
+        String LIGHT_UUID = "myUUid";
+        LightModel light = LightModel.updateBuilder(LIGHT_UUID)
             .environment(LIGHT_ENVIRONMENT)
             .gateway(LIGHT_GATEWAY)
-            .favourite(LIGHT_FAVOURITE).build();
+            .name(LIGHT_NAME)
+            .where(LIGHT_WHERE)
+            .dimmer(LIGHT_DIMMER)
+            .favourite(LIGHT_FAVOURITE)
+            .build();
 
+        assertEquals("invalid uuid", LIGHT_UUID, light.getUuid());
+        assertCommonFields(light);
+    }
+
+    private void assertCommonFields(LightModel light) {
+        assertEquals("invalid environmentId", LIGHT_ENVIRONMENT, light.getEnvironmentId());
+        assertEquals("invalid gatewayUuid", LIGHT_GATEWAY, light.getGatewayUuid());
         assertEquals("invalid name", LIGHT_NAME, light.getName());
         assertEquals("invalid where", LIGHT_WHERE, light.getWhere());
         assertEquals("invalid dimmer", LIGHT_DIMMER, light.isDimmer());
-        assertEquals("invalid environmentId", LIGHT_ENVIRONMENT, light.getEnvironmentId());
-        assertEquals("invalid gatewayUuid", LIGHT_GATEWAY, light.getGatewayUuid());
         assertEquals("invalid favourite", LIGHT_FAVOURITE, light.isFavourite());
+        assertNull("invalid status", light.getStatus());
     }
 
 }
