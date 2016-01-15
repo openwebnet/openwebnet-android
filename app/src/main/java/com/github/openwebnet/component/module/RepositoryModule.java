@@ -1,5 +1,6 @@
 package com.github.openwebnet.component.module;
 
+import com.github.openwebnet.repository.DatabaseHelper;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
@@ -16,6 +17,12 @@ import dagger.Provides;
 
 @Module
 public class RepositoryModule {
+
+    @Provides
+    @Singleton
+    public DatabaseHelper provideDatabaseHelper() {
+        return new DatabaseHelper();
+    }
 
     @Provides
     @Singleton

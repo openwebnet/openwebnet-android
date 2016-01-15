@@ -1,6 +1,8 @@
 package com.github.openwebnet.repository.impl;
 
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.repository.DatabaseHelper;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
@@ -8,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -18,6 +22,13 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
 
     private static final Logger log = LoggerFactory.getLogger(EnvironmentRepository.class);
     private static final Integer INITIAL_SEQ = 100;
+
+    @Inject
+    DatabaseHelper databaseHelper;
+
+    public EnvironmentRepositoryImpl() {
+        Injector.getApplicationComponent().inject(this);
+    }
 
     @Override
     public Observable<Integer> getNextId() {

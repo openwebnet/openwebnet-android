@@ -1,12 +1,16 @@
 package com.github.openwebnet.repository.impl;
 
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.repository.CommonRealmRepository;
+import com.github.openwebnet.repository.DatabaseHelper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -19,6 +23,13 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
         implements CommonRealmRepository<M> {
 
     private static final Logger log = LoggerFactory.getLogger(CommonRealmRepositoryImpl.class);
+
+    @Inject
+    DatabaseHelper databaseHelper;
+
+    protected CommonRealmRepositoryImpl() {
+        Injector.getApplicationComponent().inject(this);
+    }
 
     protected abstract Class<M> getRealmModelClass();
 

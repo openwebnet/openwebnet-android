@@ -1,12 +1,16 @@
 package com.github.openwebnet.repository.impl;
 
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.repository.DatabaseHelper;
 import com.github.openwebnet.repository.LightRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -18,6 +22,13 @@ public class LightRepositoryImpl extends CommonRealmRepositoryImpl<LightModel>
         implements LightRepository {
 
     private static final Logger log = LoggerFactory.getLogger(LightRepository.class);
+
+    @Inject
+    DatabaseHelper databaseHelper;
+
+    public LightRepositoryImpl() {
+        Injector.getApplicationComponent().inject(this);
+    }
 
     @Override
     protected Class<LightModel> getRealmModelClass() {

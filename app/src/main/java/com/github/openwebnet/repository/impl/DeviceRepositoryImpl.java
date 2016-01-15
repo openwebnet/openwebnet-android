@@ -1,12 +1,16 @@
 package com.github.openwebnet.repository.impl;
 
+import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.repository.DatabaseHelper;
 import com.github.openwebnet.repository.DeviceRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -18,6 +22,13 @@ public class DeviceRepositoryImpl extends CommonRealmRepositoryImpl<DeviceModel>
         implements DeviceRepository {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceRepository.class);
+
+    @Inject
+    DatabaseHelper databaseHelper;
+
+    public DeviceRepositoryImpl() {
+        Injector.getApplicationComponent().inject(this);
+    }
 
     @Override
     protected Class<DeviceModel> getRealmModelClass() {
