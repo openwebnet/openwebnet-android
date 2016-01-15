@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.LightRepository;
 
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class LightRepositoryImpl extends CommonRealmRepositoryImpl<LightModel>
     private static final Logger log = LoggerFactory.getLogger(LightRepository.class);
 
     @Inject
-    DatabaseHelper databaseHelper;
+    DatabaseRealm databaseRealm;
 
     public LightRepositoryImpl() {
         Injector.getApplicationComponent().inject(this);

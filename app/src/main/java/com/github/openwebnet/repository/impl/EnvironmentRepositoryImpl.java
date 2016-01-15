@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     private static final Integer INITIAL_SEQ = 100;
 
     @Inject
-    DatabaseHelper databaseHelper;
+    DatabaseRealm databaseRealm;
 
     public EnvironmentRepositoryImpl() {
         Injector.getApplicationComponent().inject(this);

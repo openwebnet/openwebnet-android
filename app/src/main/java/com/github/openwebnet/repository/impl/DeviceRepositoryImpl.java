@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.DeviceRepository;
 
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class DeviceRepositoryImpl extends CommonRealmRepositoryImpl<DeviceModel>
     private static final Logger log = LoggerFactory.getLogger(DeviceRepository.class);
 
     @Inject
-    DatabaseHelper databaseHelper;
+    DatabaseRealm databaseRealm;
 
     public DeviceRepositoryImpl() {
         Injector.getApplicationComponent().inject(this);

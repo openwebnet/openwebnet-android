@@ -4,7 +4,7 @@ import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.component.module.ApplicationContextModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
@@ -52,7 +52,7 @@ public interface ApplicationComponent {
     void inject(PreferenceServiceImpl preferenceService);
 
     // repository
-    void inject(DatabaseHelper databaseHelper);
+    void inject(DatabaseRealm databaseRealm);
     void inject(DeviceRepositoryImpl repository);
     void inject(EnvironmentRepositoryImpl repository);
     void inject(LightRepositoryImpl repository);

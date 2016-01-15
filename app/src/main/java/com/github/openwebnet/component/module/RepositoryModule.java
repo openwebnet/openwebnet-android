@@ -1,6 +1,6 @@
 package com.github.openwebnet.component.module;
 
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
@@ -20,8 +20,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public DatabaseHelper provideDatabaseHelper() {
-        return new DatabaseHelper();
+    public DatabaseRealm provideDatabaseRealm() {
+        return new DatabaseRealm();
     }
 
     @Provides

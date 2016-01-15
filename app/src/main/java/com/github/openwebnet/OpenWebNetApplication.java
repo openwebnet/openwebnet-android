@@ -3,7 +3,7 @@ package com.github.openwebnet;
 import android.app.Application;
 
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 
 import javax.inject.Inject;
 
@@ -13,7 +13,7 @@ import javax.inject.Inject;
 public class OpenWebNetApplication extends Application {
 
     @Inject
-    DatabaseHelper databaseHelper;
+    DatabaseRealm databaseRealm;
 
     @Override
     public void onCreate() {
@@ -21,6 +21,6 @@ public class OpenWebNetApplication extends Application {
 
         Injector.initializeApplicationComponent(this);
         Injector.getApplicationComponent().inject(this);
-        databaseHelper.setup();
+        databaseRealm.setup();
     }
 }

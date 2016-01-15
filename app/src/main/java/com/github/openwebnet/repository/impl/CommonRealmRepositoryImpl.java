@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.repository.CommonRealmRepository;
-import com.github.openwebnet.repository.DatabaseHelper;
+import com.github.openwebnet.repository.DatabaseRealm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     private static final Logger log = LoggerFactory.getLogger(CommonRealmRepositoryImpl.class);
 
     @Inject
-    DatabaseHelper databaseHelper;
+    DatabaseRealm databaseRealm;
 
     protected abstract Class<M> getRealmModelClass();
 
