@@ -1,6 +1,5 @@
 package com.github.openwebnet.repository.impl;
 
-import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.repository.CommonRealmRepository;
 import com.github.openwebnet.repository.DatabaseHelper;
@@ -26,10 +25,6 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
 
     @Inject
     DatabaseHelper databaseHelper;
-
-    protected CommonRealmRepositoryImpl() {
-        Injector.getApplicationComponent().inject(this);
-    }
 
     protected abstract Class<M> getRealmModelClass();
 
