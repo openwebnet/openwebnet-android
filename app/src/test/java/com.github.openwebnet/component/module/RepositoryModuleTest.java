@@ -1,5 +1,6 @@
 package com.github.openwebnet.component.module;
 
+import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
@@ -23,6 +24,12 @@ public class RepositoryModuleTest {
 
     public RepositoryModuleTest(boolean isMocked) {
         this.isMocked = isMocked;
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseRealm provideDatabaseRealm() {
+        return mock(DatabaseRealm.class);
     }
 
     @Provides
