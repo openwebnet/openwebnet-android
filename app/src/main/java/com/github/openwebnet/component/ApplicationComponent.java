@@ -7,6 +7,7 @@ import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.repository.DatabaseRealm;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
@@ -55,6 +56,7 @@ public interface ApplicationComponent {
     void inject(DatabaseRealm databaseRealm);
     void inject(DeviceRepositoryImpl repository);
     void inject(EnvironmentRepositoryImpl repository);
+    void inject(GatewayRepositoryImpl repository);
     void inject(LightRepositoryImpl repository);
 
 }
