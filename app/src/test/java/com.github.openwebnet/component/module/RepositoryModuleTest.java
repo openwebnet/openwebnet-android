@@ -5,6 +5,7 @@ import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
 import com.github.openwebnet.repository.LightRepository;
+import com.github.openwebnet.repository.SampleRepository;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
@@ -54,6 +55,12 @@ public class RepositoryModuleTest {
     @Singleton
     DeviceRepository provideDevice() {
         return isMocked ? mock(DeviceRepository.class) : new DeviceRepositoryImpl();
+    }
+
+    @Provides
+    @Singleton
+    SampleRepository provideSample() {
+        return isMocked ? mock(SampleRepository.class) : new SampleRepository();
     }
 
 }

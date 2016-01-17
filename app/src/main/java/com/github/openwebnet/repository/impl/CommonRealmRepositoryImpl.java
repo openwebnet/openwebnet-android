@@ -32,12 +32,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<String> add(M model) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealm(model);
-                realm.commitTransaction();
-
-                subscriber.onNext(model.getUuid());
+                subscriber.onNext(databaseRealm.add(model).getUuid());
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("ADD", e);
@@ -50,11 +45,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<Void> update(M model) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(model);
-                realm.commitTransaction();
-
+                databaseRealm.update(model);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("UPDATE", e);

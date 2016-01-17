@@ -47,6 +47,14 @@ public class DatabaseRealm {
         return model;
     }
 
+    public <T extends RealmObject> T update(T model) {
+        Realm realm = getRealmInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(model);
+        realm.commitTransaction();
+        return model;
+    }
+
     private <T extends RealmObject> RealmQuery<T> query(Class<T> clazz) {
         return getRealmInstance().where(clazz);
     }
