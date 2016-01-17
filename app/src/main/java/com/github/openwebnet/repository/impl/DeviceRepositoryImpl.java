@@ -12,11 +12,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import rx.Observable;
-
-import static com.github.openwebnet.model.DeviceModel.FIELD_ENVIRONMENT_ID;
 
 public class DeviceRepositoryImpl extends CommonRealmRepositoryImpl<DeviceModel>
         implements DeviceRepository {
@@ -39,11 +35,8 @@ public class DeviceRepositoryImpl extends CommonRealmRepositoryImpl<DeviceModel>
     public Observable<List<DeviceModel>> findByEnvironment(Integer id) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                RealmResults<DeviceModel> models = realm
-                    .where(DeviceModel.class).equalTo(FIELD_ENVIRONMENT_ID, id).findAll();
-
-                subscriber.onNext(realm.copyFromRealm(models));
+                subscriber.onNext(databaseRealm
+                    .findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID, id));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("FIND_BY_ENVIRONMENT", e);

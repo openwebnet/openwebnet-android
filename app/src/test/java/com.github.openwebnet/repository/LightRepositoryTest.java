@@ -60,6 +60,7 @@ public class LightRepositoryTest {
     @Test
     public void lightRepository_findByEnvironment() {
         Integer ENVIRONMENT = 108;
+
         LightModel light1 = LightModel.updateBuilder("uuid1")
             .environment(ENVIRONMENT)
             .gateway("gateway")
