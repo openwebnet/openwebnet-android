@@ -47,22 +47,27 @@ public class DatabaseRealm {
         return model;
     }
 
-    private <T extends RealmObject> RealmQuery<T> findWhere(Class<T> clazz) {
+    private <T extends RealmObject> RealmQuery<T> query(Class<T> clazz) {
         return getRealmInstance().where(clazz);
     }
 
-    public <T extends RealmObject> List<T> findAll(Class<T> clazz) {
-        return findWhere(clazz).findAll();
+    public <T extends RealmObject> List<T> find(Class<T> clazz) {
+        return query(clazz).findAll();
     }
 
-    public <T extends RealmObject> List<T> findAllSortedAscending(Class<T> clazz, String field) {
-        RealmResults<T> results = findWhere(clazz).findAll();
+    public <T extends RealmObject> List<T> findSortedAscending(Class<T> clazz, String field) {
+        RealmResults<T> results = query(clazz).findAll();
         results.sort(field, Sort.ASCENDING);
         return results;
     }
 
     public <T extends RealmObject> Number findMax(Class<T> clazz, String field) {
-        return findWhere(clazz).max(field);
+        return query(clazz).max(field);
+    }
+
+    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Integer value) {
+        RealmResults<T> results = query(clazz).equalTo(field, value).findAll();
+        return getRealmInstance().copyFromRealm(results);
     }
 
 }

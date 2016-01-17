@@ -4,6 +4,7 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.repository.EnvironmentRepositoryTest;
+import com.github.openwebnet.repository.LightRepositoryTest;
 import com.github.openwebnet.view.MainActivityTest;
 
 import javax.inject.Singleton;
@@ -16,5 +17,6 @@ public interface ApplicationComponentTest extends ApplicationComponent {
 
     void inject(MainActivityTest activity);
     void inject(EnvironmentRepositoryTest repository);
+    void inject(LightRepositoryTest repository);
 
 }

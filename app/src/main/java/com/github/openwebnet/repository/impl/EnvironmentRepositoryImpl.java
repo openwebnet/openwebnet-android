@@ -68,7 +68,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         return Observable.create(subscriber -> {
             try {
                 subscriber.onNext(databaseRealm
-                    .findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME));
+                    .findSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-FIND_ALL", e);

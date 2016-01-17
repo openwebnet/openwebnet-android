@@ -103,13 +103,13 @@ public class EnvironmentRepositoryTest {
         List<EnvironmentModel> environments = Arrays
             .asList(newEnvironmentModel(100, "environment1"), newEnvironmentModel(101, "environment2"));
 
-        when(databaseRealm.findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME))
+        when(databaseRealm.findSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME))
             .thenReturn(environments);
 
         TestSubscriber<List<EnvironmentModel>> tester = new TestSubscriber<>();
         environmentRepository.findAll().subscribe(tester);
 
-        verify(databaseRealm).findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME);
+        verify(databaseRealm).findSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME);
 
         tester.assertValue(environments);
         tester.assertCompleted();
