@@ -11,9 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
-import io.realm.RealmResults;
 import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -58,14 +56,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<Void> delete(String uuid) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                RealmResults<M> models = realm.where(getRealmModelClass())
-                    .equalTo(RealmModel.FIELD_UUID, uuid).findAll();
-
-                realm.beginTransaction();
-                models.clear();
-                realm.commitTransaction();
-
+                databaseRealm.delete(getRealmModelClass(), RealmModel.FIELD_UUID, uuid);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("DELETE", e);
@@ -78,12 +69,8 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<M> findById(String uuid) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                RealmResults<M> models = realm.where(getRealmModelClass())
-                    .equalTo(RealmModel.FIELD_UUID, uuid).findAll();
-
+                List<M> models = databaseRealm.findWhere(getRealmModelClass(), RealmModel.FIELD_UUID, uuid);
                 checkState(models.size() == 1, "primary key violation: invalid uuid");
-
                 subscriber.onNext(models.get(0));
                 subscriber.onCompleted();
             } catch (Exception e) {
@@ -97,10 +84,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
     public Observable<List<M>> findAll() {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                RealmResults<M> models = realm.where(getRealmModelClass()).findAll();
-
-                subscriber.onNext(models);
+                subscriber.onNext(databaseRealm.find(getRealmModelClass()));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("FIND_ALL", e);
