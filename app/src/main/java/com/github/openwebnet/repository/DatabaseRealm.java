@@ -11,6 +11,9 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class DatabaseRealm {
 
@@ -44,7 +47,22 @@ public class DatabaseRealm {
         return model;
     }
 
-    public <T extends RealmObject> List<T> findAll(Class<T> clazz) {
-        return getRealmInstance().where(clazz).findAll();
+    private <T extends RealmObject> RealmQuery<T> findWhere(Class<T> clazz) {
+        return getRealmInstance().where(clazz);
     }
+
+    public <T extends RealmObject> List<T> findAll(Class<T> clazz) {
+        return findWhere(clazz).findAll();
+    }
+
+    public <T extends RealmObject> List<T> findAllSortedAscending(Class<T> clazz, String field) {
+        RealmResults<T> results = findWhere(clazz).findAll();
+        results.sort(field, Sort.ASCENDING);
+        return results;
+    }
+
+    public <T extends RealmObject> Number findMax(Class<T> clazz, String field) {
+        return findWhere(clazz).max(field);
+    }
+
 }

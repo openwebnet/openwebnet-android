@@ -13,9 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
 import rx.Observable;
 
 public class EnvironmentRepositoryImpl implements EnvironmentRepository {
@@ -34,8 +31,9 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     public Observable<Integer> getNextId() {
         return Observable.create(subscriber -> {
             try {
-                Number maxId = Realm.getDefaultInstance().where(EnvironmentModel.class).max("id");
-                Integer lastId = maxId == null ? INITIAL_SEQ : new AtomicInteger(maxId.intValue()).incrementAndGet();
+                Number maxId = databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID);
+                Integer lastId = maxId == null ? INITIAL_SEQ :
+                    new AtomicInteger(maxId.intValue()).incrementAndGet();
 
                 subscriber.onNext(lastId);
                 subscriber.onCompleted();
@@ -50,12 +48,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     public Observable<Integer> add(EnvironmentModel environment) {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealm(environment);
-                realm.commitTransaction();
-
-                subscriber.onNext(environment.getId());
+                subscriber.onNext(databaseRealm.add(environment).getId());
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-ADD", e);
@@ -74,11 +67,8 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     public Observable<List<EnvironmentModel>> findAll() {
         return Observable.create(subscriber -> {
             try {
-                Realm realm = Realm.getDefaultInstance();
-                RealmResults<EnvironmentModel> environments = realm.where(EnvironmentModel.class).findAll();
-                environments.sort(EnvironmentModel.FIELD_NAME, Sort.ASCENDING);
-
-                subscriber.onNext(environments);
+                subscriber.onNext(databaseRealm
+                    .findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME));
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-FIND_ALL", e);

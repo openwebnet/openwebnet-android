@@ -6,6 +6,7 @@ import io.realm.annotations.Required;
 
 public class EnvironmentModel extends RealmObject {
 
+    public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
 
     @PrimaryKey

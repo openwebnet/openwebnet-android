@@ -14,27 +14,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.inject.Inject;
 
-import io.realm.Realm;
 import rx.observers.TestSubscriber;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"io.realm.*"})
-@PrepareForTest({Injector.class, Realm.class})
+@PrepareForTest({Injector.class})
 public class EnvironmentRepositoryTest {
 
     @Rule
@@ -43,7 +40,8 @@ public class EnvironmentRepositoryTest {
     @Inject
     EnvironmentRepository environmentRepository;
 
-    Realm realmMock;
+    @Inject
+    DatabaseRealm databaseRealm;
 
     @Before
     public void setupDagger() {
@@ -59,18 +57,38 @@ public class EnvironmentRepositoryTest {
         ((ApplicationComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
-    @Before
-    public void setupRealm() {
-        realmMock = PowerMockito.mock(Realm.class);
-        PowerMockito.mockStatic(Realm.class);
-        when(Realm.getDefaultInstance()).thenReturn(realmMock);
-        doNothing().when(realmMock).beginTransaction();
-        doNothing().when(realmMock).commitTransaction();
+    @Test
+    public void environmentRepository_getNextIdDefault() {
+        Integer INITIAL_SEQ = 100;
+
+        when(databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID)).thenReturn(null);
+
+        TestSubscriber<Integer> tester = new TestSubscriber<>();
+        environmentRepository.getNextId().subscribe(tester);
+
+        verify(databaseRealm).findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID);
+
+        tester.assertValue(INITIAL_SEQ);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
     public void environmentRepository_getNextId() {
+        Integer CURRENT_MAX_ID = 108;
+        Integer NEXT_SEQ = 109;
 
+
+        when(databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID)).thenReturn(CURRENT_MAX_ID);
+
+        TestSubscriber<Integer> tester = new TestSubscriber<>();
+        environmentRepository.getNextId().subscribe(tester);
+
+        verify(databaseRealm).findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID);
+
+        tester.assertValue(NEXT_SEQ);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
@@ -81,13 +99,12 @@ public class EnvironmentRepositoryTest {
         environment.setId(ENVIRONMENT_ID);
         environment.setName(ENVIRONMENT_NAME);
 
+        when(databaseRealm.add(environment)).thenReturn(environment);
+
         TestSubscriber<Integer> tester = new TestSubscriber<>();
         environmentRepository.add(environment).subscribe(tester);
 
-        assertThat(Realm.getDefaultInstance(), is(realmMock));
-        verify(realmMock).beginTransaction();
-        verify(realmMock).copyToRealm(environment);
-        verify(realmMock).commitTransaction();
+        verify(databaseRealm).add(environment);
 
         tester.assertValue(ENVIRONMENT_ID);
         tester.assertCompleted();
@@ -96,7 +113,25 @@ public class EnvironmentRepositoryTest {
 
     @Test
     public void environmentRepository_findAll() {
+        EnvironmentModel environment1 = new EnvironmentModel();
+        environment1.setId(100);
+        environment1.setName("environment1");
+        EnvironmentModel environment2 = new EnvironmentModel();
+        environment2.setId(101);
+        environment2.setName("environment2");
+        List<EnvironmentModel> environments = Arrays.asList(environment1, environment2);
 
+        when(databaseRealm.findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME))
+            .thenReturn(environments);
+
+        TestSubscriber<List<EnvironmentModel>> tester = new TestSubscriber<>();
+        environmentRepository.findAll().subscribe(tester);
+
+        verify(databaseRealm).findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME);
+
+        tester.assertValue(environments);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
 }
