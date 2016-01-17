@@ -59,34 +59,23 @@ public class EnvironmentRepositoryTest {
 
     @Test
     public void environmentRepository_getNextIdDefault() {
-        Integer INITIAL_SEQ = 100;
-
-        when(databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID)).thenReturn(null);
-
-        TestSubscriber<Integer> tester = new TestSubscriber<>();
-        environmentRepository.getNextId().subscribe(tester);
-
-        verify(databaseRealm).findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID);
-
-        tester.assertValue(INITIAL_SEQ);
-        tester.assertCompleted();
-        tester.assertNoErrors();
+        environmentRepository_testGetNextId(null, 100);
     }
 
     @Test
     public void environmentRepository_getNextId() {
-        Integer CURRENT_MAX_ID = 108;
-        Integer NEXT_SEQ = 109;
+        environmentRepository_testGetNextId(108, 109);
+    }
 
-
-        when(databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID)).thenReturn(CURRENT_MAX_ID);
+    private void environmentRepository_testGetNextId(Integer currentMaxId, Integer nextId) {
+        when(databaseRealm.findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID)).thenReturn(currentMaxId);
 
         TestSubscriber<Integer> tester = new TestSubscriber<>();
         environmentRepository.getNextId().subscribe(tester);
 
         verify(databaseRealm).findMax(EnvironmentModel.class, EnvironmentModel.FIELD_ID);
 
-        tester.assertValue(NEXT_SEQ);
+        tester.assertValue(nextId);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
@@ -95,9 +84,7 @@ public class EnvironmentRepositoryTest {
     public void environmentRepository_add() {
         Integer ENVIRONMENT_ID = 100;
         String ENVIRONMENT_NAME = "myName";
-        EnvironmentModel environment = new EnvironmentModel();
-        environment.setId(ENVIRONMENT_ID);
-        environment.setName(ENVIRONMENT_NAME);
+        EnvironmentModel environment = newEnvironmentModel(ENVIRONMENT_ID, ENVIRONMENT_NAME);
 
         when(databaseRealm.add(environment)).thenReturn(environment);
 
@@ -113,13 +100,8 @@ public class EnvironmentRepositoryTest {
 
     @Test
     public void environmentRepository_findAll() {
-        EnvironmentModel environment1 = new EnvironmentModel();
-        environment1.setId(100);
-        environment1.setName("environment1");
-        EnvironmentModel environment2 = new EnvironmentModel();
-        environment2.setId(101);
-        environment2.setName("environment2");
-        List<EnvironmentModel> environments = Arrays.asList(environment1, environment2);
+        List<EnvironmentModel> environments = Arrays
+            .asList(newEnvironmentModel(100, "environment1"), newEnvironmentModel(101, "environment2"));
 
         when(databaseRealm.findAllSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME))
             .thenReturn(environments);
@@ -132,6 +114,13 @@ public class EnvironmentRepositoryTest {
         tester.assertValue(environments);
         tester.assertCompleted();
         tester.assertNoErrors();
+    }
+
+    private EnvironmentModel newEnvironmentModel(Integer id, String name) {
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(id);
+        environment.setName(name);
+        return environment;
     }
 
 }
