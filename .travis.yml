@@ -1,5 +1,5 @@
 language: android
-#sudo: false
+sudo: false
 
 jdk:
   - oraclejdk7
@@ -23,8 +23,7 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew build connectedCheck
+  - ./gradlew build jacocoTestReport connectedCheck
 
-# TODO
 after_success:
   - bash <(curl -s https://codecov.io/bash)
