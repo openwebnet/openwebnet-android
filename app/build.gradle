@@ -39,12 +39,8 @@ android {
         }
     }
     productFlavors {
-        free {
-            applicationId 'com.github.openwebnet.free'
-        }
-        paid {
-            applicationId 'com.github.openwebnet'
-        }
+        free {}
+        paid {}
     }
 
     // Robolectric issue
