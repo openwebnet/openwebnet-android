@@ -11,7 +11,6 @@ import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.repository.GatewayRepository;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +60,6 @@ public class GatewayServiceTest {
     }
 
     @Test
-    @Ignore
     public void gatewayService_add() {
         String GATEWAY_UUID = "gatewayUuid";
         String GATEWAY_HOST = "1.1.1.1";
@@ -74,8 +72,16 @@ public class GatewayServiceTest {
 
         PowerMockito.mockStatic(GatewayModel.class);
         when(GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT)).thenReturn(gateway);
-
         when(gatewayRepository.add(gateway)).thenReturn(Observable.just(GATEWAY_UUID));
+
+        TestSubscriber<String> tester = new TestSubscriber<>();
+        gatewayService.add(GATEWAY_HOST, GATEWAY_PORT).subscribe(tester);
+
+        verify(gatewayRepository).add(gateway);
+
+        tester.assertValue(GATEWAY_UUID);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
