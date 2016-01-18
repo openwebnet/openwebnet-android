@@ -108,4 +108,14 @@ task hello(dependsOn: build) {
     println '/ / /    / / //\\__\\/_/___\\/ / /____\\ \\ \\  \\ \\___\\/ // / /_______\\      \\ \\  /   '
     println '\\/_/     \\/_/ \\/_________/\\/________\\_\\/   \\/_____/ \\/__________/       \\_\\/    '
     println ':see github.com/openwebnet/openwebnet-android\n'
+
+    println 'current directory is: ' + projectDir
+    println 'JAVA_HOME: ' + System.getenv('JAVA_HOME')
+    println 'JAVA7_HOME: ' + System.getenv('JAVA7_HOME')
+    println 'JAVA8_HOME: ' + System.getenv('JAVA7_HOME')
+    println '\n'
+}
+
+jacocoAndroidUnitTestReport {
+    excludes += ['**/*$ViewBinder*.*']
 }
