@@ -38,6 +38,10 @@ android {
             testCoverageEnabled true
         }
     }
+    productFlavors {
+        free {}
+        paid {}
+    }
 
     // Robolectric issue
     useLibrary 'org.apache.http.legacy'
