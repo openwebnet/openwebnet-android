@@ -8,6 +8,8 @@ import com.github.openwebnet.repository.DeviceRepositoryTest;
 import com.github.openwebnet.repository.EnvironmentRepositoryTest;
 import com.github.openwebnet.repository.LightRepositoryTest;
 import com.github.openwebnet.repository.SampleRepository;
+import com.github.openwebnet.service.CommonServiceTest;
+import com.github.openwebnet.service.GatewayServiceTest;
 import com.github.openwebnet.view.MainActivityTest;
 
 import javax.inject.Singleton;
@@ -25,5 +27,8 @@ public interface ApplicationComponentTest extends ApplicationComponent {
     void inject(DeviceRepositoryTest repository);
     void inject(EnvironmentRepositoryTest repository);
     void inject(LightRepositoryTest repository);
+
+    void inject(CommonServiceTest service);
+    void inject(GatewayServiceTest service);
 
 }
