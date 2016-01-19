@@ -1,0 +1,110 @@
+package com.github.openwebnet.service;
+
+import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.component.ApplicationComponent;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.component.module.ApplicationContextModuleTest;
+import com.github.openwebnet.component.module.DomoticModule;
+import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.repository.EnvironmentRepository;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.Component;
+import rx.Observable;
+import rx.observers.TestSubscriber;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
+@PrepareForTest({Injector.class})
+public class EnvironmentServiceTest {
+
+    @Rule
+    public PowerMockRule rule = new PowerMockRule();
+
+    @Inject
+    EnvironmentRepository environmentRepository;
+
+    @Inject
+    EnvironmentService environmentService;
+
+    @Singleton
+    @Component(modules = {ApplicationContextModuleTest.class, DomoticModule.class, RepositoryModuleTest.class})
+    public interface EnvironmentComponentTest extends ApplicationComponent {
+
+        void inject(EnvironmentServiceTest service);
+
+    }
+
+    @Before
+    public void setupDagger() {
+        EnvironmentComponentTest applicationComponentTest = DaggerEnvironmentServiceTest_EnvironmentComponentTest.builder()
+            .applicationContextModuleTest(new ApplicationContextModuleTest())
+            .domoticModule(new DomoticModule())
+            .repositoryModuleTest(new RepositoryModuleTest(true))
+            .build();
+
+        PowerMockito.mockStatic(Injector.class);
+        PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
+
+        ((EnvironmentComponentTest) Injector.getApplicationComponent()).inject(this);
+    }
+
+    @Test
+    public void environmentService_add() {
+        Integer ENVIRONMENT_ID = 110;
+        String ENVIRONMENT_NAME = "myName";
+
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(ENVIRONMENT_ID);
+        environment.setName(ENVIRONMENT_NAME);
+
+        when(environmentRepository.getNextId()).thenReturn(Observable.just(ENVIRONMENT_ID));
+        when(environmentRepository.add(any(EnvironmentModel.class))).thenReturn(Observable.just(ENVIRONMENT_ID));
+
+        TestSubscriber<Integer> tester = new TestSubscriber<>();
+        environmentService.add(ENVIRONMENT_NAME).subscribe(tester);
+
+        verify(environmentRepository).getNextId();
+        verify(environmentRepository).add(any(EnvironmentModel.class));
+
+        tester.assertValue(ENVIRONMENT_ID);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void environmentService_findAll() {
+        List<EnvironmentModel> environments = new ArrayList<>();
+        when(environmentRepository.findAll()).thenReturn(Observable.just(environments));
+
+        TestSubscriber<List<EnvironmentModel>> tester = new TestSubscriber<>();
+        environmentService.findAll().subscribe(tester);
+
+        verify(environmentRepository).findAll();
+
+        tester.assertValue(environments);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+}
