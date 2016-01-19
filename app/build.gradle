@@ -38,10 +38,7 @@ android {
             testCoverageEnabled true
         }
     }
-    productFlavors {
-        free {}
-        paid {}
-    }
+    productFlavors {}
 
     // Robolectric issue
     useLibrary 'org.apache.http.legacy'
@@ -94,6 +91,10 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.2'
 }
 
+jacocoAndroidUnitTestReport {
+    excludes += ['**/*$ViewBinder*.*']
+}
+
 task hello(dependsOn: build) {
     println ''
     println '         _              _          _            _            _     _          _ '
@@ -113,9 +114,4 @@ task hello(dependsOn: build) {
     println 'JAVA_HOME: ' + System.getenv('JAVA_HOME')
     println 'JAVA7_HOME: ' + System.getenv('JAVA7_HOME')
     println 'JAVA8_HOME: ' + System.getenv('JAVA7_HOME')
-    println '\n'
-}
-
-jacocoAndroidUnitTestReport {
-    excludes += ['**/*$ViewBinder*.*']
 }
