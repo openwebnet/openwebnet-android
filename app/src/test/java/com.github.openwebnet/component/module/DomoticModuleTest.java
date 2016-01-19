@@ -4,7 +4,9 @@ import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
+import com.github.openwebnet.service.impl.LightServiceImpl;
 
 import javax.inject.Singleton;
 
@@ -25,20 +27,19 @@ public class DomoticModuleTest {
     @Provides
     @Singleton
     EnvironmentService provideEnvironmentService() {
-        return mock(EnvironmentService.class);
+        return mock(EnvironmentServiceImpl.class);
     }
 
     @Provides
     @Singleton
     GatewayService provideGatewayService() {
-        //return mock(GatewayService.class);
-        return new GatewayServiceImpl();
+        return mock(GatewayServiceImpl.class);
     }
 
     @Provides
     @Singleton
     LightService provideLightService() {
-        return mock(LightService.class);
+        return mock(LightServiceImpl.class);
     }
 
 }

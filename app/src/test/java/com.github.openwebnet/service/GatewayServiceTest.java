@@ -1,11 +1,10 @@
 package com.github.openwebnet.service;
 
 import com.github.openwebnet.BuildConfig;
-import com.github.openwebnet.component.ApplicationComponentTest;
-import com.github.openwebnet.component.DaggerApplicationComponentTest;
+import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
-import com.github.openwebnet.component.module.DomoticModuleTest;
+import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.repository.GatewayRepository;
@@ -24,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import dagger.Component;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -45,18 +46,26 @@ public class GatewayServiceTest {
     @Inject
     GatewayService gatewayService;
 
+    @Singleton
+    @Component(modules = {ApplicationContextModuleTest.class, DomoticModule.class, RepositoryModuleTest.class})
+    public interface GatewayComponentTest extends ApplicationComponent {
+
+        void inject(GatewayServiceTest service);
+
+    }
+
     @Before
     public void setupDagger() {
-        ApplicationComponentTest applicationComponentTest = DaggerApplicationComponentTest.builder()
+        GatewayComponentTest applicationComponentTest = DaggerGatewayServiceTest_GatewayComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
-            .domoticModuleTest(new DomoticModuleTest())
+            .domoticModule(new DomoticModule())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((ApplicationComponentTest) Injector.getApplicationComponent()).inject(this);
+        ((GatewayComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
     @Test
