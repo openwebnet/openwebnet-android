@@ -28,15 +28,13 @@ public class ApplicationContextModuleTest {
     @Provides
     @Singleton
     public PreferenceService providePreferenceService() {
-        return mock(PreferenceService.class);
-        //return new PreferenceServiceImpl();
+        return mock(PreferenceServiceImpl.class);
     }
 
     @Provides
     @Singleton
     public CommonService provideCommonService() {
-        return mock(CommonService.class);
-        //return new CommonServiceImpl();
+        return mock(CommonServiceImpl.class);
     }
 
 }

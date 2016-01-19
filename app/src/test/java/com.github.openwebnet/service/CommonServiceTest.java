@@ -1,7 +1,5 @@
 package com.github.openwebnet.service;
 
-import android.content.Context;
-
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.DaggerApplicationComponentTest;
@@ -15,7 +13,6 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.mockito.Mockito.*;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
@@ -23,6 +20,13 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import javax.inject.Inject;
+
+import rx.Observable;
+
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
@@ -58,11 +62,21 @@ public class CommonServiceTest {
     @Test
     @Ignore
     public void commonService_isFirstTime() {
+        int ID_ENVIRONMENT = 108;
+        int ID_LABEL = 8888;
+        String LABEL_ENVIRONMENT = "myEnvironment";
+
         when(preferenceService.isFirstRun()).thenReturn(true);
+        when(commonService.getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
+        when(environmentService.add(LABEL_ENVIRONMENT)).thenReturn(Observable.just(ID_ENVIRONMENT));
+        doCallRealMethod().when(commonService).initApplication();
+
+        System.out.println(preferenceService.isFirstRun());
 
         commonService.initApplication();
 
-        verify(environmentService, times(1)).add("Example environmentXXX");
+        verify(environmentService, times(1)).add(LABEL_ENVIRONMENT);
+        verify(preferenceService, times(1)).initFirstRun();
     }
 
     @Test

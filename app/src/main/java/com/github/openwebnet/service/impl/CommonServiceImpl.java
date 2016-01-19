@@ -70,7 +70,8 @@ public class CommonServiceImpl implements CommonService {
         return CLIENT_CACHE.get(gatewayUuid);
     }
 
-    private String getString(int id) {
+    @Override
+    public String getString(int id) {
         return context.getResources().getString(id);
     }
 
