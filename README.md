@@ -1,7 +1,7 @@
 # openwebnet-android
 
 [![Build Status](https://travis-ci.org/openwebnet/openwebnet-android.svg)](https://travis-ci.org/openwebnet/openwebnet-android)
-[![codecov.io](https://codecov.io/github/openwebnet/openwebnet-android/coverage.svg?branch=master)](https://codecov.io/github/openwebnet/openwebnet-android?branch=master)
+<!--[![codecov.io](https://codecov.io/github/openwebnet/openwebnet-android/coverage.svg?branch=master)](https://codecov.io/github/openwebnet/openwebnet-android?branch=master)-->
 
 > work in progress!
 
