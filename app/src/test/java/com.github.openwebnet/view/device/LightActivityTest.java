@@ -2,10 +2,12 @@ package com.github.openwebnet.view.device;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -31,7 +33,6 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -97,6 +98,9 @@ public class LightActivityTest {
 
     @Bind(R.id.checkBoxLightDimmer)
     CheckBox checkBoxLightDimmer;
+
+    @BindString(R.string.validation_required)
+    String validationRequired;
 
     @BindString(R.string.label_none)
     String labelNone;
@@ -317,9 +321,37 @@ public class LightActivityTest {
     }
 
     @Test
-    @Ignore
     public void shouldVerifyOnCreate_onMenuSave_invalid() {
-        // TODO
+        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
+        when(gatewayService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
+
+        createWithIntent(null);
+
+        expectRequired(editTextLightName);
+        editTextLightName.setText("nameValue");
+
+        expectRequired(editTextLightWhere);
+        editTextLightWhere.setText("21");
+
+        expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
+        ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
+            android.R.layout.simple_spinner_dropdown_item, Arrays.asList("ENVIRONMENT"));
+        spinnerDeviceEnvironment.setAdapter(adapterEnvironment);
+
+        expectRequired((TextView) spinnerDeviceGateway.getSelectedView());
+        ArrayAdapter<String> adapterGateway = new ArrayAdapter<>(activity,
+            android.R.layout.simple_spinner_dropdown_item, Arrays.asList("GATEWAY"));
+        spinnerDeviceGateway.setAdapter(adapterGateway);
+
+        // now is valid
+    }
+
+    private void expectRequired(TextView view) {
+        activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
+        verify(lightService, never()).add(any(LightModel.class));
+        verify(lightService, never()).update(any(LightModel.class));
+        assertEquals("bad validation", validationRequired, view.getError());
+        //assertTrue("bad focus", view.hasFocus());
     }
 
     private LightModel common_onMenuSave_valid(String uuidExtra) {
@@ -333,7 +365,7 @@ public class LightActivityTest {
         when(environmentService.findAll()).thenReturn(Observable.
             just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-                just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+            just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
         String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
         when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));
