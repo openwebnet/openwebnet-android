@@ -28,18 +28,13 @@ import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
 
-import org.hamcrest.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -369,52 +364,11 @@ public class LightActivityTest {
         return lightMock;
     }
 
-    private static class LightModelMatcher extends ArgumentMatcher<LightModel> {
-
-        private final LightModel expected;
-
-        private LightModelMatcher(LightModel expected) {
-            Preconditions.checkNotNull(expected);
-            this.expected = expected;
-        }
-
-        @Override
-        public boolean matches(Object argument) {
-            if (argument == null || !(argument instanceof LightModel)) {
-                return false;
-            }
-            // ignore uuid
-            LightModel actual = (LightModel) argument;
-            return actual.getName().equals(expected.getName()) &&
-                actual.getWhere().equals(expected.getWhere()) &&
-                actual.getEnvironmentId().equals(expected.getEnvironmentId()) &&
-                actual.getGatewayUuid().equals(expected.getGatewayUuid()) &&
-                (actual.isDimmer() && expected.isDimmer()) &&
-                (actual.isFavourite() && expected.isFavourite());
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText(expected == null ? "null" : lightModelValue(expected));
-        }
-
-        private String lightModelValue(LightModel light) {
-            Joiner joiner = Joiner.on("; ").skipNulls();
-            return joiner.join(light.getName(), light.getWhere(),
-                light.getEnvironmentId(), light.getGatewayUuid(),
-                light.isDimmer(), light.isFavourite());
-        }
-    }
-
-    private static LightModel lightModelEq(LightModel expected) {
-        return Matchers.argThat(new LightModelMatcher(expected));
-    }
-
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
         LightModel lightMock = common_onMenuSave_valid(null);
 
-        verify(lightService, times(1)).add(lightModelEq(lightMock));
+        verify(lightService, times(1)).add(LightModelMatcher.lightModelEq(lightMock));
         verify(lightService, never()).update(any(LightModel.class));
     }
 
@@ -425,7 +379,7 @@ public class LightActivityTest {
         LightModel lightMock = common_onMenuSave_valid("anyUuid");
 
         verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, times(1)).update(lightModelEq(lightMock));
+        verify(lightService, times(1)).update(LightModelMatcher.lightModelEq(lightMock));
     }
 
     @After
