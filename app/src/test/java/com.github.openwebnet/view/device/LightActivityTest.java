@@ -11,27 +11,35 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.CommonService;
+import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
 
+import org.hamcrest.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -40,6 +48,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.util.ActivityController;
 
 import java.util.ArrayList;
@@ -59,9 +68,11 @@ import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -108,7 +119,7 @@ public class LightActivityTest {
     private LightActivity activity;
 
     @Singleton
-    @Component(modules = {ApplicationContextModuleTest.class, DomoticModule.class, RepositoryModuleTest.class})
+    @Component(modules = {LightActivityModuleTest.class, RepositoryModuleTest.class})
     public interface LightActivityComponentTest extends ApplicationComponent {
 
         void inject(LightActivityTest activity);
@@ -116,7 +127,7 @@ public class LightActivityTest {
     }
 
     @Module
-    public class ApplicationContextModuleTest {
+    public class LightActivityModuleTest {
 
         @Provides
         @Singleton
@@ -136,13 +147,36 @@ public class LightActivityTest {
             return new CommonServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        DeviceService provideDeviceService() {
+            return new DeviceServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        EnvironmentService provideEnvironmentService() {
+            return new EnvironmentServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        GatewayService provideGatewayService() {
+            return new GatewayServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        LightService provideLightService() {
+            return mock(LightServiceImpl.class);
+        }
+
     }
 
     @Before
     public void setupDagger() {
         LightActivityComponentTest applicationComponentTest = DaggerLightActivityTest_LightActivityComponentTest.builder()
-            .applicationContextModuleTest(new ApplicationContextModuleTest())
-            .domoticModule(new DomoticModule())
+            .lightActivityModuleTest(new LightActivityModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
@@ -224,18 +258,22 @@ public class LightActivityTest {
     }
 
     @Test
-    @Ignore
     public void shouldVerifyOnCreate_initEditWithoutUuid() {
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
         when(gatewayService.findAll()).thenReturn(Observable.<List<GatewayModel>>empty());
-        lightService = mock(LightServiceImpl.class);
 
         createWithIntent(null);
 
-        verify(lightService, never()).findById(anyString());
+        verify(mock(LightServiceImpl.class), never()).findById(anyString());
 
-        // TODO
-        assertEquals("should be empty text", "", editTextLightName.getText().toString());
+        assertEquals("invalid value", "", editTextLightName.getText().toString());
+        assertEquals("invalid value", "", editTextLightWhere.getText().toString());
+
+        assertEquals("invalid value", false, checkBoxLightDimmer.isChecked());
+        assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
+
+        assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
+        assertEquals("invalid value", -1, spinnerDeviceGateway.getSelectedItemPosition());
     }
 
     @Test
@@ -281,6 +319,113 @@ public class LightActivityTest {
 
         GatewayModel gatewaySelected = gateways.get(spinnerDeviceGateway.getSelectedItemPosition());
         assertEquals("invalid value", LIGHT_GATEWAY_SELECTED, gatewaySelected.getUuid());
+    }
+
+    @Test
+    @Ignore
+    public void shouldVerifyOnCreate_onMenuSave_invalid() {
+        // TODO
+    }
+
+    private LightModel common_onMenuSave_valid(String uuidExtra) {
+        String LIGHT_NAME = "myName";
+        String LIGHT_GATEWAY_SELECTED = "uuid2";
+        Integer LIGHT_WHERE = 8;
+        Integer LIGHT_ENVIRONMENT_SELECTED = 101;
+        boolean LIGHT_DIMMER = true;
+        boolean LIGHT_FAVOURITE = true;
+
+        when(environmentService.findAll()).thenReturn(Observable.
+            just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
+        when(gatewayService.findAll()).thenReturn(Observable.
+                just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+
+        String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));
+        when(lightService.update(any(LightModel.class))).thenReturn(Observable.just(null));
+
+        createWithIntent(uuidExtra);
+
+        editTextLightName.setText(String.valueOf(LIGHT_NAME));
+        editTextLightWhere.setText(String.valueOf(LIGHT_WHERE));
+
+        checkBoxLightDimmer.setChecked(LIGHT_DIMMER);
+        checkBoxDeviceFavourite.setChecked(LIGHT_FAVOURITE);
+
+        // for simplicity only 1 items
+        spinnerDeviceEnvironment.setSelection(0);
+        spinnerDeviceGateway.setSelection(0);
+
+        activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
+
+        LightModel lightMock = new LightModel();
+        lightMock.setUuid(uuidExtra);
+        lightMock.setName(LIGHT_NAME);
+        lightMock.setWhere(LIGHT_WHERE);
+        lightMock.setDimmer(LIGHT_DIMMER);
+        lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
+        lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
+        lightMock.setFavourite(LIGHT_FAVOURITE);
+        return lightMock;
+    }
+
+    private static class LightModelMatcher extends ArgumentMatcher<LightModel> {
+
+        private final LightModel expected;
+
+        private LightModelMatcher(LightModel expected) {
+            Preconditions.checkNotNull(expected);
+            this.expected = expected;
+        }
+
+        @Override
+        public boolean matches(Object argument) {
+            if (argument == null || !(argument instanceof LightModel)) {
+                return false;
+            }
+            // ignore uuid
+            LightModel actual = (LightModel) argument;
+            return actual.getName().equals(expected.getName()) &&
+                actual.getWhere().equals(expected.getWhere()) &&
+                actual.getEnvironmentId().equals(expected.getEnvironmentId()) &&
+                actual.getGatewayUuid().equals(expected.getGatewayUuid()) &&
+                (actual.isDimmer() && expected.isDimmer()) &&
+                (actual.isFavourite() && expected.isFavourite());
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText(expected == null ? "null" : lightModelValue(expected));
+        }
+
+        private String lightModelValue(LightModel light) {
+            Joiner joiner = Joiner.on("; ").skipNulls();
+            return joiner.join(light.getName(), light.getWhere(),
+                light.getEnvironmentId(), light.getGatewayUuid(),
+                light.isDimmer(), light.isFavourite());
+        }
+    }
+
+    private static LightModel lightModelEq(LightModel expected) {
+        return Matchers.argThat(new LightModelMatcher(expected));
+    }
+
+    @Test
+    public void shouldVerifyOnCreate_onMenuSave_validAdd() {
+        LightModel lightMock = common_onMenuSave_valid(null);
+
+        verify(lightService, times(1)).add(lightModelEq(lightMock));
+        verify(lightService, never()).update(any(LightModel.class));
+    }
+
+    @Test
+    public void shouldVerifyOnCreate_onMenuSave_validEdit() {
+        when(lightService.findById(anyString())).thenReturn(Observable.<LightModel>empty());
+
+        LightModel lightMock = common_onMenuSave_valid("anyUuid");
+
+        verify(lightService, never()).add(any(LightModel.class));
+        verify(lightService, times(1)).update(lightModelEq(lightMock));
     }
 
     @After
