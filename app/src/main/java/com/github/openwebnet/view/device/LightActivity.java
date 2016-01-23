@@ -46,9 +46,7 @@ public class LightActivity extends AbstractDeviceActivity {
         ButterKnife.bind(this);
 
         initSpinnerEnvironment();
-        //selectEnvironment(); TODO current environment
         initSpinnerGateway();
-        //selectGateway(); TODO default gateway
         initEditLight();
     }
 

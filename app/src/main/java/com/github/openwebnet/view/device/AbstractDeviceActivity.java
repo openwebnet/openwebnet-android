@@ -33,6 +33,9 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractDeviceActivity.class);
 
+    public static final String EXTRA_DEFAULT_ENVIRONMENT = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT";
+    public static final String EXTRA_DEFAULT_GATEWAY = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY";
+
     @Bind(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
@@ -71,6 +74,12 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             initEmptyList(environmentValues);
             initSpinnerAdapter(spinnerDeviceEnvironment, environmentValues);
+
+            int defaultEnvironment = getIntent().getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1);
+            log.debug("defaultEnvironment: {}", defaultEnvironment);
+            if (defaultEnvironment > 0) {
+                selectEnvironment(defaultEnvironment);
+            }
         });
     }
 
@@ -84,6 +93,12 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             initEmptyList(gatewayValues);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
+
+            String defaultGateway = getIntent().getStringExtra(EXTRA_DEFAULT_GATEWAY);
+            log.debug("defaultGateway: {}", defaultGateway);
+            if (defaultGateway != null) {
+                selectGateway(defaultGateway);
+            }
         });
     }
 

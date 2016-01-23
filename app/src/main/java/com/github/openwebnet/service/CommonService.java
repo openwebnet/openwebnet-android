@@ -8,6 +8,8 @@ public interface CommonService {
 
     OpenWebNet findClient(String gatewayUuid);
 
+    String getDefaultGateway();
+
     String getString(int id);
 
 }

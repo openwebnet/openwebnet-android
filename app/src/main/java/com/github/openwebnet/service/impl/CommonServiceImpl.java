@@ -71,6 +71,11 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public String getDefaultGateway() {
+        return preferenceService.getDefaultGateway();
+    }
+
+    @Override
     public String getString(int id) {
         return context.getResources().getString(id);
     }

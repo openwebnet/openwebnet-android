@@ -29,6 +29,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 
@@ -65,6 +66,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        EventBus.getDefault().post(new MainActivity.ChangeDrawerMenuEvent(id));
         log.debug("MENU selected [id={}]", id);
 
         switch (id) {

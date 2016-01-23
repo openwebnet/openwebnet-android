@@ -30,7 +30,12 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
 import io.realm.Realm;
+
+import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
+import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     CommonService commonService;
     @Inject
     EnvironmentService environmentService;
+
+    private int drawerMenuItemSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +134,23 @@ public class MainActivity extends AppCompatActivity {
     public void onClickAddLight(FloatingActionButton fab) {
         // TODO show background opaque layer
         floatingActionsMenuMain.collapse();
-        startActivity(new Intent(this, LightActivity.class));
+
+        Intent intentNewLight = new Intent(this, LightActivity.class)
+            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected)
+            .putExtra(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
+        startActivity(intentNewLight);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -135,5 +158,27 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         // TODO ?
         Realm.getDefaultInstance().close();
+    }
+
+    /**
+     *
+     */
+    public static class ChangeDrawerMenuEvent {
+
+        private final int menuItemId;
+
+        public ChangeDrawerMenuEvent(Integer menuItemId) {
+            this.menuItemId = menuItemId;
+        }
+
+        public int getMenuItemId() {
+            return menuItemId;
+        }
+    }
+
+    // fired from NavigationItemListener.onNavigationItemSelected
+    @Subscribe
+    public void onEvent(ChangeDrawerMenuEvent event) {
+        this.drawerMenuItemSelected = event.getMenuItemId();
     }
 }
