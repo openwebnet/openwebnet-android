@@ -131,7 +131,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             .setView(layout)
             .setTitle(R.string.dialog_add_environment_title)
             .setPositiveButton(R.string.button_add, null)
-            .setNegativeButton(android.R.string.cancel, null);
+            .setNeutralButton(android.R.string.cancel, null);
 
         AlertDialog dialog = builder.create();
         dialog.show();
