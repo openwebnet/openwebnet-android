@@ -38,8 +38,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 
+import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
+import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -123,20 +126,36 @@ public class MainActivityTest {
     }
 
     @Test
-    public void clickingAddLight_shouldStartDeviceActivity() {
+    public void clickingAddDevice_shouldStartDeviceActivity() {
+        String DEFAULT_GATEWAY = "myGateway";
+        int DEFAULT_ENVIRONMENT = 123;
+
+        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
         setupActivity();
+        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
 
         floatingActionButtonAddDevice.performClick();
-        Intent expectedIntent = new Intent(activity, DeviceActivity.class);
+        Intent expectedIntent = new Intent(activity, DeviceActivity.class)
+            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
+            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
+
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
 
     @Test
     public void clickingAddLight_shouldStartLightActivity() {
+        String DEFAULT_GATEWAY = "myGateway";
+        int DEFAULT_ENVIRONMENT = 123;
+
+        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
         setupActivity();
+        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
 
         floatingActionButtonAddLight.performClick();
-        Intent expectedIntent = new Intent(activity, LightActivity.class);
+        Intent expectedIntent = new Intent(activity, LightActivity.class)
+            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
+            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
+
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
 
