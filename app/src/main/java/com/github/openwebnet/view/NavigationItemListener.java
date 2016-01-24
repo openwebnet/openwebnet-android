@@ -37,6 +37,10 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
 
     private static final Logger log = LoggerFactory.getLogger(NavigationItemListener.class);
 
+    // @see menu/activity_main_drawer.xml
+    public static final int MENU_ENVIRONMENT_RANGE_MIN = 100;
+    public static final int MENU_ENVIRONMENT_RANGE_MAX = 899;
+
     @Inject
     EnvironmentService environmentService;
 
@@ -110,7 +114,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
 
         mActivity.getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.content_frame, fragment)
+                .replace(R.id.content_frame, fragment)
             //.addToBackStack(null)
             .commit();
     }
@@ -151,7 +155,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
             },
             throwable -> {
                 showSnackbar(labelErrorAddEnvironment);
-            });
+        });
     }
 
     private void showSettings() {

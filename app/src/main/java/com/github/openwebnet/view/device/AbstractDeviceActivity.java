@@ -29,16 +29,15 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 
+import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MAX;
+import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MIN;
+
 public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractDeviceActivity.class);
 
     public static final String EXTRA_DEFAULT_ENVIRONMENT = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT";
     public static final String EXTRA_DEFAULT_GATEWAY = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY";
-
-    // @see menu/activity_main_drawer.xml
-    private static final int ENVIRONMENT_RANGE_MIN = 100;
-    private static final int ENVIRONMENT_RANGE_MAX = 899;
 
     @Bind(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
@@ -81,7 +80,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             int defaultEnvironment = getIntent().getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1);
             log.debug("defaultEnvironment: {}", defaultEnvironment);
-            if (defaultEnvironment > ENVIRONMENT_RANGE_MIN && defaultEnvironment < ENVIRONMENT_RANGE_MAX) {
+            if (defaultEnvironment > MENU_ENVIRONMENT_RANGE_MIN && defaultEnvironment < MENU_ENVIRONMENT_RANGE_MAX) {
                 selectEnvironment(defaultEnvironment);
             }
         });

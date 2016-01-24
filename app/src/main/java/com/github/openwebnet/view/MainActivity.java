@@ -16,6 +16,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceActivity;
@@ -23,6 +24,9 @@ import com.github.openwebnet.view.device.LightActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
@@ -34,9 +38,11 @@ import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import io.realm.Realm;
 
+import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MIN;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 
+// TODO https://guides.codepath.com/android/Fragment-Navigation-Drawer
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
@@ -108,15 +114,19 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
         environmentService.findAll().subscribe(
-            environments -> {
-                log.debug("reloadMenu: {}", environments);
-                // TODO orderBy name
-                Stream.of(environments).forEach(environment ->
-                    menu.add(R.id.nav_group_environment, environment.getId(),
-                        environment.getId(), environment.getName())
-                );
-            },
+            environments -> addEnvironmentMenu(menu, environments),
             throwable -> showSnackbar(errorLoadNavigationDrawer));
+    }
+
+    private void addEnvironmentMenu(Menu menuGroup, List<EnvironmentModel> environments) {
+        log.debug("reloadMenu: {}", environments);
+        final AtomicInteger menuOrder = new AtomicInteger(MENU_ENVIRONMENT_RANGE_MIN);
+
+        Stream.of(environments)
+            .forEach(environment -> {
+                menuGroup.add(R.id.nav_group_environment, environment.getId(),
+                    menuOrder.incrementAndGet(), environment.getName());
+            });
     }
 
     private void showSnackbar(String message) {
