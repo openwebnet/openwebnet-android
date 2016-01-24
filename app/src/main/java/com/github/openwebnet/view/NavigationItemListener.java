@@ -66,7 +66,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        EventBus.getDefault().post(new MainActivity.ChangeDrawerMenuEvent(id));
+        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(id));
         log.debug("MENU selected [id={}]", id);
 
         switch (id) {

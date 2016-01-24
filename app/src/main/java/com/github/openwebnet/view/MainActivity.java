@@ -125,20 +125,22 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.floatingActionButtonAddDevice)
     public void onClickAddDevice(FloatingActionButton fab) {
-        // TODO show background opaque layer
-        floatingActionsMenuMain.collapse();
-        startActivity(new Intent(this, DeviceActivity.class));
+        actionNewIntent(DeviceActivity.class);
     }
 
     @OnClick(R.id.floatingActionButtonAddLight)
     public void onClickAddLight(FloatingActionButton fab) {
+        actionNewIntent(LightActivity.class);
+    }
+
+    private <T> void actionNewIntent(Class<T> clazz) {
         // TODO show background opaque layer
         floatingActionsMenuMain.collapse();
 
-        Intent intentNewLight = new Intent(this, LightActivity.class)
+        Intent intentNew = new Intent(this, clazz)
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected)
             .putExtra(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
-        startActivity(intentNewLight);
+        startActivity(intentNew);
     }
 
     @Override
@@ -163,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      *
      */
-    public static class ChangeDrawerMenuEvent {
+    public static class OnChangeDrawerMenuEvent {
 
         private final int menuItemId;
 
-        public ChangeDrawerMenuEvent(Integer menuItemId) {
+        public OnChangeDrawerMenuEvent(Integer menuItemId) {
             this.menuItemId = menuItemId;
         }
 
@@ -178,7 +180,9 @@ public class MainActivity extends AppCompatActivity {
 
     // fired from NavigationItemListener.onNavigationItemSelected
     @Subscribe
-    public void onEvent(ChangeDrawerMenuEvent event) {
-        this.drawerMenuItemSelected = event.getMenuItemId();
+    public void onEvent(OnChangeDrawerMenuEvent event) {
+        log.debug("EVENT OnChangeDrawerMenuEvent: id={}", event.getMenuItemId());
+        //navigationView.getMenu().findItem(event.getMenuItemId()).setChecked(true);
+        drawerMenuItemSelected = event.getMenuItemId();
     }
 }

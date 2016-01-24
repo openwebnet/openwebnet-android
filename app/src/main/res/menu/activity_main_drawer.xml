@@ -3,7 +3,7 @@
 
     <group
         android:id="@+id/nav_group_main"
-        android:checkableBehavior="single"
+        android:checkableBehavior="none"
         android:orderInCategory="10">
         <item
             android:id="@+id/nav_favourite"
@@ -19,7 +19,7 @@
 
     <group
         android:id="@+id/nav_group_setting"
-        android:checkableBehavior="single"
+        android:checkableBehavior="none"
         android:orderInCategory="900">
         <item
             android:id="@+id/nav_add"

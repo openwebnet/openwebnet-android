@@ -36,6 +36,10 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     public static final String EXTRA_DEFAULT_ENVIRONMENT = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT";
     public static final String EXTRA_DEFAULT_GATEWAY = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY";
 
+    // @see menu/activity_main_drawer.xml
+    private static final int ENVIRONMENT_RANGE_MIN = 100;
+    private static final int ENVIRONMENT_RANGE_MAX = 899;
+
     @Bind(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
@@ -77,7 +81,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             int defaultEnvironment = getIntent().getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1);
             log.debug("defaultEnvironment: {}", defaultEnvironment);
-            if (defaultEnvironment > 0) {
+            if (defaultEnvironment > ENVIRONMENT_RANGE_MIN && defaultEnvironment < ENVIRONMENT_RANGE_MAX) {
                 selectEnvironment(defaultEnvironment);
             }
         });
