@@ -33,9 +33,9 @@ import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 
-public class NavigationItemListener implements NavigationView.OnNavigationItemSelectedListener {
+public class NavigationViewItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final Logger log = LoggerFactory.getLogger(NavigationItemListener.class);
+    private static final Logger log = LoggerFactory.getLogger(NavigationViewItemSelectedListener.class);
 
     // @see menu/activity_main_drawer.xml
     public static final int MENU_ENVIRONMENT_RANGE_MIN = 100;
@@ -59,7 +59,7 @@ public class NavigationItemListener implements NavigationView.OnNavigationItemSe
     private final AppCompatActivity mActivity;
     private final DrawerLayout mDrawerLayout;
 
-    public NavigationItemListener(AppCompatActivity activity, DrawerLayout drawerLayout) {
+    public NavigationViewItemSelectedListener(AppCompatActivity activity, DrawerLayout drawerLayout) {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
 

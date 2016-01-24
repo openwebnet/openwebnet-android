@@ -29,8 +29,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 
-import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MAX;
-import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MIN;
+import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MAX;
+import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MIN;
 
 public abstract class AbstractDeviceActivity extends AppCompatActivity {
 

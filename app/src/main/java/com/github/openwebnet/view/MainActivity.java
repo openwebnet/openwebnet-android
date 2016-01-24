@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.annimon.stream.Stream;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -36,9 +38,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
-import io.realm.Realm;
 
-import static com.github.openwebnet.view.NavigationItemListener.MENU_ENVIRONMENT_RANGE_MIN;
+import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MIN;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(
-            new NavigationItemListener(this, drawerLayout));
+            new NavigationViewItemSelectedListener(this, drawerLayout));
     }
 
     @Override
@@ -126,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
             .forEach(environment -> {
                 menuGroup.add(R.id.nav_group_environment, environment.getId(),
                     menuOrder.incrementAndGet(), environment.getName());
+
+                MenuItem menuItem = MenuItemCompat.setActionView(menuGroup.findItem(environment.getId()),
+                    R.layout.drawer_menu_environment);
+                menuItem.getActionView().findViewById(R.id.imageViewDrawerMenuEnvironmentEdit)
+                    .setOnClickListener(new NavigationViewClickListener(environment.getId()));
             });
     }
 
@@ -165,13 +171,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // TODO ?
-        Realm.getDefaultInstance().close();
-    }
-
     /**
      *
      */
@@ -188,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // fired from NavigationItemListener.onNavigationItemSelected
+    // fired from NavigationViewItemSelectedListener.onNavigationItemSelected
     @Subscribe
     public void onEvent(OnChangeDrawerMenuEvent event) {
         log.debug("EVENT OnChangeDrawerMenuEvent: id={}", event.getMenuItemId());
