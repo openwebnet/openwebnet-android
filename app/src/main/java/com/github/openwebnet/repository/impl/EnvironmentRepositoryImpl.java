@@ -15,6 +15,8 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
+import static com.google.common.base.Preconditions.checkState;
+
 public class EnvironmentRepositoryImpl implements EnvironmentRepository {
 
     private static final Logger log = LoggerFactory.getLogger(EnvironmentRepository.class);
@@ -57,10 +59,35 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         });
     }
 
+    // TODO test
     @Override
-    public Observable<EnvironmentModel> find(Integer id) {
-        log.debug("environment-FIND");
-        throw new UnsupportedOperationException("not implemented yet");
+    public Observable<Void> update(EnvironmentModel environment) {
+        return Observable.create(subscriber -> {
+            try {
+                databaseRealm.update(environment);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("environment-UPDATE", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    // TODO test
+    @Override
+    public Observable<EnvironmentModel> findById(Integer id) {
+        return Observable.create(subscriber -> {
+            try {
+                List<EnvironmentModel> models = databaseRealm
+                    .findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
+                checkState(models.size() == 1, "primary key violation: invalid id");
+                subscriber.onNext(models.get(0));
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("environment-FIND_BY_ID", e);
+                subscriber.onError(e);
+            }
+        });
     }
 
     @Override

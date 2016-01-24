@@ -12,7 +12,9 @@ public interface EnvironmentRepository {
 
     Observable<Integer> add(EnvironmentModel environment);
 
-    Observable<EnvironmentModel> find(Integer id);
+    Observable<Void> update(EnvironmentModel environment);
+
+    Observable<EnvironmentModel> findById(Integer id);
 
     Observable<List<EnvironmentModel>> findAll();
     

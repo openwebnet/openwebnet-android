@@ -91,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(
-            new NavigationViewItemSelectedListener(this, drawerLayout));
+        navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
 
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
+import rx.functions.Action1;
 
 public class NavigationViewClickListener implements OnClickListener {
 
@@ -55,45 +58,59 @@ public class NavigationViewClickListener implements OnClickListener {
 
     private void showDialogEditEnvironment() {
         View layout = LayoutInflater.from(mActivity).inflate(R.layout.dialog_environment, null);
-        EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
+        EditText editTextName = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
             .setView(layout)
             .setTitle(R.string.dialog_edit_environment_title)
             .setPositiveButton(R.string.button_edit, null)
-            .setNeutralButton(android.R.string.cancel, null)
-            .setNegativeButton(R.string.button_delete, null);
+            //.setNegativeButton(R.string.button_delete, null)
+            .setNeutralButton(android.R.string.cancel, null);
 
-        AlertDialog dialog = builder.create();
-        //dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            .setOnClickListener(v -> {
-                if (TextUtils.isEmpty(name.getText())) {
-                    name.setError(labelValidationRequired);
-                } else {
-                    editEnvironment(name.getText().toString());
+        Action1<EnvironmentModel> showDialogEnvironment = environmentSelected -> {
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener(v -> {
+                    if (TextUtils.isEmpty(editTextName.getText())) {
+                        editTextName.setError(labelValidationRequired);
+                    } else {
+                        editEnvironment(editTextName.getText().toString());
+                        dialog.dismiss();
+                    }
+                });
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                .setOnClickListener(v -> {
+                    deleteEnvironment();
                     dialog.dismiss();
-                }
-            });
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-            .setOnClickListener(v -> {
-                deleteEnvironment();
-                dialog.dismiss();
+                });
+        };
+
+        environmentService.findById(environmentId)
+            .subscribe(environment -> {
+                EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(environmentId));
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                editTextName.setText(environment.getName());
+                showDialogEnvironment.call(environment);
             });
     }
 
-    // TODO
     private void editEnvironment(String name) {
-        environmentService.add(name)
-            .subscribe(id -> {
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(environmentId);
+        environment.setName(name);
+
+        environmentService.update(environment)
+            .doOnCompleted(() -> {
                 // calls onPrepareOptionsMenu(): reload menu
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
-            },
-            throwable -> log.error("editEnvironment", throwable));
+            })
+            .subscribe(aVoid -> {}, throwable -> log.error("editEnvironment", throwable));
     }
 
+    // TODO
     private void deleteEnvironment() {
-
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

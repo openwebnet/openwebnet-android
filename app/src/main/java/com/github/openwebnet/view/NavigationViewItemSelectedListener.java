@@ -47,6 +47,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     @Bind(R.id.floatingActionsMenuMain)
     FloatingActionsMenu floatingActionsMenuMain;
 
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
     @BindString(R.string.app_name)
     String labelApplicationName;
     @BindString(R.string.activity_settings)
@@ -57,14 +60,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     String labelErrorAddEnvironment;
 
     private final AppCompatActivity mActivity;
-    private final DrawerLayout mDrawerLayout;
 
-    public NavigationViewItemSelectedListener(AppCompatActivity activity, DrawerLayout drawerLayout) {
+    public NavigationViewItemSelectedListener(AppCompatActivity activity) {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
 
         this.mActivity = activity;
-        this.mDrawerLayout = drawerLayout;
     }
 
     @Override
