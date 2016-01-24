@@ -18,7 +18,8 @@
     <string name="drawer_menu_example">Example environment</string>
 
     <string name="dialog_add_environment_title">Add environment</string>
-    <string name="dialog_add_environment_name">Name</string>
+    <string name="dialog_edit_environment_title">Edit environment</string>
+    <string name="dialog_environment_name">Name</string>
 
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="error_add_environment">Error adding environment</string>
@@ -36,6 +37,8 @@
     <string name="dialog_gateway_port">Port</string>
 
     <string name="button_add">Add</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Delete</string>
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
     <string name="label_default_success">SUCCESS</string>

@@ -43,7 +43,6 @@ import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 
-// TODO https://guides.codepath.com/android/Fragment-Navigation-Drawer
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
@@ -131,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 MenuItem menuItem = MenuItemCompat.setActionView(menuGroup.findItem(environment.getId()),
                     R.layout.drawer_menu_environment);
                 menuItem.getActionView().findViewById(R.id.imageViewDrawerMenuEnvironmentEdit)
-                    .setOnClickListener(new NavigationViewClickListener(environment.getId()));
+                    .setOnClickListener(new NavigationViewClickListener(this, environment.getId()));
             });
     }
 

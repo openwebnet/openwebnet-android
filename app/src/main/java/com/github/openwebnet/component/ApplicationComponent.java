@@ -16,6 +16,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
+import com.github.openwebnet.view.NavigationViewClickListener;
 import com.github.openwebnet.view.NavigationViewItemSelectedListener;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.DeviceListAdapter;
@@ -40,6 +41,7 @@ public interface ApplicationComponent {
     void inject(DeviceListFragment fragment);
 
     void inject(NavigationViewItemSelectedListener listener);
+    void inject(NavigationViewClickListener listener);
     void inject(GatewayEditTextPreference editTextPreference);
     void inject(GatewayListPreference listPreference);
     void inject(DeviceListAdapter deviceListAdapter);
