@@ -32,6 +32,7 @@ import de.greenrobot.event.Subscribe;
 import rx.Observable;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
+// TODO handle no items found
 public class DeviceListFragment extends Fragment {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);

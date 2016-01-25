@@ -32,12 +32,14 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class NavigationViewItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final Logger log = LoggerFactory.getLogger(NavigationViewItemSelectedListener.class);
 
     // @see menu/activity_main_drawer.xml
+    public static final int MENU_FAVOURITE = 10;
     public static final int MENU_ENVIRONMENT_RANGE_MIN = 100;
     public static final int MENU_ENVIRONMENT_RANGE_MAX = 899;
 
@@ -76,11 +78,11 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
         switch (id) {
             case R.id.nav_favourite:
-                // TODO favourite
-                // TODO handle no favourites found
+                checkArgument(item.getOrder() == MENU_FAVOURITE, "invalid favourite menu id");
+
                 mActivity.getSupportActionBar().setTitle(labelApplicationName);
                 floatingActionsMenuMain.setVisibility(View.INVISIBLE);
-                log.debug("TODO favourite");
+                showDeviceList(MENU_FAVOURITE);
                 break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
@@ -89,9 +91,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 showSettings();
                 break;
             default:
-                // TODO handle no items found
+                checkArgument(id >= MENU_ENVIRONMENT_RANGE_MIN
+                    || id <= MENU_ENVIRONMENT_RANGE_MAX, "invalid environment menu id");
+
                 mActivity.getSupportActionBar().setTitle(item.getTitle());
-                showEnvironment(id);
+                floatingActionsMenuMain.setVisibility(View.VISIBLE);
+                showDeviceList(id);
                 break;
         }
 
@@ -100,12 +105,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         return true;
     }
 
-    public void showEnvironment(Integer id) {
-        floatingActionsMenuMain.setVisibility(View.VISIBLE);
+    private void showDeviceList(int id) {
         removeFragment();
 
         Fragment fragment = mActivity.getSupportFragmentManager()
             .findFragmentById(R.id.content_frame);
+
         if (fragment == null || fragment.getArguments().getInt(ARG_ENVIRONMENT) != id) {
             fragment = new DeviceListFragment();
             Bundle args = new Bundle();
@@ -115,7 +120,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
         mActivity.getSupportFragmentManager()
             .beginTransaction()
-                .replace(R.id.content_frame, fragment)
+            .replace(R.id.content_frame, fragment)
             //.addToBackStack(null)
             .commit();
     }
