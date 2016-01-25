@@ -52,7 +52,7 @@ import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*", "com.getbase.*"})
+@PowerMockIgnore({"org.robolectric.*", "android.*", "com.getbase.*"})
 @PrepareForTest({Injector.class})
 public class MainActivityTest {
 
