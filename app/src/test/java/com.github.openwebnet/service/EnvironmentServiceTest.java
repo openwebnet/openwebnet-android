@@ -93,6 +93,21 @@ public class EnvironmentServiceTest {
     }
 
     @Test
+    public void environmentService_update() {
+        EnvironmentModel environment = new EnvironmentModel();
+
+        when(environmentRepository.update(environment)).thenReturn(Observable.just(null));
+
+        TestSubscriber<Void> tester = new TestSubscriber<>();
+        environmentService.update(environment).subscribe(tester);
+
+        verify(environmentRepository).update(environment);
+
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
     public void environmentService_findAll() {
         List<EnvironmentModel> environments = new ArrayList<>();
         when(environmentRepository.findAll()).thenReturn(Observable.just(environments));
@@ -103,6 +118,24 @@ public class EnvironmentServiceTest {
         verify(environmentRepository).findAll();
 
         tester.assertValue(environments);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void environmentService_findById() {
+        Integer ENVIRONMENT_ID = 110;
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(ENVIRONMENT_ID);
+
+        when(environmentRepository.findById(ENVIRONMENT_ID)).thenReturn(Observable.just(environment));
+
+        TestSubscriber<EnvironmentModel> tester = new TestSubscriber<>();
+        environmentService.findById(ENVIRONMENT_ID).subscribe(tester);
+
+        verify(environmentRepository).findById(ENVIRONMENT_ID);
+
+        tester.assertValue(environment);
         tester.assertCompleted();
         tester.assertNoErrors();
     }

@@ -32,7 +32,6 @@ public class EnvironmentServiceImpl implements EnvironmentService {
             .flatMap(environment -> environmentRepository.add(environment));
     }
 
-    // TODO test
     @Override
     public Observable<Void> update(EnvironmentModel environment) {
         return environmentRepository.update(environment);
@@ -43,7 +42,6 @@ public class EnvironmentServiceImpl implements EnvironmentService {
         return environmentRepository.findAll();
     }
 
-    // TODO test
     @Override
     public Observable<EnvironmentModel> findById(Integer id) {
         return environmentRepository.findById(id);

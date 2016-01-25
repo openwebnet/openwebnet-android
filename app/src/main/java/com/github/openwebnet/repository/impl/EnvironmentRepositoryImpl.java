@@ -59,7 +59,6 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         });
     }
 
-    // TODO test
     @Override
     public Observable<Void> update(EnvironmentModel environment) {
         return Observable.create(subscriber -> {
@@ -73,7 +72,6 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         });
     }
 
-    // TODO test
     @Override
     public Observable<EnvironmentModel> findById(Integer id) {
         return Observable.create(subscriber -> {

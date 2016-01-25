@@ -99,6 +99,40 @@ public class EnvironmentRepositoryTest {
     }
 
     @Test
+    public void environmentRepository_update() {
+        EnvironmentModel environment = newEnvironmentModel(108, "env");
+
+        when(databaseRealm.update(environment)).thenReturn(null);
+
+        TestSubscriber<Void> tester = new TestSubscriber<>();
+        environmentRepository.update(environment).subscribe(tester);
+
+        verify(databaseRealm).update(environment);
+
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void environmentRepository_findById() {
+        Integer ENVIRONMENT_ID = 100;
+        EnvironmentModel environment = newEnvironmentModel(ENVIRONMENT_ID, "myName");
+        List<EnvironmentModel> environments = Arrays.asList(environment);
+
+        when(databaseRealm.findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID))
+            .thenReturn(environments);
+
+        TestSubscriber<EnvironmentModel> tester = new TestSubscriber<>();
+        environmentRepository.findById(ENVIRONMENT_ID).subscribe(tester);
+
+        verify(databaseRealm).findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID);
+
+        tester.assertValue(environment);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
     public void environmentRepository_findAll() {
         List<EnvironmentModel> environments = Arrays
             .asList(newEnvironmentModel(100, "environment1"), newEnvironmentModel(101, "environment2"));
