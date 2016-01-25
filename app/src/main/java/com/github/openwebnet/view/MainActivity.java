@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Stream.of(environments)
             .forEach(environment -> {
                 menuGroup.add(R.id.nav_group_environment, environment.getId(),
-                    menuOrder.incrementAndGet(), environment.getName());
+                    menuOrder.getAndIncrement(), environment.getName());
 
                 MenuItem menuItem = MenuItemCompat.setActionView(menuGroup.findItem(environment.getId()),
                     R.layout.drawer_menu_environment);

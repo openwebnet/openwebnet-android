@@ -97,13 +97,12 @@ public class MainActivityTest {
 
     @Test
     public void shouldInitNavigationDrawerMenu() {
-        EnvironmentModel environment1 = new EnvironmentModel();
-        environment1.setId(100);
-        environment1.setName("environment1");
-        EnvironmentModel environment2 = new EnvironmentModel();
-        environment2.setId(101);
-        environment2.setName("environment2");
-        List<EnvironmentModel> environments = Lists.newArrayList(environment1, environment2);
+        List<EnvironmentModel> environments = Lists.newArrayList(
+            newEnvironmentModel(801, "A-environment"),
+            newEnvironmentModel(802, "B-environment"),
+            newEnvironmentModel(803, "C-environment"),
+            newEnvironmentModel(804, "D-environment"),
+            newEnvironmentModel(805, "E-environment"));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
 
@@ -115,14 +114,30 @@ public class MainActivityTest {
         Menu menu = navigationView.getMenu();
         assertEquals("invalid menu title", "Favourite", menu.getItem(0).getTitle());
         assertEquals("invalid menu order", 10, menu.getItem(0).getOrder());
-        assertEquals("invalid menu title", "environment1", menu.getItem(1).getTitle());
+
+        // ordered by name (from repository)
+        assertEquals("invalid menu title", "A-environment", menu.getItem(1).getTitle());
         assertEquals("invalid menu order", 100, menu.getItem(1).getOrder());
-        assertEquals("invalid menu title", "environment2", menu.getItem(2).getTitle());
+        assertEquals("invalid menu title", "B-environment", menu.getItem(2).getTitle());
         assertEquals("invalid menu order", 101, menu.getItem(2).getOrder());
-        assertEquals("invalid menu title", "Add environment", menu.getItem(3).getTitle());
-        assertEquals("invalid menu order", 900, menu.getItem(3).getOrder());
-        assertEquals("invalid menu title", "Settings", menu.getItem(4).getTitle());
-        assertEquals("invalid menu order", 900, menu.getItem(4).getOrder());
+        assertEquals("invalid menu title", "C-environment", menu.getItem(3).getTitle());
+        assertEquals("invalid menu order", 102, menu.getItem(3).getOrder());
+        assertEquals("invalid menu title", "D-environment", menu.getItem(4).getTitle());
+        assertEquals("invalid menu order", 103, menu.getItem(4).getOrder());
+        assertEquals("invalid menu title", "E-environment", menu.getItem(5).getTitle());
+        assertEquals("invalid menu order", 104, menu.getItem(5).getOrder());
+
+        assertEquals("invalid menu title", "Add environment", menu.getItem(6).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(6).getOrder());
+        assertEquals("invalid menu title", "Settings", menu.getItem(7).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(7).getOrder());
+    }
+
+    private EnvironmentModel newEnvironmentModel(Integer id, String name) {
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(id);
+        environment.setName(name);
+        return environment;
     }
 
     @Test
