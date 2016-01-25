@@ -56,7 +56,7 @@ public class CommonServiceImpl implements CommonService {
         CLIENT_CACHE = new HashMap<>();
     }
 
-    // TODO clean cache always when add/update gateway
+    // TODO clean cache always when add/update/delete gateway
     @Override
     public OpenWebNet findClient(String gatewayUuid) {
         if (!CLIENT_CACHE.containsKey(gatewayUuid)) {

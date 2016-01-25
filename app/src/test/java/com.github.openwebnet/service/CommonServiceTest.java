@@ -2,17 +2,18 @@ package com.github.openwebnet.service;
 
 import android.content.Context;
 
+import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,11 @@ import dagger.Module;
 import dagger.Provides;
 import rx.Observable;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -55,6 +60,9 @@ public class CommonServiceTest {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    GatewayService gatewayService;
 
     @Singleton
     @Component(modules = {CommonApplicationContextModuleTest.class, DomoticModuleTest.class, RepositoryModuleTest.class})
@@ -119,27 +127,47 @@ public class CommonServiceTest {
     }
 
     @Test
-    @Ignore
     public void commonService_initApplication_isNotFirstTime() {
-        throw new UnsupportedOperationException("not implemented yet");
+        when(preferenceService.isFirstRun()).thenReturn(false);
+
+        commonService.initApplication();
+
+        verify(environmentService, never()).add(anyString());
+        verify(preferenceService, never()).initFirstRun();
     }
 
     @Test
-    @Ignore
     public void commonService_findClient() {
-        throw new UnsupportedOperationException("not implemented yet");
+        String GATEWAY_UUID = "gatewayUuid";
+        GatewayModel gateway = new GatewayModel();
+        gateway.setUuid(GATEWAY_UUID);
+        gateway.setHost("host");
+        gateway.setPort(123);
+
+        when(preferenceService.isFirstRun()).thenReturn(false);
+        when(gatewayService.findById(GATEWAY_UUID)).thenReturn(Observable.just(gateway));
+
+        commonService.initApplication();
+        OpenWebNet client = commonService.findClient(GATEWAY_UUID);
+
+        assertNotNull("null client", client);
+        verify(gatewayService).findById(GATEWAY_UUID);
     }
 
     @Test
-    @Ignore
     public void commonService_getDefaultGateway() {
-        throw new UnsupportedOperationException("not implemented yet");
+        String DEFAULT_GATEWAY = "gatewayUuid";
+        when(preferenceService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
+
+        assertEquals("bad value", DEFAULT_GATEWAY, commonService.getDefaultGateway());
+
+        verify(preferenceService).getDefaultGateway();
     }
 
     @Test
-    @Ignore
     public void commonService_getString() {
-        throw new UnsupportedOperationException("not implemented yet");
+        String expected = commonService.getString(R.string.drawer_menu_example);
+        assertEquals("invalid string", "Example environment", expected);
     }
 
 }
