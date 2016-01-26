@@ -82,4 +82,30 @@ public class DeviceRepositoryTest {
         tester.assertCompleted();
         tester.assertNoErrors();
     }
+
+    @Test
+    public void deviceRepository_findFavourites() {
+        DeviceModel device1 = DeviceModel.updateBuilder("uuid1")
+            .environment(108)
+            .gateway("gateway")
+            .name("device1")
+            .request("*#1")
+            .response("*#1")
+            .favourite(true)
+            .build();
+
+        List<DeviceModel> devices = Arrays.asList(device1);
+
+        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE, true)).thenReturn(devices);
+
+        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
+        deviceRepository.findFavourites().subscribe(tester);
+
+        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE, true);
+
+        tester.assertValue(devices);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
 }

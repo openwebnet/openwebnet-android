@@ -88,4 +88,29 @@ public class LightRepositoryTest {
         tester.assertCompleted();
         tester.assertNoErrors();
     }
+
+    @Test
+    public void lightRepository_findFavourites() {
+        LightModel light = LightModel.updateBuilder("uuid2")
+            .environment(108)
+            .gateway("gateway")
+            .name("light2")
+            .where(11)
+            .favourite(true)
+            .build();
+
+        List<LightModel> lights = Arrays.asList(light);
+
+        when(databaseRealm.findCopyWhere(LightModel.class, LightModel.FIELD_FAVOURITE, true)).thenReturn(lights);
+
+        TestSubscriber<List<LightModel>> tester = new TestSubscriber<>();
+        lightRepository.findFavourites().subscribe(tester);
+
+        verify(databaseRealm).findCopyWhere(LightModel.class, LightModel.FIELD_FAVOURITE, true);
+
+        tester.assertValue(lights);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
 }
