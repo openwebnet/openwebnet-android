@@ -51,6 +51,7 @@
     <string name="fa_hashtag">&#xf292;</string>
     <string name="fa_hashtag_double">&#xf292;&#xf292;</string>
 
+    <string name="list_empty">No items found</string>
     <string name="device_where">where</string>
     <string name="device_favourite">Favourite</string>
     <string name="device_confirm">Show confirmation alert</string>

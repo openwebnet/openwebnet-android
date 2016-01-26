@@ -142,8 +142,23 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    /**
+     *
+     */
+    public static class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        public static final int VIEW_TYPE = -1;
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
+        if (mItems.isEmpty()) {
+            return EmptyViewHolder.VIEW_TYPE;
+        }
         if (mItems.get(position) instanceof DeviceModel) {
             return DeviceViewHolder.VIEW_TYPE;
         }
@@ -162,6 +177,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case LightViewHolder.VIEW_TYPE:
                 return new LightViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_light, parent, false));
+            case EmptyViewHolder.VIEW_TYPE:
+                return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_empty, parent, false));
             default:
                 throw new IllegalStateException("invalid view type");
         }
@@ -176,6 +194,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case LightViewHolder.VIEW_TYPE:
                 initCardLight((LightViewHolder) holder, (LightModel) mItems.get(position));
                 break;
+            case EmptyViewHolder.VIEW_TYPE:
+                break;
             default:
                 throw new IllegalStateException("invalid item position");
         }
@@ -183,7 +203,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mItems.size() > 0 ? mItems.size() : 1;
     }
 
     /* Device */

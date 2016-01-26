@@ -117,6 +117,7 @@ public class DeviceListFragment extends Fragment {
     }
 
     public void initCards(Integer environmentId) {
+        // TODO in favourite or not
         Observable.zip(
             lightService.requestByEnvironment(environmentId),
             deviceService.findByEnvironment(environmentId),
