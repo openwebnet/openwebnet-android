@@ -11,8 +11,6 @@ import static java.util.Objects.requireNonNull;
 
 public class LightModel extends RealmObject implements RealmModel, DomoticModel {
 
-    public static final String FIELD_ENVIRONMENT_ID = "environmentId";
-
     // TODO handle also ERROR
     public enum Status {
         ON, OFF
@@ -125,6 +123,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.uuid = uuid;
     }
 
+    @Override
     public Integer getEnvironmentId() {
         return environmentId;
     }
@@ -165,6 +164,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.dimmer = dimmer;
     }
 
+    @Override
     public boolean isFavourite() {
         return favourite;
     }

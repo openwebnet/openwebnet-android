@@ -11,8 +11,6 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
 
-    public static final String FIELD_ENVIRONMENT_ID = "environmentId";
-
     // TODO handle also WAIT and ERROR
     public enum Status {
         SUCCESS, FAIL
@@ -143,6 +141,7 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.uuid = uuid;
     }
 
+    @Override
     public Integer getEnvironmentId() {
         return environmentId;
     }
@@ -183,6 +182,7 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.response = response;
     }
 
+    @Override
     public boolean isFavourite() {
         return favourite;
     }
