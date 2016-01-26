@@ -64,6 +64,11 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public Observable<List<DeviceModel>> findFavourites() {
+        return deviceRepository.findFavourites();
+    }
+
+    @Override
     public Observable<DeviceModel> sendRequest(DeviceModel device) {
         return commonService.findClient(device.getGatewayUuid())
             .send(() -> device.getRequest())

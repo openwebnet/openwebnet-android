@@ -14,6 +14,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.view.NavigationViewItemSelectedListener;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -32,7 +33,6 @@ import de.greenrobot.event.Subscribe;
 import rx.Observable;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
-// TODO handle no items found
 public class DeviceListFragment extends Fragment {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);
@@ -100,13 +100,13 @@ public class DeviceListFragment extends Fragment {
      */
     public static class UpdateDeviceListEvent {
 
-        private final Integer environmentId;
+        private final int environmentId;
 
-        public UpdateDeviceListEvent(Integer environmentId) {
+        public UpdateDeviceListEvent(int environmentId) {
             this.environmentId = environmentId;
         }
 
-        public Integer getEnvironmentId() {
+        public int getEnvironmentId() {
             return environmentId;
         }
     }
@@ -116,7 +116,8 @@ public class DeviceListFragment extends Fragment {
         initCards(event.getEnvironmentId());
     }
 
-    public void initCards(Integer environmentId) {
+    public void initCards(int environmentId) {
+        log.debug("isFavourite: {}", environmentId == NavigationViewItemSelectedListener.MENU_FAVOURITE);
         // TODO in favourite or not
         Observable.zip(
             lightService.requestByEnvironment(environmentId),
@@ -127,7 +128,7 @@ public class DeviceListFragment extends Fragment {
                     domoticItems.clear();
                     domoticItems.addAll(results);
                     mAdapter.notifyDataSetChanged();
-            });
+                });
 
     }
 

@@ -59,6 +59,11 @@ public class LightServiceImpl implements LightService {
     }
 
     @Override
+    public Observable<List<LightModel>> findFavourites() {
+        return lightRepository.findFavourites();
+    }
+
+    @Override
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
         // TODO improvement: group by gateway and for each gateway send all requests together
         return findByEnvironment(id)

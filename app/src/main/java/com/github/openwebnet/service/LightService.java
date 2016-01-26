@@ -18,6 +18,8 @@ public interface LightService {
 
     Observable<List<LightModel>> findByEnvironment(Integer id);
 
+    Observable<List<LightModel>> findFavourites();
+
     /* operate on background threads */
 
     Observable<List<LightModel>> requestByEnvironment(Integer id);
