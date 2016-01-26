@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkState;
 public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmModel>
         implements CommonRealmRepository<M> {
 
-    private static final Logger log = LoggerFactory.getLogger(CommonRealmRepositoryImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonRealmRepository.class);
 
     @Inject
     DatabaseRealm databaseRealm;

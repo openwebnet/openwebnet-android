@@ -90,4 +90,9 @@ public class DatabaseRealm {
         return getRealmInstance().copyFromRealm(results);
     }
 
+    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Boolean value) {
+        RealmResults<T> results = query(clazz).equalTo(field, value).findAll();
+        return getRealmInstance().copyFromRealm(results);
+    }
+
 }
