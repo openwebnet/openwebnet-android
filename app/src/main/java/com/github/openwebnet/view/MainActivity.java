@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
+
+        // select favourite menu
+        navigationView.setCheckedItem(R.id.nav_favourite);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_favourite, Menu.NONE);
     }
 
     @Override
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 menuGroup.add(R.id.nav_group_environment, environment.getId(),
                     menuOrder.getAndIncrement(), environment.getName());
 
+                // edit menu
                 MenuItem menuItem = MenuItemCompat.setActionView(menuGroup.findItem(environment.getId()),
                     R.layout.drawer_menu_environment);
                 menuItem.getActionView().findViewById(R.id.imageViewDrawerMenuEnvironmentEdit)
