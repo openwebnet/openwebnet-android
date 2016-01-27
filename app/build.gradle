@@ -107,5 +107,5 @@ task hello(dependsOn: build) {
     println 'current directory is: ' + projectDir
     println 'JAVA_HOME: ' + System.getenv('JAVA_HOME')
     println 'JAVA7_HOME: ' + System.getenv('JAVA7_HOME')
-    println 'JAVA8_HOME: ' + System.getenv('JAVA7_HOME')
+    println 'JAVA8_HOME: ' + System.getenv('JAVA8_HOME')
 }
