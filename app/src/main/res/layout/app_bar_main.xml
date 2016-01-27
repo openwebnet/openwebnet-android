@@ -46,7 +46,7 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddDevice"
             style="@style/fab_menu.button_mini"
-            fab:fab_icon="@drawable/pulse"
+            fab:fab_icon="@drawable/remote"
             fab:fab_size="mini"
             fab:fab_title="@string/fab_label_add_device"/>
 
