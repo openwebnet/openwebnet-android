@@ -90,6 +90,7 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.2'
 }
 
+// @example http://jeroenmols.com/blog/2015/11/13/traviscoveralls/
 coveralls {
     jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
 }
