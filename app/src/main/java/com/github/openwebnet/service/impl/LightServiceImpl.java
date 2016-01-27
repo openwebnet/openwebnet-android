@@ -17,7 +17,11 @@ import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import static com.github.openwebnet.model.LightModel.Status.OFF;
+import static com.github.openwebnet.model.LightModel.Status.ON;
 
 public class LightServiceImpl implements LightService {
 
@@ -65,56 +69,52 @@ public class LightServiceImpl implements LightService {
 
     @Override
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
-        // TODO improvement: group by gateway and for each gateway send all requests together
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(light -> commonService.findClient(light.getGatewayUuid())
-                .send(Lighting.requestStatus(light.getWhere()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(Lighting.handleStatus(
-                    () -> light.setStatus(LightModel.Status.ON),
-                    () -> light.setStatus(LightModel.Status.OFF)))
-                .map(openSession -> Observable.just(light))
-                .onErrorReturn(throwable -> {
-                    log.warn("fail to request status for light={}", light.getUuid());
-                    // unreadable status
-                    return Observable.just(light);
-                }))
-            .collect(() -> new ArrayList<>(), (lightModels, lightModelObservable) ->
-                lightModelObservable.subscribe(lightModel -> lightModels.add(lightModel)));
+            .flatMap(requestLight(requestStatus, ON, OFF))
+            .collect(() -> new ArrayList<>(),
+                (lightModels, lightModel) -> lightModels.add(lightModel));
+    }
+
+    @Override
+    public Observable<List<LightModel>> requestFavourites() {
+        return findFavourites()
+            .flatMapIterable(lightModels -> lightModels)
+            .flatMap(requestLight(requestStatus, ON, OFF))
+            .collect(() -> new ArrayList<>(),
+                (lightModels, lightModel) -> lightModels.add(lightModel));
     }
 
     @Override
     public Observable<LightModel> turnOn(LightModel light) {
-        return commonService.findClient(light.getGatewayUuid())
-            .send(Lighting.requestTurnOn(light.getWhere()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(Lighting.handleResponse(
-                () -> light.setStatus(LightModel.Status.ON),
-                () -> light.setStatus(null)))
-            .map(openSession -> light)
-            .onErrorReturn(throwable -> {
-                log.error("fail to turnOn light={}", light.getUuid());
-                light.setStatus(null);
-                return light;
-            });
+        Func1<Integer, Lighting> requestTurnOn = where -> Lighting.requestTurnOn(where);
+
+        return Observable.just(light).flatMap(requestLight(requestTurnOn, ON, null));
     }
 
     @Override
     public Observable<LightModel> turnOff(LightModel light) {
-        return commonService.findClient(light.getGatewayUuid())
-            .send(Lighting.requestTurnOff(light.getWhere()))
+        Func1<Integer, Lighting> requestTurnOff = where -> Lighting.requestTurnOff(where);
+
+        return Observable.just(light).flatMap(requestLight(requestTurnOff, OFF, null));
+    }
+
+    private Func1<Integer, Lighting> requestStatus = where -> Lighting.requestStatus(where);
+
+    private Func1<LightModel, Observable<LightModel>> requestLight(
+        Func1<Integer, Lighting> request, LightModel.Status success, LightModel.Status fail) {
+        // TODO improvement: group by gateway and for each gateway send all requests together
+        return light -> commonService.findClient(light.getGatewayUuid())
+            .send(request.call(light.getWhere()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map(Lighting.handleResponse(
-                () -> light.setStatus(LightModel.Status.OFF),
-                () -> light.setStatus(null)))
+            .map(Lighting.handleStatus(
+                () -> light.setStatus(success),
+                () -> light.setStatus(fail)))
             .map(openSession -> light)
             .onErrorReturn(throwable -> {
-                log.error("fail to turnOff light={}", light.getUuid());
-                light.setStatus(null);
+                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                // unreadable status
                 return light;
             });
     }

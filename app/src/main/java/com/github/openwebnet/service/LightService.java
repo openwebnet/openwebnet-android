@@ -24,6 +24,8 @@ public interface LightService {
 
     Observable<List<LightModel>> requestByEnvironment(Integer id);
 
+    Observable<List<LightModel>> requestFavourites();
+
     Observable<LightModel> turnOn(LightModel light);
 
     Observable<LightModel> turnOff(LightModel light);

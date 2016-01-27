@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
-import com.github.openwebnet.view.NavigationViewItemSelectedListener;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -31,6 +31,8 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import rx.Observable;
+
+import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
 
 // http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
 public class DeviceListFragment extends Fragment {
@@ -117,14 +119,20 @@ public class DeviceListFragment extends Fragment {
     }
 
     public void initCards(int environmentId) {
-        log.debug("isFavourite: {}", environmentId == NavigationViewItemSelectedListener.MENU_FAVOURITE);
-        // TODO in favourite or not
-        Observable.zip(
-            lightService.requestByEnvironment(environmentId),
+        boolean isFavouriteMenu = environmentId == MENU_FAVOURITE;
+        log.debug("initCards-isFavouriteMenu: {}", isFavouriteMenu);
+
+        // TODO show loader/hide list
+
+        Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
+            lightService.requestByEnvironment(environmentId);
+
+        Observable.zip(requestLights,
             deviceService.findByEnvironment(environmentId),
                 (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
                 .doOnError(throwable -> log.error("ERROR initCards", throwable))
                 .subscribe(results -> {
+                    // TODO hide loader/show list
                     domoticItems.clear();
                     domoticItems.addAll(results);
                     mAdapter.notifyDataSetChanged();
