@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -15,6 +16,7 @@ import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -34,7 +36,6 @@ import rx.Observable;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
 
-// http://stackoverflow.com/questions/26666143/recyclerview-gridlayoutmanager-how-to-auto-detect-span-count
 public class DeviceListFragment extends Fragment {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);
@@ -44,6 +45,9 @@ public class DeviceListFragment extends Fragment {
 
     @Bind(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
+
+    @Bind(R.id.progressBarDeviceList)
+    ProgressBar progressBarDeviceList;
 
     @Inject
     LightService lightService;
@@ -119,10 +123,9 @@ public class DeviceListFragment extends Fragment {
     }
 
     public void initCards(int environmentId) {
+        showLoader(true);
         boolean isFavouriteMenu = environmentId == MENU_FAVOURITE;
         log.debug("initCards-isFavouriteMenu: {}", isFavouriteMenu);
-
-        // TODO show loader/hide list
 
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
             lightService.requestByEnvironment(environmentId);
@@ -132,12 +135,19 @@ public class DeviceListFragment extends Fragment {
                 (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
                 .doOnError(throwable -> log.error("ERROR initCards", throwable))
                 .subscribe(results -> {
-                    // TODO hide loader/show list
+                    showLoader(false);
                     domoticItems.clear();
                     domoticItems.addAll(results);
                     mAdapter.notifyDataSetChanged();
                 });
 
+    }
+
+    private void showLoader(boolean visibility) {
+        mRecyclerView.setVisibility(visibility ? View.INVISIBLE: View.VISIBLE);
+        progressBarDeviceList.setVisibility(visibility ? View.VISIBLE: View.GONE);
+
+        EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!visibility));
     }
 
 }

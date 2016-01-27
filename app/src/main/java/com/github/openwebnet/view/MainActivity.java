@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.annimon.stream.Stream;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -197,4 +198,28 @@ public class MainActivity extends AppCompatActivity {
         //navigationView.getMenu().findItem(event.getMenuItemId()).setChecked(true);
         drawerMenuItemSelected = event.getMenuItemId();
     }
+
+    /**
+     *
+     */
+    public static class OnChangeFabVisibilityEvent {
+
+        private final boolean visible;
+
+        public OnChangeFabVisibilityEvent(boolean visible) {
+            this.visible = visible;
+        }
+
+        public boolean isVisible() {
+            return visible;
+        }
+    }
+
+    // fired from DeviceListFragment.showLoader
+    @Subscribe
+    public void onEvent(OnChangeFabVisibilityEvent event) {
+        floatingActionsMenuMain.collapse();
+        floatingActionsMenuMain.setVisibility(event.isVisible() ? View.VISIBLE: View.INVISIBLE);
+    }
+
 }
