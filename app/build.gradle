@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 23
@@ -38,7 +37,6 @@ android {
             testCoverageEnabled true
         }
     }
-    productFlavors {}
 
     // Robolectric issue
     useLibrary 'org.apache.http.legacy'
@@ -89,10 +87,6 @@ dependencies {
     compile 'com.google.dagger:dagger:2.0.2'
     provided 'javax.annotation:jsr250-api:1.0'
     apt 'com.google.dagger:dagger-compiler:2.0.2'
-}
-
-jacocoAndroidUnitTestReport {
-    excludes += ['**/*$ViewBinder*.*']
 }
 
 task hello(dependsOn: build) {
