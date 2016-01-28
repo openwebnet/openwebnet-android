@@ -3,6 +3,8 @@ package com.github.openwebnet.view.device;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,17 +51,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Inject
     LightService lightService;
 
-    @Inject
+    // NO @Inject: need activity to show AppCompactDialog
     Context mContext;
 
     private final Integer mEnvironmentId;
     private List<DomoticModel> mItems;
 
-    public DeviceListAdapter(Integer environmentId, List<DomoticModel> items) {
+    public DeviceListAdapter(Context context, Integer environmentId, List<DomoticModel> items) {
         Injector.getApplicationComponent().inject(this);
 
         requireNonNull(environmentId, "environmentId is null");
         requireNonNull(items, "items is null");
+        this.mContext = context;
         this.mEnvironmentId = environmentId;
         this.mItems = items;
     }
@@ -226,8 +229,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         holder.imageButtonCardSend.setOnClickListener(v -> {
-            // TODO showConfirmationAlert
-            sendDeviceRequest(holder, device);
+            if (device.isShowConfirmation()) {
+                showConfirmationDialog(holder, device);
+            } else {
+                sendDeviceRequest(holder, device);
+            }
         });
 
         holder.imageViewCardDeviceMenu.setOnClickListener(v -> showCardMenu(v,
@@ -260,6 +266,22 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
             case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
         }
+    }
+
+    private void showConfirmationDialog(DeviceViewHolder holder, DeviceModel device) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+            .setTitle(R.string.dialog_device_confirmation_title)
+            .setMessage(R.string.dialog_device_confirmation_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                sendDeviceRequest(holder, device);
+                dialog.dismiss();
+            });
     }
 
     /* Light */

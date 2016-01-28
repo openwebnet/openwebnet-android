@@ -72,7 +72,7 @@ public class DeviceListFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new DeviceListAdapter(getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
+        mAdapter = new DeviceListAdapter(getActivity(), getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
