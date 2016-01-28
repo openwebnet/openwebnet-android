@@ -222,7 +222,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
         if (device.isRunOnLoad()) {
-            sendDeviceRequest(holder, device);
+            showDeviceStatus(holder, device);
         }
 
         holder.imageButtonCardSend.setOnClickListener(v -> {
@@ -243,21 +243,23 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void sendDeviceRequest(DeviceViewHolder holder, DeviceModel device) {
-        deviceService.sendRequest(device).subscribe(deviceModel -> {
-            if (deviceModel.getStatus() == null) {
-                holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
-                holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
-                holder.imageViewCardAlert.setVisibility(View.VISIBLE);
-                return;
-            }
+        deviceService.sendRequest(device).subscribe(deviceModel -> showDeviceStatus(holder, deviceModel));
+    }
 
-            holder.imageButtonCardSend.setVisibility(View.VISIBLE);
-            holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
-            switch (deviceModel.getStatus()) {
-                case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
-                case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
-            }
-        });
+    private void showDeviceStatus(DeviceViewHolder holder, DeviceModel device) {
+        if (device.getStatus() == null) {
+            holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
+            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        switch (device.getStatus()) {
+            case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
+            case FAIL: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusFail); break;
+        }
     }
 
     /* Light */
