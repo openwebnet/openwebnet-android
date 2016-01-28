@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnChangeFabVisibilityEvent event) {
         floatingActionsMenuMain.collapse();
-        floatingActionsMenuMain.setVisibility(event.isVisible() ? View.VISIBLE: View.INVISIBLE);
+        floatingActionsMenuMain.setVisibility(event.isVisible() ? View.VISIBLE : View.INVISIBLE);
     }
 
 }

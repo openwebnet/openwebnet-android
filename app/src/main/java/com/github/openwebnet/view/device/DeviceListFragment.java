@@ -123,8 +123,8 @@ public class DeviceListFragment extends Fragment {
     }
 
     public void initCards(int environmentId) {
-        showLoader(true);
-        boolean isFavouriteMenu = environmentId == MENU_FAVOURITE;
+        final boolean isFavouriteMenu = environmentId == MENU_FAVOURITE;
+        showLoader(true, isFavouriteMenu);
         log.debug("initCards-isFavouriteMenu: {}", isFavouriteMenu);
 
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
@@ -135,7 +135,7 @@ public class DeviceListFragment extends Fragment {
                 (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
                 .doOnError(throwable -> log.error("ERROR initCards", throwable))
                 .subscribe(results -> {
-                    showLoader(false);
+                    showLoader(false, isFavouriteMenu);
                     domoticItems.clear();
                     domoticItems.addAll(results);
                     mAdapter.notifyDataSetChanged();
@@ -143,11 +143,17 @@ public class DeviceListFragment extends Fragment {
 
     }
 
-    private void showLoader(boolean visibility) {
-        mRecyclerView.setVisibility(visibility ? View.INVISIBLE: View.VISIBLE);
-        progressBarDeviceList.setVisibility(visibility ? View.VISIBLE: View.GONE);
+    private void showLoader(boolean visibility, boolean isFavouriteMenu) {
+        // mRecyclerView is null if user select another menu while is still loading
+        if (mRecyclerView != null) {
+            mRecyclerView.setVisibility(visibility ? View.INVISIBLE : View.VISIBLE);
+            progressBarDeviceList.setVisibility(visibility ? View.VISIBLE : View.GONE);
 
-        EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!visibility));
+            if (!isFavouriteMenu) {
+                // toggle FloatingActionsMenu
+                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!visibility));
+            }
+        }
     }
 
 }
