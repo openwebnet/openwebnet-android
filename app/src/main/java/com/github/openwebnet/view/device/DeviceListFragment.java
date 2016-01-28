@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.service.DeviceService;
@@ -130,16 +131,18 @@ public class DeviceListFragment extends Fragment {
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
             lightService.requestByEnvironment(environmentId);
 
-        Observable.zip(requestLights,
-            deviceService.findByEnvironment(environmentId),
-                (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
-                .doOnError(throwable -> log.error("ERROR initCards", throwable))
-                .subscribe(results -> {
-                    showLoader(false, isFavouriteMenu);
-                    domoticItems.clear();
-                    domoticItems.addAll(results);
-                    mAdapter.notifyDataSetChanged();
-                });
+        Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
+            deviceService.requestByEnvironment(environmentId);
+
+        Observable.zip(requestLights, requestDevices,
+            (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
+            .doOnError(throwable -> log.error("ERROR initCards", throwable))
+            .subscribe(results -> {
+                showLoader(false, isFavouriteMenu);
+                domoticItems.clear();
+                domoticItems.addAll(results);
+                mAdapter.notifyDataSetChanged();
+            });
 
     }
 

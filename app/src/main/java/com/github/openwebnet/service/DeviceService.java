@@ -22,6 +22,10 @@ public interface DeviceService {
 
     /* operate on background threads */
 
+    Observable<List<DeviceModel>> requestByEnvironment(Integer id);
+
+    Observable<List<DeviceModel>> requestFavourites();
+
     Observable<DeviceModel> sendRequest(DeviceModel device);
 
 }

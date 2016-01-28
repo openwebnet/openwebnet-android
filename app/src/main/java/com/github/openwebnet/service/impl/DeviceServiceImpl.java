@@ -12,12 +12,15 @@ import com.google.common.base.Joiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Statement;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.github.openwebnet.model.DeviceModel.Status.FAIL;
@@ -69,6 +72,29 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    public Observable<List<DeviceModel>> requestByEnvironment(Integer id) {
+        return findByEnvironment(id)
+            .flatMapIterable(deviceModels -> deviceModels)
+            .flatMap(requestOnLoad())
+            .collect(() -> new ArrayList<>(),
+                (deviceModels, deviceModel) -> deviceModels.add(deviceModel));
+    }
+
+    private Func1<DeviceModel, Observable<DeviceModel>> requestOnLoad() {
+        return device -> Statement.ifThen(() -> device.isRunOnLoad(),
+            sendRequest(device), Observable.just(device));
+    }
+
+    @Override
+    public Observable<List<DeviceModel>> requestFavourites() {
+        return findFavourites()
+            .flatMapIterable(deviceModels -> deviceModels)
+            .flatMap(requestOnLoad())
+            .collect(() -> new ArrayList<>(),
+                (deviceModels, deviceModel) -> deviceModels.add(deviceModel));
+    }
+
+    @Override
     public Observable<DeviceModel> sendRequest(DeviceModel device) {
         return commonService.findClient(device.getGatewayUuid())
             .send(() -> device.getRequest())
@@ -85,7 +111,7 @@ public class DeviceServiceImpl implements DeviceService {
                     isExpectedResponse, device.getResponse(), response);
                 return device;
             })
-            .onErrorReturn(throwable1 -> {
+            .onErrorReturn(throwable -> {
                 log.error("fail to send request for device={}", device.getUuid());
                 device.setStatus(null);
                 return device;
