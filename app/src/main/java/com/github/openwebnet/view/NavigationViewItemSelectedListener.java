@@ -121,7 +121,6 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         mActivity.getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.content_frame, fragment)
-            //.addToBackStack(null)
             .commit();
     }
 
