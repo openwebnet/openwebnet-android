@@ -129,7 +129,7 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:digits">0123456789*#</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:inputType">textMultiLine</item>
+        <item name="android:inputType">textMultiLine|phone</item>
         <item name="android:textSize">32sp</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
