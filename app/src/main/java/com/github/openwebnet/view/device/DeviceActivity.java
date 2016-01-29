@@ -62,10 +62,9 @@ public class DeviceActivity extends AbstractDeviceActivity {
         ButterKnife.bind(this);
 
         initSpinnerEnvironment();
-        //selectEnvironment(); TODO current environment
         initSpinnerGateway();
-        //selectGateway(); TODO default gateway
         initEditDevice();
+        initAcceptDisclaimer();
     }
 
     private void initEditDevice() {
@@ -85,6 +84,15 @@ public class DeviceActivity extends AbstractDeviceActivity {
                 checkBoxDeviceConfirm.setChecked(device.isShowConfirmation());
             });
         }
+    }
+
+    private void initAcceptDisclaimer() {
+        checkBoxDeviceAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                checkBoxDeviceAccept.clearFocus();
+                checkBoxDeviceAccept.setError(null);
+            }
+        });
     }
 
     @Override

@@ -67,6 +67,7 @@
         <CheckBox
             android:id="@+id/checkBoxDeviceConfirm"
             style="@style/device.checkBox"
+            android:checked="true"
             android:text="@string/device_confirm"/>
 
         <CheckBox
