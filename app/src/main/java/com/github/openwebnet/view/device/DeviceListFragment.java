@@ -3,12 +3,12 @@ package com.github.openwebnet.view.device;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -47,8 +47,8 @@ public class DeviceListFragment extends Fragment {
     @Bind(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.progressBarDeviceList)
-    ProgressBar progressBarDeviceList;
+    @Bind(R.id.swipeRefreshLayoutDeviceList)
+    SwipeRefreshLayout swipeRefreshLayoutDeviceList;
 
     @Inject
     LightService lightService;
@@ -75,6 +75,10 @@ public class DeviceListFragment extends Fragment {
         mAdapter = new DeviceListAdapter(getActivity(), getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
         mRecyclerView.setAdapter(mAdapter);
 
+        swipeRefreshLayoutDeviceList.setColorSchemeResources(R.color.primary, R.color.yellow, R.color.accent);
+        swipeRefreshLayoutDeviceList.setOnRefreshListener(() ->
+            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT))));
+
         return view;
     }
 
@@ -87,7 +91,10 @@ public class DeviceListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
+        swipeRefreshLayoutDeviceList.post(() -> {
+            swipeRefreshLayoutDeviceList.setRefreshing(true);
+            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
+        });
     }
 
     @Override
@@ -146,15 +153,16 @@ public class DeviceListFragment extends Fragment {
 
     }
 
-    private void showLoader(boolean visibility, boolean isFavouriteMenu) {
+    private void showLoader(boolean refreshing, boolean isFavouriteMenu) {
         // mRecyclerView is null if user select another menu while is still loading
         if (mRecyclerView != null) {
-            mRecyclerView.setVisibility(visibility ? View.INVISIBLE : View.VISIBLE);
-            progressBarDeviceList.setVisibility(visibility ? View.VISIBLE : View.GONE);
-
+            mRecyclerView.setVisibility(refreshing ? View.INVISIBLE : View.VISIBLE);
+            if (!refreshing) {
+                swipeRefreshLayoutDeviceList.setRefreshing(false);
+            }
             if (!isFavouriteMenu) {
-                // toggle FloatingActionsMenu
-                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!visibility));
+                // toggle visibility FloatingActionsMenu
+                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!refreshing));
             }
         }
     }
