@@ -1,5 +1,6 @@
 package com.github.openwebnet.service.impl;
 
+import com.github.niqdev.openwebnet.OpenSession;
 import com.github.niqdev.openwebnet.message.Lighting;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.LightModel;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 import static com.github.openwebnet.model.LightModel.Status.OFF;
@@ -67,11 +69,18 @@ public class LightServiceImpl implements LightService {
         return lightRepository.findFavourites();
     }
 
+    private Func1<Integer, Lighting> requestStatus = where -> Lighting.requestStatus(where);
+
+    private Func2<OpenSession, LightModel, LightModel> handleStatus = (openSession, light) -> {
+        Lighting.handleStatus(() -> light.setStatus(ON), () -> light.setStatus(OFF)).call(openSession);
+        return light;
+    };
+
     @Override
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(requestStatus, ON, OFF))
+            .flatMap(requestLight(requestStatus, handleStatus))
             .collect(() -> new ArrayList<>(),
                 (lightModels, lightModel) -> lightModels.add(lightModel));
     }
@@ -80,42 +89,45 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestFavourites() {
         return findFavourites()
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(requestStatus, ON, OFF))
+            .flatMap(requestLight(requestStatus, handleStatus))
             .collect(() -> new ArrayList<>(),
                 (lightModels, lightModel) -> lightModels.add(lightModel));
+    }
+
+    private Func2<OpenSession, LightModel, LightModel> handleResponse(LightModel.Status status) {
+        return (openSession, light) -> {
+            Lighting.handleResponse(() ->
+                light.setStatus(status), () -> light.setStatus(null)).call(openSession);
+            return light;
+        };
     }
 
     @Override
     public Observable<LightModel> turnOn(LightModel light) {
         Func1<Integer, Lighting> requestTurnOn = where -> Lighting.requestTurnOn(where);
 
-        return Observable.just(light).flatMap(requestLight(requestTurnOn, ON, null));
+        return Observable.just(light).flatMap(requestLight(requestTurnOn, handleResponse(ON)));
     }
 
     @Override
     public Observable<LightModel> turnOff(LightModel light) {
         Func1<Integer, Lighting> requestTurnOff = where -> Lighting.requestTurnOff(where);
 
-        return Observable.just(light).flatMap(requestLight(requestTurnOff, OFF, null));
+        return Observable.just(light).flatMap(requestLight(requestTurnOff, handleResponse(OFF)));
     }
 
-    private Func1<Integer, Lighting> requestStatus = where -> Lighting.requestStatus(where);
-
     private Func1<LightModel, Observable<LightModel>> requestLight(
-        Func1<Integer, Lighting> request, LightModel.Status success, LightModel.Status fail) {
+        Func1<Integer, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
         // TODO improvement: group by gateway and for each gateway send all requests together
         return light -> commonService.findClient(light.getGatewayUuid())
-            .send(request.call(light.getWhere()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(Lighting.handleStatus(
-                () -> light.setStatus(success),
-                () -> light.setStatus(fail)))
-            .map(openSession -> light)
-            .onErrorReturn(throwable -> {
-                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
-                // unreadable status
-                return light;
+                .send(request.call(light.getWhere()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(openSession -> handler.call(openSession, light))
+                .onErrorReturn(throwable -> {
+                    log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                    // unreadable status
+                    return light;
             });
     }
 
