@@ -322,8 +322,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return;
         }
         switch (status) {
-            case ON: holder.cardViewLight.setBackgroundColor(holder.colorStatusOn); break;
-            case OFF: holder.cardViewLight.setBackgroundColor(holder.colorStatusOff); break;
+            case ON: holder.cardViewLight.setCardBackgroundColor(holder.colorStatusOn); break;
+            case OFF: holder.cardViewLight.setCardBackgroundColor(holder.colorStatusOff); break;
         }
     }
 
