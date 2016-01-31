@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -315,6 +314,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
         holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
             holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
