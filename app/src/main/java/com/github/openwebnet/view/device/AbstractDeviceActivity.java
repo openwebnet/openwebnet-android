@@ -80,7 +80,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
             int defaultEnvironment = getIntent().getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1);
             log.debug("defaultEnvironment: {}", defaultEnvironment);
-            if (defaultEnvironment > MENU_ENVIRONMENT_RANGE_MIN && defaultEnvironment < MENU_ENVIRONMENT_RANGE_MAX) {
+            if (defaultEnvironment >= MENU_ENVIRONMENT_RANGE_MIN && defaultEnvironment <= MENU_ENVIRONMENT_RANGE_MAX) {
                 selectEnvironment(defaultEnvironment);
             }
         });
