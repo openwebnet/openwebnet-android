@@ -7,7 +7,8 @@
 
 TODO screenshots
 
-TODO description
+MyHome is the [BTicino](http://www.bticino.it/domotica-casa-connessa) and [Legrand](http://www.myopen-legrandgroup.com/) home domotic system that let you manage your house from remote devices through [OpenWebNet](https://en.wikipedia.org/wiki/OpenWebNet) protocol.
+This Android application is a free and unofficial client under CC license available on the Play Store.
 
 ### Changelog
 
