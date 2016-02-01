@@ -4,7 +4,7 @@ import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.component.module.ApplicationContextModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
-import com.github.openwebnet.repository.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;

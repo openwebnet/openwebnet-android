@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
-import com.github.openwebnet.repository.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;

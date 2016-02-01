@@ -2,6 +2,7 @@ package com.github.openwebnet.repository;
 
 import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.SampleModel;
 import com.github.openwebnet.repository.impl.CommonRealmRepositoryImpl;
 

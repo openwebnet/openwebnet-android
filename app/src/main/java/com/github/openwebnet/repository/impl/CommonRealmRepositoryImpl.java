@@ -2,7 +2,7 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.repository.CommonRealmRepository;
-import com.github.openwebnet.repository.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

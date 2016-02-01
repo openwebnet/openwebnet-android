@@ -1,4 +1,4 @@
-package com.github.openwebnet.repository;
+package com.github.openwebnet.database;
 
 import android.content.Context;
 
@@ -17,6 +17,9 @@ import io.realm.Sort;
 
 public class DatabaseRealm {
 
+    private static final String DATABASE_NAME = "openwebnet.realm";
+    private static final int DATABASE_VERSION = 1;
+
     @Inject
     Context mContext;
 
@@ -28,11 +31,18 @@ public class DatabaseRealm {
 
     public void setup() {
         if (realmConfiguration == null) {
-            realmConfiguration = new RealmConfiguration.Builder(mContext).build();
+            realmConfiguration = getRealmConfig();
             Realm.setDefaultConfiguration(realmConfiguration);
         } else {
             throw new IllegalStateException("database already configured");
         }
+    }
+
+    private RealmConfiguration getRealmConfig() {
+        return new RealmConfiguration.Builder(mContext)
+            .name(DATABASE_NAME)
+            .schemaVersion(DATABASE_VERSION)
+            .build();
     }
 
     public Realm getRealmInstance() {

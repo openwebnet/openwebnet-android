@@ -7,6 +7,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.LightModel;
 
 import org.junit.Before;

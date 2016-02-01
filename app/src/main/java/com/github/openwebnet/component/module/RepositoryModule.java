@@ -1,6 +1,6 @@
 package com.github.openwebnet.component.module;
 
-import com.github.openwebnet.repository.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
