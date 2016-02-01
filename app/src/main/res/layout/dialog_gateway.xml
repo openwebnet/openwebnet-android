@@ -14,6 +14,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginTop="@dimen/dialog_margin"
         android:hint="@string/dialog_gateway_host"
+        android:inputType="phone"
         android:maxLength="15"/>
 
     <EditText
