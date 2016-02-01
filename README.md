@@ -5,7 +5,30 @@
 
 > work in progress!
 
+TODO screenshots
+
+TODO description
+
+### Changelog
+
+#### v1.0.0 and previous releases
+
+- Add/edit environment
+- Add multiple gateway
+- Handle favourites
+- Add/edit/remove light
+- Add/edit/remove generic OpenWebNet message (frame)
+
+### Next features
+
 [Trello Board](https://trello.com/b/KwVQLhoj/openwebnet-android)
+
+- [ ] Preference: enable/disable debug request
+- [ ] Import/Export database to JSON
+- [ ] Add Dimmer (Light)
+- [ ] Add IpCam
+- [ ] Add Sound System
+- [ ] Add Temperature System
 
 ### License
 
