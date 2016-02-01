@@ -280,7 +280,7 @@ public class LightActivityTest {
         String LIGHT_UUID = "myUuid";
         String LIGHT_NAME = "myName";
         String LIGHT_GATEWAY_SELECTED = "uuid2";
-        Integer LIGHT_WHERE = 8;
+        String LIGHT_WHERE = "08";
         Integer LIGHT_ENVIRONMENT_SELECTED = 108;
         boolean LIGHT_DIMMER = true;
         boolean LIGHT_FAVOURITE = true;
@@ -357,7 +357,7 @@ public class LightActivityTest {
     private LightModel common_onMenuSave_valid(String uuidExtra) {
         String LIGHT_NAME = "myName";
         String LIGHT_GATEWAY_SELECTED = "uuid2";
-        Integer LIGHT_WHERE = 8;
+        String LIGHT_WHERE = "08";
         Integer LIGHT_ENVIRONMENT_SELECTED = 101;
         boolean LIGHT_DIMMER = true;
         boolean LIGHT_FAVOURITE = true;

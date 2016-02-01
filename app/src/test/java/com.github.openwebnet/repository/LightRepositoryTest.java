@@ -65,14 +65,14 @@ public class LightRepositoryTest {
             .environment(ENVIRONMENT)
             .gateway("gateway")
             .name("light1")
-            .where(10)
+            .where("10")
             .build();
 
         LightModel light2 = LightModel.updateBuilder("uuid2")
             .environment(ENVIRONMENT)
             .gateway("gateway")
             .name("light2")
-            .where(11)
+            .where("11")
             .build();
 
         List<LightModel> lights = Arrays.asList(light1, light2);
@@ -95,7 +95,7 @@ public class LightRepositoryTest {
             .environment(108)
             .gateway("gateway")
             .name("light2")
-            .where(11)
+            .where("11")
             .favourite(true)
             .build();
 

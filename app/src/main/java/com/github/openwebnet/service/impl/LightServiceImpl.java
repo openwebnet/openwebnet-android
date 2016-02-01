@@ -69,7 +69,7 @@ public class LightServiceImpl implements LightService {
         return lightRepository.findFavourites();
     }
 
-    private Func1<Integer, Lighting> requestStatus = where -> Lighting.requestStatus(where);
+    private Func1<String, Lighting> requestStatus = where -> Lighting.requestStatus(where);
 
     private Func2<OpenSession, LightModel, LightModel> handleStatus = (openSession, light) -> {
         Lighting.handleStatus(() -> light.setStatus(ON), () -> light.setStatus(OFF)).call(openSession);
@@ -104,20 +104,20 @@ public class LightServiceImpl implements LightService {
 
     @Override
     public Observable<LightModel> turnOn(LightModel light) {
-        Func1<Integer, Lighting> requestTurnOn = where -> Lighting.requestTurnOn(where);
+        Func1<String, Lighting> requestTurnOn = where -> Lighting.requestTurnOn(where);
 
         return Observable.just(light).flatMap(requestLight(requestTurnOn, handleResponse(ON)));
     }
 
     @Override
     public Observable<LightModel> turnOff(LightModel light) {
-        Func1<Integer, Lighting> requestTurnOff = where -> Lighting.requestTurnOff(where);
+        Func1<String, Lighting> requestTurnOff = where -> Lighting.requestTurnOff(where);
 
         return Observable.just(light).flatMap(requestLight(requestTurnOff, handleResponse(OFF)));
     }
 
     private Func1<LightModel, Observable<LightModel>> requestLight(
-        Func1<Integer, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
+        Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
         // TODO improvement: group by gateway and for each gateway send all requests together
         return light -> commonService.findClient(light.getGatewayUuid())
                 .send(request.call(light.getWhere()))

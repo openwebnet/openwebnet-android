@@ -201,7 +201,7 @@ public class LightServiceTest {
         gateway.setPort(GATEWAY_PORT);
 
         LightModel result = new LightModel();
-        result.setWhere(21);
+        result.setWhere("21");
         result.setGatewayUuid(GATEWAY_UUID);
 
         OpenMessage request = () -> "*1*1*21##";

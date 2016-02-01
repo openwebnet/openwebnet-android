@@ -11,7 +11,7 @@ public class LightModelTest {
     private final Integer LIGHT_ENVIRONMENT = 100;
     private final String LIGHT_GATEWAY = "gatewayUuid";
     private final String LIGHT_NAME = "name";
-    private final Integer LIGHT_WHERE = 8;
+    private final String LIGHT_WHERE = "08";
     private final boolean LIGHT_DIMMER = true;
     private final boolean LIGHT_FAVOURITE = true;
 

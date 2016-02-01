@@ -29,7 +29,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     private String name;
 
     @Required
-    private Integer where;
+    private String where;
 
     private boolean dimmer;
 
@@ -58,7 +58,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         private Integer environmentId;
         private String gatewayUuid;
         private String name;
-        private Integer where;
+        private String where;
         private boolean dimmer;
         private boolean favourite;
 
@@ -81,7 +81,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
             return this;
         }
 
-        public Builder where(Integer where) {
+        public Builder where(String where) {
             this.where = where;
             return this;
         }
@@ -148,11 +148,11 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.name = name;
     }
 
-    public Integer getWhere() {
+    public String getWhere() {
         return where;
     }
 
-    public void setWhere(Integer where) {
+    public void setWhere(String where) {
         this.where = where;
     }
 
