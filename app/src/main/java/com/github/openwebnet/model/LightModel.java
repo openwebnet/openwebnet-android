@@ -140,6 +140,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.gatewayUuid = gatewayUuid;
     }
 
+    @Override
     public String getName() {
         return name;
     }

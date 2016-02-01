@@ -1,8 +1,8 @@
 package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
@@ -77,7 +77,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         return Observable.create(subscriber -> {
             try {
                 List<EnvironmentModel> models = databaseRealm
-                    .findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
+                    .findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id, null);
                 checkState(models.size() == 1, "primary key violation: invalid id");
                 subscriber.onNext(models.get(0));
                 subscriber.onCompleted();

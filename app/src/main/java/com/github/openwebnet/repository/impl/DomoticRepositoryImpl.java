@@ -12,6 +12,10 @@ import java.util.List;
 import io.realm.RealmObject;
 import rx.Observable;
 
+import static com.github.openwebnet.model.DomoticModel.FIELD_ENVIRONMENT_ID;
+import static com.github.openwebnet.model.DomoticModel.FIELD_FAVOURITE;
+import static com.github.openwebnet.model.DomoticModel.FIELD_NAME;
+
 public abstract class DomoticRepositoryImpl<D extends RealmObject & RealmModel & DomoticModel>
         extends CommonRealmRepositoryImpl<D> implements DomoticRepository<D> {
 
@@ -22,10 +26,10 @@ public abstract class DomoticRepositoryImpl<D extends RealmObject & RealmModel &
         return Observable.create(subscriber -> {
             try {
                 subscriber.onNext(databaseRealm
-                    .findCopyWhere(getRealmModelClass(), DomoticModel.FIELD_ENVIRONMENT_ID, id));
+                    .findCopyWhere(getRealmModelClass(), FIELD_ENVIRONMENT_ID, id, FIELD_NAME));
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("FIND_BY_ENVIRONMENT", e);
+                log.error("FIND_BY_ENVIRONMENT-orderByName", e);
                 subscriber.onError(e);
             }
         });
@@ -36,10 +40,10 @@ public abstract class DomoticRepositoryImpl<D extends RealmObject & RealmModel &
         return Observable.create(subscriber -> {
             try {
                 subscriber.onNext(databaseRealm
-                    .findCopyWhere(getRealmModelClass(), DomoticModel.FIELD_FAVOURITE, true));
+                    .findCopyWhere(getRealmModelClass(), FIELD_FAVOURITE, true, FIELD_NAME));
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("FIND_FAVOURITES", e);
+                log.error("FIND_FAVOURITES-orderByName", e);
                 subscriber.onError(e);
             }
         });

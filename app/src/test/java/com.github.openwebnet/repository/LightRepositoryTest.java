@@ -8,6 +8,7 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
 
 import org.junit.Before;
@@ -78,12 +79,14 @@ public class LightRepositoryTest {
 
         List<LightModel> lights = Arrays.asList(light1, light2);
 
-        when(databaseRealm.findCopyWhere(LightModel.class, LightModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT)).thenReturn(lights);
+        when(databaseRealm.findCopyWhere(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DomoticModel.FIELD_NAME)).thenReturn(lights);
 
         TestSubscriber<List<LightModel>> tester = new TestSubscriber<>();
         lightRepository.findByEnvironment(ENVIRONMENT).subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(LightModel.class, LightModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT);
+        verify(databaseRealm).findCopyWhere(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DomoticModel.FIELD_NAME);
 
         tester.assertValue(lights);
         tester.assertCompleted();
@@ -102,12 +105,14 @@ public class LightRepositoryTest {
 
         List<LightModel> lights = Arrays.asList(light);
 
-        when(databaseRealm.findCopyWhere(LightModel.class, LightModel.FIELD_FAVOURITE, true)).thenReturn(lights);
+        when(databaseRealm.findCopyWhere(LightModel.class, DomoticModel.FIELD_FAVOURITE,
+            true, DomoticModel.FIELD_NAME)).thenReturn(lights);
 
         TestSubscriber<List<LightModel>> tester = new TestSubscriber<>();
         lightRepository.findFavourites().subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(LightModel.class, LightModel.FIELD_FAVOURITE, true);
+        verify(databaseRealm).findCopyWhere(LightModel.class, DomoticModel.FIELD_FAVOURITE,
+            true, DomoticModel.FIELD_NAME);
 
         tester.assertValue(lights);
         tester.assertCompleted();

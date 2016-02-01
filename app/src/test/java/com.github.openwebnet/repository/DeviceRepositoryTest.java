@@ -72,12 +72,14 @@ public class DeviceRepositoryTest {
 
         List<DeviceModel> devices = Arrays.asList(device1);
 
-        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT)).thenReturn(devices);
+        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DeviceModel.FIELD_NAME)).thenReturn(devices);
 
         TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
         deviceRepository.findByEnvironment(ENVIRONMENT).subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT);
+        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DeviceModel.FIELD_NAME);
 
         tester.assertValue(devices);
         tester.assertCompleted();
@@ -97,12 +99,14 @@ public class DeviceRepositoryTest {
 
         List<DeviceModel> devices = Arrays.asList(device1);
 
-        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE, true)).thenReturn(devices);
+        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE,
+            true, DeviceModel.FIELD_NAME)).thenReturn(devices);
 
         TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
         deviceRepository.findFavourites().subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE, true);
+        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE,
+            true, DeviceModel.FIELD_NAME);
 
         tester.assertValue(devices);
         tester.assertCompleted();

@@ -95,13 +95,19 @@ public class DatabaseRealm {
         return query(clazz).equalTo(field, value).findAll();
     }
 
-    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Integer value) {
+    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Integer value, String orderBy) {
         RealmResults<T> results = query(clazz).equalTo(field, value).findAll();
+        if (orderBy != null) {
+            results.sort(orderBy, Sort.ASCENDING);
+        }
         return getRealmInstance().copyFromRealm(results);
     }
 
-    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Boolean value) {
+    public <T extends RealmObject> List<T> findCopyWhere(Class<T> clazz, String field, Boolean value, String orderBy) {
         RealmResults<T> results = query(clazz).equalTo(field, value).findAll();
+        if (orderBy != null) {
+            results.sort(orderBy, Sort.ASCENDING);
+        }
         return getRealmInstance().copyFromRealm(results);
     }
 

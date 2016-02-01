@@ -120,13 +120,13 @@ public class EnvironmentRepositoryTest {
         EnvironmentModel environment = newEnvironmentModel(ENVIRONMENT_ID, "myName");
         List<EnvironmentModel> environments = Arrays.asList(environment);
 
-        when(databaseRealm.findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID))
+        when(databaseRealm.findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID, null))
             .thenReturn(environments);
 
         TestSubscriber<EnvironmentModel> tester = new TestSubscriber<>();
         environmentRepository.findById(ENVIRONMENT_ID).subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).findCopyWhere(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID, null);
 
         tester.assertValue(environment);
         tester.assertCompleted();
