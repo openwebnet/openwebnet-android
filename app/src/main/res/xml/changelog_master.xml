@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+    <release version="1.0.0" versioncode="1">
+        <change>Add/edit environment</change>
+        <change>Add multiple gateway</change>
+        <change>Show favourites</change>
+        <change>Add/edit/remove light</change>
+        <change>Add/edit/remove generic OpenWebNet message</change>
+    </release>
+</changelog>

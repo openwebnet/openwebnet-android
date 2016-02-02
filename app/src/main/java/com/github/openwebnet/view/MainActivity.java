@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
-        // TODO pull to refresh
     }
 
     @Override
