@@ -2,7 +2,7 @@
     <string name="app_name">OpenWebNet</string>
     <string name="app_version">version</string>
     <string name="app_version_number">1.0.0</string>
-    <!--<string name="app_link">https://github.com/openwebnet/openwebnet-android</string>-->
+    <string name="app_link">https://github.com/openwebnet/openwebnet-android</string>
 
     <string name="activity_device">Device</string>
     <string name="activity_light">Light</string>

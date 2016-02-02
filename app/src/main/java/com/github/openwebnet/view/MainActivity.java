@@ -1,6 +1,7 @@
 package com.github.openwebnet.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
     @BindString(R.string.error_load_navigation_drawer)
     String errorLoadNavigationDrawer;
 
+    @BindString(R.string.app_link)
+    String appLinkGitHub;
+
     @Inject
     CommonService commonService;
     @Inject
@@ -98,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        initOnClickLinkToGitHub();
+
         navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
 
         // select favourite menu
@@ -107,6 +113,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getSupportActionBar().setTitle(savedInstanceState.getString(STATE_TITLE));
         }
+    }
+
+    public void initOnClickLinkToGitHub() {
+        // issue with @OnClick(R.id.imageViewAppLink)
+        // inflate manually in activity_main > NavigationView:headerLayout
+        // https://code.google.com/p/android/issues/detail?id=190226
+        View navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        navHeaderMain.findViewById(R.id.imageViewAppLink)
+            .setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
     }
 
     @Override
