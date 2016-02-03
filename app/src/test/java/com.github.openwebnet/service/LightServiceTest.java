@@ -13,6 +13,7 @@ import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.repository.LightRepository;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -34,15 +35,15 @@ import javax.inject.Singleton;
 import dagger.Component;
 import rx.Observable;
 import rx.observers.TestSubscriber;
+import rx.plugins.RxJavaTestPlugins;
 
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"android.*"})
-@PrepareForTest({Injector.class})
+@PrepareForTest({Injector.class, OpenWebNet.class})
 public class LightServiceTest {
 
     @Rule
@@ -63,6 +64,16 @@ public class LightServiceTest {
 
         void inject(LightServiceTest service);
 
+    }
+
+    @Before
+    public void setupRxJava() {
+        RxJavaTestPlugins.immediateAndroidSchedulers();
+    }
+
+    @After
+    public void tearDownRxJava() {
+        RxJavaTestPlugins.resetPlugins();
     }
 
     @Before
@@ -200,9 +211,12 @@ public class LightServiceTest {
         gateway.setHost(GATEWAY_HOST);
         gateway.setPort(GATEWAY_PORT);
 
-        LightModel result = new LightModel();
-        result.setWhere("21");
-        result.setGatewayUuid(GATEWAY_UUID);
+        LightModel light = LightModel.updateBuilder("uuid")
+            .environment(108)
+            .gateway(GATEWAY_UUID)
+            .name("light")
+            .where("21")
+            .build();
 
         OpenMessage request = () -> "*1*1*21##";
         OpenMessage response = () -> "*#*1##";
@@ -212,16 +226,18 @@ public class LightServiceTest {
         OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
         OpenWebNet clientSpy = PowerMockito.spy(client);
 
-        doReturn(Observable.just(session)).when(clientSpy).send(request);
-        when(commonService.findClient(GATEWAY_UUID)).thenReturn(client);
+        // TODO spy is not working on client.send
+        // ERROR connect: java.net.SocketException: Network is unreachable
+        when(commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
+        PowerMockito.doReturn(Observable.just(session)).when(clientSpy).send(request);
 
         TestSubscriber<LightModel> tester = new TestSubscriber<>();
-        lightService.turnOn(result).subscribe(tester);
+        lightService.turnOn(light).subscribe(tester);
 
         verify(commonService).findClient(GATEWAY_UUID);
 
         // TODO
-        //tester.assertValue(result);
+        //tester.assertValue(light);
         //tester.assertCompleted();
         tester.assertNoErrors();
     }

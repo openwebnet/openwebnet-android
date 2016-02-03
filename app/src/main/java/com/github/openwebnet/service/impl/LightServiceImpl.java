@@ -120,14 +120,14 @@ public class LightServiceImpl implements LightService {
         Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
         // TODO improvement: group by gateway and for each gateway send all requests together
         return light -> commonService.findClient(light.getGatewayUuid())
-                .send(request.call(light.getWhere()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(openSession -> handler.call(openSession, light))
-                .onErrorReturn(throwable -> {
-                    log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
-                    // unreadable status
-                    return light;
+            .send(request.call(light.getWhere()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(openSession -> handler.call(openSession, light))
+            .onErrorReturn(throwable -> {
+                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                // unreadable status
+                return light;
             });
     }
 
