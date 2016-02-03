@@ -20,7 +20,6 @@ import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.google.common.collect.Lists;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,7 +47,9 @@ import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEF
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
@@ -159,7 +160,7 @@ public class MainActivityTest {
             .get();
         ButterKnife.bind(this, activity);
 
-        Assert.assertEquals("wrong title", labelAppName, activity.getSupportActionBar().getTitle());
+        assertEquals("wrong title", labelAppName, activity.getSupportActionBar().getTitle());
 
         String CUSTOM_TITLE = "myNewTitle";
         activity.getSupportActionBar().setTitle(CUSTOM_TITLE);
@@ -170,7 +171,7 @@ public class MainActivityTest {
             .visible()
             .get();
 
-        Assert.assertEquals("wrong title", CUSTOM_TITLE, activity.getSupportActionBar().getTitle());
+        assertEquals("wrong title", CUSTOM_TITLE, activity.getSupportActionBar().getTitle());
     }
 
     @Test
@@ -205,6 +206,35 @@ public class MainActivityTest {
             .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
 
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+    }
+
+    @Test
+    public void handleEvent_OnChangeDrawerMenuEvent() {
+        int MENU_ID = 88;
+        setupActivity();
+
+        assertEquals("wrong menu selected", 0, activity.drawerMenuItemSelected);
+
+        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(MENU_ID));
+
+        assertEquals("wrong menu selected", MENU_ID, activity.drawerMenuItemSelected);
+    }
+
+    @Test
+    public void handleEvent_OnChangeFabVisibilityEvent() {
+        setupActivity();
+
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
+        activity.floatingActionsMenuMain.expand();
+        assertTrue("invalid state", activity.floatingActionsMenuMain.isExpanded());
+
+        EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(true));
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
+        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+
+        EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
     }
 
 }

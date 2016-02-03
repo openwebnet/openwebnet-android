@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     EnvironmentService environmentService;
 
-    private int drawerMenuItemSelected;
+    int drawerMenuItemSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
