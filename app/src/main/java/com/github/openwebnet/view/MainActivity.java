@@ -48,7 +48,7 @@ import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEF
 public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
-    private static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
+    static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;

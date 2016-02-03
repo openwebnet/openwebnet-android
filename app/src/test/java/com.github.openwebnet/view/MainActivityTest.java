@@ -20,6 +20,7 @@ import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.google.common.collect.Lists;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,12 +32,14 @@ import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.util.ActivityController;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.Observable;
@@ -70,6 +73,9 @@ public class MainActivityTest {
     FloatingActionButton floatingActionButtonAddLight;
     @Bind(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindString(R.string.app_name)
+    String labelAppName;
 
     MainActivity activity;
 
@@ -138,6 +144,33 @@ public class MainActivityTest {
         environment.setId(id);
         environment.setName(name);
         return environment;
+    }
+
+    @Test
+    public void shouldVerifyInstanceState() {
+        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+
+        ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
+        activity = controller
+            .create()
+            .start()
+            .resume()
+            .visible()
+            .get();
+        ButterKnife.bind(this, activity);
+
+        Assert.assertEquals("wrong title", labelAppName, activity.getSupportActionBar().getTitle());
+
+        String CUSTOM_TITLE = "myNewTitle";
+        activity.getSupportActionBar().setTitle(CUSTOM_TITLE);
+
+        activity = controller
+            .stop()
+            .resume()
+            .visible()
+            .get();
+
+        Assert.assertEquals("wrong title", CUSTOM_TITLE, activity.getSupportActionBar().getTitle());
     }
 
     @Test
