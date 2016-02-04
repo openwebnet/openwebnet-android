@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
+    static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_TITLE, getSupportActionBar().getTitle().toString());
+        outState.putBoolean(STATE_FAB_MENU, floatingActionsMenuMain.isShown());
     }
 
     private void initNavigationDrawer(Bundle savedInstanceState) {
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
             navigationView.getMenu().performIdentifierAction(R.id.nav_favourite, Menu.NONE);
         } else {
             getSupportActionBar().setTitle(savedInstanceState.getString(STATE_TITLE));
+            floatingActionsMenuMain.setVisibility(
+                savedInstanceState.getBoolean(STATE_FAB_MENU) ? View.VISIBLE : View.INVISIBLE);
         }
     }
 

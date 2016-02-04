@@ -3,6 +3,7 @@ package com.github.openwebnet.view;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
+import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.BuildConfig;
@@ -148,7 +149,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void shouldVerifyInstanceState() {
+    public void shouldVerifyInstance_stateTitle() {
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
@@ -172,6 +173,42 @@ public class MainActivityTest {
             .get();
 
         assertEquals("wrong title", CUSTOM_TITLE, activity.getSupportActionBar().getTitle());
+    }
+
+    @Test
+    public void shouldVerifyInstance_stateFab() {
+        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+
+        ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
+        activity = controller
+            .create()
+            .start()
+            .resume()
+            .visible()
+            .get();
+        ButterKnife.bind(this, activity);
+
+        activity.floatingActionsMenuMain.setVisibility(View.VISIBLE);
+        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+
+        activity = controller
+            .stop()
+            .resume()
+            .visible()
+            .get();
+
+        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+
+        activity.floatingActionsMenuMain.setVisibility(View.INVISIBLE);
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
+
+        activity = controller
+            .stop()
+            .resume()
+            .visible()
+            .get();
+
+        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
     }
 
     @Test
