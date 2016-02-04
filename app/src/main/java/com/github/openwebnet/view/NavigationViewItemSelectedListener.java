@@ -135,13 +135,13 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     private void showDialogAddEnvironment() {
         View layout = LayoutInflater.from(mActivity).inflate(R.layout.dialog_environment, null);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
+        AlertDialog dialog = new AlertDialog.Builder(mActivity)
             .setView(layout)
             .setTitle(R.string.dialog_add_environment_title)
             .setPositiveButton(R.string.button_add, null)
-            .setNeutralButton(android.R.string.cancel, null);
+            .setNeutralButton(android.R.string.cancel, null)
+            .create();
 
-        AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {

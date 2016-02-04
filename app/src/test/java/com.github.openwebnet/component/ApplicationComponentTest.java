@@ -9,6 +9,7 @@ import com.github.openwebnet.repository.EnvironmentRepositoryTest;
 import com.github.openwebnet.repository.LightRepositoryTest;
 import com.github.openwebnet.repository.SampleRepository;
 import com.github.openwebnet.view.MainActivityTest;
+import com.github.openwebnet.view.NavigationViewItemSelectedListenerTest;
 
 import javax.inject.Singleton;
 
@@ -19,6 +20,7 @@ import dagger.Component;
 public interface ApplicationComponentTest extends ApplicationComponent {
 
     void inject(MainActivityTest activity);
+    void inject(NavigationViewItemSelectedListenerTest listener);
 
     void inject(SampleRepository repository);
     void inject(CommonRealmRepositoryTest repository);
