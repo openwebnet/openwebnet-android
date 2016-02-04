@@ -109,7 +109,6 @@ public class NavigationViewClickListener implements OnClickListener {
             .subscribe(aVoid -> {}, throwable -> log.error("editEnvironment", throwable));
     }
 
-    // TODO
     private void deleteEnvironment() {
         throw new UnsupportedOperationException("not implemented yet");
     }

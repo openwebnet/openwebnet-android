@@ -1,4 +1,4 @@
-package com.github.openwebnet.view.device;
+package com.github.openwebnet.matcher;
 
 import com.github.openwebnet.model.LightModel;
 import com.google.common.base.Joiner;

@@ -14,6 +14,7 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.matcher.LightModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.LightModel;
