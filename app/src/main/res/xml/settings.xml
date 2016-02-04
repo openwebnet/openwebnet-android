@@ -2,13 +2,13 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/settings_category_title">
+    <PreferenceCategory android:title="@string/settings_category_shortcuts">
         <PreferenceScreen android:title="@string/settings_title_wireless">
             <intent android:action="android.settings.WIRELESS_SETTINGS"/>
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_gateway_title">
+    <PreferenceCategory android:title="@string/settings_category_gateway">
 
         <com.github.openwebnet.view.settings.GatewayEditTextPreference
             android:dialogTitle="@string/settings_gateway_add"
@@ -20,6 +20,12 @@
             android:summary="@string/label_none"
             android:title="@string/settings_gateway_default"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_about">
+        <Preference
+            android:key="com.github.openwebnet.view.settings.SettingsFragment.ABOUT_CHANGELOG"
+            android:title="@string/settings_title_changelog"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -24,7 +24,6 @@ import com.github.openwebnet.view.settings.SettingsFragment;
 import com.google.common.collect.Lists;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -185,13 +184,6 @@ public class NavigationViewItemSelectedListenerTest {
         android.app.Fragment currentFragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
         assertNotNull("null fragment", currentFragment);
         assertThat("invalid fragment", currentFragment, instanceOf(SettingsFragment.class));
-    }
-
-    @Test
-    @Ignore
-    public void onNavigationItemSelected_shouldSelectChangelog() {
-        setupActivity();
-
     }
 
     private EnvironmentModel newEnvironmentModel(Integer id, String name) {

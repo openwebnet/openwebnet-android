@@ -29,10 +29,6 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"
             android:title="@string/drawer_menu_settings"/>
-        <item
-            android:id="@+id/nav_changelog"
-            android:icon="@drawable/information"
-            android:title="@string/drawer_menu_changelog"/>
     </group>
 
 </menu>

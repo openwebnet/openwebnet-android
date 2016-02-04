@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.cketti.library.changelog.ChangeLog;
 import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
@@ -90,9 +89,6 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 break;
             case R.id.nav_settings:
                 showSettings();
-                break;
-            case R.id.nav_changelog:
-                new ChangeLog(mActivity).getLogDialog().show();
                 break;
             default:
                 checkArgument(id >= MENU_ENVIRONMENT_RANGE_MIN

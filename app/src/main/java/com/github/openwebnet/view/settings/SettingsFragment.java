@@ -8,15 +8,20 @@ import android.text.TextUtils;
 
 import com.github.openwebnet.R;
 
+import de.cketti.library.changelog.ChangeLog;
+
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 
 public class SettingsFragment extends PreferenceFragment {
+
+    private static final String ABOUT_CHANGELOG = "com.github.openwebnet.view.settings.SettingsFragment.ABOUT_CHANGELOG";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         updatePreferenceSummary(getPreferenceScreen());
+        initAbout();
     }
 
     private void updatePreferenceSummary(Preference preference) {
@@ -36,5 +41,13 @@ public class SettingsFragment extends PreferenceFragment {
         if (!TextUtils.isEmpty(value)) {
             preference.setSummary(value);
         }
+    }
+
+    private void initAbout() {
+        getPreferenceScreen().findPreference(ABOUT_CHANGELOG)
+            .setOnPreferenceClickListener(preference -> {
+                new ChangeLog(preference.getContext()).getLogDialog().show();
+                return true;
+            });
     }
 }
