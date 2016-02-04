@@ -1,8 +1,8 @@
 package com.github.openwebnet.view;
 
-import android.support.v7.app.AlertDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.ShadowAlertDialogSupport;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +20,8 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.settings.SettingsFragment;
+import com.google.common.collect.Lists;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,11 +34,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowAlertController;
-import org.robolectric.shadows.ShadowAlertDialog;
-import org.robolectric.shadows.ShadowDialog;
 
 import java.util.List;
 
@@ -53,7 +51,9 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
@@ -76,8 +76,6 @@ public class NavigationViewItemSelectedListenerTest {
     String labelDrawerMenuAdd;
     @BindString(R.string.drawer_menu_settings)
     String labelDrawerMenuSettings;
-    @BindString(R.string.drawer_menu_changelog)
-    String labelDrawerMenuChangelog;
 
     MainActivity activity;
 
@@ -96,7 +94,6 @@ public class NavigationViewItemSelectedListenerTest {
     }
 
     private void setupActivity() {
-        // mock reloadMenu
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
 
         activity = Robolectric.setupActivity(MainActivity.class);
@@ -130,7 +127,7 @@ public class NavigationViewItemSelectedListenerTest {
     }
 
     @Test
-    public void onNavigationItemSelected_shouldSelectAdd() {
+    public void onNavigationItemSelected_shouldSelectAdd_showDialog() {
         setupActivity();
         MenuItem item = clickMenuItem(R.id.nav_add);
         assertEquals("wrong title", labelDrawerMenuAdd, item.getTitle());
@@ -138,21 +135,56 @@ public class NavigationViewItemSelectedListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
 
         assertThat(activity.getString(R.string.dialog_add_environment_title),
-            equalTo(shadowAlertDialog.getTitle()));
+                equalTo(shadowAlertDialog.getTitle()));
 
         View inflatedView = shadowAlertDialog.getInflatedView();
-        EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
-
-        shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);
-
-
+        assertNotNull("null layout", inflatedView);
     }
 
     @Test
-    @Ignore
+    public void onNavigationItemSelected_shouldSelectAdd_clickInvalid() {
+        setupActivity();
+        clickMenuItem(R.id.nav_add);
+
+        ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
+        View inflatedView = shadowAlertDialog.getInflatedView();
+
+        EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+
+        assertNull("no error", name.getError());
+        shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);
+        assertThat(name.getError(), equalTo(activity.getString(R.string.validation_required)));
+    }
+
+    @Test
+    public void onNavigationItemSelected_shouldSelectAdd_clickValid() {
+        String NEW_ENVIRONMENT = "newEnvironment";
+        int NEW_ENVIRONMENT_ID = 108;
+        when(environmentService.add(NEW_ENVIRONMENT)).thenReturn(Observable.just(NEW_ENVIRONMENT_ID));
+
+        setupActivity();
+        clickMenuItem(R.id.nav_add);
+
+        ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
+        View inflatedView = shadowAlertDialog.getInflatedView();
+
+        EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        name.setText(NEW_ENVIRONMENT);
+        shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);
+        verify(environmentService).add(NEW_ENVIRONMENT);
+    }
+
+    @Test
     public void onNavigationItemSelected_shouldSelectSettings() {
         setupActivity();
-        //assertEquals("wrong title", "xxx", item.getTitle());
+        MenuItem item = clickMenuItem(R.id.nav_settings);
+
+        assertEquals("wrong title", labelDrawerMenuSettings, item.getTitle());
+        assertFalse("should be hidden", activity.floatingActionsMenuMain.isShown());
+
+        android.app.Fragment currentFragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
+        assertNotNull("null fragment", currentFragment);
+        assertThat("invalid fragment", currentFragment, instanceOf(SettingsFragment.class));
     }
 
     @Test
@@ -162,11 +194,45 @@ public class NavigationViewItemSelectedListenerTest {
 
     }
 
-    @Test
-    @Ignore
-    public void onNavigationItemSelected_shouldSelectDefault() {
-        setupActivity();
+    private EnvironmentModel newEnvironmentModel(Integer id, String name) {
+        EnvironmentModel environment = new EnvironmentModel();
+        environment.setId(id);
+        environment.setName(name);
+        return environment;
+    }
 
+    @Test
+    public void onNavigationItemSelected_shouldSelectDefault() {
+        int MENU_ENVIRONMENT_POSITION = 102;
+        int MENU_ENVIRONMENT_ID = 803;
+        String MENU_ENVIRONMENT_NAME = "C-environment";
+
+        List<EnvironmentModel> environments = Lists.newArrayList(
+            newEnvironmentModel(801, "A-environment"),
+            newEnvironmentModel(802, "B-environment"),
+            newEnvironmentModel(MENU_ENVIRONMENT_ID, MENU_ENVIRONMENT_NAME),
+            newEnvironmentModel(804, "D-environment"),
+            newEnvironmentModel(805, "E-environment"));
+
+        when(environmentService.findAll()).thenReturn(Observable.just(environments));
+
+        activity = Robolectric.setupActivity(MainActivity.class);
+        ButterKnife.bind(this, activity);
+
+        MenuItem item = clickMenuItem(MENU_ENVIRONMENT_ID);
+        assertEquals("invalid menu order", MENU_ENVIRONMENT_POSITION, item.getOrder());
+        assertEquals("wrong title", MENU_ENVIRONMENT_NAME, activity.getSupportActionBar().getTitle());
+        assertFalse("should be hidden", activity.floatingActionsMenuMain.isShown());
+
+        Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        assertNotNull("null fragment", currentFragment);
+        assertThat("invalid fragment", currentFragment, instanceOf(DeviceListFragment.class));
+
+        int argumentEnvironment = currentFragment.getArguments().getInt(ARG_ENVIRONMENT);
+        assertEquals("invalid fragment", MENU_ENVIRONMENT_ID, argumentEnvironment);
+
+        assertFalse("should be collapsed", activity.floatingActionsMenuMain.isExpanded());
+        assertFalse("should be close", activity.drawerLayout.isDrawerOpen(GravityCompat.START));
     }
 
 }
