@@ -11,7 +11,6 @@ import static java.util.Objects.requireNonNull;
 
 public class LightModel extends RealmObject implements RealmModel, DomoticModel {
 
-    // TODO handle also ERROR
     public enum Status {
         ON, OFF
     }

@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import org.threeten.bp.LocalDateTime;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -11,7 +13,6 @@ import static java.util.Objects.requireNonNull;
 
 public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
 
-    // TODO handle also WAIT and ERROR
     public enum Status {
         SUCCESS, FAIL
     }
@@ -42,6 +43,15 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
 
     @Ignore
     private Status status;
+
+    @Ignore
+    private String responseDebug;
+
+    @Ignore
+    private LocalDateTime dateTimeRequestDebug;
+
+    @Ignore
+    private LocalDateTime dateTimeResponseDebug;
 
     public DeviceModel() {}
 
@@ -214,5 +224,29 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getResponseDebug() {
+        return responseDebug;
+    }
+
+    public void setResponseDebug(String responseDebug) {
+        this.responseDebug = responseDebug;
+    }
+
+    public LocalDateTime getDateTimeRequestDebug() {
+        return dateTimeRequestDebug;
+    }
+
+    public void setDateTimeRequestDebug(LocalDateTime dateTimeRequestDebug) {
+        this.dateTimeRequestDebug = dateTimeRequestDebug;
+    }
+
+    public LocalDateTime getDateTimeResponseDebug() {
+        return dateTimeResponseDebug;
+    }
+
+    public void setDateTimeResponseDebug(LocalDateTime dateTimeResponseDebug) {
+        this.dateTimeResponseDebug = dateTimeResponseDebug;
     }
 }
