@@ -14,7 +14,8 @@ import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEF
 
 public class SettingsFragment extends PreferenceFragment {
 
-    private static final String ABOUT_CHANGELOG = "com.github.openwebnet.view.settings.SettingsFragment.ABOUT_CHANGELOG";
+    public static final String PREF_KEY_ABOUT_CHANGELOG = "com.github.openwebnet_preferences.PREF_KEY_ABOUT_CHANGELOG";
+    public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private void initAbout() {
-        getPreferenceScreen().findPreference(ABOUT_CHANGELOG)
+        getPreferenceScreen().findPreference(PREF_KEY_ABOUT_CHANGELOG)
             .setOnPreferenceClickListener(preference -> {
                 new ChangeLog(preference.getContext()).getLogDialog().show();
                 return true;

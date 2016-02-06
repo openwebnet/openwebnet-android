@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.settings.GatewayListPreference;
+import com.github.openwebnet.view.settings.SettingsFragment;
 
 import javax.inject.Inject;
 
@@ -39,6 +40,12 @@ public class PreferenceServiceImpl implements PreferenceService {
     public String getDefaultGateway() {
         return context.getSharedPreferences(PREFERENCE_DEFAULT, Context.MODE_PRIVATE)
             .getString(GatewayListPreference.PREF_DEFAULT_GATEWAY_KEY, null);
+    }
+
+    @Override
+    public boolean isDeviceDebugEnabled() {
+        return context.getSharedPreferences(PREFERENCE_DEFAULT, Context.MODE_PRIVATE)
+            .getBoolean(SettingsFragment.PREF_KEY_DEBUG_DEVICE, false);
     }
 
 }

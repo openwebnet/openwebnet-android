@@ -7,4 +7,6 @@ public interface PreferenceService {
     void initFirstRun();
 
     String getDefaultGateway();
+
+    boolean isDeviceDebugEnabled();
 }
