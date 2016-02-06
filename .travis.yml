@@ -31,5 +31,4 @@ before_script:
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
 
 script:
-  - echo "Travis branch is $TRAVIS_BRANCH"
-  - ./gradlew clean build --stacktrace connectedCheck coveralls
+  - ./gradlew clean build --stacktrace connectedCheck createDebugCoverageReport coveralls
