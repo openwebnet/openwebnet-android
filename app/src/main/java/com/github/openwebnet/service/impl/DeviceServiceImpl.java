@@ -11,6 +11,8 @@ import com.google.common.base.Joiner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +98,8 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Observable<DeviceModel> sendRequest(DeviceModel device) {
+        device.setInstantRequestDebug(Instant.now());
+
         return commonService.findClient(device.getGatewayUuid())
             .send(() -> device.getRequest())
             .subscribeOn(Schedulers.io())
@@ -105,6 +109,9 @@ public class DeviceServiceImpl implements DeviceService {
                     .map(response -> response.getValue())
                     .collect(Collectors.toList())))
             .map(response -> {
+                device.setInstantResponseDebug(Instant.now());
+                device.setResponseDebug(response);
+
                 boolean isExpectedResponse = device.getResponse().equals(response);
                 device.setStatus(isExpectedResponse ? SUCCESS: FAIL);
                 log.debug("SEND_REQUEST: [isExpected={}][response={}][value={}]",

@@ -71,4 +71,8 @@
     <string name="light_dimmer">Dimer</string>
     <string name="light_prefix">*1*1*</string>
     <string name="light_suffix">##</string>
+
+    <string name="card_device_debug_delay">Delay:</string>
+    <string name="card_device_debug_sec">sec</string>
+    <string name="card_device_debug_copy">Copy</string>
 </resources>

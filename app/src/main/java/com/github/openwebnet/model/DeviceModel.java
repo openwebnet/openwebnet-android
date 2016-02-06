@@ -1,5 +1,6 @@
 package com.github.openwebnet.model;
 
+import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 
 import java.util.UUID;
@@ -48,10 +49,10 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
     private String responseDebug;
 
     @Ignore
-    private LocalDateTime dateTimeRequestDebug;
+    private Instant instantRequestDebug;
 
     @Ignore
-    private LocalDateTime dateTimeResponseDebug;
+    private Instant instantResponseDebug;
 
     public DeviceModel() {}
 
@@ -234,19 +235,19 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         this.responseDebug = responseDebug;
     }
 
-    public LocalDateTime getDateTimeRequestDebug() {
-        return dateTimeRequestDebug;
+    public Instant getInstantRequestDebug() {
+        return instantRequestDebug;
     }
 
-    public void setDateTimeRequestDebug(LocalDateTime dateTimeRequestDebug) {
-        this.dateTimeRequestDebug = dateTimeRequestDebug;
+    public void setInstantRequestDebug(Instant instantRequestDebug) {
+        this.instantRequestDebug = instantRequestDebug;
     }
 
-    public LocalDateTime getDateTimeResponseDebug() {
-        return dateTimeResponseDebug;
+    public Instant getInstantResponseDebug() {
+        return instantResponseDebug;
     }
 
-    public void setDateTimeResponseDebug(LocalDateTime dateTimeResponseDebug) {
-        this.dateTimeResponseDebug = dateTimeResponseDebug;
+    public void setInstantResponseDebug(Instant instantResponseDebug) {
+        this.instantResponseDebug = instantResponseDebug;
     }
 }
