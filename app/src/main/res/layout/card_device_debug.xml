@@ -39,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@+id/textViewCardDeviceLabelDelay"
-                android:text="3"/>
+                android:layout_toRightOf="@+id/textViewCardDeviceLabelDelay"/>
 
             <TextView
                 android:id="@+id/textViewCardDeviceUnitDelay"
@@ -70,6 +69,7 @@
         </RelativeLayout>
 
         <com.github.openwebnet.view.custom.TextViewCustom
+            android:id="@+id/textViewCustomCardDeviceResponse"
             style="@style/message.textViewFontCustom"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="6dp"

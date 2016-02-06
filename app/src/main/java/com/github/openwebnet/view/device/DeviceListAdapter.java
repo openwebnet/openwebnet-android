@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.view.custom.TextViewCustom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,6 +92,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageViewCardDeviceMenu)
         ImageView imageViewCardDeviceMenu;
+
+        @Bind(R.id.linearLayoutCardDeviceDebug)
+        LinearLayout linearLayoutCardDeviceDebug;
+
+        @Bind(R.id.textViewCardDeviceValueDelay)
+        TextView textViewCardDeviceValueDelay;
+
+        @Bind(R.id.imageButtonCardDeviceCopy)
+        ImageButton imageButtonCardDeviceCopy;
+
+        @Bind(R.id.textViewCustomCardDeviceResponse)
+        TextViewCustom textViewCustomCardDeviceResponse;
 
         public DeviceViewHolder(View view) {
             super(view);
