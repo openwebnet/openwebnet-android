@@ -24,10 +24,12 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.custom.TextViewCustom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.threeten.bp.Duration;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDrawable;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
@@ -51,6 +54,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     LightService lightService;
+
+    @Inject
+    PreferenceService preferenceService;
 
     // NO @Inject: need activity to show AppCompactDialog
     Context mContext;
@@ -104,6 +110,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.textViewCustomCardDeviceResponse)
         TextViewCustom textViewCustomCardDeviceResponse;
+
+        @BindString(R.string.card_device_debug_none)
+        String labelNoResponse;
 
         public DeviceViewHolder(View view) {
             super(view);
@@ -259,6 +268,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             () -> deviceService.delete(device.getUuid())
                     .doOnCompleted(() -> updateDeviceListEvent())
                     .subscribe()));
+
+        handleDeviceDebug(holder, device);
     }
 
     private void sendDeviceRequest(DeviceViewHolder holder, DeviceModel device) {
@@ -295,6 +306,22 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 sendDeviceRequest(holder, device);
                 dialog.dismiss();
             });
+    }
+
+    // TODO
+    private void handleDeviceDebug(DeviceViewHolder holder, DeviceModel device) {
+        holder.linearLayoutCardDeviceDebug.setVisibility(View.GONE);
+        if (preferenceService.isDeviceDebugEnabled()) {
+            holder.textViewCardDeviceValueDelay.setText("-");
+            holder.textViewCustomCardDeviceResponse.setText(holder.labelNoResponse);
+            holder.linearLayoutCardDeviceDebug.setVisibility(View.VISIBLE);
+            if (device.getInstantResponseDebug() != null) {
+                Duration duration = Duration.between(device.getInstantRequestDebug(), device.getInstantResponseDebug());
+                holder.textViewCardDeviceValueDelay.setText(String.valueOf(duration.getSeconds()));
+                holder.textViewCustomCardDeviceResponse.setText(device.getResponseDebug());
+            }
+            // TODO copy to clipboard
+        }
     }
 
     /* Light */

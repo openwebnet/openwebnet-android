@@ -14,7 +14,7 @@
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
 
-    <string name="drawer_menu_favourite">Favourite</string>
+    <string name="drawer_menu_favourite">Favourites</string>
     <string name="drawer_menu_add">Add environment</string>
     <string name="drawer_menu_settings">Settings</string>
     <string name="drawer_menu_example">Example environment</string>
@@ -65,12 +65,13 @@
     <string name="device_where">where</string>
     <string name="device_favourite">Favourite</string>
     <string name="device_confirm">Show confirmation alert</string>
-    <string name="device_on_load">Run on event load</string>
+    <string name="device_on_load">Send request on load event</string>
     <string name="device_accept">I know what I\'m doing! (Disclaimer)</string>
     <string name="device_request">Request</string>
     <string name="device_response">Response</string>
     <string name="device_value">value</string>
     <string name="device_expected_value">expected value</string>
+    <string name="light_request">Request Turn On</string>
     <string name="light_dimmer">Dimer</string>
     <string name="light_prefix">*1*1*</string>
     <string name="light_suffix">##</string>
@@ -78,4 +79,5 @@
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_sec">sec</string>
     <string name="card_device_debug_copy">Copy</string>
+    <string name="card_device_debug_none">no response</string>
 </resources>

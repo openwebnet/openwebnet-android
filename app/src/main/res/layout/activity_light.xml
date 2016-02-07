@@ -19,6 +19,13 @@
             android:focusableInTouchMode="true"
             android:hint="@string/label_name"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="@string/light_request"
+            android:textStyle="bold|italic"/>
+
         <LinearLayout
             style="@style/message.linearLayout">
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <View
         android:layout_width="match_parent"
@@ -39,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
-                android:layout_toRightOf="@+id/textViewCardDeviceLabelDelay"/>
+                android:layout_toRightOf="@+id/textViewCardDeviceLabelDelay"
+                android:text="-"/>
 
             <TextView
                 android:id="@+id/textViewCardDeviceUnitDelay"
@@ -74,6 +75,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
+            android:text="@string/card_device_debug_none"
             typeface:font="inconsolata"/>
 
     </LinearLayout>
