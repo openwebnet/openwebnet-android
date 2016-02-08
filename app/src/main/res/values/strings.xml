@@ -77,7 +77,9 @@
     <string name="light_suffix">##</string>
 
     <string name="card_device_debug_delay">Delay:</string>
-    <string name="card_device_debug_sec">sec</string>
+    <string name="card_device_debug_timeunit">milliseconds</string>
     <string name="card_device_debug_copy">Copy</string>
     <string name="card_device_debug_none">no response</string>
+    <string name="card_device_debug_clipboard">response</string>
+    <string name="card_device_debug_clipboard_success">Response copied</string>
 </resources>

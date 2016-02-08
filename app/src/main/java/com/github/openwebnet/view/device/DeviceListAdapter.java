@@ -1,11 +1,14 @@
 package com.github.openwebnet.view.device;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -29,7 +33,7 @@ import com.github.openwebnet.view.custom.TextViewCustom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.threeten.bp.Duration;
+import org.threeten.bp.temporal.ChronoUnit;
 
 import java.util.List;
 
@@ -38,7 +42,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDrawable;
-import butterknife.BindString;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
@@ -99,6 +102,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardDeviceMenu)
         ImageView imageViewCardDeviceMenu;
 
+        /* card_device_debug */
+
         @Bind(R.id.linearLayoutCardDeviceDebug)
         LinearLayout linearLayoutCardDeviceDebug;
 
@@ -110,9 +115,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.textViewCustomCardDeviceResponse)
         TextViewCustom textViewCustomCardDeviceResponse;
-
-        @BindString(R.string.card_device_debug_none)
-        String labelNoResponse;
 
         public DeviceViewHolder(View view) {
             super(view);
@@ -273,7 +275,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void sendDeviceRequest(DeviceViewHolder holder, DeviceModel device) {
-        deviceService.sendRequest(device).subscribe(deviceModel -> showDeviceStatus(holder, deviceModel));
+        deviceService.sendRequest(device).subscribe(deviceModel -> {
+            showDeviceStatus(holder, deviceModel);
+            handleDeviceDebug(holder, deviceModel);
+        });
     }
 
     private void showDeviceStatus(DeviceViewHolder holder, DeviceModel device) {
@@ -308,20 +313,32 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
     }
 
-    // TODO
     private void handleDeviceDebug(DeviceViewHolder holder, DeviceModel device) {
         holder.linearLayoutCardDeviceDebug.setVisibility(View.GONE);
         if (preferenceService.isDeviceDebugEnabled()) {
             holder.textViewCardDeviceValueDelay.setText("-");
-            holder.textViewCustomCardDeviceResponse.setText(holder.labelNoResponse);
+            holder.textViewCustomCardDeviceResponse.setText(mContext.getString(R.string.card_device_debug_none));
             holder.linearLayoutCardDeviceDebug.setVisibility(View.VISIBLE);
-            if (device.getInstantResponseDebug() != null) {
-                Duration duration = Duration.between(device.getInstantRequestDebug(), device.getInstantResponseDebug());
-                holder.textViewCardDeviceValueDelay.setText(String.valueOf(duration.getSeconds()));
+            if (!TextUtils.isEmpty(device.getResponseDebug())) {
+                long duration = ChronoUnit.MILLIS.between(device.getInstantRequestDebug(), device.getInstantResponseDebug());
+                holder.textViewCardDeviceValueDelay.setText(String.valueOf(duration));
                 holder.textViewCustomCardDeviceResponse.setText(device.getResponseDebug());
+
+                handleDeviceDebugClipboard(holder, device);
             }
-            // TODO copy to clipboard
         }
+    }
+
+    private void handleDeviceDebugClipboard(DeviceViewHolder holder, DeviceModel device) {
+        holder.imageButtonCardDeviceCopy.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            String labelClipboard = mContext.getString(R.string.card_device_debug_clipboard);
+            clipboard.setPrimaryClip(ClipData.newPlainText(labelClipboard, device.getResponseDebug()));
+
+            // TODO event show snackbar in NavigationViewItemSelectedListener
+            // mContext.getString(R.string.card_device_debug_clipboard_success)
+            Toast.makeText(mContext, "TODO snackbar", Toast.LENGTH_SHORT).show();
+        });
     }
 
     /* Light */

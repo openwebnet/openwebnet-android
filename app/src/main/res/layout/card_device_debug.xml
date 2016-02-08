@@ -49,7 +49,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="2dp"
                 android:layout_toRightOf="@+id/textViewCardDeviceValueDelay"
-                android:text="@string/card_device_debug_sec"/>
+                android:text="@string/card_device_debug_timeunit"/>
 
             <TextView
                 android:id="@+id/textViewCardDeviceCopy"
