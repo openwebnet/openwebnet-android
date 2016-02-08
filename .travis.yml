@@ -1,5 +1,5 @@
 language: android
-#sudo: false
+sudo: required
 
 jdk:
   - oraclejdk7
@@ -9,6 +9,8 @@ env:
   global:
     - ANDROID_TARGET=android-19
     - ANDROID_ABI=armeabi-v7a
+    - MALLOC_ARENA_MAX=2
+    - ADB_INSTALL_TIMEOUT=10
 
 android:
   components:
