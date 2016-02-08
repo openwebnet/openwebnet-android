@@ -3,6 +3,7 @@ package com.github.openwebnet.view;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -120,7 +121,7 @@ public class MainActivityTest {
         verify(environmentService).findAll();
 
         Menu menu = navigationView.getMenu();
-        assertEquals("invalid menu title", "Favourite", menu.getItem(0).getTitle());
+        assertEquals("invalid menu title", "Favourites", menu.getItem(0).getTitle());
         assertEquals("invalid menu order", 10, menu.getItem(0).getOrder());
 
         // ordered by name (from repository)
@@ -272,6 +273,20 @@ public class MainActivityTest {
         EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
         assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
         assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
+    }
+
+    @Test
+    public void handleEvent_OnChangePreferenceDeviceDebugEvent() {
+        setupActivity();
+        MenuItem menuDebug = activity.toolbar.getMenu().findItem(R.id.action_settings);
+
+        assertFalse("invalid state", menuDebug.isVisible());
+
+        EventBus.getDefault().post(new MainActivity.OnChangePreferenceDeviceDebugEvent(true));
+        assertTrue("invalid state", menuDebug.isVisible());
+
+        EventBus.getDefault().post(new MainActivity.OnChangePreferenceDeviceDebugEvent(false));
+        assertFalse("invalid state", menuDebug.isVisible());
     }
 
 }
