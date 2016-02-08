@@ -332,12 +332,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void handleDeviceDebugClipboard(DeviceViewHolder holder, DeviceModel device) {
         holder.imageButtonCardDeviceCopy.setOnClickListener(v -> {
             ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-            String labelClipboard = mContext.getString(R.string.card_device_debug_clipboard);
+            String labelClipboard = mContext.getString(R.string.device_debug_label);
             clipboard.setPrimaryClip(ClipData.newPlainText(labelClipboard, device.getResponseDebug()));
 
-            // TODO event show snackbar in NavigationViewItemSelectedListener
-            // mContext.getString(R.string.card_device_debug_clipboard_success)
-            Toast.makeText(mContext, "TODO snackbar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, mContext.getString(R.string.card_device_debug_clipboard_copied),
+                Toast.LENGTH_SHORT).show();
         });
     }
 

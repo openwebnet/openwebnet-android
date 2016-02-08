@@ -1,14 +1,21 @@
 package com.github.openwebnet.view.device;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.PreferenceService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +32,9 @@ public class DeviceActivity extends AbstractDeviceActivity {
 
     @Inject
     DeviceService deviceService;
+
+    @Inject
+    PreferenceService preferenceService;
 
     @Bind(R.id.editTextDeviceName)
     EditText editTextDeviceName;
@@ -44,11 +54,23 @@ public class DeviceActivity extends AbstractDeviceActivity {
     @Bind(R.id.checkBoxDeviceAccept)
     CheckBox checkBoxDeviceAccept;
 
+    @Bind(R.id.textViewDevicePasteResponse)
+    TextView textViewDevicePasteResponse;
+
+    @Bind(R.id.imageButtonDevicePasteResponse)
+    ImageButton imageButtonDevicePasteResponse;
+
     @BindString(R.string.label_default_success)
     String labelDefaultSuccess;
 
     @BindString(R.string.label_default_fail)
     String labelDefaultFail;
+
+    @BindString(R.string.device_debug_label)
+    String labelDeviceDebug;
+
+    @BindString(R.string.device_debug_label_invalid)
+    String labelDeviceDebugInvalid;
 
     private String deviceUuid;
 
@@ -65,6 +87,7 @@ public class DeviceActivity extends AbstractDeviceActivity {
         initSpinnerGateway();
         initEditDevice();
         initAcceptDisclaimer();
+        initPasteRespone();
     }
 
     private void initEditDevice() {
@@ -93,6 +116,29 @@ public class DeviceActivity extends AbstractDeviceActivity {
                 checkBoxDeviceAccept.setError(null);
             }
         });
+    }
+
+    private void initPasteRespone() {
+        textViewDevicePasteResponse.setVisibility(View.INVISIBLE);
+        imageButtonDevicePasteResponse.setVisibility(View.INVISIBLE);
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        if (preferenceService.isDeviceDebugEnabled() && clipboard.hasPrimaryClip()
+            && labelDeviceDebug.equals(clipboard.getPrimaryClipDescription().getLabel())
+            && clipboard.getPrimaryClip().getItemAt(0) != null) {
+
+            textViewDevicePasteResponse.setVisibility(View.VISIBLE);
+            imageButtonDevicePasteResponse.setVisibility(View.VISIBLE);
+
+            imageButtonDevicePasteResponse.setOnClickListener(v -> {
+                if (labelDeviceDebug.equals(clipboard.getPrimaryClipDescription().getLabel())) {
+                    editTextDeviceResponse.setText(clipboard.getPrimaryClip().getItemAt(0).getText());
+                } else {
+                    Toast.makeText(this, labelDeviceDebugInvalid, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
