@@ -11,7 +11,13 @@ MyHome is the [BTicino](http://www.bticino.it/domotica-casa-connessa) and [Legra
 
 This Android application is an unofficial free client under CC license available on the Play Store.
 
+It isn't mandatory, but it's highly recommended that you connect to your domotic system using a VPN connection.
+
 ### Changelog
+
+#### v1.1.0
+
+- Add device debug
 
 #### v1.0.0 and previous releases
 

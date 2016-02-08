@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
     <release version="1.0.0" versioncode="1">
+        <change>Add device debug</change>
+    </release>
+    <release version="1.0.0" versioncode="1">
         <change>Add/edit environment</change>
         <change>Add multiple gateway</change>
         <change>Show favourites</change>
