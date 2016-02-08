@@ -2,7 +2,6 @@ package com.github.openwebnet.view;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -58,8 +57,6 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     String labelSettings;
     @BindString(R.string.validation_required)
     String labelValidationRequired;
-    @BindString(R.string.error_add_environment)
-    String labelErrorAddEnvironment;
 
     private final AppCompatActivity mActivity;
 
@@ -124,10 +121,6 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             .commit();
     }
 
-    private void showSnackbar(String message) {
-        Snackbar.make(floatingActionsMenuMain, message, Snackbar.LENGTH_LONG).show();
-    }
-
     private void showDialogAddEnvironment() {
         View layout = LayoutInflater.from(mActivity).inflate(R.layout.dialog_environment, null);
 
@@ -157,10 +150,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 // calls onPrepareOptionsMenu(): reload menu
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
-            },
-            throwable -> {
-                showSnackbar(labelErrorAddEnvironment);
-        });
+            });
     }
 
     private void showSettings() {

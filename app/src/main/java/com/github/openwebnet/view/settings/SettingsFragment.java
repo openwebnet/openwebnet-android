@@ -7,8 +7,10 @@ import android.preference.PreferenceGroup;
 import android.text.TextUtils;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.view.MainActivity;
 
 import de.cketti.library.changelog.ChangeLog;
+import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 
@@ -22,6 +24,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         updatePreferenceSummary(getPreferenceScreen());
+        initDebug();
         initAbout();
     }
 
@@ -42,6 +45,15 @@ public class SettingsFragment extends PreferenceFragment {
         if (!TextUtils.isEmpty(value)) {
             preference.setSummary(value);
         }
+    }
+
+    private void initDebug() {
+        getPreferenceScreen().findPreference(PREF_KEY_DEBUG_DEVICE)
+            .setOnPreferenceChangeListener((preference, newValue) -> {
+                EventBus.getDefault().post(new MainActivity
+                    .OnChangePreferenceDeviceDebugEvent((Boolean) newValue));
+                return true;
+            });
     }
 
     private void initAbout() {

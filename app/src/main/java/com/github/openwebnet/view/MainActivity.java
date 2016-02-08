@@ -23,6 +23,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 
@@ -71,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     CommonService commonService;
+
+    @Inject
+    PreferenceService preferenceService;
+
     @Inject
     EnvironmentService environmentService;
 
@@ -139,7 +144,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        EventBus.getDefault().post(new MainActivity
+            .OnChangePreferenceDeviceDebugEvent(preferenceService.isDeviceDebugEnabled()));
         reloadMenu();
         return super.onPrepareOptionsMenu(menu);
     }
@@ -250,6 +263,28 @@ public class MainActivity extends AppCompatActivity {
     public void onEvent(OnChangeFabVisibilityEvent event) {
         floatingActionsMenuMain.collapse();
         floatingActionsMenuMain.setVisibility(event.isVisible() ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    /**
+     *
+     */
+    public static class OnChangePreferenceDeviceDebugEvent {
+
+        private final boolean debug;
+
+        public OnChangePreferenceDeviceDebugEvent(boolean debug) {
+            this.debug = debug;
+        }
+
+        public boolean isDebug() {
+            return debug;
+        }
+    }
+
+    // fired from SettingsFragment.initDebug
+    @Subscribe
+    public void onEvent(OnChangePreferenceDeviceDebugEvent event) {
+        toolbar.getMenu().findItem(R.id.action_settings).setVisible(event.isDebug());
     }
 
 }
