@@ -31,7 +31,7 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 [Trello Board](https://trello.com/b/KwVQLhoj/openwebnet-android)
 
-- [ ] Preference: enable/disable debug request
+- [x] Preference: enable/disable debug request
 - [ ] Import/Export database to JSON
 - [ ] Add Dimmer (Light)
 - [ ] Add IpCam
