@@ -51,8 +51,6 @@
     <string name="button_close">Close</string>
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
-    <string name="label_default_success">SUCCESS</string>
-    <string name="label_default_fail">FAIL</string>
 
     <string name="fab_label_add_device">Add device</string>
     <string name="fab_label_add_light">Add light</string>
@@ -75,7 +73,7 @@
     <string name="device_debug_label">Debug response</string>
     <string name="device_debug_label_invalid">Invalid paste</string>
     <string name="light_request">Request Turn On</string>
-    <string name="light_dimmer">Dimer</string>
+    <string name="light_dimmer">Dimmer</string>
     <string name="light_prefix">*1*1*</string>
     <string name="light_suffix">##</string>
 
