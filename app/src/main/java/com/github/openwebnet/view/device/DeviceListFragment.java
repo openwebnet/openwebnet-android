@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,6 @@ import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU
 public class DeviceListFragment extends Fragment {
 
     private static final Logger log = LoggerFactory.getLogger(DeviceListFragment.class);
-    private static final int GRID_COLUMNS = 2;
 
     public static final String ARG_ENVIRONMENT = "com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT";
 
@@ -67,10 +68,7 @@ public class DeviceListFragment extends Fragment {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, view);
 
-        //mRecyclerView.setHasFixedSize(true);
-        //mLayoutManager = new GridLayoutManager(getContext(), GRID_COLUMNS);
-
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new GridLayoutManager(getContext(), calculateGridColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new DeviceListAdapter(getActivity(), getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
         mRecyclerView.setAdapter(mAdapter);
@@ -80,6 +78,17 @@ public class DeviceListFragment extends Fragment {
             EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT))));
 
         return view;
+    }
+
+    private int calculateGridColumns() {
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float density = getResources().getDisplayMetrics().density;
+        float dpWidth = outMetrics.widthPixels / density;
+        int columns = Math.round(dpWidth / 300);
+        return columns;
     }
 
     @Override

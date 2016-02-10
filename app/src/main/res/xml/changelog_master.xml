@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
-    <release version="1.0.0" versioncode="1">
+    <release version="1.2.0" versioncode="3">
+        <change>Handle columns on orientation change</change>
+        <change>Add italian language support</change>
+    </release>
+    <release version="1.1.0" versioncode="2">
         <change>Add device debug</change>
     </release>
     <release version="1.0.0" versioncode="1">

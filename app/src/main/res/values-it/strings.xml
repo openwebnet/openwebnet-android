@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_version">versione</string>
+
+    <string name="activity_device">Dispositivo</string>
+    <string name="activity_light">Luce</string>
+    <string name="activity_settings">Impostazioni</string>
+
+    <string name="menu_save">Salva</string>
+    <string name="menu_edit">Modifica</string>
+    <string name="menu_delete">Cancella</string>
+
+    <string name="drawer_menu_favourite">Preferiti</string>
+    <string name="drawer_menu_add">Aggiungi ambiente</string>
+    <string name="drawer_menu_settings">Impostazioni</string>
+    <string name="drawer_menu_example">Esempio ambiente</string>
+
+    <string name="dialog_add_environment_title">Aggiungi ambiente</string>
+    <string name="dialog_edit_environment_title">Modifica ambiente</string>
+    <string name="dialog_environment_name">Nome</string>
+    <string name="dialog_device_confirmation_title">Conferma</string>
+    <string name="dialog_device_confirmation_message">Sei sicuro?</string>
+
+    <string name="error_load_navigation_drawer">Errore caricamento menu</string>
+    <string name="validation_required">Campo obbligatorio</string>
+    <string name="validation_host">Indirizzo ip non valido</string>
+    <string name="validation_port">Porta non valida</string>
+
+    <string name="settings_category_shortcuts">Scelta rapida</string>
+    <string name="settings_title_wireless">Wireless e reti</string>
+    <string name="settings_category_gateway">Gateway</string>
+    <string name="settings_gateway_add">Aggiungi gateway</string>
+    <string name="settings_gateway_default">Gateway di default</string>
+    <string name="settings_gateway_default_dialog">Scegli il Gateway di default</string>
+    <string name="dialog_gateway_host">Indirizzo ip</string>
+    <string name="dialog_gateway_port">Porta</string>
+    <string name="settings_category_about">Informazioni</string>
+    <string name="settings_title_changelog">Changelogs</string>
+    <string name="settings_category_debug">Debug</string>
+    <string name="settings_debug_device_title">Debug dispositivi</string>
+    <string name="settings_debug_device_summary">Mostra durata e risposta</string>
+
+    <string name="button_add">Aggiungi</string>
+    <string name="button_edit">Modifica</string>
+    <string name="button_delete">Cancella</string>
+    <string name="button_close">Chiudi</string>
+    <string name="label_none">Nessuna</string>
+    <string name="label_name">Nome</string>
+
+    <string name="fab_label_add_device">Aggiungi dispositivo</string>
+    <string name="fab_label_add_light">Aggiungi luce</string>
+
+    <string name="list_empty">Nessun elemento trovato</string>
+    <string name="device_where">dove</string>
+    <string name="device_favourite">Preferito</string>
+    <string name="device_confirm">Mostra messaggio di conferma</string>
+    <string name="device_on_load">Invia la richiesta al caricamento</string>
+    <string name="device_accept">So cosa sto facendo!</string>
+    <string name="device_request">Richiesta</string>
+    <string name="device_response">Risposta</string>
+    <string name="device_response_paste">Incolla</string>
+    <string name="device_value">valore</string>
+    <string name="device_expected_value">valore previsto</string>
+    <string name="device_debug_label_invalid">Valore non valido</string>
+    <string name="light_request">Richiesta</string>
+    <string name="light_dimmer">Dimmer</string>
+
+    <string name="card_device_debug_delay">Ritardo:</string>
+    <string name="card_device_debug_timeunit">millisecondi</string>
+    <string name="card_device_debug_copy">Copia</string>
+    <string name="card_device_debug_none">nessuna risposta</string>
+    <string name="card_device_debug_clipboard_copied">Risposta copiata</string>
+</resources>

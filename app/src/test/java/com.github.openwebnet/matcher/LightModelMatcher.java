@@ -28,8 +28,8 @@ public class LightModelMatcher extends ArgumentMatcher<LightModel> {
             actual.getWhere().equals(expected.getWhere()) &&
             actual.getEnvironmentId().equals(expected.getEnvironmentId()) &&
             actual.getGatewayUuid().equals(expected.getGatewayUuid()) &&
-            (actual.isDimmer() && expected.isDimmer()) &&
-            (actual.isFavourite() && expected.isFavourite());
+            (actual.isDimmer() == expected.isDimmer()) &&
+            (actual.isFavourite() == expected.isFavourite());
     }
 
     @Override

@@ -250,11 +250,13 @@ public class LightActivityTest {
         assertFalse("should not be empty", adapterEnvironment.isEmpty());
         assertEquals("should verify first element", "env1", adapterEnvironment.getItem(0));
         assertEquals("should verify second element", "env2", adapterEnvironment.getItem(1));
+        assertEquals("should select default", 0, spinnerDeviceEnvironment.getSelectedItemPosition());
 
         SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
         assertFalse("should not be empty", adapterGateway.isEmpty());
         assertEquals("should verify first element", "1.1.1.1:1", adapterGateway.getItem(0));
         assertEquals("should verify second element", "2.2.2.2:2", adapterGateway.getItem(1));
+        assertEquals("should select default", 0, spinnerDeviceGateway.getSelectedItemPosition());
     }
 
     @Test

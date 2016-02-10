@@ -5,7 +5,14 @@
 
 > work in progress!
 
-TODO screenshots
+<img src="images/screenshot-menu.png" alt=menu height="600" />
+<img src="images/screenshot-environment-fab.png" alt=menu height="600" />
+
+<img src="images/screenshot-add-edit-device.png" alt=menu height="600" />
+<img src="images/screenshot-add-edit-light.png" alt=menu height="600" />
+
+<img src="images/screenshot-device-debug.png" alt=menu height="600" />
+<img src="images/screenshot-settings.png" alt=menu height="600" />
 
 MyHome is the [BTicino](http://www.bticino.it/domotica-casa-connessa) and [Legrand](http://www.myopen-legrandgroup.com/) home domotic system that let you manage your house from remote devices through [OpenWebNet](https://en.wikipedia.org/wiki/OpenWebNet) protocol.
 
@@ -14,6 +21,11 @@ This Android application is an unofficial free client under CC license available
 It isn't mandatory, but it's highly recommended that you connect to your domotic system using a VPN connection.
 
 ### Changelog
+
+#### v1.2.0
+
+- Handle columns on orientation change
+- Add italian language support
 
 #### v1.1.0
 
@@ -31,7 +43,7 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 [Trello Board](https://trello.com/b/KwVQLhoj/openwebnet-android)
 
-- [ ] Preference: enable/disable debug request
+- [x] Preference: enable/disable debug request
 - [ ] Import/Export database to JSON
 - [ ] Add Dimmer (Light)
 - [ ] Add IpCam

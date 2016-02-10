@@ -60,12 +60,6 @@ public class DeviceActivity extends AbstractDeviceActivity {
     @Bind(R.id.imageButtonDevicePasteResponse)
     ImageButton imageButtonDevicePasteResponse;
 
-    @BindString(R.string.label_default_success)
-    String labelDefaultSuccess;
-
-    @BindString(R.string.label_default_fail)
-    String labelDefaultFail;
-
     @BindString(R.string.device_debug_label)
     String labelDeviceDebug;
 
