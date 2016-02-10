@@ -17,6 +17,11 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 ### Changelog
 
+#### v1.2.0
+
+- Handle columns on orientation change
+- Add italian language support
+
 #### v1.1.0
 
 - Add device debug
