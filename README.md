@@ -20,6 +20,8 @@ This Android application is an unofficial free client under CC license available
 
 It isn't mandatory, but it's highly recommended that you connect to your domotic system using a VPN connection.
 
+<a href="https://play.google.com/store/apps/details?id=com.github.openwebnet&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="200"/></a>
+
 ### Changelog
 
 #### v1.2.0
