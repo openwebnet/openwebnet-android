@@ -54,6 +54,7 @@
 
     <string name="fab_label_add_device">Add device</string>
     <string name="fab_label_add_light">Add light</string>
+    <string name="fab_label_add_webcam">Add webcam</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>

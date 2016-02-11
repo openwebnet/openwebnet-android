@@ -37,6 +37,13 @@
         fab:fab_labelStyle="@style/fab_menu.labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonAddWebcam"
+            style="@style/fab_menu.button_mini"
+            fab:fab_icon="@drawable/webcam"
+            fab:fab_size="mini"
+            fab:fab_title="@string/fab_label_add_webcam"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddLight"
             style="@style/fab_menu.button_mini"
             fab:fab_icon="@drawable/lightbulb"
