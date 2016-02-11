@@ -24,6 +24,7 @@ android {
     lintOptions {
         disable 'InvalidPackage'
         abortOnError false
+        lintConfig file('lint.xml')
     }
 
     packagingOptions {
