@@ -8,6 +8,7 @@
     <string name="menu_save">Salva</string>
     <string name="menu_edit">Modifica</string>
     <string name="menu_delete">Cancella</string>
+    <string name="menu_debug">Debug</string>
 
     <string name="drawer_menu_favourite">Preferiti</string>
     <string name="drawer_menu_add">Aggiungi ambiente</string>

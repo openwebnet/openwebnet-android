@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- list of issues to configure -->
+
+    <issue id="ResourceType">
+        <!-- Remove this when this is fixed: https://github.com/JakeWharton/butterknife/issues/338 -->
+        <ignore path="**/*$$ViewBinder.java"/>
+    </issue>
+</lint>
