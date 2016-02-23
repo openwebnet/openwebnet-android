@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_version">version</string>
+
+    <string name="activity_device">Dispositif</string>
+    <string name="activity_light">Lumière</string>
+    <string name="activity_settings">Paramètres</string>
+
+    <string name="menu_save">Enregistrer</string>
+    <string name="menu_edit">Modifier</string>
+    <string name="menu_delete">Supprimer</string>
+    <string name="menu_debug">Débogage</string>
+
+    <string name="drawer_menu_favourite">Favoris</string>
+    <string name="drawer_menu_add">Ajouter environnement</string>
+    <string name="drawer_menu_settings">Paramètres</string>
+    <string name="drawer_menu_example">Environnement d\'exemple</string>
+
+    <string name="dialog_add_environment_title">Ajouter environnement</string>
+    <string name="dialog_edit_environment_title">Modifier environnement</string>
+    <string name="dialog_environment_name">Nom</string>
+    <string name="dialog_device_confirmation_title">Confirmer</string>
+    <string name="dialog_device_confirmation_message">Êtes-vous sûr ?</string>
+
+    <string name="error_load_navigation_drawer">Erreur de chargement du menu</string>
+    <string name="validation_required">Champ obbligatoire</string>
+    <string name="validation_host">Adresse IP invalide</string>
+    <string name="validation_port">Port invalide</string>
+
+    <string name="settings_category_shortcuts">Raccourcis</string>
+    <string name="settings_title_wireless">Sans-fil et réseau</string>
+    <string name="settings_category_gateway">Passerelle</string>
+    <string name="settings_gateway_add">Ajouter passerelle</string>
+    <string name="settings_gateway_default">Passerelle par defaut</string>
+    <string name="settings_gateway_default_dialog">Choisir la passerelle par défaut</string>
+    <string name="dialog_gateway_host">Adresse IP</string>
+    <string name="dialog_gateway_port">Port</string>
+    <string name="settings_category_about">À propos</string>
+    <string name="settings_title_changelog">Changelog</string>
+    <string name="settings_category_debug">Débogage</string>
+    <string name="settings_debug_device_title">Débogage des dispositifs</string>
+    <string name="settings_debug_device_summary">Afficher la durée et la réponse</string>
+
+    <string name="button_add">Ajouter</string>
+    <string name="button_edit">Modifier</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_close">Fermer</string>
+    <string name="label_none">Aucun</string>
+    <string name="label_name">Nom</string>
+
+    <string name="fab_label_add_device">Ajouter dispositif</string>
+    <string name="fab_label_add_light">Ajouter lumière</string>
+    <string name="fab_label_add_webcam">Ajouter webcam</string>
+
+    <string name="list_empty">Aucun élément trouvé</string>
+    <string name="device_where">Où</string>
+    <string name="device_favourite">Favori</string>
+    <string name="device_confirm">Afficher message de confirmation</string>
+    <string name="device_on_load">Envoyer la requête au chargement</string>
+    <string name="device_accept">Je sais ce que je fais !</string>
+    <string name="device_request">Requête</string>
+    <string name="device_response">Réponse</string>
+    <string name="device_response_paste">Coller</string>
+    <string name="device_value">valeur</string>
+    <string name="device_expected_value">valeur attendue</string>
+    <string name="device_debug_label_invalid">Valeur invalide</string>
+    <string name="light_request">Requête</string>
+    <string name="light_dimmer">Variateur</string>
+
+    <string name="card_device_debug_delay">Délai:</string>
+    <string name="card_device_debug_timeunit">ms</string>
+    <string name="card_device_debug_copy">Copier</string>
+    <string name="card_device_debug_none">aucune réponse</string>
+    <string name="card_device_debug_clipboard_copied">Réponse copiée</string>
+</resources>
