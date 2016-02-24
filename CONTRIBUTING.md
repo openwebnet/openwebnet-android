@@ -1,7 +1,8 @@
 # How to Contribute
 
 Thanks for your interest in contributing with this project!
-If you have anything you'd like to contribute, please submit an issue with a label (bug/enhancement/question) describing your proposed change before writing it.
+
+If you have anything you'd like to contribute, please submit an issue with a label starting with \[bug|enhancement|question\] describing your proposed change before writing it.
 
 ## Workflow
 
@@ -16,5 +17,5 @@ If you have anything you'd like to contribute, please submit an issue with a lab
 
 ## Styleguide
 
-* follow the [android coding guidelines](https://source.android.com/source/code-style.html), followed by the [java coding convention](https://google.github.io/styleguide/javaguide.html)
+* follow the [android coding guidelines](https://source.android.com/source/code-style.html) and the [java coding convention](https://google.github.io/styleguide/javaguide.html)
 * checkstyle and lint will be used to help enforce code style
