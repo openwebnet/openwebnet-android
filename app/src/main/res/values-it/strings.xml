@@ -3,6 +3,7 @@
 
     <string name="activity_device">Dispositivo</string>
     <string name="activity_light">Luce</string>
+    <string name="activity_automation">Automatismo</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -49,6 +50,7 @@
 
     <string name="fab_label_add_device">Aggiungi dispositivo</string>
     <string name="fab_label_add_light">Aggiungi luce</string>
+    <string name="fab_label_add_automation">Aggiungi automatismo</string>
     <string name="fab_label_add_webcam">Aggiungi webcam</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
@@ -65,6 +67,7 @@
     <string name="device_debug_label_invalid">Valore non valido</string>
     <string name="light_request">Richiesta</string>
     <string name="light_dimmer">Dimmer</string>
+    <string name="automation_request">Richiesta</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>
