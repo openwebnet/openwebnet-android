@@ -1,9 +1,11 @@
 package com.github.openwebnet.component.module;
 
+import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
@@ -41,5 +43,12 @@ public class DomoticModuleTest {
     LightService provideLightService() {
         return mock(LightServiceImpl.class);
     }
+
+    @Provides
+    @Singleton
+    AutomationService provideAutomationService() {
+        return mock(AutomationServiceImpl.class);
+    }
+
 
 }
