@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/imageButtonCardFavourite"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/star_outline"/>
+
+    <ImageView
+        android:id="@+id/imageViewCardAlert"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/alert"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardSend"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/power"
+        android:visibility="visible"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardOff"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_toLeftOf="@id/imageButtonCardSend"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/led_variant_off"
+        android:visibility="visible"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardOn"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_toLeftOf="@id/imageButtonCardOff"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/led_variant_on"
+        android:visibility="visible"/>
+
+</RelativeLayout>
