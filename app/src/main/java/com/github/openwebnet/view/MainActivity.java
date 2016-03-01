@@ -24,6 +24,7 @@ import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 
@@ -194,6 +195,11 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.floatingActionButtonAddLight)
     public void onClickAddLight(FloatingActionButton fab) {
         actionNewIntent(LightActivity.class);
+    }
+
+    @OnClick(R.id.floatingActionButtonAddAutomation)
+    public void onClickAddAutomation(FloatingActionButton fab) {
+        actionNewIntent(AutomationActivity.class);
     }
 
     private <T> void actionNewIntent(Class<T> clazz) {

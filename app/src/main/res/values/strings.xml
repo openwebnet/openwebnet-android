@@ -6,6 +6,7 @@
 
     <string name="activity_device">Device</string>
     <string name="activity_light">Light</string>
+    <string name="activity_automation">Automation</string>
     <string name="activity_settings">Settings</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -55,6 +56,7 @@
     <string name="fab_label_add_device">Add device</string>
     <string name="fab_label_add_light">Add light</string>
     <string name="fab_label_add_webcam">Add webcam</string>
+    <string name="fab_label_add_automation">Add automation</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>
@@ -77,6 +79,9 @@
     <string name="light_dimmer">Dimmer</string>
     <string name="light_prefix" translatable="false">*1*1*</string>
     <string name="light_suffix" translatable="false">##</string>
+    <string name="automation_request">Request Stop</string>
+    <string name="automation_prefix" translatable="false">*2*0*</string>
+    <string name="automation_suffix" translatable="false">##</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>

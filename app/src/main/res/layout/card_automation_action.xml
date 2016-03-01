@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/imageButtonCardFavourite"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/star_outline"/>
+
+    <ImageView
+        android:id="@+id/imageViewCardAlert"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/alert"
+        android:visibility="invisible"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardDown"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/arrow_down_bold_circle_outline"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardUp"
+        style="@style/deviceCard.imageButton"
+        android:layout_toLeftOf="@id/imageButtonCardDown"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:src="@drawable/arrow_up_bold_circle_outline"/>
+
+</RelativeLayout>

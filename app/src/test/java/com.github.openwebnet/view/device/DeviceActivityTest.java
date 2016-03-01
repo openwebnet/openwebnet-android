@@ -19,12 +19,14 @@ import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
@@ -190,6 +192,12 @@ public class DeviceActivityTest {
         @Singleton
         LightService provideLightService() {
             return new LightServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        AutomationService provideAutomationService() {
+            return new AutomationServiceImpl();
         }
 
     }

@@ -18,6 +18,7 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.google.common.collect.Lists;
@@ -74,6 +75,8 @@ public class MainActivityTest {
     FloatingActionButton floatingActionButtonAddDevice;
     @Bind(R.id.floatingActionButtonAddLight)
     FloatingActionButton floatingActionButtonAddLight;
+    @Bind(R.id.floatingActionButtonAddAutomation)
+    FloatingActionButton floatingActionButtonAddAutomation;
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
@@ -242,6 +245,24 @@ public class MainActivityTest {
         Intent expectedIntent = new Intent(activity, LightActivity.class)
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
             .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
+
+        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+    }
+
+
+    @Test
+    public void clickingAddAutomation_shouldStartAutomationActivity() {
+        String DEFAULT_GATEWAY = "myGateway";
+        int DEFAULT_ENVIRONMENT = 123;
+
+        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
+        setupActivity();
+        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
+
+        floatingActionButtonAddAutomation.performClick();
+        Intent expectedIntent = new Intent(activity, AutomationActivity.class)
+                .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
+                .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
 
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }

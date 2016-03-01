@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -18,7 +19,7 @@ import io.realm.Sort;
 public class DatabaseRealm {
 
     private static final String DATABASE_NAME = "openwebnet.realm";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     @Inject
     Context mContext;
@@ -42,6 +43,7 @@ public class DatabaseRealm {
         return new RealmConfiguration.Builder(mContext)
             .name(DATABASE_NAME)
             .schemaVersion(DATABASE_VERSION)
+            .migration(new MigrationStrategy())
             .build();
     }
 

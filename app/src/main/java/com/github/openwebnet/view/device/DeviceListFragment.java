@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.view.MainActivity;
@@ -53,6 +55,8 @@ public class DeviceListFragment extends Fragment {
 
     @Inject
     LightService lightService;
+    @Inject
+    AutomationService automationService;
     @Inject
     DeviceService deviceService;
 
@@ -147,11 +151,14 @@ public class DeviceListFragment extends Fragment {
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
             lightService.requestByEnvironment(environmentId);
 
+        Observable<List<AutomationModel>> requestAutomations = isFavouriteMenu ? automationService.requestFavourites() :
+                automationService.requestByEnvironment(environmentId);
+
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable.zip(requestLights, requestDevices,
-            (lights, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, devices)))
+        Observable.zip(requestLights, requestAutomations, requestDevices,
+            (lights, automations, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, automations, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);

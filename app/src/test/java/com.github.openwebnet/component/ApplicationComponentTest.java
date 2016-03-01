@@ -3,6 +3,7 @@ package com.github.openwebnet.component;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.repository.AutomationRepositoryTest;
 import com.github.openwebnet.repository.CommonRealmRepositoryTest;
 import com.github.openwebnet.repository.DeviceRepositoryTest;
 import com.github.openwebnet.repository.EnvironmentRepositoryTest;
@@ -29,5 +30,6 @@ public interface ApplicationComponentTest extends ApplicationComponent {
     void inject(DeviceRepositoryTest repository);
     void inject(EnvironmentRepositoryTest repository);
     void inject(LightRepositoryTest repository);
+    void inject(AutomationRepositoryTest repository);
 
 }

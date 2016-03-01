@@ -5,10 +5,12 @@ import com.github.openwebnet.component.module.ApplicationContextModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
+import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
@@ -18,6 +20,7 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationViewClickListener;
 import com.github.openwebnet.view.NavigationViewItemSelectedListener;
+import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.DeviceListAdapter;
 import com.github.openwebnet.view.device.DeviceListFragment;
@@ -38,6 +41,7 @@ public interface ApplicationComponent {
     void inject(MainActivity activity);
     void inject(DeviceActivity activity);
     void inject(LightActivity activity);
+    void inject(AutomationActivity activity);
     void inject(DeviceListFragment fragment);
 
     void inject(NavigationViewItemSelectedListener listener);
@@ -52,6 +56,7 @@ public interface ApplicationComponent {
     void inject(EnvironmentServiceImpl environmentService);
     void inject(GatewayServiceImpl gatewayService);
     void inject(LightServiceImpl lightService);
+    void inject(AutomationServiceImpl automationService);
     void inject(PreferenceServiceImpl preferenceService);
 
     // repository
@@ -60,5 +65,6 @@ public interface ApplicationComponent {
     void inject(EnvironmentRepositoryImpl repository);
     void inject(GatewayRepositoryImpl repository);
     void inject(LightRepositoryImpl repository);
+    void inject(AutomationRepositoryImpl repository);
 
 }
