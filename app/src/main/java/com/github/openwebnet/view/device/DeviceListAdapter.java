@@ -149,6 +149,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardLightMenu)
         ImageView imageViewCardLightMenu;
 
+        @Bind(R.id.imageButtonCardOff)
+        ImageButton imageButtonCardOff;
+
+        @Bind(R.id.imageButtonCardOn)
+        ImageButton imageButtonCardOn;
+
         public LightViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -412,6 +418,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateLightStatus(holder, light.getStatus());
         holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
+        holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
+        holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
         holder.imageViewCardLightMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
@@ -427,10 +435,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
         holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+        holder.imageButtonCardOff.setVisibility(View.VISIBLE);
+        holder.imageButtonCardOn.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
             holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardOff.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardOn.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
@@ -440,17 +452,38 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    private void turnLightOff(LightViewHolder holder, LightModel light) {
+        log.debug("turn off light {}", light.getUuid());
+        if (light.getStatus() == null) {
+            log.warn("light status is null: unable to turn off");
+            return;
+        }
+
+        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
+        lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe();
+    }
+
+    private void turnLightOn(LightViewHolder holder, LightModel light) {
+        log.debug("turn on light {}", light.getUuid());
+        if (light.getStatus() == null) {
+            log.warn("light status is null: unable to turn on");
+            return;
+        }
+
+        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
+        lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe();
+    }
+
     private void toggleLight(LightViewHolder holder, LightModel light) {
         log.debug("toggle light {}", light.getUuid());
         if (light.getStatus() == null) {
             log.warn("light status is null: unable to toggle");
             return;
         }
-        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
 
         switch (light.getStatus()) {
-            case ON: lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
-            case OFF: lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
+            case ON: turnLightOff(holder, light); break;
+            case OFF: turnLightOn(holder, light); break;
         }
     }
 
