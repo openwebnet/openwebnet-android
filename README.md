@@ -24,6 +24,11 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 ### Changelog
 
+#### v1.4.0
+
+- Add automation features
+- Minor style changes
+
 #### v1.3.0
 
 - Add french language support

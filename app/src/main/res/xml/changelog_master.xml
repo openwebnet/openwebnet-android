@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="1.4.0" versioncode="5">
+        <change>Add automation features</change>
+        <change>Minor style changes</change>
+    </release>
     <release version="1.3.0" versioncode="4">
         <change>Add french language support</change>
     </release>
