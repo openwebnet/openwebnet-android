@@ -131,7 +131,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class LightViewHolder extends CommonViewHolder {
+    public static class LightViewHolder extends RecyclerView.ViewHolder {
 
         public static final int VIEW_TYPE = 200;
 
@@ -139,6 +139,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
+
+        @Bind(R.id.imageButtonCardFavourite)
+        ImageButton imageButtonCardFavourite;
+
+        @Bind(R.id.imageViewCardAlert)
+        ImageView imageViewCardAlert;
 
         @Bind(R.id.cardViewLight)
         CardView cardViewLight;
@@ -417,7 +423,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 
         updateLightStatus(holder, light.getStatus());
-        holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
         holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
@@ -434,13 +439,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
-        holder.imageButtonCardSend.setVisibility(View.VISIBLE);
         holder.imageButtonCardOff.setVisibility(View.VISIBLE);
         holder.imageButtonCardOn.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
-            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
             holder.imageButtonCardOff.setVisibility(View.INVISIBLE);
             holder.imageButtonCardOn.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
@@ -472,19 +475,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
         lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe();
-    }
-
-    private void toggleLight(LightViewHolder holder, LightModel light) {
-        log.debug("toggle light {}", light.getUuid());
-        if (light.getStatus() == null) {
-            log.warn("light status is null: unable to toggle");
-            return;
-        }
-
-        switch (light.getStatus()) {
-            case ON: turnLightOff(holder, light); break;
-            case OFF: turnLightOn(holder, light); break;
-        }
     }
 
     /* Automation */
@@ -594,6 +584,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
+        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
+        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
+    }
+
+    private void updateFavourite(LightViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
     }
