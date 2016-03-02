@@ -2,7 +2,7 @@
 <manifest
     package="com.github.openwebnet"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="4"
+    android:versionCode="5"
     android:versionName="@string/app_version_number">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -36,6 +36,14 @@
         <activity
             android:name=".view.device.LightActivity"
             android:label="@string/activity_light"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".view.device.AutomationActivity"
+            android:label="@string/activity_automation"
             android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

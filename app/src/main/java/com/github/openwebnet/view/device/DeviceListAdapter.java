@@ -20,12 +20,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
@@ -57,6 +60,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     LightService lightService;
+
+    @Inject
+    AutomationService automationService;
 
     @Inject
     PreferenceService preferenceService;
@@ -143,7 +149,54 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageViewCardLightMenu)
         ImageView imageViewCardLightMenu;
 
+        @Bind(R.id.imageButtonCardOff)
+        ImageButton imageButtonCardOff;
+
+        @Bind(R.id.imageButtonCardOn)
+        ImageButton imageButtonCardOn;
+
         public LightViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
+    public static class AutomationViewHolder extends RecyclerView.ViewHolder {
+
+        public static final int VIEW_TYPE = 300;
+
+        @BindColor(R.color.white)
+        int colorStatusStop;
+        @BindColor(R.color.lime)
+        int colorStatusUp;
+        @BindColor(R.color.lime)
+        int colorStatusDown;
+
+        @Bind(R.id.imageButtonCardFavourite)
+        ImageButton imageButtonCardFavourite;
+
+        @Bind(R.id.imageViewCardAlert)
+        ImageView imageViewCardAlert;
+
+        @Bind(R.id.cardViewAutomation)
+        CardView cardViewAutomation;
+
+        @Bind(R.id.textViewCardAutomationTitle)
+        TextView textViewCardAutomationTitle;
+
+        @Bind(R.id.imageViewCardAutomationMenu)
+        ImageView imageViewCardAutomationMenu;
+
+        @Bind(R.id.imageButtonCardUp)
+        ImageButton imageButtonCardUp;
+
+        @Bind(R.id.imageButtonCardDown)
+        ImageView imageButtonCardDown;
+
+        public AutomationViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -192,6 +245,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof LightModel) {
             return LightViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof AutomationModel) {
+            return AutomationViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -204,6 +260,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case LightViewHolder.VIEW_TYPE:
                 return new LightViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_light, parent, false));
+            case AutomationViewHolder.VIEW_TYPE:
+                return new AutomationViewHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_automation, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -220,6 +279,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case LightViewHolder.VIEW_TYPE:
                 initCardLight((LightViewHolder) holder, (LightModel) mItems.get(position));
+                break;
+            case AutomationViewHolder.VIEW_TYPE:
+                initCardAutomation((AutomationViewHolder) holder, (AutomationModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -356,6 +418,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateLightStatus(holder, light.getStatus());
         holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
+        holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
+        holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
         holder.imageViewCardLightMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
@@ -371,10 +435,14 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
         holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+        holder.imageButtonCardOff.setVisibility(View.VISIBLE);
+        holder.imageButtonCardOn.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
             holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardOff.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardOn.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
@@ -384,17 +452,138 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    private void turnLightOff(LightViewHolder holder, LightModel light) {
+        log.debug("turn off light {}", light.getUuid());
+        if (light.getStatus() == null) {
+            log.warn("light status is null: unable to turn off");
+            return;
+        }
+
+        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
+        lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe();
+    }
+
+    private void turnLightOn(LightViewHolder holder, LightModel light) {
+        log.debug("turn on light {}", light.getUuid());
+        if (light.getStatus() == null) {
+            log.warn("light status is null: unable to turn on");
+            return;
+        }
+
+        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
+        lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe();
+    }
+
     private void toggleLight(LightViewHolder holder, LightModel light) {
         log.debug("toggle light {}", light.getUuid());
         if (light.getStatus() == null) {
             log.warn("light status is null: unable to toggle");
             return;
         }
-        Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
 
         switch (light.getStatus()) {
-            case ON: lightService.turnOff(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
-            case OFF: lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe(); break;
+            case ON: turnLightOff(holder, light); break;
+            case OFF: turnLightOn(holder, light); break;
+        }
+    }
+
+    /* Automation */
+
+    private void initCardAutomation(AutomationViewHolder holder, AutomationModel automation) {
+        holder.textViewCardAutomationTitle.setText(automation.getName());
+
+        // TODO abstract
+        updateFavourite(holder, automation.isFavourite());
+        holder.imageButtonCardFavourite.setOnClickListener(v -> {
+            automation.setFavourite(!automation.isFavourite());
+            automationService.update(automation)
+                    .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
+                    .subscribe();
+        });
+
+        updateAutomationStatus(holder, automation.getStatus());
+
+        holder.imageButtonCardUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
+        holder.imageButtonCardDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
+
+        holder.imageViewCardAutomationMenu.setOnClickListener(v -> showCardMenu(v,
+                () -> {
+                    Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
+                    mContext.startActivity(intentEditAutomation);
+                },
+                () -> automationService.delete(automation.getUuid())
+                        .doOnCompleted(this::updateDeviceListEvent)
+                        .subscribe()));
+    }
+
+    private void updateAutomationStatus(AutomationViewHolder holder, AutomationModel.Status status) {
+        holder.imageButtonCardUp.setVisibility(View.VISIBLE);
+        holder.imageButtonCardDown.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+
+        if (status == null) {
+            log.warn("automation status is null: unable to update");
+            holder.imageButtonCardUp.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardDown.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        switch (status) {
+            case STOP:
+                holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusStop);
+                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
+                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
+                break;
+            case UP:
+                holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusUp);
+                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle);
+                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
+                break;
+            case DOWN:
+                holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusDown);
+                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
+                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle);
+                break;
+        }
+    }
+
+    private void sendAutomationRequestUp(AutomationViewHolder holder, AutomationModel automation) {
+        log.debug("move automation up {}", automation.getUuid());
+        if (automation.getStatus() == null) {
+            log.warn("automation status is null: unable to move up");
+            return;
+        }
+        Action0 updateAutomationStatusAction = () -> updateAutomationStatus(holder, automation.getStatus());
+
+        switch (automation.getStatus()) {
+            case STOP:
+                automationService.moveUp(automation).doOnCompleted(updateAutomationStatusAction).subscribe();
+                break;
+            case UP:
+            case DOWN:
+                automationService.stop(automation).doOnCompleted(updateAutomationStatusAction).subscribe();
+                break;
+        }
+    }
+
+    private void sendAutomationRequestDown(AutomationViewHolder holder, AutomationModel automation) {
+        log.debug("move automation down {}", automation.getUuid());
+        if (automation.getStatus() == null) {
+            log.warn("automation status is null: unable to move down");
+            return;
+        }
+        Action0 updateAutomationStatusAction = () -> updateAutomationStatus(holder, automation.getStatus());
+
+        switch (automation.getStatus()) {
+            case STOP:
+                automationService.moveDown(automation).doOnCompleted(updateAutomationStatusAction).subscribe();
+                break;
+            case UP:
+            case DOWN:
+                automationService.stop(automation).doOnCompleted(updateAutomationStatusAction).subscribe();
+                break;
         }
     }
 
@@ -405,6 +594,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
+        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
+        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
+    }
+
+    private void updateFavourite(AutomationViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
     }

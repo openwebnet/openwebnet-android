@@ -14,10 +14,10 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
-import com.github.openwebnet.matcher.LightModelMatcher;
+import com.github.openwebnet.matcher.AutomationModelMatcher;
+import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
@@ -79,7 +79,7 @@ import static org.mockito.Mockito.when;
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
-public class LightActivityTest {
+public class AutomationActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -93,14 +93,11 @@ public class LightActivityTest {
     @Bind(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @Bind(R.id.editTextLightName)
-    EditText editTextLightName;
+    @Bind(R.id.editTextAutomationName)
+    EditText editTextAutomationName;
 
-    @Bind(R.id.editTextLightWhere)
-    EditText editTextLightWhere;
-
-    @Bind(R.id.checkBoxLightDimmer)
-    CheckBox checkBoxLightDimmer;
+    @Bind(R.id.editTextAutomationWhere)
+    EditText editTextAutomationWhere;
 
     @BindString(R.string.validation_required)
     String validationRequired;
@@ -109,7 +106,7 @@ public class LightActivityTest {
     String labelNone;
 
     @Inject
-    LightService lightService;
+    AutomationService automationService;
 
     @Inject
     EnvironmentService environmentService;
@@ -117,19 +114,19 @@ public class LightActivityTest {
     @Inject
     GatewayService gatewayService;
 
-    private ActivityController<LightActivity> controller;
-    private LightActivity activity;
+    private ActivityController<AutomationActivity> controller;
+    private AutomationActivity activity;
 
     @Singleton
-    @Component(modules = {LightActivityModuleTest.class, RepositoryModuleTest.class})
-    public interface LightActivityComponentTest extends ApplicationComponent {
+    @Component(modules = {AutomationActivityModuleTest.class, RepositoryModuleTest.class})
+    public interface AutomationActivityComponentTest extends ApplicationComponent {
 
-        void inject(LightActivityTest activity);
+        void inject(AutomationActivityTest activity);
 
     }
 
     @Module
-    public class LightActivityModuleTest {
+    public class AutomationActivityModuleTest {
 
         @Provides
         @Singleton
@@ -170,32 +167,32 @@ public class LightActivityTest {
         @Provides
         @Singleton
         LightService provideLightService() {
-            return mock(LightServiceImpl.class);
+            return new LightServiceImpl();
         }
 
         @Provides
         @Singleton
         AutomationService provideAutomationService() {
-            return new AutomationServiceImpl();
+            return mock(AutomationServiceImpl.class);
         }
 
     }
 
     @Before
     public void setupDagger() {
-        LightActivityComponentTest applicationComponentTest = DaggerLightActivityTest_LightActivityComponentTest.builder()
-            .lightActivityModuleTest(new LightActivityModuleTest())
+        AutomationActivityComponentTest applicationComponentTest = DaggerAutomationActivityTest_AutomationActivityComponentTest.builder()
+            .automationActivityModuleTest(new AutomationActivityModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((LightActivityComponentTest) Injector.getApplicationComponent()).inject(this);
+        ((AutomationActivityComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(LightActivity.class);
+        controller = Robolectric.buildActivity(AutomationActivity.class);
 
         Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
@@ -276,10 +273,9 @@ public class LightActivityTest {
 
         verify(mock(LightServiceImpl.class), never()).findById(anyString());
 
-        assertEquals("invalid value", "", editTextLightName.getText().toString());
-        assertEquals("invalid value", "", editTextLightWhere.getText().toString());
+        assertEquals("invalid value", "", editTextAutomationName.getText().toString());
+        assertEquals("invalid value", "", editTextAutomationWhere.getText().toString());
 
-        assertEquals("invalid value", false, checkBoxLightDimmer.isChecked());
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
 
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
@@ -288,47 +284,44 @@ public class LightActivityTest {
 
     @Test
     public void shouldVerifyOnCreate_initEditWithUuid() {
-        String LIGHT_UUID = "myUuid";
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 108;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+        String AUTOMATION_UUID = "myUuid";
+        String AUTOMATION_NAME = "myName";
+        String AUTOMATION_GATEWAY_SELECTED = "uuid2";
+        String AUTOMATION_WHERE = "08";
+        Integer AUTOMATION__ENVIRONMENT_SELECTED = 108;
+        boolean AUTOMATION_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env8"));
+            asList(newEnvironment(100, "env1"), newEnvironment(AUTOMATION__ENVIRONMENT_SELECTED, "env8"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2));
+            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(AUTOMATION_GATEWAY_SELECTED, "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
 
-        LightModel lightModel = LightModel.updateBuilder(LIGHT_UUID)
-            .name(LIGHT_NAME)
-            .where(LIGHT_WHERE)
-            .dimmer(LIGHT_DIMMER)
-            .environment(LIGHT_ENVIRONMENT_SELECTED)
-            .gateway(LIGHT_GATEWAY_SELECTED)
-            .favourite(LIGHT_FAVOURITE)
+        AutomationModel automationModel = AutomationModel.updateBuilder(AUTOMATION_UUID)
+            .name(AUTOMATION_NAME)
+            .where(AUTOMATION_WHERE)
+            .environment(AUTOMATION__ENVIRONMENT_SELECTED)
+            .gateway(AUTOMATION_GATEWAY_SELECTED)
+            .favourite(AUTOMATION_FAVOURITE)
             .build();
 
-        when(lightService.findById(anyString())).thenReturn(Observable.just(lightModel));
+        when(automationService.findById(anyString())).thenReturn(Observable.just(automationModel));
 
-        createWithIntent(LIGHT_UUID);
+        createWithIntent(AUTOMATION_UUID);
 
-        assertEquals("invalid value", LIGHT_NAME, editTextLightName.getText().toString());
-        assertEquals("invalid value", String.valueOf(LIGHT_WHERE), editTextLightWhere.getText().toString());
+        assertEquals("invalid value", AUTOMATION_NAME, editTextAutomationName.getText().toString());
+        assertEquals("invalid value", String.valueOf(AUTOMATION_WHERE), editTextAutomationWhere.getText().toString());
 
-        assertEquals("invalid value", LIGHT_DIMMER, checkBoxLightDimmer.isChecked());
-        assertEquals("invalid value", LIGHT_FAVOURITE, checkBoxDeviceFavourite.isChecked());
+        assertEquals("invalid value", AUTOMATION_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
-        assertEquals("invalid value", environmentSelected.getId(), LIGHT_ENVIRONMENT_SELECTED);
+        assertEquals("invalid value", environmentSelected.getId(), AUTOMATION__ENVIRONMENT_SELECTED);
 
         GatewayModel gatewaySelected = gateways.get(spinnerDeviceGateway.getSelectedItemPosition());
-        assertEquals("invalid value", LIGHT_GATEWAY_SELECTED, gatewaySelected.getUuid());
+        assertEquals("invalid value", AUTOMATION_GATEWAY_SELECTED, gatewaySelected.getUuid());
     }
 
     @Test
@@ -338,11 +331,11 @@ public class LightActivityTest {
 
         createWithIntent(null);
 
-        expectRequired(editTextLightName);
-        editTextLightName.setText("nameValue");
+        expectRequired(editTextAutomationName);
+        editTextAutomationName.setText("nameValue");
 
-        expectRequired(editTextLightWhere);
-        editTextLightWhere.setText("21");
+        expectRequired(editTextAutomationWhere);
+        editTextAutomationWhere.setText("21");
 
         expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
         ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
@@ -359,36 +352,34 @@ public class LightActivityTest {
 
     private void expectRequired(TextView view) {
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(automationService, never()).add(any(AutomationModel.class));
+        verify(automationService, never()).update(any(AutomationModel.class));
         assertEquals("bad validation", validationRequired, view.getError());
         //assertTrue("bad focus", view.hasFocus());
     }
 
-    private LightModel common_onMenuSave_valid(String uuidExtra) {
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 101;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+    private AutomationModel common_onMenuSave_valid(String uuidExtra) {
+        String AUTOMATION_NAME = "myName";
+        String AUTOMATION_GATEWAY_SELECTED = "uuid2";
+        String AUTOMATION_WHERE = "08";
+        Integer AUTOMATION_ENVIRONMENT_SELECTED = 101;
+        boolean AUTOMATION_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
+            just(Arrays.asList(newEnvironment(AUTOMATION_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+            just(Arrays.asList(newGateway(AUTOMATION_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
-        String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
-        when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));
-        when(lightService.update(any(LightModel.class))).thenReturn(Observable.just(null));
+        String AUTOMATION_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(automationService.add(any(AutomationModel.class))).thenReturn(Observable.just(AUTOMATION_UUID));
+        when(automationService.update(any(AutomationModel.class))).thenReturn(Observable.just(null));
 
         createWithIntent(uuidExtra);
 
-        editTextLightName.setText(String.valueOf(LIGHT_NAME));
-        editTextLightWhere.setText(String.valueOf(LIGHT_WHERE));
+        editTextAutomationName.setText(String.valueOf(AUTOMATION_NAME));
+        editTextAutomationWhere.setText(String.valueOf(AUTOMATION_WHERE));
 
-        checkBoxLightDimmer.setChecked(LIGHT_DIMMER);
-        checkBoxDeviceFavourite.setChecked(LIGHT_FAVOURITE);
+        checkBoxDeviceFavourite.setChecked(AUTOMATION_FAVOURITE);
 
         // for simplicity only 1 items
         spinnerDeviceEnvironment.setSelection(0);
@@ -396,33 +387,32 @@ public class LightActivityTest {
 
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
 
-        LightModel lightMock = new LightModel();
-        lightMock.setUuid(uuidExtra);
-        lightMock.setName(LIGHT_NAME);
-        lightMock.setWhere(LIGHT_WHERE);
-        lightMock.setDimmer(LIGHT_DIMMER);
-        lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
-        lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
-        lightMock.setFavourite(LIGHT_FAVOURITE);
-        return lightMock;
+        AutomationModel automationMock = new AutomationModel();
+        automationMock.setUuid(uuidExtra);
+        automationMock.setName(AUTOMATION_NAME);
+        automationMock.setWhere(AUTOMATION_WHERE);
+        automationMock.setEnvironmentId(AUTOMATION_ENVIRONMENT_SELECTED);
+        automationMock.setGatewayUuid(AUTOMATION_GATEWAY_SELECTED);
+        automationMock.setFavourite(AUTOMATION_FAVOURITE);
+        return automationMock;
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
-        LightModel lightMock = common_onMenuSave_valid(null);
+        AutomationModel automationMock = common_onMenuSave_valid(null);
 
-        verify(lightService, times(1)).add(LightModelMatcher.lightModelEq(lightMock));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(automationService, times(1)).add(AutomationModelMatcher.automationModelEq(automationMock));
+        verify(automationService, never()).update(any(AutomationModel.class));
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validEdit() {
-        when(lightService.findById(anyString())).thenReturn(Observable.<LightModel>empty());
+        when(automationService.findById(anyString())).thenReturn(Observable.<AutomationModel>empty());
 
-        LightModel lightMock = common_onMenuSave_valid("anyUuid");
+        AutomationModel automationMock = common_onMenuSave_valid("anyUuid");
 
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, times(1)).update(LightModelMatcher.lightModelEq(lightMock));
+        verify(automationService, never()).add(any(AutomationModel.class));
+        verify(automationService, times(1)).update(AutomationModelMatcher.automationModelEq(automationMock));
     }
 
     @After

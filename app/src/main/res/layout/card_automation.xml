@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardViewLight"
+        android:id="@+id/cardViewAutomation"
         style="@style/deviceCard.layout"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardCornerRadius="4dp"
@@ -31,10 +31,10 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="4dp"
-                    android:src="@drawable/lightbulb_outline"/>
+                    android:src="@drawable/blinds"/>
 
                 <TextView
-                    android:id="@+id/textViewCardLightTitle"
+                    android:id="@+id/textViewCardAutomationTitle"
                     style="@style/deviceCard.textView"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -42,7 +42,7 @@
                     android:textSize="24sp"/>
 
                 <ImageView
-                    android:id="@+id/imageViewCardLightMenu"
+                    android:id="@+id/imageViewCardAutomationMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="16dp"
@@ -51,7 +51,7 @@
             </LinearLayout>
 
             <include
-                layout="@layout/card_light_action"
+                layout="@layout/card_automation_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"/>

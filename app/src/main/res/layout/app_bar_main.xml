@@ -46,6 +46,13 @@
         -->
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonAddAutomation"
+            style="@style/fab_menu.button_mini"
+            fab:fab_icon="@drawable/blinds_white"
+            fab:fab_size="mini"
+            fab:fab_title="@string/fab_label_add_automation"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddLight"
             style="@style/fab_menu.button_mini"
             fab:fab_icon="@drawable/lightbulb"
