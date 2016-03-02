@@ -105,6 +105,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
+        @Bind(R.id.imageButtonCardSend)
+        ImageButton imageButtonCardSend;
+
         @Bind(R.id.imageViewCardDeviceMenu)
         ImageView imageViewCardDeviceMenu;
 
@@ -131,7 +134,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class LightViewHolder extends RecyclerView.ViewHolder {
+    public static class LightViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 200;
 
@@ -139,12 +142,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
-
-        @Bind(R.id.imageButtonCardFavourite)
-        ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageViewCardAlert)
-        ImageView imageViewCardAlert;
 
         @Bind(R.id.cardViewLight)
         CardView cardViewLight;
@@ -170,7 +167,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class AutomationViewHolder extends RecyclerView.ViewHolder {
+    public static class AutomationViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 300;
 
@@ -180,12 +177,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int colorStatusUp;
         @BindColor(R.color.lime)
         int colorStatusDown;
-
-        @Bind(R.id.imageButtonCardFavourite)
-        ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageViewCardAlert)
-        ImageView imageViewCardAlert;
 
         @Bind(R.id.cardViewAutomation)
         CardView cardViewAutomation;
@@ -215,9 +206,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageButtonCardSend)
-        ImageButton imageButtonCardSend;
 
         @Bind(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
@@ -584,16 +572,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
-        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
-        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
-    }
-
-    private void updateFavourite(LightViewHolder holder, boolean favourite) {
-        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
-        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
-    }
-
-    private void updateFavourite(AutomationViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
     }
