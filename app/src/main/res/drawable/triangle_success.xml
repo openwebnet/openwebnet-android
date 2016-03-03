@@ -10,8 +10,8 @@
             android:shape="rectangle">
             <stroke
                 android:width="10dp"
-                android:color="#4CAF50"/>
-            <solid android:color="#4CAF50"/>
+                android:color="@color/green_dark"/>
+            <solid android:color="@color/green_dark"/>
         </shape>
     </rotate>
 </item>
