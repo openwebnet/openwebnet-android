@@ -105,6 +105,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
+        @Bind(R.id.imageButtonCardSend)
+        ImageButton imageButtonCardSend;
+
         @Bind(R.id.imageViewCardDeviceMenu)
         ImageView imageViewCardDeviceMenu;
 
@@ -164,7 +167,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
-    public static class AutomationViewHolder extends RecyclerView.ViewHolder {
+    public static class AutomationViewHolder extends CommonViewHolder {
 
         public static final int VIEW_TYPE = 300;
 
@@ -174,12 +177,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int colorStatusUp;
         @BindColor(R.color.lime)
         int colorStatusDown;
-
-        @Bind(R.id.imageButtonCardFavourite)
-        ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageViewCardAlert)
-        ImageView imageViewCardAlert;
 
         @Bind(R.id.cardViewAutomation)
         CardView cardViewAutomation;
@@ -209,9 +206,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
-
-        @Bind(R.id.imageButtonCardSend)
-        ImageButton imageButtonCardSend;
 
         @Bind(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
@@ -417,7 +411,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 
         updateLightStatus(holder, light.getStatus());
-        holder.imageButtonCardSend.setOnClickListener(v -> toggleLight(holder, light));
         holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
@@ -434,13 +427,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
-        holder.imageButtonCardSend.setVisibility(View.VISIBLE);
         holder.imageButtonCardOff.setVisibility(View.VISIBLE);
         holder.imageButtonCardOn.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
-            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
             holder.imageButtonCardOff.setVisibility(View.INVISIBLE);
             holder.imageButtonCardOn.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
@@ -472,19 +463,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         Action0 updateLightStatusAction = () -> updateLightStatus(holder, light.getStatus());
         lightService.turnOn(light).doOnCompleted(updateLightStatusAction).subscribe();
-    }
-
-    private void toggleLight(LightViewHolder holder, LightModel light) {
-        log.debug("toggle light {}", light.getUuid());
-        if (light.getStatus() == null) {
-            log.warn("light status is null: unable to toggle");
-            return;
-        }
-
-        switch (light.getStatus()) {
-            case ON: turnLightOff(holder, light); break;
-            case OFF: turnLightOn(holder, light); break;
-        }
     }
 
     /* Automation */
@@ -594,11 +572,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
-        int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
-        holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
-    }
-
-    private void updateFavourite(AutomationViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
     }

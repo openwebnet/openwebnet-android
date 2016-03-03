@@ -9,6 +9,9 @@
     <color name="amber">#FFC107</color>
     <color name="black_semi_transparent">#B2000000</color>
     <color name="white">#FFF</color>
+    <color name="red_dark">#D32F2F</color>
+    <color name="green_dark">#388E3C</color>
+    <color name="grey">#9E9E9E</color>
 
     <!-- material palette -->
     <color name="primary">#FF9800</color>
