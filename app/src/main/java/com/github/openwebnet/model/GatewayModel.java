@@ -6,7 +6,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GatewayModel extends RealmObject implements RealmModel {
 
@@ -20,8 +20,8 @@ public class GatewayModel extends RealmObject implements RealmModel {
     private Integer port;
 
     public static GatewayModel newGateway(String host, Integer port) {
-        requireNonNull(host, "host is null");
-        requireNonNull(port, "port is null");
+        checkNotNull(host, "host is null");
+        checkNotNull(port, "port is null");
 
         GatewayModel gateway = new GatewayModel();
         gateway.setUuid(UUID.randomUUID().toString());

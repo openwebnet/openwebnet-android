@@ -20,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
@@ -49,7 +48,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -76,8 +75,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public DeviceListAdapter(Context context, Integer environmentId, List<DomoticModel> items) {
         Injector.getApplicationComponent().inject(this);
 
-        requireNonNull(environmentId, "environmentId is null");
-        requireNonNull(items, "items is null");
+        checkNotNull(environmentId, "environmentId is null");
+        checkNotNull(items, "items is null");
         this.mContext = context;
         this.mEnvironmentId = environmentId;
         this.mItems = items;

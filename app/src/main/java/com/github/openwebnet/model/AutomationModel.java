@@ -7,7 +7,7 @@ import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AutomationModel extends RealmObject implements RealmModel, DomoticModel {
 
@@ -89,10 +89,10 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
         }
 
         public AutomationModel build() {
-            requireNonNull(environmentId, "environmentId is null");
-            requireNonNull(gatewayUuid, "gatewayUuid is null");
-            requireNonNull(name, "name is null");
-            requireNonNull(where, "where is null");
+            checkNotNull(environmentId, "environmentId is null");
+            checkNotNull(gatewayUuid, "gatewayUuid is null");
+            checkNotNull(name, "name is null");
+            checkNotNull(where, "where is null");
 
             return new AutomationModel(this);
         }
