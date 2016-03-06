@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,40 +30,40 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        fab:fab_addButtonColorNormal="@color/accent"
-        fab:fab_addButtonColorPressed="@color/primary"
-        fab:fab_addButtonPlusIconColor="@android:color/white"
-        fab:fab_labelStyle="@style/fab_menu.labels_style">
+        app:fab_addButtonColorNormal="@color/accent"
+        app:fab_addButtonColorPressed="@color/primary"
+        app:fab_addButtonPlusIconColor="@android:color/white"
+        app:fab_labelStyle="@style/fab_menu.labels_style">
 
         <!--
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddWebcam"
             style="@style/fab_menu.button_mini"
-            fab:fab_icon="@drawable/webcam"
-            fab:fab_size="mini"
-            fab:fab_title="@string/fab_label_add_webcam"/>
+            app:fab_icon="@drawable/webcam"
+            app:fab_size="mini"
+            app:fab_title="@string/fab_label_add_webcam"/>
         -->
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddAutomation"
             style="@style/fab_menu.button_mini"
-            fab:fab_icon="@drawable/blinds_white"
-            fab:fab_size="mini"
-            fab:fab_title="@string/fab_label_add_automation"/>
+            app:fab_icon="@drawable/blinds_white"
+            app:fab_size="mini"
+            app:fab_title="@string/fab_label_add_automation"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddLight"
             style="@style/fab_menu.button_mini"
-            fab:fab_icon="@drawable/lightbulb"
-            fab:fab_size="mini"
-            fab:fab_title="@string/fab_label_add_light"/>
+            app:fab_icon="@drawable/lightbulb"
+            app:fab_size="mini"
+            app:fab_title="@string/fab_label_add_light"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButtonAddDevice"
             style="@style/fab_menu.button_mini"
-            fab:fab_icon="@drawable/remote"
-            fab:fab_size="mini"
-            fab:fab_title="@string/fab_label_add_device"/>
+            app:fab_icon="@drawable/remote"
+            app:fab_size="mini"
+            app:fab_title="@string/fab_label_add_device"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

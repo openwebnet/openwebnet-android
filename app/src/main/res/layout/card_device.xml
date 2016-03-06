@@ -2,6 +2,8 @@
 <LinearLayout
     style="@style/deviceCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -48,7 +50,8 @@
                     android:paddingBottom="4dp"
                     android:paddingRight="16dp"
                     android:paddingTop="20dp"
-                    android:src="@drawable/dots_vertical"/>
+                    app:srcCompat="@drawable/dots_vertical"
+                    tools:ignore="MissingPrefix"/>
             </LinearLayout>
 
             <include
