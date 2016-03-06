@@ -64,7 +64,7 @@ public class NavigationViewClickListener implements OnClickListener {
             .setView(layout)
             .setTitle(R.string.dialog_edit_environment_title)
             .setPositiveButton(R.string.button_edit, null)
-            //.setNegativeButton(R.string.button_delete, null)
+            .setNegativeButton(R.string.button_delete, null)
             .setNeutralButton(android.R.string.cancel, null);
 
         Action1<EnvironmentModel> showDialogEnvironment = environmentSelected -> {
@@ -110,6 +110,12 @@ public class NavigationViewClickListener implements OnClickListener {
     }
 
     private void deleteEnvironment() {
-        throw new UnsupportedOperationException("not implemented yet");
+        environmentService.delete(environmentId)
+            .doOnCompleted(() -> {
+                // calls onPrepareOptionsMenu(): reload menu
+                mActivity.invalidateOptionsMenu();
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            })
+            .subscribe(aVoid -> {}, throwable -> log.error("deleteEnvironment", throwable));
     }
 }

@@ -8,7 +8,11 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.model.AutomationModel;
+import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.model.LightModel;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,6 +31,7 @@ import javax.inject.Inject;
 
 import rx.observers.TestSubscriber;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -147,6 +152,27 @@ public class EnvironmentRepositoryTest {
         verify(databaseRealm).findSortedAscending(EnvironmentModel.class, EnvironmentModel.FIELD_NAME);
 
         tester.assertValue(environments);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void environmentRepository_delete() {
+        final int ENVIRONMENT_ID = 42;
+
+        doNothing().when(databaseRealm).delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID);
+        doNothing().when(databaseRealm).delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        doNothing().when(databaseRealm).delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        doNothing().when(databaseRealm).delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+
+        TestSubscriber<Void> tester = new TestSubscriber<>();
+        environmentRepository.delete(ENVIRONMENT_ID).subscribe(tester);
+
+        verify(databaseRealm).delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID);
+
         tester.assertCompleted();
         tester.assertNoErrors();
     }
