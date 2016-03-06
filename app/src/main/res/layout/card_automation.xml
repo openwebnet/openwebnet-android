@@ -50,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="16dp"
                     android:paddingTop="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     app:srcCompat="@drawable/dots_vertical"
                     tools:ignore="MissingPrefix"/>
             </LinearLayout>
