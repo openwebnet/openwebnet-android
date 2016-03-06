@@ -2,7 +2,8 @@
 <LinearLayout
     android:id="@+id/linearLayoutCardDeviceDebug"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -66,7 +67,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/content_copy"/>
+                app:srcCompat="@drawable/content_copy"
+                tools:ignore="MissingPrefix"/>
         </RelativeLayout>
 
         <com.github.openwebnet.view.custom.TextViewCustom
@@ -76,7 +78,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:text="@string/card_device_debug_none"
-            typeface:font="inconsolata"/>
+            app:font="inconsolata"/>
 
     </LinearLayout>
 
