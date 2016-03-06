@@ -108,7 +108,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ImageButton imageButtonCardSend;
 
         @Bind(R.id.imageViewCardDeviceMenu)
-        ImageView imageViewCardDeviceMenu;
+        ImageButton imageViewCardDeviceMenu;
 
         /* card_device_debug */
 
@@ -149,7 +149,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView textViewCardLightTitle;
 
         @Bind(R.id.imageViewCardLightMenu)
-        ImageView imageViewCardLightMenu;
+        ImageButton imageViewCardLightMenu;
 
         @Bind(R.id.imageButtonCardOff)
         ImageButton imageButtonCardOff;
@@ -184,13 +184,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView textViewCardAutomationTitle;
 
         @Bind(R.id.imageViewCardAutomationMenu)
-        ImageView imageViewCardAutomationMenu;
+        ImageButton imageViewCardAutomationMenu;
 
         @Bind(R.id.imageButtonCardUp)
         ImageButton imageButtonCardUp;
 
         @Bind(R.id.imageButtonCardDown)
-        ImageView imageButtonCardDown;
+        ImageButton imageButtonCardDown;
 
         public AutomationViewHolder(View view) {
             super(view);
