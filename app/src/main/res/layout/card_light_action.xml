@@ -11,6 +11,7 @@
         style="@style/deviceCard.imageButton"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/star_outline"
         tools:ignore="MissingPrefix"/>
 
@@ -30,6 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/led_variant_off"
         android:visibility="visible"
         tools:ignore="MissingPrefix"/>
@@ -41,6 +43,7 @@
         android:layout_toLeftOf="@id/imageButtonCardOff"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:srcCompat="@drawable/led_variant_on"
         android:visibility="visible"
         tools:ignore="MissingPrefix"/>

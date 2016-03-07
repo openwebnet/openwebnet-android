@@ -107,9 +107,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.imageButtonCardSend)
         ImageButton imageButtonCardSend;
 
-        @Bind(R.id.imageViewCardDeviceMenu)
-        ImageView imageViewCardDeviceMenu;
-
         /* card_device_debug */
 
         @Bind(R.id.linearLayoutCardDeviceDebug)
@@ -148,9 +145,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        @Bind(R.id.imageViewCardLightMenu)
-        ImageView imageViewCardLightMenu;
-
         @Bind(R.id.imageButtonCardOff)
         ImageButton imageButtonCardOff;
 
@@ -183,14 +177,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardAutomationTitle)
         TextView textViewCardAutomationTitle;
 
-        @Bind(R.id.imageViewCardAutomationMenu)
-        ImageView imageViewCardAutomationMenu;
-
         @Bind(R.id.imageButtonCardUp)
         ImageButton imageButtonCardUp;
 
         @Bind(R.id.imageButtonCardDown)
-        ImageView imageButtonCardDown;
+        ImageButton imageButtonCardDown;
 
         public AutomationViewHolder(View view) {
             super(view);
@@ -205,6 +196,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
+
+        @Bind(R.id.imageButtonCardMenu)
+        ImageButton imageButtonCardMenu;
 
         @Bind(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
@@ -315,16 +309,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         });
 
-        holder.imageViewCardDeviceMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, device.getUuid());
-                mContext.startActivity(intentEditDevice);
-            },
-            () -> deviceService.delete(device.getUuid())
-                    .doOnCompleted(() -> updateDeviceListEvent())
-                    .subscribe()));
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+                () -> {
+                    Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra(RealmModel.FIELD_UUID, device.getUuid());
+                    mContext.startActivity(intentEditDevice);
+                },
+                () -> deviceService.delete(device.getUuid())
+                        .doOnCompleted(() -> updateDeviceListEvent())
+                        .subscribe()));
 
         handleDeviceDebug(holder, device);
     }
@@ -413,16 +407,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
-        holder.imageViewCardLightMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditLight = new Intent(mContext, LightActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, light.getUuid());
-                mContext.startActivity(intentEditLight);
-            },
-            () -> lightService.delete(light.getUuid())
-                    .doOnCompleted(() -> updateDeviceListEvent())
-                    .subscribe()));
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+                () -> {
+                    Intent intentEditLight = new Intent(mContext, LightActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .putExtra(RealmModel.FIELD_UUID, light.getUuid());
+                    mContext.startActivity(intentEditLight);
+                },
+                () -> lightService.delete(light.getUuid())
+                        .doOnCompleted(() -> updateDeviceListEvent())
+                        .subscribe()));
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -483,7 +477,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
         holder.imageButtonCardDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
 
-        holder.imageViewCardAutomationMenu.setOnClickListener(v -> showCardMenu(v,
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
                 () -> {
                     Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

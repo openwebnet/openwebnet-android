@@ -58,6 +58,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="right|bottom"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/github_circle"
             tools:ignore="MissingPrefix"/>
 
