@@ -88,4 +88,5 @@
     <string name="card_device_debug_copy">Copy</string>
     <string name="card_device_debug_none">no response</string>
     <string name="card_device_debug_clipboard_copied">Response copied</string>
+    <string name="settings_gateway_default_hint">Default port: 20000</string>
 </resources>

@@ -33,6 +33,7 @@
     <string name="settings_gateway_add">Aggiungi gateway</string>
     <string name="settings_gateway_default">Gateway di default</string>
     <string name="settings_gateway_default_dialog">Scegli il Gateway di default</string>
+    <string name="settings_gateway_default_hint">Porta predefinita: 20000</string>
     <string name="dialog_gateway_host">Indirizzo ip</string>
     <string name="dialog_gateway_port">Porta</string>
     <string name="settings_category_about">Informazioni</string>
