@@ -17,5 +17,6 @@ public interface EnvironmentRepository {
     Observable<EnvironmentModel> findById(Integer id);
 
     Observable<List<EnvironmentModel>> findAll();
-    
+
+    Observable<Void> delete(Integer id);
 }

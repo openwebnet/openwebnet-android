@@ -14,6 +14,8 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,8 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action1;
+
+import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
 
 public class NavigationViewClickListener implements OnClickListener {
 
@@ -64,7 +68,7 @@ public class NavigationViewClickListener implements OnClickListener {
             .setView(layout)
             .setTitle(R.string.dialog_edit_environment_title)
             .setPositiveButton(R.string.button_edit, null)
-            //.setNegativeButton(R.string.button_delete, null)
+            .setNegativeButton(R.string.button_delete, null)
             .setNeutralButton(android.R.string.cancel, null);
 
         Action1<EnvironmentModel> showDialogEnvironment = environmentSelected -> {
@@ -110,6 +114,14 @@ public class NavigationViewClickListener implements OnClickListener {
     }
 
     private void deleteEnvironment() {
-        throw new UnsupportedOperationException("not implemented yet");
+        environmentService.delete(environmentId)
+            .doOnCompleted(() -> {
+                // calls onPrepareOptionsMenu(): reload menu
+                mActivity.invalidateOptionsMenu();
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                // Switch to the only environment that is always there : the "favourite" environment.
+                EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
+            })
+            .subscribe(aVoid -> {}, throwable -> log.error("deleteEnvironment", throwable));
     }
 }

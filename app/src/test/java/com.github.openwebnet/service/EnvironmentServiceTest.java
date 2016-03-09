@@ -30,6 +30,7 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -140,4 +141,18 @@ public class EnvironmentServiceTest {
         tester.assertNoErrors();
     }
 
+    @Test
+    public void environmentService_delete() {
+        Integer ENVIRONMENT_ID = 42;
+
+        when(environmentRepository.delete(ENVIRONMENT_ID)).thenReturn(Observable.empty());
+
+        TestSubscriber<Void> tester = new TestSubscriber<>();
+        environmentService.delete(ENVIRONMENT_ID).subscribe(tester);
+
+        verify(environmentRepository).delete(ENVIRONMENT_ID);
+
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
 }
