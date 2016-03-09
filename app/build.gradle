@@ -11,8 +11,8 @@ android {
         applicationId "com.github.openwebnet"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.4.1"
+        versionCode 7
+        versionName "1.4.2"
         multiDexEnabled true
         generatedDensities = []
         aaptOptions {

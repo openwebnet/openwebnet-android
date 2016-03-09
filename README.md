@@ -27,7 +27,7 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 #### v1.4.2
 
 - Fix error on android 4.1
-- Delete environment
+- Delete environments
 - Minor style changes
 
 #### v1.4.1
@@ -54,11 +54,11 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 #### v1.0.0 and previous releases
 
-- Add/edit environment
-- Add multiple gateway
+- Add/edit environments
+- Add gateways
 - Show favourites
-- Add/edit/remove light
-- Add/edit/remove generic OpenWebNet message (frame)
+- Add light features
+- Add device features
 
 ### License
 
