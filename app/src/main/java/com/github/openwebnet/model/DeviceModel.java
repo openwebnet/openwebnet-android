@@ -1,7 +1,6 @@
 package com.github.openwebnet.model;
 
 import org.threeten.bp.Instant;
-import org.threeten.bp.LocalDateTime;
 
 import java.util.UUID;
 
@@ -10,7 +9,7 @@ import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
 
@@ -125,11 +124,11 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         }
 
         public DeviceModel build() {
-            requireNonNull(environmentId, "environmentId is null");
-            requireNonNull(gatewayUuid, "gatewayUuid is null");
-            requireNonNull(name, "name is null");
-            requireNonNull(request, "request is null");
-            requireNonNull(response, "response is null");
+            checkNotNull(environmentId, "environmentId is null");
+            checkNotNull(gatewayUuid, "gatewayUuid is null");
+            checkNotNull(name, "name is null");
+            checkNotNull(request, "request is null");
+            checkNotNull(response, "response is null");
 
             return new DeviceModel(this);
         }

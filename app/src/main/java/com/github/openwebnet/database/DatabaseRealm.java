@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmMigration;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -68,6 +67,14 @@ public class DatabaseRealm {
     }
 
     public <T extends RealmObject> void delete(Class<T> clazz, String field, String value) {
+        Realm realm = getRealmInstance();
+        RealmResults<T> models = realm.where(clazz).equalTo(field, value).findAll();
+        realm.beginTransaction();
+        models.clear();
+        realm.commitTransaction();
+    }
+
+    public <T extends RealmObject> void delete(Class<T> clazz, String field, Integer value) {
         Realm realm = getRealmInstance();
         RealmResults<T> models = realm.where(clazz).equalTo(field, value).findAll();
         realm.beginTransaction();

@@ -47,4 +47,8 @@ public class EnvironmentServiceImpl implements EnvironmentService {
         return environmentRepository.findById(id);
     }
 
+    @Override
+    public Observable<Void> delete(Integer id) {
+        return environmentRepository.delete(id);
+    }
 }

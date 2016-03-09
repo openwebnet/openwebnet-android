@@ -6,7 +6,7 @@
 > work in progress!
 
 <img src="images/screenshot-menu.png" alt=menu height="600" />
-<img src="images/screenshot-environment-fab.png" alt=menu height="600" />
+<img src="images/screenshot-environment-fab-02.png" alt=menu height="600" />
 
 <img src="images/screenshot-add-edit-device.png" alt=menu height="600" />
 <img src="images/screenshot-add-edit-light.png" alt=menu height="600" />
@@ -23,6 +23,12 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 <a href="https://play.google.com/store/apps/details?id=com.github.openwebnet&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="200"/></a>
 
 ### Changelog
+
+#### v1.4.2
+
+- Fix error on android 4.1
+- Delete environments
+- Minor style changes
 
 #### v1.4.1
 
@@ -48,22 +54,11 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 #### v1.0.0 and previous releases
 
-- Add/edit environment
-- Add multiple gateway
+- Add/edit environments
+- Add gateways
 - Show favourites
-- Add/edit/remove light
-- Add/edit/remove generic OpenWebNet message (frame)
-
-### Next features
-
-[Trello Board](https://trello.com/b/KwVQLhoj/openwebnet-android)
-
-- [x] Preference: enable/disable debug request
-- [ ] Import/Export database to JSON
-- [ ] Add Dimmer (Light)
-- [ ] Add IpCam
-- [ ] Add Sound System
-- [ ] Add Temperature System
+- Add light features
+- Add device features
 
 ### License
 

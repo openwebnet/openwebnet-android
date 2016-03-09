@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,18 +32,18 @@
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_prefix"
-                typeface:font="inconsolata"/>
+                app:font="inconsolata"/>
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextLightWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                typeface:font="inconsolata"/>
+                app:font="inconsolata"/>
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_suffix"
-                typeface:font="inconsolata"/>
+                app:font="inconsolata"/>
 
         </LinearLayout>
 

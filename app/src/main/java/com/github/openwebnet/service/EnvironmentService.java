@@ -16,4 +16,5 @@ public interface EnvironmentService {
 
     Observable<EnvironmentModel> findById(Integer id);
 
+    Observable<Void> delete(Integer id);
 }

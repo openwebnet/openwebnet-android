@@ -2,8 +2,10 @@
 <LinearLayout
     style="@style/deviceCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -31,7 +33,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="4dp"
-                    android:src="@drawable/lightbulb_outline"/>
+                    app:srcCompat="@drawable/lightbulb_outline"
+                    tools:ignore="MissingPrefix"/>
 
                 <TextView
                     android:id="@+id/textViewCardLightTitle"
@@ -41,13 +44,15 @@
                     android:singleLine="true"
                     android:textSize="24sp"/>
 
-                <ImageView
-                    android:id="@+id/imageViewCardLightMenu"
+                <ImageButton
+                    android:id="@+id/imageButtonCardMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:paddingTop="4dp"
-                    android:src="@drawable/dots_vertical"/>
+                    app:srcCompat="@drawable/dots_vertical"
+                    tools:ignore="MissingPrefix"/>
             </LinearLayout>
 
             <include

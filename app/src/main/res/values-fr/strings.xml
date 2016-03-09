@@ -33,6 +33,7 @@
     <string name="settings_gateway_add">Ajouter passerelle</string>
     <string name="settings_gateway_default">Passerelle par defaut</string>
     <string name="settings_gateway_default_dialog">Choisir la passerelle par défaut</string>
+    <string name="settings_gateway_default_hint">Port par défaut : 20000</string>
     <string name="dialog_gateway_host">Adresse IP</string>
     <string name="dialog_gateway_port">Port</string>
     <string name="settings_category_about">À propos</string>

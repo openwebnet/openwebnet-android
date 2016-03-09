@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="1.4.2" versioncode="7">
+        <change>Fix error on android 4.1</change>
+        <change>Delete environments</change>
+        <change>Minor style changes</change>
+    </release>
     <release version="1.4.1" versioncode="6">
         <change>Minor style changes</change>
     </release>
@@ -18,10 +23,10 @@
         <change>Add device debug</change>
     </release>
     <release version="1.0.0" versioncode="1">
-        <change>Add/edit environment</change>
-        <change>Add multiple gateway</change>
+        <change>Add/edit environments</change>
+        <change>Add gateways</change>
         <change>Show favourites</change>
-        <change>Add/edit/remove light</change>
-        <change>Add/edit/remove generic OpenWebNet message</change>
+        <change>Add light features</change>
+        <change>Add device features</change>
     </release>
 </changelog>

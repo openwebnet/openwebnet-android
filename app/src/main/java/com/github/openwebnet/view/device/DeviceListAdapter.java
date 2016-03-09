@@ -20,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
@@ -49,7 +48,7 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
 
-import static java.util.Objects.requireNonNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -76,8 +75,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public DeviceListAdapter(Context context, Integer environmentId, List<DomoticModel> items) {
         Injector.getApplicationComponent().inject(this);
 
-        requireNonNull(environmentId, "environmentId is null");
-        requireNonNull(items, "items is null");
+        checkNotNull(environmentId, "environmentId is null");
+        checkNotNull(items, "items is null");
         this.mContext = context;
         this.mEnvironmentId = environmentId;
         this.mItems = items;
@@ -107,9 +106,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageButtonCardSend)
         ImageButton imageButtonCardSend;
-
-        @Bind(R.id.imageViewCardDeviceMenu)
-        ImageView imageViewCardDeviceMenu;
 
         /* card_device_debug */
 
@@ -149,9 +145,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        @Bind(R.id.imageViewCardLightMenu)
-        ImageView imageViewCardLightMenu;
-
         @Bind(R.id.imageButtonCardOff)
         ImageButton imageButtonCardOff;
 
@@ -184,14 +177,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardAutomationTitle)
         TextView textViewCardAutomationTitle;
 
-        @Bind(R.id.imageViewCardAutomationMenu)
-        ImageView imageViewCardAutomationMenu;
-
         @Bind(R.id.imageButtonCardUp)
         ImageButton imageButtonCardUp;
 
         @Bind(R.id.imageButtonCardDown)
-        ImageView imageButtonCardDown;
+        ImageButton imageButtonCardDown;
 
         public AutomationViewHolder(View view) {
             super(view);
@@ -206,6 +196,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Bind(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
+
+        @Bind(R.id.imageButtonCardMenu)
+        ImageButton imageButtonCardMenu;
 
         @Bind(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
@@ -256,7 +249,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .inflate(R.layout.card_light, parent, false));
             case AutomationViewHolder.VIEW_TYPE:
                 return new AutomationViewHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.card_automation, parent, false));
+                    .inflate(R.layout.card_automation, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -316,7 +309,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         });
 
-        holder.imageViewCardDeviceMenu.setOnClickListener(v -> showCardMenu(v,
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
                 Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -324,8 +317,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 mContext.startActivity(intentEditDevice);
             },
             () -> deviceService.delete(device.getUuid())
-                    .doOnCompleted(() -> updateDeviceListEvent())
-                    .subscribe()));
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
 
         handleDeviceDebug(holder, device);
     }
@@ -414,7 +407,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
-        holder.imageViewCardLightMenu.setOnClickListener(v -> showCardMenu(v,
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
                 Intent intentEditLight = new Intent(mContext, LightActivity.class)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -422,8 +415,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 mContext.startActivity(intentEditLight);
             },
             () -> lightService.delete(light.getUuid())
-                    .doOnCompleted(() -> updateDeviceListEvent())
-                    .subscribe()));
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -475,8 +468,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardFavourite.setOnClickListener(v -> {
             automation.setFavourite(!automation.isFavourite());
             automationService.update(automation)
-                    .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
-                    .subscribe();
+                .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
+                .subscribe();
         });
 
         updateAutomationStatus(holder, automation.getStatus());
@@ -484,16 +477,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
         holder.imageButtonCardDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
 
-        holder.imageViewCardAutomationMenu.setOnClickListener(v -> showCardMenu(v,
-                () -> {
-                    Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
-                    mContext.startActivity(intentEditAutomation);
-                },
-                () -> automationService.delete(automation.getUuid())
-                        .doOnCompleted(this::updateDeviceListEvent)
-                        .subscribe()));
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
+                mContext.startActivity(intentEditAutomation);
+            },
+            () -> automationService.delete(automation.getUuid())
+                .doOnCompleted(this::updateDeviceListEvent)
+                .subscribe()));
     }
 
     private void updateAutomationStatus(AutomationViewHolder holder, AutomationModel.Status status) {

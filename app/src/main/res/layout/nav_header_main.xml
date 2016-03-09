@@ -2,6 +2,8 @@
 <LinearLayout
     android:id="@+id/nav_header_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -56,7 +58,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="right|bottom"
-            android:src="@drawable/github_circle"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/github_circle"
+            tools:ignore="MissingPrefix"/>
 
     </LinearLayout>
 

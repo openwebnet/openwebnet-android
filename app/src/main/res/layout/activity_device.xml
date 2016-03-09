@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,7 +34,7 @@
                 android:id="@+id/editTextDeviceRequest"
                 style="@style/device.editText"
                 android:hint="@string/device_value"
-                typeface:font="inconsolata"/>
+                app:font="inconsolata"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -69,8 +69,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@null"
-                android:src="@drawable/content_paste"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/content_paste"
+                tools:ignore="MissingPrefix"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -80,7 +81,7 @@
                 android:id="@+id/editTextDeviceResponse"
                 style="@style/device.editText"
                 android:hint="@string/device_expected_value"
-                typeface:font="inconsolata"/>
+                app:font="inconsolata"/>
         </LinearLayout>
 
         <include

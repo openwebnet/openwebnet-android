@@ -30,4 +30,14 @@
         android:inputType="number"
         android:maxLength="5"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dialog_margin"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="#616161"
+        android:textStyle="bold|italic"
+        android:text="@string/settings_gateway_default_hint"/>
+
 </LinearLayout>

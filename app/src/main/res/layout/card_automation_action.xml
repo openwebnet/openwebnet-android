@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageButton
         android:id="@+id/imageButtonCardFavourite"
         style="@style/deviceCard.imageButton"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/star_outline"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/star_outline"
+        tools:ignore="MissingPrefix"/>
 
     <ImageView
         android:id="@+id/imageViewCardAlert"
@@ -17,8 +20,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:src="@drawable/alert"
-        android:visibility="invisible"/>
+        app:srcCompat="@drawable/alert"
+        android:visibility="invisible"
+        tools:ignore="MissingPrefix"/>
 
     <ImageButton
         android:id="@+id/imageButtonCardDown"
@@ -26,7 +30,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:src="@drawable/arrow_down_bold_circle_outline"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/arrow_down_bold_circle_outline"
+        tools:ignore="MissingPrefix"/>
 
     <ImageButton
         android:id="@+id/imageButtonCardUp"
@@ -34,6 +40,8 @@
         android:layout_toLeftOf="@id/imageButtonCardDown"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:src="@drawable/arrow_up_bold_circle_outline"/>
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/arrow_up_bold_circle_outline"
+        tools:ignore="MissingPrefix"/>
 
 </RelativeLayout>

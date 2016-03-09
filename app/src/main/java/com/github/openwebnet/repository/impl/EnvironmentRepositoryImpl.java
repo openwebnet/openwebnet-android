@@ -2,7 +2,11 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.model.AutomationModel;
+import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
@@ -102,4 +106,21 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         });
     }
 
+    @Override
+    public Observable<Void> delete(Integer id) {
+        return Observable.create(subscriber -> {
+            try {
+                // TODO use reflections? https://github.com/openwebnet/openwebnet-android/pull/29
+                databaseRealm.delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
+                databaseRealm.delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
+                databaseRealm.delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
+
+                databaseRealm.delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("environment-DELETE", e);
+                subscriber.onError(e);
+            }
+        });
+    }
 }
