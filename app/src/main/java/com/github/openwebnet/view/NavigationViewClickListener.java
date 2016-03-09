@@ -14,7 +14,6 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
-import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
 import org.slf4j.Logger;

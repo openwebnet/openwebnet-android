@@ -110,9 +110,11 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
     public Observable<Void> delete(Integer id) {
         return Observable.create(subscriber -> {
             try {
+                // TODO use reflections? https://github.com/openwebnet/openwebnet-android/pull/29
                 databaseRealm.delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
                 databaseRealm.delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
                 databaseRealm.delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
+
                 databaseRealm.delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
                 subscriber.onCompleted();
             } catch (Exception e) {

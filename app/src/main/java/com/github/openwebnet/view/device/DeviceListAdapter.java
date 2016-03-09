@@ -249,7 +249,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     .inflate(R.layout.card_light, parent, false));
             case AutomationViewHolder.VIEW_TYPE:
                 return new AutomationViewHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.card_automation, parent, false));
+                    .inflate(R.layout.card_automation, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -310,15 +310,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-                () -> {
-                    Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(RealmModel.FIELD_UUID, device.getUuid());
-                    mContext.startActivity(intentEditDevice);
-                },
-                () -> deviceService.delete(device.getUuid())
-                        .doOnCompleted(() -> updateDeviceListEvent())
-                        .subscribe()));
+            () -> {
+                Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, device.getUuid());
+                mContext.startActivity(intentEditDevice);
+            },
+            () -> deviceService.delete(device.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
 
         handleDeviceDebug(holder, device);
     }
@@ -408,15 +408,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-                () -> {
-                    Intent intentEditLight = new Intent(mContext, LightActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(RealmModel.FIELD_UUID, light.getUuid());
-                    mContext.startActivity(intentEditLight);
-                },
-                () -> lightService.delete(light.getUuid())
-                        .doOnCompleted(() -> updateDeviceListEvent())
-                        .subscribe()));
+            () -> {
+                Intent intentEditLight = new Intent(mContext, LightActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, light.getUuid());
+                mContext.startActivity(intentEditLight);
+            },
+            () -> lightService.delete(light.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -468,8 +468,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardFavourite.setOnClickListener(v -> {
             automation.setFavourite(!automation.isFavourite());
             automationService.update(automation)
-                    .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
-                    .subscribe();
+                .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
+                .subscribe();
         });
 
         updateAutomationStatus(holder, automation.getStatus());
@@ -478,15 +478,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-                () -> {
-                    Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
-                    mContext.startActivity(intentEditAutomation);
-                },
-                () -> automationService.delete(automation.getUuid())
-                        .doOnCompleted(this::updateDeviceListEvent)
-                        .subscribe()));
+            () -> {
+                Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
+                mContext.startActivity(intentEditAutomation);
+            },
+            () -> automationService.delete(automation.getUuid())
+                .doOnCompleted(this::updateDeviceListEvent)
+                .subscribe()));
     }
 
     private void updateAutomationStatus(AutomationViewHolder holder, AutomationModel.Status status) {

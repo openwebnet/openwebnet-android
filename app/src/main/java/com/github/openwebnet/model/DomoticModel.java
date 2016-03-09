@@ -1,9 +1,14 @@
 package com.github.openwebnet.model;
 
-/**
+/*
  * @see DeviceModel
  * @see LightModel
  * @see AutomationModel
+ *
+ * Note:
+ * check https://github.com/openwebnet/openwebnet-android/pull/29
+ * For now if you add a new class that implements this interface,
+ * you must remember to verify EnvironmentRepositoryImpl#delete
  */
 public interface DomoticModel {
 
