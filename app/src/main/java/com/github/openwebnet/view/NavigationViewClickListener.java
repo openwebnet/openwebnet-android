@@ -115,8 +115,7 @@ public class NavigationViewClickListener implements OnClickListener {
                     mActivity.getSupportActionBar().setTitle(name);
                 }
             })
-            .subscribe(aVoid -> {
-            }, throwable -> log.error("editEnvironment", throwable));
+            .subscribe(aVoid -> {}, throwable -> log.error("editEnvironment", throwable));
     }
 
     private void deleteEnvironment() {
