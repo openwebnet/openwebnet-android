@@ -1,9 +1,9 @@
 package com.github.openwebnet.view;
 
-import android.app.Activity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +42,11 @@ public class NavigationViewClickListener implements OnClickListener {
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    private final Activity mActivity;
+    private final AppCompatActivity mActivity;
     private final int environmentId;
+    private boolean shouldUpdateTitle;
 
-    public NavigationViewClickListener(Activity activity, int environmentId) {
+    public NavigationViewClickListener(AppCompatActivity activity, int environmentId) {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this, activity);
 
@@ -91,6 +92,8 @@ public class NavigationViewClickListener implements OnClickListener {
 
         environmentService.findById(environmentId)
             .subscribe(environment -> {
+                // refresh title only if is already open
+                shouldUpdateTitle =  mActivity.getSupportActionBar().getTitle().equals(environment.getName());
                 EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(environmentId));
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 editTextName.setText(environment.getName());
@@ -108,8 +111,12 @@ public class NavigationViewClickListener implements OnClickListener {
                 // calls onPrepareOptionsMenu(): reload menu
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                if (shouldUpdateTitle) {
+                    mActivity.getSupportActionBar().setTitle(name);
+                }
             })
-            .subscribe(aVoid -> {}, throwable -> log.error("editEnvironment", throwable));
+            .subscribe(aVoid -> {
+            }, throwable -> log.error("editEnvironment", throwable));
     }
 
     private void deleteEnvironment() {
@@ -119,7 +126,9 @@ public class NavigationViewClickListener implements OnClickListener {
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 // Switch to the only environment that is always there : the "favourite" environment.
+                mActivity.getSupportActionBar().setTitle(R.string.app_name);
                 EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
+                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
             })
             .subscribe(aVoid -> {}, throwable -> log.error("deleteEnvironment", throwable));
     }

@@ -104,10 +104,8 @@ public class DeviceListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        swipeRefreshLayoutDeviceList.post(() -> {
-            swipeRefreshLayoutDeviceList.setRefreshing(true);
-            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
-        });
+        swipeRefreshLayoutDeviceList.post(() ->
+            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT))));
     }
 
     @Override
@@ -140,6 +138,7 @@ public class DeviceListFragment extends Fragment {
 
     @Subscribe
     public void onEvent(UpdateDeviceListEvent event) {
+        swipeRefreshLayoutDeviceList.setRefreshing(true);
         initCards(event.getEnvironmentId());
     }
 
@@ -152,7 +151,7 @@ public class DeviceListFragment extends Fragment {
             lightService.requestByEnvironment(environmentId);
 
         Observable<List<AutomationModel>> requestAutomations = isFavouriteMenu ? automationService.requestFavourites() :
-                automationService.requestByEnvironment(environmentId);
+            automationService.requestByEnvironment(environmentId);
 
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
