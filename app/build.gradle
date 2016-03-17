@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 23
@@ -47,10 +46,6 @@ android {
 
     // Robolectric issue
     useLibrary 'org.apache.http.legacy'
-
-    jacoco {
-        version '0.7.5.201505241946'
-    }
 }
 
 dependencies {
