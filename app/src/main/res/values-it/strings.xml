@@ -49,11 +49,6 @@
     <string name="label_none">Nessuna</string>
     <string name="label_name">Nome</string>
 
-    <string name="fab_label_add_device">Aggiungi dispositivo</string>
-    <string name="fab_label_add_light">Aggiungi luce</string>
-    <string name="fab_label_add_automation">Aggiungi automatismo</string>
-    <string name="fab_label_add_webcam">Aggiungi webcam</string>
-
     <string name="list_empty">Nessun elemento trovato</string>
     <string name="device_where">dove</string>
     <string name="device_favourite">Preferito</string>
