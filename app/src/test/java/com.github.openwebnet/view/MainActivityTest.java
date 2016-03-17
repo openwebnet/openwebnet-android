@@ -23,6 +23,7 @@ import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,7 +44,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;

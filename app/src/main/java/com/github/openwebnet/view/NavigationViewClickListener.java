@@ -16,6 +16,7 @@ import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import rx.functions.Action1;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;

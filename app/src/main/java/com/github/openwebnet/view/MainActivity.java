@@ -28,6 +28,8 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +42,6 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MIN;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;

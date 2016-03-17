@@ -20,6 +20,7 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 import static com.google.common.base.Preconditions.checkArgument;
