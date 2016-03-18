@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         // LightActivity.class
         // AutomationActivity.class
         // TODO
+        new MainBottomSheetDialogFragment().show(getSupportFragmentManager(), "mainBottomSheetDialog");
     }
 
     private <T> void actionNewIntent(Class<T> clazz) {
