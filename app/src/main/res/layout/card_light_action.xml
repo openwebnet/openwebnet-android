@@ -21,31 +21,31 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/alert"
         android:visibility="invisible"
-        tools:ignore="MissingPrefix"/>
-
-    <ImageButton
-        android:id="@+id/imageButtonCardOff"
-        style="@style/deviceCard.imageButton"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/led_variant_off"
-        android:visibility="visible"
+        app:srcCompat="@drawable/alert"
         tools:ignore="MissingPrefix"/>
 
     <ImageButton
         android:id="@+id/imageButtonCardOn"
         style="@style/deviceCard.imageButton"
-        android:layout_alignParentRight="false"
-        android:layout_toLeftOf="@id/imageButtonCardOff"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/led_variant_on"
         android:visibility="visible"
+        app:srcCompat="@drawable/toggle_switch"
+        tools:ignore="MissingPrefix"/>
+
+    <ImageButton
+        android:id="@+id/imageButtonCardOff"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardOn"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        app:srcCompat="@drawable/toggle_switch_off"
         tools:ignore="MissingPrefix"/>
 
 </RelativeLayout>

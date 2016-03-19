@@ -70,7 +70,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.android.support:support-annotations:23.2.1'
 
-    //compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'de.cketti.library.changelog:ckchangelog:1.2.2'
 
     compile 'com.github.openwebnet:rx-openwebnet:0.7.2'
