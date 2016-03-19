@@ -21,7 +21,7 @@
             android:layout_marginRight="24dp"
             android:layout_marginStart="24dp"
             android:gravity="center_vertical"
-            android:text="aaa"
+            android:text="@string/bs_title"
             android:textColor="@color/secondary_text"
             android:textSize="16sp"/>
 

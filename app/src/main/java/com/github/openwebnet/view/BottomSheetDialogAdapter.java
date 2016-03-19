@@ -64,8 +64,7 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
         }
 
         MenuItem menuItem = (MenuItem) getItem(position);
-        // TODO
-        holder.icon.setImageResource(R.mipmap.ic_launcher);
+        holder.icon.setImageDrawable(menuItem.getIcon());
         holder.label.setText(menuItem.getTitle());
 
         return view;

@@ -10,10 +10,15 @@ import android.widget.GridView;
 
 import com.github.openwebnet.R;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
+
+    private static final Logger log = LoggerFactory.getLogger(MainBottomSheetDialogFragment.class);
 
     @Bind(R.id.gridViewBottomSheet)
     GridView gridView;
@@ -26,6 +31,9 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
         BottomSheetDialogAdapter mAdapter = new BottomSheetDialogAdapter(this.getContext());
         gridView.setAdapter(mAdapter);
+        gridView.setOnItemClickListener((parent, view1, position, id) -> {
+            log.debug("position={} id={}", position, id);
+        });
 
         return view;
     }

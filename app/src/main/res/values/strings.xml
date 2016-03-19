@@ -53,6 +53,12 @@
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
 
+    <string name="bs_title">Add</string>
+    <string name="bs_device">Device</string>
+    <string name="bs_light">Light</string>
+    <string name="bs_automation">Automation</string>
+    <string name="bs_webcam">Webcam</string>
+
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>
     <string name="fa_hashtag_double" translatable="false">&#xf292;&#xf292;</string>
