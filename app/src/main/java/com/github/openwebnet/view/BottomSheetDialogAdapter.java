@@ -23,7 +23,7 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
     private Menu mMenu;
 
     public BottomSheetDialogAdapter(Context context) {
-        mContext = context;
+        this.mContext = context;
         setupMenu();
     }
 

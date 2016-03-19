@@ -57,7 +57,6 @@
     <string name="bs_device">Device</string>
     <string name="bs_light">Light</string>
     <string name="bs_automation">Automation</string>
-    <string name="bs_webcam">Webcam</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>

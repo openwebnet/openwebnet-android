@@ -12,9 +12,4 @@
         android:id="@+id/bs_add_device"
         android:icon="@mipmap/bs_lightbulb"
         android:title="@string/bs_device"/>
-    <item
-        android:id="@+id/bs_add_webcam"
-        android:enabled="false"
-        android:icon="@mipmap/bs_lightbulb"
-        android:title="@string/bs_webcam"/>
 </menu>

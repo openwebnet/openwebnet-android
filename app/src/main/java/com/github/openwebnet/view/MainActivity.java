@@ -185,18 +185,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.floatingActionButtonMain)
     public void onClickFabMain(FloatingActionButton fab) {
-        // DeviceActivity.class
-        // LightActivity.class
-        // AutomationActivity.class
-        // TODO
-        new MainBottomSheetDialogFragment().show(getSupportFragmentManager(), "mainBottomSheetDialog");
-    }
+        Bundle bundle = new Bundle();
+        bundle.putInt(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected);
+        bundle.putString(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
 
-    private <T> void actionNewIntent(Class<T> clazz) {
-        Intent intentNew = new Intent(this, clazz)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
-        startActivity(intentNew);
+        MainBottomSheetDialogFragment bottomSheetDialogFragment = new MainBottomSheetDialogFragment();
+        bottomSheetDialogFragment.setArguments(bundle);
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), "mainBottomSheetDialog");
     }
 
     @Override
