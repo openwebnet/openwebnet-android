@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getSupportActionBar().setTitle(savedInstanceState.getString(STATE_TITLE));
             floatingActionButtonMain.setVisibility(
-                    savedInstanceState.getBoolean(STATE_FAB_MENU) ? View.VISIBLE : View.INVISIBLE);
+                savedInstanceState.getBoolean(STATE_FAB_MENU) ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         View navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
         navHeaderMain.findViewById(R.id.imageViewAppLink)
             .setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
+                Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
     }
 
     @Override
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         EventBus.getDefault().post(new MainActivity
-                .OnChangePreferenceDeviceDebugEvent(preferenceService.isDeviceDebugEnabled()));
+            .OnChangePreferenceDeviceDebugEvent(preferenceService.isDeviceDebugEnabled()));
         reloadMenu();
         return super.onPrepareOptionsMenu(menu);
     }
@@ -158,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         menu.removeGroup(R.id.nav_group_environment);
         environmentService.findAll().subscribe(
-                environments -> addEnvironmentMenu(menu, environments),
-                throwable -> showSnackbar(errorLoadNavigationDrawer));
+            environments -> addEnvironmentMenu(menu, environments),
+            throwable -> showSnackbar(errorLoadNavigationDrawer));
     }
 
     private void addEnvironmentMenu(Menu menuGroup, List<EnvironmentModel> environments) {

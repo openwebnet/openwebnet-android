@@ -2,10 +2,14 @@ package com.github.openwebnet.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
@@ -13,37 +17,38 @@ import com.github.openwebnet.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BottomSheetActionAdapter extends BaseAdapter {
-
-    //http://stackoverflow.com/questions/18850704/dynamically-change-column-number-in-android-gridview
-
-    private Integer[] images = new Integer[]{
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher
-    };
+public class BottomSheetDialogAdapter extends BaseAdapter {
 
     private final Context mContext;
+    private Menu mMenu;
 
-    public BottomSheetActionAdapter(Context context) {
+    public BottomSheetDialogAdapter(Context context) {
         mContext = context;
+        setupMenu();
+    }
+
+    private void setupMenu() {
+        // https://github.com/Flipboard/bottomsheet/blob/master/bottomsheet-commons/src/main/java/com/flipboard/bottomsheet/commons/MenuSheetView.java
+        // dirty hack to get a menu instance since MenuBuilder isn't public
+        this.mMenu = new PopupMenu(mContext, null).getMenu();
+
+        MenuInflater inflater = new MenuInflater(mContext);
+        inflater.inflate(R.menu.menu_bottom_sheet, mMenu);
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        return mMenu.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mMenu.getItem(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mMenu.getItem(position).getItemId();
     }
 
     @Override
@@ -53,14 +58,15 @@ public class BottomSheetActionAdapter extends BaseAdapter {
             holder = (ItemHolder) view.getTag();
         } else {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.sheet_grid_item, parent, false);
+            view = inflater.inflate(R.layout.bottom_sheet_dialog_item, parent, false);
             holder = new ItemHolder(view);
             view.setTag(holder);
         }
 
+        MenuItem menuItem = (MenuItem) getItem(position);
         // TODO
         holder.icon.setImageResource(R.mipmap.ic_launcher);
-        holder.label.setText("label");
+        holder.label.setText(menuItem.getTitle());
 
         return view;
     }
@@ -70,10 +76,10 @@ public class BottomSheetActionAdapter extends BaseAdapter {
      */
     public static class ItemHolder {
 
-        @Bind(R.id.bs_item_icon)
+        @Bind(R.id.imageViewBottomSheetItemIcon)
         ImageView icon;
 
-        @Bind(R.id.bs_item_label)
+        @Bind(R.id.textViewBottomSheetItemLabel)
         TextView label;
 
         public ItemHolder(View view) {

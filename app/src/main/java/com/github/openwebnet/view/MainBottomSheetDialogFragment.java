@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
-    @Bind(R.id.grid)
+    @Bind(R.id.gridViewBottomSheet)
     GridView gridView;
 
     @Nullable
@@ -24,7 +24,7 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.bottom_sheet_dialog_main, container, false);
         ButterKnife.bind(this, view);
 
-        BottomSheetActionAdapter mAdapter = new BottomSheetActionAdapter(this.getContext());
+        BottomSheetDialogAdapter mAdapter = new BottomSheetDialogAdapter(this.getContext());
         gridView.setAdapter(mAdapter);
 
         return view;

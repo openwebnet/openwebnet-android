@@ -9,19 +9,19 @@
     android:paddingTop="8dp">
 
     <ImageView
-        android:id="@+id/bs_item_icon"
+        android:id="@+id/imageViewBottomSheetItemIcon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"/>
 
     <TextView
-        android:id="@+id/bs_item_label"
+        android:id="@+id/textViewBottomSheetItemLabel"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:ellipsize="end"
         android:gravity="center_horizontal"
         android:maxLines="1"
-        android:textColor="@color/grey"
+        android:textColor="@color/secondary_text"
         android:textSize="12sp"/>
 
 </LinearLayout>
