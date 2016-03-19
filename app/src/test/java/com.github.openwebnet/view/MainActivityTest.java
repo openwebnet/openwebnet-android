@@ -3,6 +3,7 @@ package com.github.openwebnet.view;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +53,8 @@ import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEF
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -213,9 +216,8 @@ public class MainActivityTest {
         assertFalse("invalid state", activity.floatingActionButtonMain.isShown());
     }
 
-    @Ignore
     @Test
-    public void clickingAddDevice_shouldStartDeviceActivity() {
+    public void clickingFabMain_shouldShowBottomSheetDialog() {
         String DEFAULT_GATEWAY = "myGateway";
         int DEFAULT_ENVIRONMENT = 123;
 
@@ -223,51 +225,13 @@ public class MainActivityTest {
         setupActivity();
         EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
 
-        // TODO
-        //floatingActionButtonAddDevice.performClick();
-        Intent expectedIntent = new Intent(activity, DeviceActivity.class)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
+        assertNull("bottomSheetDialog is not null", activity.getSupportFragmentManager().findFragmentByTag("mainBottomSheetDialog"));
 
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
+        floatingActionButtonMain.performClick();
 
-    @Ignore
-    @Test
-    public void clickingAddLight_shouldStartLightActivity() {
-        String DEFAULT_GATEWAY = "myGateway";
-        int DEFAULT_ENVIRONMENT = 123;
-
-        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
-        setupActivity();
-        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
-
-        // TODO
-        //floatingActionButtonAddLight.performClick();
-        Intent expectedIntent = new Intent(activity, LightActivity.class)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
-
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
-
-    @Ignore
-    @Test
-    public void clickingAddAutomation_shouldStartAutomationActivity() {
-        String DEFAULT_GATEWAY = "myGateway";
-        int DEFAULT_ENVIRONMENT = 123;
-
-        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
-        setupActivity();
-        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
-
-        // TODO
-        //floatingActionButtonAddAutomation.performClick();
-        Intent expectedIntent = new Intent(activity, AutomationActivity.class)
-                .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-                .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
-
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+        Fragment fragment = activity.getSupportFragmentManager().findFragmentByTag("mainBottomSheetDialog");
+        assertNotNull("bottomSheetDialog is null", fragment);
+        assertTrue("bottomSheetDialog is not visible", fragment.isVisible());
     }
 
     @Test

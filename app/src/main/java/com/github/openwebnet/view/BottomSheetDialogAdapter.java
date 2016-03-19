@@ -66,7 +66,6 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
         MenuItem menuItem = (MenuItem) getItem(position);
         holder.icon.setImageDrawable(menuItem.getIcon());
         holder.label.setText(menuItem.getTitle());
-
         return view;
     }
 
