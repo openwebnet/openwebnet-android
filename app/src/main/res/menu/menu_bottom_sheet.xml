@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bs_add_light"
-        android:icon="@mipmap/bs_lightbulb"
+        android:icon="@drawable/lightbulb_outline"
         android:title="@string/bs_light"/>
     <item
         android:id="@+id/bs_add_automation"
-        android:icon="@mipmap/bs_lightbulb"
+        android:icon="@drawable/blinds_white"
         android:title="@string/bs_automation"/>
     <item
         android:id="@+id/bs_add_device"
-        android:icon="@mipmap/bs_lightbulb"
+        android:icon="@drawable/remote"
         android:title="@string/bs_device"/>
 </menu>

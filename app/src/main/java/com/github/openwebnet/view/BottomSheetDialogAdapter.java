@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.github.openwebnet.R;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 
 public class BottomSheetDialogAdapter extends BaseAdapter {
@@ -65,6 +66,7 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
 
         MenuItem menuItem = (MenuItem) getItem(position);
         holder.icon.setImageDrawable(menuItem.getIcon());
+        holder.icon.setColorFilter(holder.iconColor);
         holder.label.setText(menuItem.getTitle());
         return view;
     }
@@ -73,6 +75,9 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
      *
      */
     public static class ItemHolder {
+
+        @BindColor(R.color.grey_light)
+        int iconColor;
 
         @Bind(R.id.imageViewBottomSheetItemIcon)
         ImageView icon;
