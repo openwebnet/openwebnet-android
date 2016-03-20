@@ -24,6 +24,12 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 
 ### Changelog
 
+#### v2.0.0
+
+- New menu
+- Bug fixing
+- Minor style changes
+
 #### v1.4.2
 
 - Fix error on android 4.1
