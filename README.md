@@ -6,10 +6,10 @@
 > work in progress!
 
 <img src="images/screenshot-menu.png" alt=menu height="600" />
-<img src="images/screenshot-environment-fab-02.png" alt=menu height="600" />
+<img src="images/screenshot-environment-fab-03.png" alt=menu height="600" />
 
+<img src="images/screenshot-bs-01.png" alt=menu height="600" />
 <img src="images/screenshot-add-edit-device.png" alt=menu height="600" />
-<img src="images/screenshot-add-edit-light.png" alt=menu height="600" />
 
 <img src="images/screenshot-device-debug.png" alt=menu height="600" />
 <img src="images/screenshot-settings.png" alt=menu height="600" />

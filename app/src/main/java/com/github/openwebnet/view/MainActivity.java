@@ -3,6 +3,7 @@ package com.github.openwebnet.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -16,18 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.annimon.stream.Stream;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.PreferenceService;
-import com.github.openwebnet.view.device.AutomationActivity;
-import com.github.openwebnet.view.device.DeviceActivity;
-import com.github.openwebnet.view.device.LightActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +38,6 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MIN;
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
@@ -62,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
-    @Bind(R.id.floatingActionsMenuMain)
-    FloatingActionsMenu floatingActionsMenuMain;
+    @Bind(R.id.floatingActionButtonMain)
+    FloatingActionButton floatingActionButtonMain;
 
     @BindString(R.string.error_load_navigation_drawer)
     String errorLoadNavigationDrawer;
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(STATE_TITLE, getSupportActionBar().getTitle().toString());
-        outState.putBoolean(STATE_FAB_MENU, floatingActionsMenuMain.isShown());
+        outState.putBoolean(STATE_FAB_MENU, floatingActionButtonMain.isShown());
     }
 
     private void initNavigationDrawer(Bundle savedInstanceState) {
@@ -120,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             navigationView.getMenu().performIdentifierAction(R.id.nav_favourite, Menu.NONE);
         } else {
             getSupportActionBar().setTitle(savedInstanceState.getString(STATE_TITLE));
-            floatingActionsMenuMain.setVisibility(
+            floatingActionButtonMain.setVisibility(
                 savedInstanceState.getBoolean(STATE_FAB_MENU) ? View.VISIBLE : View.INVISIBLE);
         }
     }
@@ -187,29 +183,15 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
-    @OnClick(R.id.floatingActionButtonAddDevice)
-    public void onClickAddDevice(FloatingActionButton fab) {
-        actionNewIntent(DeviceActivity.class);
-    }
+    @OnClick(R.id.floatingActionButtonMain)
+    public void onClickFabMain(FloatingActionButton fab) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected);
+        bundle.putString(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
 
-    @OnClick(R.id.floatingActionButtonAddLight)
-    public void onClickAddLight(FloatingActionButton fab) {
-        actionNewIntent(LightActivity.class);
-    }
-
-    @OnClick(R.id.floatingActionButtonAddAutomation)
-    public void onClickAddAutomation(FloatingActionButton fab) {
-        actionNewIntent(AutomationActivity.class);
-    }
-
-    private <T> void actionNewIntent(Class<T> clazz) {
-        // TODO show background opaque layer
-        floatingActionsMenuMain.collapse();
-
-        Intent intentNew = new Intent(this, clazz)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, drawerMenuItemSelected)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, commonService.getDefaultGateway());
-        startActivity(intentNew);
+        MainBottomSheetDialogFragment bottomSheetDialogFragment = new MainBottomSheetDialogFragment();
+        bottomSheetDialogFragment.setArguments(bundle);
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), "mainBottomSheetDialog");
     }
 
     @Override
@@ -267,8 +249,7 @@ public class MainActivity extends AppCompatActivity {
     // fired from DeviceListFragment.showLoader
     @Subscribe
     public void onEvent(OnChangeFabVisibilityEvent event) {
-        floatingActionsMenuMain.collapse();
-        floatingActionsMenuMain.setVisibility(event.isVisible() ? View.VISIBLE : View.INVISIBLE);
+        floatingActionButtonMain.setVisibility(event.isVisible() ? View.VISIBLE : View.INVISIBLE);
     }
 
     /**

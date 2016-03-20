@@ -33,6 +33,7 @@ import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.custom.TextViewCustom;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.threeten.bp.temporal.ChronoUnit;
@@ -45,7 +46,6 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import rx.functions.Action0;
 
 import static com.google.common.base.Preconditions.checkNotNull;

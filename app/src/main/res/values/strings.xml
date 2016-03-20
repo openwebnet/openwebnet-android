@@ -53,10 +53,10 @@
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
 
-    <string name="fab_label_add_device">Add device</string>
-    <string name="fab_label_add_light">Add light</string>
-    <string name="fab_label_add_webcam">Add webcam</string>
-    <string name="fab_label_add_automation">Add automation</string>
+    <string name="bs_title">Add</string>
+    <string name="bs_device">Device</string>
+    <string name="bs_light">Light</string>
+    <string name="bs_automation">Automation</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>

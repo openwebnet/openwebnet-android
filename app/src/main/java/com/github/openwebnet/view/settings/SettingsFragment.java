@@ -9,8 +9,9 @@ import android.text.TextUtils;
 import com.github.openwebnet.R;
 import com.github.openwebnet.view.MainActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import de.cketti.library.changelog.ChangeLog;
-import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 

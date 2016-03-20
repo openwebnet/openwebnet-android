@@ -1,12 +1,13 @@
 package com.github.openwebnet.view;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponentTest;
@@ -23,7 +24,9 @@ import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +46,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
@@ -51,6 +53,8 @@ import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEF
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -71,12 +75,9 @@ public class MainActivityTest {
     @Inject
     EnvironmentService environmentService;
 
-    @Bind(R.id.floatingActionButtonAddDevice)
-    FloatingActionButton floatingActionButtonAddDevice;
-    @Bind(R.id.floatingActionButtonAddLight)
-    FloatingActionButton floatingActionButtonAddLight;
-    @Bind(R.id.floatingActionButtonAddAutomation)
-    FloatingActionButton floatingActionButtonAddAutomation;
+    @Bind(R.id.floatingActionButtonMain)
+    FloatingActionButton floatingActionButtonMain;
+
     @Bind(R.id.nav_view)
     NavigationView navigationView;
 
@@ -192,8 +193,8 @@ public class MainActivityTest {
             .get();
         ButterKnife.bind(this, activity);
 
-        activity.floatingActionsMenuMain.setVisibility(View.VISIBLE);
-        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+        activity.floatingActionButtonMain.setVisibility(View.VISIBLE);
+        assertTrue("invalid state", activity.floatingActionButtonMain.isShown());
 
         activity = controller
             .stop()
@@ -201,10 +202,10 @@ public class MainActivityTest {
             .visible()
             .get();
 
-        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+        assertTrue("invalid state", activity.floatingActionButtonMain.isShown());
 
-        activity.floatingActionsMenuMain.setVisibility(View.INVISIBLE);
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
+        activity.floatingActionButtonMain.setVisibility(View.INVISIBLE);
+        assertFalse("invalid state", activity.floatingActionButtonMain.isShown());
 
         activity = controller
             .stop()
@@ -212,11 +213,11 @@ public class MainActivityTest {
             .visible()
             .get();
 
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
+        assertFalse("invalid state", activity.floatingActionButtonMain.isShown());
     }
 
     @Test
-    public void clickingAddDevice_shouldStartDeviceActivity() {
+    public void clickingFabMain_shouldShowBottomSheetDialog() {
         String DEFAULT_GATEWAY = "myGateway";
         int DEFAULT_ENVIRONMENT = 123;
 
@@ -224,47 +225,13 @@ public class MainActivityTest {
         setupActivity();
         EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
 
-        floatingActionButtonAddDevice.performClick();
-        Intent expectedIntent = new Intent(activity, DeviceActivity.class)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
+        assertNull("bottomSheetDialog is not null", activity.getSupportFragmentManager().findFragmentByTag("mainBottomSheetDialog"));
 
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
+        floatingActionButtonMain.performClick();
 
-    @Test
-    public void clickingAddLight_shouldStartLightActivity() {
-        String DEFAULT_GATEWAY = "myGateway";
-        int DEFAULT_ENVIRONMENT = 123;
-
-        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
-        setupActivity();
-        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
-
-        floatingActionButtonAddLight.performClick();
-        Intent expectedIntent = new Intent(activity, LightActivity.class)
-            .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-            .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
-
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
-
-
-    @Test
-    public void clickingAddAutomation_shouldStartAutomationActivity() {
-        String DEFAULT_GATEWAY = "myGateway";
-        int DEFAULT_ENVIRONMENT = 123;
-
-        when(commonService.getDefaultGateway()).thenReturn(DEFAULT_GATEWAY);
-        setupActivity();
-        EventBus.getDefault().post(new MainActivity.OnChangeDrawerMenuEvent(DEFAULT_ENVIRONMENT));
-
-        floatingActionButtonAddAutomation.performClick();
-        Intent expectedIntent = new Intent(activity, AutomationActivity.class)
-                .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
-                .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
-
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+        Fragment fragment = activity.getSupportFragmentManager().findFragmentByTag("mainBottomSheetDialog");
+        assertNotNull("bottomSheetDialog is null", fragment);
+        assertTrue("bottomSheetDialog is not visible", fragment.isVisible());
     }
 
     @Test
@@ -283,17 +250,11 @@ public class MainActivityTest {
     public void handleEvent_OnChangeFabVisibilityEvent() {
         setupActivity();
 
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
-        activity.floatingActionsMenuMain.expand();
-        assertTrue("invalid state", activity.floatingActionsMenuMain.isExpanded());
-
         EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(true));
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
-        assertTrue("invalid state", activity.floatingActionsMenuMain.isShown());
+        assertTrue("invalid state", activity.floatingActionButtonMain.isShown());
 
         EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isExpanded());
-        assertFalse("invalid state", activity.floatingActionsMenuMain.isShown());
+        assertFalse("invalid state", activity.floatingActionButtonMain.isShown());
     }
 
     @Test

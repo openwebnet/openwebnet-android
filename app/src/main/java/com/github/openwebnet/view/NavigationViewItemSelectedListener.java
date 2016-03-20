@@ -1,6 +1,7 @@
 package com.github.openwebnet.view;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -13,13 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 import static com.google.common.base.Preconditions.checkArgument;
@@ -45,8 +45,8 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     @Inject
     EnvironmentService environmentService;
 
-    @Bind(R.id.floatingActionsMenuMain)
-    FloatingActionsMenu floatingActionsMenuMain;
+    @Bind(R.id.floatingActionButtonMain)
+    FloatingActionButton floatingActionButtonMain;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -78,7 +78,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 checkArgument(item.getOrder() == MENU_FAVOURITE, "invalid favourite menu id");
 
                 mActivity.getSupportActionBar().setTitle(labelApplicationName);
-                floatingActionsMenuMain.setVisibility(View.INVISIBLE);
+                floatingActionButtonMain.setVisibility(View.INVISIBLE);
                 showDeviceList(MENU_FAVOURITE);
                 break;
             case R.id.nav_add:
@@ -92,12 +92,11 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                     || id <= MENU_ENVIRONMENT_RANGE_MAX, "invalid environment menu id");
 
                 mActivity.getSupportActionBar().setTitle(item.getTitle());
-                floatingActionsMenuMain.setVisibility(View.VISIBLE);
+                floatingActionButtonMain.setVisibility(View.VISIBLE);
                 showDeviceList(id);
                 break;
         }
 
-        floatingActionsMenuMain.collapse();
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -155,7 +154,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
     private void showSettings() {
         mActivity.getSupportActionBar().setTitle(labelSettings);
-        floatingActionsMenuMain.setVisibility(View.INVISIBLE);
+        floatingActionButtonMain.setVisibility(View.INVISIBLE);
         removeCompactFragment();
 
         // refactor with android.support.v4 when will be stable
