@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="2.0.0" versioncode="8">
+        <change>New menu</change>
+        <change>Bug fixing</change>
+        <change>Minor style changes</change>
+    </release>
     <release version="1.4.2" versioncode="7">
         <change>Fix error on android 4.1</change>
         <change>Delete environments</change>

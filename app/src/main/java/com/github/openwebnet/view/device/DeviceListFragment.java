@@ -25,6 +25,8 @@ import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +37,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
 import rx.Observable;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
@@ -104,10 +104,8 @@ public class DeviceListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        swipeRefreshLayoutDeviceList.post(() -> {
-            swipeRefreshLayoutDeviceList.setRefreshing(true);
-            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT)));
-        });
+        swipeRefreshLayoutDeviceList.post(() ->
+            EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT))));
     }
 
     @Override
@@ -140,6 +138,7 @@ public class DeviceListFragment extends Fragment {
 
     @Subscribe
     public void onEvent(UpdateDeviceListEvent event) {
+        swipeRefreshLayoutDeviceList.setRefreshing(true);
         initCards(event.getEnvironmentId());
     }
 
@@ -152,7 +151,7 @@ public class DeviceListFragment extends Fragment {
             lightService.requestByEnvironment(environmentId);
 
         Observable<List<AutomationModel>> requestAutomations = isFavouriteMenu ? automationService.requestFavourites() :
-                automationService.requestByEnvironment(environmentId);
+            automationService.requestByEnvironment(environmentId);
 
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);

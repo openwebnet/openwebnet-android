@@ -2,6 +2,18 @@
 // http://stackoverflow.com/questions/18358297/android-test-code-coverage-with-jacoco-gradle-plugin
 // http://jeroenmols.com/blog/2015/11/13/traviscoveralls/
 
+/*
+ADD THIS
+
+apply from: '../jacoco.gradle'
+
+android {
+    jacoco {
+        version '0.7.5.201505241946'
+    }
+}
+*/
+
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 

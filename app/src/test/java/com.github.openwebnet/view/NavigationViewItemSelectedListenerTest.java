@@ -112,7 +112,7 @@ public class NavigationViewItemSelectedListenerTest {
 
         assertEquals("invalid menu order", MENU_FAVOURITE, item.getOrder());
         assertEquals("wrong title", labelApplicationName, activity.getSupportActionBar().getTitle());
-        assertFalse("should be hidden", activity.floatingActionsMenuMain.isShown());
+        assertFalse("should be hidden", activity.floatingActionButtonMain.isShown());
 
         Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
         assertNotNull("null fragment", currentFragment);
@@ -121,7 +121,6 @@ public class NavigationViewItemSelectedListenerTest {
         int argumentEnvironment = currentFragment.getArguments().getInt(ARG_ENVIRONMENT);
         assertEquals("invalid fragment", MENU_FAVOURITE, argumentEnvironment);
 
-        assertFalse("should be collapsed", activity.floatingActionsMenuMain.isExpanded());
         assertFalse("should be close", activity.drawerLayout.isDrawerOpen(GravityCompat.START));
     }
 
@@ -179,7 +178,7 @@ public class NavigationViewItemSelectedListenerTest {
         MenuItem item = clickMenuItem(R.id.nav_settings);
 
         assertEquals("wrong title", labelDrawerMenuSettings, item.getTitle());
-        assertFalse("should be hidden", activity.floatingActionsMenuMain.isShown());
+        assertFalse("should be hidden", activity.floatingActionButtonMain.isShown());
 
         android.app.Fragment currentFragment = activity.getFragmentManager().findFragmentById(R.id.content_frame);
         assertNotNull("null fragment", currentFragment);
@@ -214,7 +213,7 @@ public class NavigationViewItemSelectedListenerTest {
         MenuItem item = clickMenuItem(MENU_ENVIRONMENT_ID);
         assertEquals("invalid menu order", MENU_ENVIRONMENT_POSITION, item.getOrder());
         assertEquals("wrong title", MENU_ENVIRONMENT_NAME, activity.getSupportActionBar().getTitle());
-        assertFalse("should be hidden", activity.floatingActionsMenuMain.isShown());
+        assertFalse("should be hidden", activity.floatingActionButtonMain.isShown());
 
         Fragment currentFragment = activity.getSupportFragmentManager().findFragmentById(R.id.content_frame);
         assertNotNull("null fragment", currentFragment);
@@ -223,7 +222,6 @@ public class NavigationViewItemSelectedListenerTest {
         int argumentEnvironment = currentFragment.getArguments().getInt(ARG_ENVIRONMENT);
         assertEquals("invalid fragment", MENU_ENVIRONMENT_ID, argumentEnvironment);
 
-        assertFalse("should be collapsed", activity.floatingActionsMenuMain.isExpanded());
         assertFalse("should be close", activity.drawerLayout.isDrawerOpen(GravityCompat.START));
     }
 

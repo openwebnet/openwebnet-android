@@ -48,23 +48,6 @@
         <item name="android:background">@null</item>
     </style>
 
-    <!-- FloatingActionButton Style -->
-
-    <style name="fab_menu"></style>
-
-    <style name="fab_menu.button_mini">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fab_colorNormal">@color/accent</item>
-        <item name="fab_colorPressed">@color/primary</item>
-        <item name="fab_size">mini</item>
-    </style>
-
-    <style name="fab_menu.labels_style">
-        <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
     <!-- OpenWebNet Message Style -->
 
     <style name="message"></style>
