@@ -27,7 +27,7 @@ It isn't mandatory, but it's highly recommended that you connect to your domotic
 #### v2.0.0
 
 - New menu
-- Bug fixing
+- Bug fix
 - Minor style changes
 
 #### v1.4.2
