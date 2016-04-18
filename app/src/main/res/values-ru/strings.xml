@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_version">версия</string>
+
+    <string name="activity_device">Устройство</string>
+    <string name="activity_light">Свет</string>
+    <string name="activity_automation">Автоматизм</string>
+    <string name="activity_settings">Настройки</string>
+
+    <string name="menu_save">Сохранить</string>
+    <string name="menu_edit">Изменить</string>
+    <string name="menu_delete">Удалить</string>
+    <string name="menu_debug">Отладка</string>
+
+    <string name="drawer_menu_favourite">Избранное</string>
+    <string name="drawer_menu_add">Добавить окружение</string>
+    <string name="drawer_menu_settings">Настройки</string>
+    <string name="drawer_menu_example">Пример окружения</string>
+
+    <string name="dialog_add_environment_title">Добавьте окружение</string>
+    <string name="dialog_edit_environment_title">Измените окружение</string>
+    <string name="dialog_environment_name">Имя</string>
+    <string name="dialog_device_confirmation_title">Подтверждение</string>
+    <string name="dialog_device_confirmation_message">Вы уверены?</string>
+
+    <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
+    <string name="validation_required">Обязательно поле</string>
+    <string name="validation_host">Некорректный IP адрес</string>
+    <string name="validation_port">Некорректный порт</string>
+
+    <string name="settings_category_shortcuts">Быстрый выбор</string>
+    <string name="settings_title_wireless">Беспроводные сети</string>
+    <string name="settings_category_gateway">Шлюз</string>
+    <string name="settings_gateway_add">Добавить шлюз</string>
+    <string name="settings_gateway_default">Стандартный шлюз</string>
+    <string name="settings_gateway_default_dialog">Выберите стандартный шлюз</string>
+    <string name="settings_gateway_default_hint">Стандартный порт: 20000</string>
+    <string name="dialog_gateway_host">IP адрес</string>
+    <string name="dialog_gateway_port">Порт</string>
+    <string name="settings_category_about">Информация</string>
+    <string name="settings_title_changelog">Список изменений</string>
+    <string name="settings_category_debug">Отладка</string>
+    <string name="settings_debug_device_title">Отладка устройств</string>
+    <string name="settings_debug_device_summary">Отображать время и ответ</string>
+
+    <string name="button_add">Добавить</string>
+    <string name="button_edit">Изменить</string>
+    <string name="button_delete">Удалить</string>
+    <string name="button_close">Закрыть</string>
+    <string name="label_none">Отсутствует</string>
+    <string name="label_name">Имя</string>
+
+    <string name="fab_label_add_device">Добавить устройство</string>
+    <string name="fab_label_add_light">Добавить освещение</string>
+    <string name="fab_label_add_automation">Добавить автоматизм</string>
+    <string name="fab_label_add_webcam">Добавить веб камеру</string>
+
+    <string name="list_empty">Не найдено ни одного элемента</string>
+    <string name="device_where">где</string>
+    <string name="device_favourite">Добавить в избранное</string>
+    <string name="device_confirm">Отображать подтверждающее сообщение</string>
+    <string name="device_on_load">Отправлять запрос при загрузке</string>
+    <string name="device_accept">Я понимаю что я делаю!</string>
+    <string name="device_request">Запрос</string>
+    <string name="device_response">Ответ</string>
+    <string name="device_response_paste">Вставить</string>
+    <string name="device_value">значение</string>
+    <string name="device_expected_value">ожидаемое значение</string>
+    <string name="device_debug_label_invalid">Значение некорректно</string>
+    <string name="light_request">Запрос</string>
+    <string name="light_dimmer">Диммер</string>
+    <string name="automation_request">Запрос</string>
+
+    <string name="card_device_debug_delay">Задержка:</string>
+    <string name="card_device_debug_timeunit">миллисекунды</string>
+    <string name="card_device_debug_copy">Копировать</string>
+    <string name="card_device_debug_none">нет ответа</string>
+    <string name="card_device_debug_clipboard_copied">Ответ скопирован</string>
+</resources>
