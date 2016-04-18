@@ -13,10 +13,6 @@ android {
         versionCode 8
         versionName "2.0.0"
         multiDexEnabled true
-        generatedDensities = []
-        aaptOptions {
-            additionalParameters "--no-version-vectors"
-        }
     }
 
     compileOptions {
