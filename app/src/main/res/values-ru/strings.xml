@@ -3,7 +3,7 @@
 
     <string name="activity_device">Устройство</string>
     <string name="activity_light">Свет</string>
-    <string name="activity_automation">Автоматизм</string>
+    <string name="activity_automation">Автопривод</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -51,7 +51,7 @@
 
     <string name="fab_label_add_device">Добавить устройство</string>
     <string name="fab_label_add_light">Добавить освещение</string>
-    <string name="fab_label_add_automation">Добавить автоматизм</string>
+    <string name="fab_label_add_automation">Добавить автопривод</string>
     <string name="fab_label_add_webcam">Добавить веб камеру</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
