@@ -24,6 +24,10 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
+#### v2.1.0
+
+- Add Russian language support
+
 #### v2.0.0
 
 - New menu
@@ -47,12 +51,12 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 #### v1.3.0
 
-- Add french language support
+- Add French language support
 
 #### v1.2.0
 
 - Handle columns on orientation change
-- Add italian language support
+- Add Italian language support
 
 #### v1.1.0
 

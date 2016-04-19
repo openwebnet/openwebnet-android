@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="2.1.0" versioncode="9">
+        <change>Add Russian language support</change>
+    </release>
     <release version="2.0.0" versioncode="8">
         <change>New menu</change>
         <change>Bug fix</change>
@@ -18,11 +21,11 @@
         <change>Minor style changes</change>
     </release>
     <release version="1.3.0" versioncode="4">
-        <change>Add french language support</change>
+        <change>Add French language support</change>
     </release>
     <release version="1.2.0" versioncode="3">
         <change>Handle columns on orientation change</change>
-        <change>Add italian language support</change>
+        <change>Add Italian language support</change>
     </release>
     <release version="1.1.0" versioncode="2">
         <change>Add device debug</change>
