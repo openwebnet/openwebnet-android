@@ -5,6 +5,7 @@ import com.github.openwebnet.component.module.ApplicationContextModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
@@ -15,6 +16,7 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
+import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
@@ -58,9 +60,11 @@ public interface ApplicationComponent {
     void inject(LightServiceImpl lightService);
     void inject(AutomationServiceImpl automationService);
     void inject(PreferenceServiceImpl preferenceService);
+    void inject(KeyStoreServiceImpl keyStoreService);
 
     // repository
     void inject(DatabaseRealm databaseRealm);
+    void inject(DatabaseRealmConfig databaseRealmConfig);
     void inject(DeviceRepositoryImpl repository);
     void inject(EnvironmentRepositoryImpl repository);
     void inject(GatewayRepositoryImpl repository);
