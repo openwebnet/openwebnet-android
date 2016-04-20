@@ -3,7 +3,14 @@ package com.github.openwebnet.database;
 import android.content.Context;
 
 import com.github.openwebnet.component.Injector;
+import com.google.common.io.BaseEncoding;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +24,10 @@ import io.realm.Sort;
 
 public class DatabaseRealm {
 
+    private static final Logger log = LoggerFactory.getLogger(DatabaseRealm.class);
+
     private static final String DATABASE_NAME = "openwebnet.realm";
+    private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
     private static final int DATABASE_VERSION = 2;
 
     @Inject
@@ -39,11 +49,42 @@ public class DatabaseRealm {
     }
 
     private RealmConfiguration getRealmConfig() {
-        return new RealmConfiguration.Builder(mContext)
-            .name(DATABASE_NAME)
+        byte[] realmEncryptionKey = getRealmEncryptionKey();
+        log.debug("realmEncryptionKey: {}", BaseEncoding.base16().lowerCase().encode(realmEncryptionKey));
+
+        boolean existsUnencryptedRealm = new File(mContext.getFilesDir(), DATABASE_NAME).exists();
+        if (existsUnencryptedRealm) {
+            RealmConfiguration realmConfig = new RealmConfiguration.Builder(mContext)
+                .name(DATABASE_NAME)
+                .schemaVersion(DATABASE_VERSION)
+                .migration(new MigrationStrategy())
+                .build();
+
+            try {
+                Realm realm = Realm.getInstance(realmConfig);
+                realm.writeEncryptedCopyTo(new File(mContext.getFilesDir(), DATABASE_NAME_CRYPT), realmEncryptionKey);
+                realm.close();
+                Realm.deleteRealm(realmConfig);
+            } catch (IOException e) {
+                log.error("unable to encrypt realm", e);
+                return realmConfig;
+            }
+        }
+
+        RealmConfiguration realmConfigCrypt = new RealmConfiguration.Builder(mContext)
+            .name(DATABASE_NAME_CRYPT)
+            .encryptionKey(realmEncryptionKey)
             .schemaVersion(DATABASE_VERSION)
             .migration(new MigrationStrategy())
             .build();
+
+        return realmConfigCrypt;
+    }
+
+    private byte[] getRealmEncryptionKey() {
+        byte[] key = new byte[64];
+        new SecureRandom().nextBytes(key);
+        return key;
     }
 
     public Realm getRealmInstance() {
