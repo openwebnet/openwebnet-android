@@ -10,7 +10,6 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DomoticModel;
-import com.github.openwebnet.model.LightModel;
 
 import org.junit.Before;
 import org.junit.Rule;

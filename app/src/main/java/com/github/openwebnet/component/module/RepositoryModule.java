@@ -1,6 +1,7 @@
 package com.github.openwebnet.component.module;
 
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.github.openwebnet.repository.AutomationRepository;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
@@ -24,6 +25,12 @@ public class RepositoryModule {
     @Singleton
     public DatabaseRealm provideDatabaseRealm() {
         return new DatabaseRealm();
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseRealmConfig provideDatabaseRealmConfig() {
+        return new DatabaseRealmConfig();
     }
 
     @Provides
