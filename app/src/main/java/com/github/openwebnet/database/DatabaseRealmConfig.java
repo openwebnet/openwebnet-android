@@ -23,7 +23,10 @@ public class DatabaseRealmConfig {
 
     private static final String DATABASE_NAME = "openwebnet.realm";
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
+    private static final String OPENWEBNET_REALM_KEY = "openwebnet-key";
     private static final int DATABASE_VERSION = 2;
+
+    private static final boolean DEBUG_DATABASE = true;
 
     @Inject
     Context mContext;
@@ -54,6 +57,14 @@ public class DatabaseRealmConfig {
             }
         }
 
+        if (DEBUG_DATABASE) {
+            try {
+                keyStoreService.writeKeyToFile(DATABASE_NAME_CRYPT);
+            } catch (IOException e) {
+                log.error("error writing key to file", e);
+            }
+        }
+
         return getEncryptedConfig();
     }
 
@@ -74,6 +85,13 @@ public class DatabaseRealmConfig {
             .build();
     }
 
+    /*
+     * @see https://developer.android.com/training/articles/keystore.html
+     *
+     * Keystore provider was introduced only on Android 4.3 (API level 18)
+     * so is useless to encrypt Realm if there isn't a safe place
+     * where to store the key on the client
+     */
     private boolean isEncryptionSupported() {
         log.debug("current OS version is {}", Build.VERSION.SDK_INT);
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
