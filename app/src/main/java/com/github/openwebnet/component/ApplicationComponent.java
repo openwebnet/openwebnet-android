@@ -2,6 +2,7 @@ package com.github.openwebnet.component;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.component.module.ApplicationContextModule;
+import com.github.openwebnet.component.module.DatabaseModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
 import com.github.openwebnet.database.DatabaseRealm;
@@ -35,7 +36,12 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {ApplicationContextModule.class, DomoticModule.class, RepositoryModule.class})
+@Component(modules = {
+    ApplicationContextModule.class,
+    DatabaseModule.class,
+    RepositoryModule.class,
+    DomoticModule.class
+})
 public interface ApplicationComponent {
 
     // view
@@ -53,18 +59,20 @@ public interface ApplicationComponent {
     void inject(DeviceListAdapter deviceListAdapter);
 
     // service
+    void inject(PreferenceServiceImpl preferenceService);
     void inject(CommonServiceImpl commonService);
+    void inject(KeyStoreServiceImpl keyStoreService);
     void inject(DeviceServiceImpl deviceService);
     void inject(EnvironmentServiceImpl environmentService);
     void inject(GatewayServiceImpl gatewayService);
     void inject(LightServiceImpl lightService);
     void inject(AutomationServiceImpl automationService);
-    void inject(PreferenceServiceImpl preferenceService);
-    void inject(KeyStoreServiceImpl keyStoreService);
 
-    // repository
+    // database
     void inject(DatabaseRealm databaseRealm);
     void inject(DatabaseRealmConfig databaseRealmConfig);
+
+    // repository
     void inject(DeviceRepositoryImpl repository);
     void inject(EnvironmentRepositoryImpl repository);
     void inject(GatewayRepositoryImpl repository);
