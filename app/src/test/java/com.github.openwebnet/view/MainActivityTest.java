@@ -13,6 +13,7 @@ import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.DaggerApplicationComponentTest;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
@@ -80,8 +81,9 @@ public class MainActivityTest {
     public void setup() {
         ApplicationComponentTest applicationComponentTest = DaggerApplicationComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
-            .domoticModuleTest(new DomoticModuleTest())
+            .databaseModuleTest(new DatabaseModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
+            .domoticModuleTest(new DomoticModuleTest())
             .build();
 
         PowerMockito.mockStatic(Injector.class);

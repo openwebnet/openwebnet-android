@@ -4,6 +4,7 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
@@ -30,7 +31,6 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,7 +49,12 @@ public class EnvironmentServiceTest {
     EnvironmentService environmentService;
 
     @Singleton
-    @Component(modules = {ApplicationContextModuleTest.class, DomoticModule.class, RepositoryModuleTest.class})
+    @Component(modules = {
+        ApplicationContextModuleTest.class,
+        DatabaseModuleTest.class,
+        RepositoryModuleTest.class,
+        DomoticModule.class
+    })
     public interface EnvironmentComponentTest extends ApplicationComponent {
 
         void inject(EnvironmentServiceTest service);
@@ -60,8 +65,9 @@ public class EnvironmentServiceTest {
     public void setupDagger() {
         EnvironmentComponentTest applicationComponentTest = DaggerEnvironmentServiceTest_EnvironmentComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
-            .domoticModule(new DomoticModule())
+            .databaseModuleTest(new DatabaseModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
+            .domoticModule(new DomoticModule())
             .build();
 
         PowerMockito.mockStatic(Injector.class);

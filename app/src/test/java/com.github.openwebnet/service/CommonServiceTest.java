@@ -7,10 +7,12 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import org.junit.Before;
@@ -65,7 +67,12 @@ public class CommonServiceTest {
     GatewayService gatewayService;
 
     @Singleton
-    @Component(modules = {CommonApplicationContextModuleTest.class, DomoticModuleTest.class, RepositoryModuleTest.class})
+    @Component(modules = {
+        CommonApplicationContextModuleTest.class,
+        DatabaseModuleTest.class,
+        RepositoryModuleTest.class,
+        DomoticModuleTest.class
+    })
     public interface CommonComponentTest extends ApplicationComponent {
 
         void inject(CommonServiceTest service);
@@ -93,14 +100,21 @@ public class CommonServiceTest {
             return new CommonServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        public KeyStoreService provideKeyStoreService() {
+            return mock(KeyStoreServiceImpl.class);
+        }
+
     }
 
     @Before
     public void setupDagger() {
         CommonComponentTest applicationComponentTest = DaggerCommonServiceTest_CommonComponentTest.builder()
             .commonApplicationContextModuleTest(new CommonApplicationContextModuleTest())
-            .domoticModuleTest(new DomoticModuleTest())
+            .databaseModuleTest(new DatabaseModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
+            .domoticModuleTest(new DomoticModuleTest())
             .build();
 
         PowerMockito.mockStatic(Injector.class);
