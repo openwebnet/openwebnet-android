@@ -59,7 +59,7 @@ public class DatabaseRealmConfig {
 
         if (DEBUG_DATABASE) {
             try {
-                keyStoreService.writeKeyToFile(DATABASE_NAME_CRYPT);
+                keyStoreService.writeKeyToFile(OPENWEBNET_REALM_KEY);
             } catch (IOException e) {
                 log.error("error writing key to file", e);
             }
