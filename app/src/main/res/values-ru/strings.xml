@@ -49,10 +49,10 @@
     <string name="label_none">Отсутствует</string>
     <string name="label_name">Имя</string>
 
-    <string name="fab_label_add_device">Добавить устройство</string>
-    <string name="fab_label_add_light">Добавить освещение</string>
-    <string name="fab_label_add_automation">Добавить автопривод</string>
-    <string name="fab_label_add_webcam">Добавить веб камеру</string>
+    <string name="bs_title">Добавить</string>
+    <string name="bs_device">Устройство</string>
+    <string name="bs_light">Освещение</string>
+    <string name="bs_automation">Автопривод</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
