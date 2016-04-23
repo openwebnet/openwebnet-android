@@ -2,6 +2,9 @@ package com.github.openwebnet.service;
 
 import java.io.IOException;
 
+/*
+ * @see https://github.com/googlesamples/android-BasicAndroidKeyStore
+ */
 public interface KeyStoreService {
 
     byte[] getKey();
