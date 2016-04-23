@@ -2,7 +2,7 @@
 <manifest
     package="com.github.openwebnet"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="9"
+    android:versionCode="10"
     android:versionName="@string/app_version_number">
 
     <uses-permission android:name="android.permission.INTERNET"/>

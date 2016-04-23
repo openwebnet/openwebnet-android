@@ -24,7 +24,7 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
-#### v2.1.0
+#### v2.1.0 and 2.1.1
 
 - Add Russian language support
 
@@ -76,6 +76,7 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Other contributors
 - [Nicolas Moreau](https://github.com/moreau-nicolas)
+- [terranum](https://github.com/terranum)
 
 Thanks to:
 

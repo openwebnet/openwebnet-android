@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="2.1.1" versioncode="10">
+        <change>Update Russian language support</change>
+    </release>
     <release version="2.1.0" versioncode="9">
         <change>Add Russian language support</change>
     </release>
