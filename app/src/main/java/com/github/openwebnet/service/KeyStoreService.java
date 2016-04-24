@@ -2,20 +2,14 @@ package com.github.openwebnet.service;
 
 import java.io.IOException;
 
-/*
- * @see https://github.com/googlesamples/android-BasicAndroidKeyStore
- */
 public interface KeyStoreService {
 
-    byte[] getKey();
+    String getKey(String name);
 
-    /**
-     * Dump the key 128-character string in hexadecimal format to file
-     * Note: use only for development abd debugging purpose
-     *
-     * @param fileName
-     * @throws IOException
-     */
-    void writeKeyToFile(String fileName) throws IOException;
+    String getKey(String name, String defaultValue);
+
+    void setKey(String name, String value);
+
+    void writeKeyToFile(String fileName, String name) throws IOException;
 
 }
