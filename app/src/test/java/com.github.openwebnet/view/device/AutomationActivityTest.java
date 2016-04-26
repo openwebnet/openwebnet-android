@@ -15,7 +15,6 @@ import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
-import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.matcher.AutomationModelMatcher;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.EnvironmentModel;
@@ -26,7 +25,6 @@ import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
-import com.github.openwebnet.service.KeyStoreService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
@@ -34,7 +32,6 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
-import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
@@ -178,12 +175,6 @@ public class AutomationActivityTest {
         @Singleton
         AutomationService provideAutomationService() {
             return mock(AutomationServiceImpl.class);
-        }
-
-        @Provides
-        @Singleton
-        public KeyStoreService provideKeyStoreService() {
-            return mock(KeyStoreServiceImpl.class);
         }
 
     }

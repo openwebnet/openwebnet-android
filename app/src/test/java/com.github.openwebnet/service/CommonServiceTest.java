@@ -12,7 +12,6 @@ import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
-import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import org.junit.Before;
@@ -98,12 +97,6 @@ public class CommonServiceTest {
         @Singleton
         public CommonService provideCommonService() {
             return new CommonServiceImpl();
-        }
-
-        @Provides
-        @Singleton
-        public KeyStoreService provideKeyStoreService() {
-            return mock(KeyStoreServiceImpl.class);
         }
 
     }
