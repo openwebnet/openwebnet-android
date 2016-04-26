@@ -1,16 +1,17 @@
 package com.github.openwebnet.database;
 
 import android.content.Context;
-import android.text.TextUtils;
+import android.content.SharedPreferences;
 
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.service.KeyStoreService;
+import com.github.openwebnet.service.PreferenceService;
 import com.google.common.io.BaseEncoding;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 
@@ -19,6 +20,9 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/*
+ * TODO issue
+ */
 public class DatabaseRealmConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseRealmConfig.class);
@@ -26,26 +30,29 @@ public class DatabaseRealmConfig {
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "openwebnet.realm";
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
-    private static final String DATABASE_KEY = "com.github.openwebnet.database.DatabaseRealmConfig.DATABASE_KEY";
 
-    private static final boolean DEBUG_DATABASE = false;
+    private static final boolean DEBUG_DATABASE = true;
     private static final String DEBUG_REALM_KEY = "database.key";
+    private static final String PREFERENCE_DATABASE_KEY = "com.github.openwebnet.database.DatabaseRealmConfig.PREFERENCE_DATABASE_KEY";
 
     @Inject
     Context mContext;
 
     @Inject
-    KeyStoreService keyStoreService;
+    PreferenceService preferenceService;
 
     public DatabaseRealmConfig() {
         Injector.getApplicationComponent().inject(this);
     }
 
     public RealmConfiguration getConfig() {
-        loadOrGenerateKey();
+        initRealmKey();
+
+        if (DEBUG_DATABASE) {
+            writeKeyToFile();
+        }
 
         boolean existsUnencryptedRealm = new File(mContext.getFilesDir(), DATABASE_NAME).exists();
-
         if (existsUnencryptedRealm) {
             RealmConfiguration unencryptedConfig = getUnencryptedConfig();
             try {
@@ -54,14 +61,6 @@ public class DatabaseRealmConfig {
             } catch (IOException e) {
                 log.error("error migrating encrypted realm", e);
                 return unencryptedConfig;
-            }
-        }
-
-        if (DEBUG_DATABASE) {
-            try {
-                keyStoreService.writeKeyToFile(DEBUG_REALM_KEY, DATABASE_KEY);
-            } catch (IOException e) {
-                log.error("error writing key to file", e);
             }
         }
 
@@ -79,7 +78,7 @@ public class DatabaseRealmConfig {
     private RealmConfiguration getEncryptedConfig() {
         return new RealmConfiguration.Builder(mContext)
             .name(DATABASE_NAME_CRYPT)
-            .encryptionKey(decodeHexKey(keyStoreService.getKey(DATABASE_KEY)))
+            .encryptionKey(getRealmKey())
             .schemaVersion(DATABASE_VERSION)
             .migration(new MigrationStrategy())
             .build();
@@ -87,8 +86,7 @@ public class DatabaseRealmConfig {
 
     private void migrateToEncryptedConfig(RealmConfiguration unencryptedConfig) throws IOException {
         Realm realm = Realm.getInstance(unencryptedConfig);
-        realm.writeEncryptedCopyTo(new File(mContext.getFilesDir(), DATABASE_NAME_CRYPT),
-            decodeHexKey(keyStoreService.getKey(DATABASE_KEY)));
+        realm.writeEncryptedCopyTo(new File(mContext.getFilesDir(), DATABASE_NAME_CRYPT), getRealmKey());
         realm.close();
         Realm.deleteRealm(unencryptedConfig);
     }
@@ -99,21 +97,31 @@ public class DatabaseRealmConfig {
         return key;
     }
 
-    private void loadOrGenerateKey() {
-        String key = keyStoreService.getKey(DATABASE_KEY);
-        if (TextUtils.isEmpty(key)) {
-            keyStoreService.setKey(DATABASE_KEY, encodeHexKey(generateKey()));
-            log.debug("new Realm key");
+    private void initRealmKey() {
+        SharedPreferences securePreferences = preferenceService.getSecurePreferences();
+        if (!securePreferences.contains(PREFERENCE_DATABASE_KEY)) {
+            // Realm key is a 128-character string in hexadecimal format
+            String key = BaseEncoding.base16().lowerCase().encode(generateKey());
+            securePreferences.edit().putString(PREFERENCE_DATABASE_KEY, key).apply();
+            log.debug("new database key stored in preferences");
         }
     }
 
-    private byte[] decodeHexKey(String value) {
-        return BaseEncoding.base16().lowerCase().decode(value);
+    private byte[] getRealmKey() {
+        String key = preferenceService.getSecurePreferences().getString(PREFERENCE_DATABASE_KEY, "");
+        return BaseEncoding.base16().lowerCase().decode(key);
     }
 
-    // Realm key is a 128-character string in hexadecimal format
-    private String encodeHexKey(byte[] value) {
-        return BaseEncoding.base16().lowerCase().encode(value);
+    private void writeKeyToFile() {
+        try {
+            File file = new File(mContext.getFilesDir(), DEBUG_REALM_KEY);
+            FileOutputStream stream = new FileOutputStream(file);
+            String key = preferenceService.getSecurePreferences().getString(PREFERENCE_DATABASE_KEY, "");
+            stream.write(key.getBytes());
+            stream.close();
+        } catch (IOException e) {
+            log.error("error writing key to file", e);
+        }
     }
 
 }
