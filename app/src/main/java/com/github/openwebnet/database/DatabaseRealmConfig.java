@@ -1,6 +1,7 @@
 package com.github.openwebnet.database;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.KeyStoreService;
@@ -27,7 +28,7 @@ public class DatabaseRealmConfig {
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
     private static final String DATABASE_KEY = "com.github.openwebnet.database.DatabaseRealmConfig.DATABASE_KEY";
 
-    private static final boolean DEBUG_DATABASE = true;
+    private static final boolean DEBUG_DATABASE = false;
     private static final String DEBUG_REALM_KEY = "database.key";
 
     @Inject
@@ -41,7 +42,6 @@ public class DatabaseRealmConfig {
     }
 
     public RealmConfiguration getConfig() {
-        // TODO setKey
         loadOrGenerateKey();
 
         boolean existsUnencryptedRealm = new File(mContext.getFilesDir(), DATABASE_NAME).exists();
@@ -100,8 +100,11 @@ public class DatabaseRealmConfig {
     }
 
     private void loadOrGenerateKey() {
-        // TODO setKey
-        keyStoreService.getKey(DATABASE_KEY, encodeHexKey(generateKey()));
+        String key = keyStoreService.getKey(DATABASE_KEY);
+        if (TextUtils.isEmpty(key)) {
+            keyStoreService.setKey(DATABASE_KEY, encodeHexKey(generateKey()));
+            log.debug("new Realm key");
+        }
     }
 
     private byte[] decodeHexKey(String value) {
