@@ -17,7 +17,6 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
-import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.view.MainActivity;
@@ -61,7 +60,6 @@ public interface ApplicationComponent {
     // service
     void inject(PreferenceServiceImpl preferenceService);
     void inject(CommonServiceImpl commonService);
-    void inject(KeyStoreServiceImpl keyStoreService);
     void inject(DeviceServiceImpl deviceService);
     void inject(EnvironmentServiceImpl environmentService);
     void inject(GatewayServiceImpl gatewayService);

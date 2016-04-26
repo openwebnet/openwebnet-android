@@ -4,10 +4,8 @@ import android.content.Context;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.service.CommonService;
-import com.github.openwebnet.service.KeyStoreService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
-import com.github.openwebnet.service.impl.KeyStoreServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import javax.inject.Singleton;
@@ -46,12 +44,6 @@ public class ApplicationContextModule {
     @Singleton
     public CommonService provideCommonService() {
         return new CommonServiceImpl();
-    }
-
-    @Provides
-    @Singleton
-    public KeyStoreService provideKeyStoreService() {
-        return new KeyStoreServiceImpl();
     }
 
 }
