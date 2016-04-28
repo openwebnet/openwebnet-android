@@ -24,7 +24,11 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
-#### v2.1.0 and 2.1.1
+#### v2.2.0
+
+- Encrypted database
+
+#### v2.1.0 and v2.1.1
 
 - Add Russian language support
 
