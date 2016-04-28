@@ -1,6 +1,7 @@
 package com.github.openwebnet.component;
 
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.repository.AutomationRepositoryTest;
@@ -18,7 +19,11 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {ApplicationContextModuleTest.class, DomoticModuleTest.class, RepositoryModuleTest.class})
+@Component(modules = {
+    ApplicationContextModuleTest.class,
+    DatabaseModuleTest.class,
+    RepositoryModuleTest.class,
+    DomoticModuleTest.class})
 public interface ApplicationComponentTest extends ApplicationComponent {
 
     void inject(MainActivityTest activity);

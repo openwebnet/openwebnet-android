@@ -13,6 +13,7 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.matcher.AutomationModelMatcher;
 import com.github.openwebnet.model.AutomationModel;
@@ -118,7 +119,7 @@ public class AutomationActivityTest {
     private AutomationActivity activity;
 
     @Singleton
-    @Component(modules = {AutomationActivityModuleTest.class, RepositoryModuleTest.class})
+    @Component(modules = {AutomationActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
     public interface AutomationActivityComponentTest extends ApplicationComponent {
 
         void inject(AutomationActivityTest activity);

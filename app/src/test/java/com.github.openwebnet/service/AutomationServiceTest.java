@@ -7,11 +7,11 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.repository.AutomationRepository;
 
 import org.junit.After;
@@ -60,7 +60,12 @@ public class AutomationServiceTest {
     CommonService commonService;
 
     @Singleton
-    @Component(modules = {ApplicationContextModuleTest.class, DomoticModule.class, RepositoryModuleTest.class})
+    @Component(modules = {
+        ApplicationContextModuleTest.class,
+        DatabaseModuleTest.class,
+        RepositoryModuleTest.class,
+        DomoticModule.class
+    })
     public interface AutomationComponentTest extends ApplicationComponent {
 
         void inject(AutomationServiceTest service);
@@ -81,8 +86,9 @@ public class AutomationServiceTest {
     public void setupDagger() {
         AutomationComponentTest applicationComponentTest = DaggerAutomationServiceTest_AutomationComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
-            .domoticModule(new DomoticModule())
+            .databaseModuleTest(new DatabaseModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
+            .domoticModule(new DomoticModule())
             .build();
 
         PowerMockito.mockStatic(Injector.class);

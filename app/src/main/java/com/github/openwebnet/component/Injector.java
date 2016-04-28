@@ -2,6 +2,7 @@ package com.github.openwebnet.component;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.component.module.ApplicationContextModule;
+import com.github.openwebnet.component.module.DatabaseModule;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModule;
 
@@ -16,8 +17,9 @@ public class Injector {
     public static void initializeApplicationComponent(OpenWebNetApplication application) {
         applicationComponent = DaggerApplicationComponent.builder()
             .applicationContextModule(new ApplicationContextModule(application))
-            .domoticModule(new DomoticModule())
+            .databaseModule(new DatabaseModule())
             .repositoryModule(new RepositoryModule())
+            .domoticModule(new DomoticModule())
             .build();
     }
 

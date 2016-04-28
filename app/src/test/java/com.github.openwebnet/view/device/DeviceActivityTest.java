@@ -13,6 +13,7 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.matcher.DeviceModelMatcher;
 import com.github.openwebnet.model.DeviceModel;
@@ -142,7 +143,7 @@ public class DeviceActivityTest {
     private DeviceActivity activity;
 
     @Singleton
-    @Component(modules = {DeviceActivityModuleTest.class, RepositoryModuleTest.class})
+    @Component(modules = {DeviceActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
     public interface DeviceActivityComponentTest extends ApplicationComponent {
 
         void inject(DeviceActivityTest activity);
@@ -161,7 +162,7 @@ public class DeviceActivityTest {
         @Provides
         @Singleton
         public PreferenceService providePreferenceService() {
-            return new PreferenceServiceImpl();
+            return mock(PreferenceServiceImpl.class);
         }
 
         @Provides

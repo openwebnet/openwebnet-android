@@ -1,5 +1,7 @@
 package com.github.openwebnet.service;
 
+import android.content.SharedPreferences;
+
 public interface PreferenceService {
 
     boolean isFirstRun();
@@ -9,4 +11,7 @@ public interface PreferenceService {
     String getDefaultGateway();
 
     boolean isDeviceDebugEnabled();
+
+    SharedPreferences getSecurePreferences();
+
 }
