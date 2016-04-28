@@ -13,6 +13,7 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.matcher.LightModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
@@ -121,7 +122,7 @@ public class LightActivityTest {
     private LightActivity activity;
 
     @Singleton
-    @Component(modules = {LightActivityModuleTest.class, RepositoryModuleTest.class})
+    @Component(modules = {LightActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
     public interface LightActivityComponentTest extends ApplicationComponent {
 
         void inject(LightActivityTest activity);

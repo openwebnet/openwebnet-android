@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="2.2.0" versioncode="11">
+        <change>Encrypted database</change>
+    </release>
     <release version="2.1.1" versioncode="10">
         <change>Update Russian language support</change>
     </release>

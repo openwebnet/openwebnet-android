@@ -10,8 +10,8 @@ android {
         applicationId "com.github.openwebnet"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 10
-        versionName "2.1.1"
+        versionCode 11
+        versionName "2.2.0"
         multiDexEnabled true
     }
 
@@ -67,6 +67,7 @@ dependencies {
     compile 'com.android.support:support-annotations:23.3.0'
 
     compile 'de.cketti.library.changelog:ckchangelog:1.2.2'
+    compile 'com.scottyab:secure-preferences-lib:0.1.4'
 
     compile 'com.github.openwebnet:rx-openwebnet:0.7.2'
 
