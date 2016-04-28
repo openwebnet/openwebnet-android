@@ -17,7 +17,7 @@ public class PreferenceServiceImpl implements PreferenceService {
     private static final String PREFERENCE_MAIN = "com.github.openwebnet.MAIN";
     private static final String KEY_FIRST_RUN = "com.github.openwebnet.MAIN.FIRST_RUN";
 
-    private static final String PREFERENCE_SECURE = "secure_preferences";
+    private static final String PREFERENCE_SECURE = "com.github.openwebnet.secure_preferences";
     private static final String PREFERENCE_SECURE_PWD = "NO_PWD";
 
     private final SharedPreferences sharedPreferences;

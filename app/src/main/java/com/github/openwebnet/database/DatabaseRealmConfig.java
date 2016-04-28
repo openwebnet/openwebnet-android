@@ -20,8 +20,9 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-/*
- * TODO issue
+/**
+ * See this issue for more details about KeyStore and SecurePreferences
+ * https://github.com/openwebnet/openwebnet-android/issues/46
  */
 public class DatabaseRealmConfig {
 
@@ -45,6 +46,9 @@ public class DatabaseRealmConfig {
         Injector.getApplicationComponent().inject(this);
     }
 
+    /**
+     * @return RealmConfiguration
+     */
     public RealmConfiguration getConfig() {
         initRealmKey();
 
@@ -100,7 +104,7 @@ public class DatabaseRealmConfig {
     private void initRealmKey() {
         SharedPreferences securePreferences = preferenceService.getSecurePreferences();
         if (!securePreferences.contains(PREFERENCE_DATABASE_KEY)) {
-            // Realm key is a 128-character string in hexadecimal format
+            // realm key is a 128-character string in hexadecimal format
             String key = BaseEncoding.base16().lowerCase().encode(generateKey());
             securePreferences.edit().putString(PREFERENCE_DATABASE_KEY, key).apply();
             log.debug("new database key stored in preferences");
