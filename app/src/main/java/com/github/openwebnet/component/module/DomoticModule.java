@@ -1,15 +1,17 @@
 package com.github.openwebnet.component.module;
 
+import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
+import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
-import com.github.openwebnet.service.AutomationService;
+import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
+import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
-import com.github.openwebnet.service.impl.AutomationServiceImpl;
 
 import javax.inject.Singleton;
 
@@ -47,5 +49,11 @@ public class DomoticModule {
     @Singleton
     AutomationService provideAutomationService() {
         return new AutomationServiceImpl();
+    }
+
+    @Provides
+    @Singleton
+    IpcamService provideIpcamService() {
+        return new IpcamServiceImpl();
     }
 }
