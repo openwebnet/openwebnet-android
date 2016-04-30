@@ -7,16 +7,68 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
-        <EditText
-            android:id="@+id/editTextIpcamName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/label_name"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
+
+            <EditText
+                android:id="@+id/editTextIpcamName"
+                style="@style/common.focusable"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/label_name"/>
+
+            <EditText
+                android:id="@+id/editTextIpcamUrl"
+                style="@style/common.focusable"
+                android:hint="@string/ipcam_url"
+                android:inputType="textUri"/>
+
+            <TextView
+                android:id="@+id/textViewIpcamUrlHelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
+                android:text="@string/ipcam_url_help"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <Switch
+                android:id="@+id/switchIpcamAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/ipcam_authentication"/>
+
+            <EditText
+                android:id="@+id/editTextIpcamUsername"
+                style="@style/common.focusable"
+                android:layout_marginTop="8dp"
+                android:hint="@string/ipcam_username"
+                android:inputType="text"
+                android:singleLine="true"/>
+
+            <EditText
+                android:id="@+id/editTextIpcamPassword"
+                style="@style/common.focusable"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/ipcam_password"
+                android:inputType="textPassword"
+                android:singleLine="true"/>
+
+            <Spinner
+                android:id="@+id/spinnerIpcamStreamType"
+                style="@style/common.focusable"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
 
         <include
             layout="@layout/activity_common_device"
