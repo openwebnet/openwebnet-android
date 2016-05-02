@@ -6,23 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/imageButtonCardFavourite"
-        style="@style/deviceCard.imageButton"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/star_outline"
-        tools:ignore="MissingPrefix"/>
+    <include
+        layout="@layout/card_common_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/imageViewCardAlert"
+    <ImageButton
+        android:id="@+id/imageButtonCardDeviceSend"
         style="@style/deviceCard.imageButton"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/alert"
-        android:visibility="invisible"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:srcCompat="@drawable/send"
         tools:ignore="MissingPrefix"/>
 
 </RelativeLayout>

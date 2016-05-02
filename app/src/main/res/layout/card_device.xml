@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <include
-                layout="@layout/card_common_action"
+                layout="@layout/card_device_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"/>

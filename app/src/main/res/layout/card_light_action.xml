@@ -6,27 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/imageButtonCardFavourite"
-        style="@style/deviceCard.imageButton"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        app:srcCompat="@drawable/star_outline"
-        tools:ignore="MissingPrefix"/>
-
-    <ImageView
-        android:id="@+id/imageViewCardAlert"
-        style="@style/deviceCard.imageButton"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/alert"
-        tools:ignore="MissingPrefix"/>
+    <include
+        layout="@layout/card_common_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <ImageButton
-        android:id="@+id/imageButtonCardOn"
+        android:id="@+id/imageButtonCardLightOn"
         style="@style/deviceCard.imageButton"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -37,12 +23,12 @@
         tools:ignore="MissingPrefix"/>
 
     <ImageButton
-        android:id="@+id/imageButtonCardOff"
+        android:id="@+id/imageButtonCardLightOff"
         style="@style/deviceCard.imageButton"
         android:layout_alignParentRight="false"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:layout_toLeftOf="@id/imageButtonCardOn"
+        android:layout_toLeftOf="@id/imageButtonCardLightOn"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="visible"
         app:srcCompat="@drawable/toggle_switch_off"

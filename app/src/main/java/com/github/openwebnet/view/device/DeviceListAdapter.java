@@ -109,8 +109,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
-        @Bind(R.id.imageButtonCardSend)
-        ImageButton imageButtonCardSend;
+        @Bind(R.id.imageButtonCardDeviceSend)
+        ImageButton imageButtonCardDeviceSend;
 
         /* card_device_debug */
 
@@ -150,11 +150,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        @Bind(R.id.imageButtonCardOff)
-        ImageButton imageButtonCardOff;
+        @Bind(R.id.imageButtonCardLightOff)
+        ImageButton imageButtonCardLightOff;
 
-        @Bind(R.id.imageButtonCardOn)
-        ImageButton imageButtonCardOn;
+        @Bind(R.id.imageButtonCardLightOn)
+        ImageButton imageButtonCardLightOn;
 
         public LightViewHolder(View view) {
             super(view);
@@ -182,11 +182,11 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardAutomationTitle)
         TextView textViewCardAutomationTitle;
 
-        @Bind(R.id.imageButtonCardUp)
-        ImageButton imageButtonCardUp;
+        @Bind(R.id.imageButtonCardAutomationUp)
+        ImageButton imageButtonCardAutomationUp;
 
-        @Bind(R.id.imageButtonCardDown)
-        ImageButton imageButtonCardDown;
+        @Bind(R.id.imageButtonCardAutomationDown)
+        ImageButton imageButtonCardAutomationDown;
 
         public AutomationViewHolder(View view) {
             super(view);
@@ -207,8 +207,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @Bind(R.id.textViewCardIpcamTitle)
         TextView textViewCardIpcamTitle;
 
-        @Bind(R.id.imageButtonIpcamPlay)
-        ImageButton imageButtonIpcamPlay;
+        @Bind(R.id.imageButtonCardIpcamPlay)
+        ImageButton imageButtonCardIpcamPlay;
 
         public IpcamViewHolder(View view) {
             super(view);
@@ -337,7 +337,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             showDeviceStatus(holder, device);
         }
 
-        holder.imageButtonCardSend.setOnClickListener(v -> {
+        holder.imageButtonCardDeviceSend.setOnClickListener(v -> {
             if (device.isShowConfirmation()) {
                 showConfirmationDialog(holder, device);
             } else {
@@ -369,12 +369,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void showDeviceStatus(DeviceViewHolder holder, DeviceModel device) {
         if (device.getStatus() == null) {
             holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
-            holder.imageButtonCardSend.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardDeviceSend.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
 
-        holder.imageButtonCardSend.setVisibility(View.VISIBLE);
+        holder.imageButtonCardDeviceSend.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         switch (device.getStatus()) {
             case SUCCESS: holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusSuccess); break;
@@ -440,8 +440,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 
         updateLightStatus(holder, light.getStatus());
-        holder.imageButtonCardOff.setOnClickListener(v -> turnLightOff(holder, light));
-        holder.imageButtonCardOn.setOnClickListener(v -> turnLightOn(holder, light));
+        holder.imageButtonCardLightOff.setOnClickListener(v -> turnLightOff(holder, light));
+        holder.imageButtonCardLightOn.setOnClickListener(v -> turnLightOn(holder, light));
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
@@ -456,13 +456,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
-        holder.imageButtonCardOff.setVisibility(View.VISIBLE);
-        holder.imageButtonCardOn.setVisibility(View.VISIBLE);
+        holder.imageButtonCardLightOff.setVisibility(View.VISIBLE);
+        holder.imageButtonCardLightOn.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("light status is null: unable to update");
-            holder.imageButtonCardOff.setVisibility(View.INVISIBLE);
-            holder.imageButtonCardOn.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardLightOff.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardLightOn.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
@@ -510,8 +510,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateAutomationStatus(holder, automation.getStatus());
 
-        holder.imageButtonCardUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
-        holder.imageButtonCardDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
+        holder.imageButtonCardAutomationUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
+        holder.imageButtonCardAutomationDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
             () -> {
@@ -526,32 +526,32 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateAutomationStatus(AutomationViewHolder holder, AutomationModel.Status status) {
-        holder.imageButtonCardUp.setVisibility(View.VISIBLE);
-        holder.imageButtonCardDown.setVisibility(View.VISIBLE);
+        holder.imageButtonCardAutomationUp.setVisibility(View.VISIBLE);
+        holder.imageButtonCardAutomationDown.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
 
         if (status == null) {
             log.warn("automation status is null: unable to update");
-            holder.imageButtonCardUp.setVisibility(View.INVISIBLE);
-            holder.imageButtonCardDown.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardAutomationUp.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardAutomationDown.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
         switch (status) {
             case STOP:
                 holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusStop);
-                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
-                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
+                holder.imageButtonCardAutomationUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
+                holder.imageButtonCardAutomationDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
                 break;
             case UP:
                 holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusUp);
-                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle);
-                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
+                holder.imageButtonCardAutomationUp.setImageResource(R.drawable.arrow_up_bold_circle);
+                holder.imageButtonCardAutomationDown.setImageResource(R.drawable.arrow_down_bold_circle_outline);
                 break;
             case DOWN:
                 holder.cardViewAutomation.setCardBackgroundColor(holder.colorStatusDown);
-                holder.imageButtonCardUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
-                holder.imageButtonCardDown.setImageResource(R.drawable.arrow_down_bold_circle);
+                holder.imageButtonCardAutomationUp.setImageResource(R.drawable.arrow_up_bold_circle_outline);
+                holder.imageButtonCardAutomationDown.setImageResource(R.drawable.arrow_down_bold_circle);
                 break;
         }
     }
