@@ -25,10 +25,12 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.custom.TextViewCustom;
@@ -62,6 +64,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     AutomationService automationService;
+
+    @Inject
+    IpcamService ipcamService;
 
     @Inject
     PreferenceService preferenceService;
@@ -192,6 +197,28 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
+    public static class IpcamViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 400;
+
+        @Bind(R.id.cardViewIpcam)
+        CardView cardViewIpcam;
+
+        @Bind(R.id.textViewCardIpcamTitle)
+        TextView textViewCardIpcamTitle;
+
+        @Bind(R.id.imageButtonIpcamPlay)
+        ImageButton imageButtonIpcamPlay;
+
+        public IpcamViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.imageButtonCardFavourite)
@@ -235,6 +262,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof AutomationModel) {
             return AutomationViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof IpcamModel) {
+            return IpcamViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -250,6 +280,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case AutomationViewHolder.VIEW_TYPE:
                 return new AutomationViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_automation, parent, false));
+            case IpcamViewHolder.VIEW_TYPE:
+                return new IpcamViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_ipcam, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -269,6 +302,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case AutomationViewHolder.VIEW_TYPE:
                 initCardAutomation((AutomationViewHolder) holder, (AutomationModel) mItems.get(position));
+                break;
+            case IpcamViewHolder.VIEW_TYPE:
+                initCardIpcam((IpcamViewHolder) holder, (IpcamModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -556,6 +592,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 automationService.stop(automation).doOnCompleted(updateAutomationStatusAction).subscribe();
                 break;
         }
+    }
+
+    /* Ipcam */
+
+    private void initCardIpcam(IpcamViewHolder holder, IpcamModel ipcam) {
+
     }
 
     /* commons */
