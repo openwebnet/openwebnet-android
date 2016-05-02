@@ -29,6 +29,7 @@ import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.DeviceListAdapter;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.device.IpcamActivity;
+import com.github.openwebnet.view.device.IpcamStreamActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
@@ -53,6 +54,7 @@ public interface ApplicationComponent {
     void inject(LightActivity activity);
     void inject(AutomationActivity activity);
     void inject(IpcamActivity activity);
+    void inject(IpcamStreamActivity activity);
     void inject(DeviceListFragment fragment);
 
     void inject(NavigationViewItemSelectedListener listener);
