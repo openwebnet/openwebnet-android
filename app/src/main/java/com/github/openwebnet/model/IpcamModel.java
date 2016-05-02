@@ -130,7 +130,7 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
             return this;
         }
 
-        public Builder String(StreamType type) {
+        public Builder streamType(StreamType type) {
             this.type = type.name();
             return this;
         }

@@ -32,6 +32,8 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 
 // TODO translate
+// TODO edit
+// TODO test
 public class IpcamActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(IpcamActivity.class);
@@ -160,15 +162,11 @@ public class IpcamActivity extends AbstractDeviceActivity {
         log.debug("favourite: {}", isFavourite());
 
         if (isValidIpcam()) {
-            log.debug("VALID");
-            //ipcamService.add(parseIpcam()).subscribe(uuid -> finish());
+            ipcamService.add(parseIpcam()).subscribe(uuid -> finish());
         }
     }
 
     private boolean isValidIpcam() {
-        // TODO url validation ?
-        // TODO hasAuthentication: username/password
-        // TODO isValidStreamType
         return isValidRequired(editTextIpcamName) &&
             isValidRequired(editTextIpcamUrl) &&
             isValidUrl(editTextIpcamUrl) &&
@@ -186,9 +184,21 @@ public class IpcamActivity extends AbstractDeviceActivity {
         return true;
     }
 
-    // TODO
     private IpcamModel parseIpcam() {
-        return null;
+        IpcamModel.Builder builder = IpcamModel.addBuilder()
+            .name(editTextIpcamName.getText().toString())
+            .url(editTextIpcamUrl.getText().toString())
+            .streamType(getSelectedStreamType())
+            .environment(getSelectedEnvironment().getId())
+            .favourite(isFavourite());
+
+        // has authentication
+        if (switchIpcamAuthentication.isChecked()) {
+            builder
+                .username(editTextIpcamUsername.getText().toString())
+                .password(editTextIpcamPassword.getText().toString());
+        }
+        return builder.build();
     }
 
 }
