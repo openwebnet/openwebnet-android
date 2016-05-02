@@ -1,5 +1,12 @@
 package com.github.openwebnet.model;
 
+import com.github.openwebnet.R;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -16,9 +23,41 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
     public static final String FIELD_USERNAME = "username";
     public static final String FIELD_PASSWORD = "password";
 
-    // TODO validation
     public enum StreamType {
-        MJPEG
+
+        MJPEG(R.string.ipcam_stream_mjpeg);
+
+        private static final Map<String, StreamType> nameToValueMap = new HashMap<>();
+        static {
+            for (StreamType value : EnumSet.allOf(StreamType.class)) {
+                nameToValueMap.put(value.name(), value);
+            }
+        }
+
+        private final int labelId;
+
+        StreamType(int labelId) {
+            this.labelId = labelId;
+        }
+
+        public int getLabelId() {
+            return labelId;
+        }
+
+        public static StreamType forName(String name) {
+            if (name == null || !isValid(name)) {
+                throw new IllegalArgumentException("invalid name");
+            }
+            return nameToValueMap.get(name);
+        }
+
+        public static boolean isValid(String name) {
+            return nameToValueMap.containsKey(name);
+        }
+
+        public static List<StreamType> toList() {
+            return new ArrayList<>(nameToValueMap.values());
+        }
     }
 
     @PrimaryKey
@@ -91,7 +130,6 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
             return this;
         }
 
-        // TODO validation toUpperCase
         public Builder String(StreamType type) {
             this.type = type.name();
             return this;
@@ -204,12 +242,10 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
         this.favourite = favourite;
     }
 
-    // TODO validation toUpperCase
     public StreamType getStreamType() {
-        return StreamType.valueOf(getType());
+        return StreamType.forName(getType());
     }
 
-    // TODO validation toUpperCase
     public void setStreamType(StreamType streamType) {
         this.type = streamType.name();
     }

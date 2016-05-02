@@ -33,6 +33,7 @@
     <string name="validation_required">Required field</string>
     <string name="validation_host">Invalid ip address</string>
     <string name="validation_port">Invalid port range</string>
+    <string name="validation_url">Invalid url</string>
 
     <string name="settings_category_shortcuts">Shortcuts</string>
     <string name="settings_title_wireless">Wireless &amp; networks</string>
@@ -88,10 +89,11 @@
     <string name="automation_suffix" translatable="false">##</string>
     <!-- TODO -->
     <string name="ipcam_url">Url</string>
-    <string name="ipcam_url_help">If you need help to identify the url, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>wiki</a></string>
+    <string name="ipcam_url_help">Example <i>http://192.168.1.100:2222/videostream.cgi</i>\nIf you need help to identify the url, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>wiki</a></string>
     <string name="ipcam_authentication">Authentication</string>
     <string name="ipcam_username">Username</string>
     <string name="ipcam_password">Password</string>
+    <string name="ipcam_stream_mjpeg">MJPEG</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>
