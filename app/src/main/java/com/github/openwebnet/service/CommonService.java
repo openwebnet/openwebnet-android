@@ -12,4 +12,8 @@ public interface CommonService {
 
     String getString(int id);
 
+    boolean hasNetworkAccess();
+
+    boolean hasInternetAccess();
+
 }

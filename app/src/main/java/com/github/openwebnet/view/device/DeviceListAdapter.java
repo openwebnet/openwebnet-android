@@ -29,6 +29,7 @@ import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
+import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
@@ -71,6 +72,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     PreferenceService preferenceService;
+
+    @Inject
+    CommonService commonService;
 
     // NO @Inject: need activity to show AppCompactDialog
     Context mContext;
@@ -579,7 +583,35 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /* Ipcam */
 
     private void initCardIpcam(IpcamViewHolder holder, IpcamModel ipcam) {
+        holder.textViewCardIpcamTitle.setText(ipcam.getName());
+
+        updateFavourite(holder, ipcam.isFavourite());
+        onFavouriteChange(holder, ipcam, ipcamService);
+
         // TODO
+        holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        if (!commonService.hasNetworkAccess()) {
+            log.warn("ipcam has not network access");
+            holder.imageButtonCardIpcamPlay.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        holder.imageButtonCardIpcamPlay.setOnClickListener(v -> {
+            // TODO open activity
+        });
+
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
+                mContext.startActivity(intentEditIpcam);
+            },
+            () -> ipcamService.delete(ipcam.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
     }
 
     /* commons */

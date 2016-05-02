@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.annimon.stream.function.Function;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.IpcamModel;
+import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.IpcamService;
 
 import org.slf4j.Logger;
@@ -32,7 +34,6 @@ import butterknife.BindString;
 import butterknife.ButterKnife;
 
 // TODO translate
-// TODO edit
 // TODO test
 public class IpcamActivity extends AbstractDeviceActivity {
 
@@ -67,6 +68,8 @@ public class IpcamActivity extends AbstractDeviceActivity {
 
     private SparseArray<IpcamModel.StreamType> streamTypeArray;
 
+    private String ipcamUuid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +83,8 @@ public class IpcamActivity extends AbstractDeviceActivity {
         hideSpinnerGateway();
         initSpinnerEnvironment();
         initSpinnerStreamType();
-        initEditIpcam();
         initAuthentication();
+        initEditIpcam();
     }
 
     private int dp2px(int dp) {
@@ -112,12 +115,40 @@ public class IpcamActivity extends AbstractDeviceActivity {
         return streamTypeArray.get(spinnerIpcamStreamType.getSelectedItemPosition());
     }
 
+    private void selectStreamType(IpcamModel.StreamType streamType) {
+        Function<IpcamModel.StreamType, Integer> findSelectedIpcam = type -> {
+            for (int i = 0; i < streamTypeArray.size(); i++) {
+                if (streamTypeArray.valueAt(i).equals(type)) {
+                    return i;
+                }
+            }
+            throw new IllegalStateException("unable to find a valid streamType");
+        };
+        spinnerDeviceEnvironment.setSelection(findSelectedIpcam.apply(streamType));
+    }
+
     private void initEditIpcam() {
-        // TODO
+        ipcamUuid = getIntent().getStringExtra(RealmModel.FIELD_UUID);
+        log.debug("initEditIpcam: {}", ipcamUuid);
+        if (ipcamUuid != null) {
+            ipcamService.findById(ipcamUuid).subscribe(ipcam -> {
+                editTextIpcamName.setText(String.valueOf(ipcam.getName()));
+                editTextIpcamUrl.setText(String.valueOf(ipcam.getUrl()));
+
+                if (ipcam.getUsername() != null && ipcam.getPassword() != null) {
+                    switchIpcamAuthentication.setChecked(true);
+                    editTextIpcamUsername.setText(String.valueOf(ipcam.getUsername()));
+                    editTextIpcamPassword.setText(String.valueOf(ipcam.getPassword()));
+                }
+
+                selectStreamType(ipcam.getStreamType());
+                selectEnvironment(ipcam.getEnvironmentId());
+                setFavourite(ipcam.isFavourite());
+            });
+        }
     }
 
     private void initAuthentication() {
-        // TODO
         switchIpcamAuthentication.setChecked(false);
         disableEditText(editTextIpcamUsername);
         disableEditText(editTextIpcamPassword);
@@ -162,7 +193,13 @@ public class IpcamActivity extends AbstractDeviceActivity {
         log.debug("favourite: {}", isFavourite());
 
         if (isValidIpcam()) {
-            ipcamService.add(parseIpcam()).subscribe(uuid -> finish());
+            if (ipcamUuid == null) {
+                ipcamService.add(parseIpcam()).subscribe(uuid -> finish());
+            } else {
+                ipcamService.update(parseIpcam())
+                    .doOnCompleted(() -> finish())
+                    .subscribe();
+            }
         }
     }
 
@@ -185,7 +222,10 @@ public class IpcamActivity extends AbstractDeviceActivity {
     }
 
     private IpcamModel parseIpcam() {
-        IpcamModel.Builder builder = IpcamModel.addBuilder()
+        IpcamModel.Builder builder = (ipcamUuid == null ?
+            IpcamModel.addBuilder() : IpcamModel.updateBuilder(ipcamUuid));
+
+        builder
             .name(editTextIpcamName.getText().toString())
             .url(editTextIpcamUrl.getText().toString())
             .streamType(getSelectedStreamType())
