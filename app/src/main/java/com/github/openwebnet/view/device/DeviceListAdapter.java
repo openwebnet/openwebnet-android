@@ -588,7 +588,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, ipcam.isFavourite());
         onFavouriteChange(holder, ipcam, ipcamService);
 
-        // TODO
         holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (!commonService.hasNetworkAccess()) {
@@ -599,7 +598,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         holder.imageButtonCardIpcamPlay.setOnClickListener(v -> {
-            // TODO open activity
+            Intent intentIpcamStream = new Intent(mContext, IpcamStreamActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
+            mContext.startActivity(intentIpcamStream);
         });
 
         holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
