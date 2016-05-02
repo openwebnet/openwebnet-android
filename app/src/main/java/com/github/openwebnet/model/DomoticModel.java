@@ -22,8 +22,10 @@ public interface DomoticModel {
 
     String getGatewayUuid();
 
+    String getName();
+
     boolean isFavourite();
 
-    String getName();
+    void setFavourite(boolean favourite);
 
 }

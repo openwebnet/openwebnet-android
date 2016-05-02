@@ -154,6 +154,7 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
         return favourite;
     }
 
+    @Override
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }

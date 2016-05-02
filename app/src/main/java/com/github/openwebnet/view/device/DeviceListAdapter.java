@@ -30,6 +30,7 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
@@ -323,14 +324,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initCardDevice(DeviceViewHolder holder, DeviceModel device) {
         holder.textViewCardDevice.setText(device.getName());
 
-        // TODO abstract
         updateFavourite(holder, device.isFavourite());
-        holder.imageButtonCardFavourite.setOnClickListener(v -> {
-            device.setFavourite(!device.isFavourite());
-            deviceService.update(device)
-                .doOnCompleted(() -> updateFavourite(holder, device.isFavourite()))
-                .subscribe();
-        });
+        onFavouriteChange(holder, device, deviceService);
 
         holder.relativeLayoutCardDeviceStatus.setBackground(holder.drawableStatusWait);
         if (device.isRunOnLoad()) {
@@ -430,16 +425,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initCardLight(LightViewHolder holder, LightModel light) {
         holder.textViewCardLightTitle.setText(light.getName());
 
-        // TODO abstract
         updateFavourite(holder, light.isFavourite());
-        holder.imageButtonCardFavourite.setOnClickListener(v -> {
-            light.setFavourite(!light.isFavourite());
-            lightService.update(light)
-                .doOnCompleted(() -> updateFavourite(holder, light.isFavourite()))
-                .subscribe();
-        });
-
+        onFavouriteChange(holder, light, lightService);
         updateLightStatus(holder, light.getStatus());
+
         holder.imageButtonCardLightOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardLightOn.setOnClickListener(v -> turnLightOn(holder, light));
 
@@ -499,15 +488,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void initCardAutomation(AutomationViewHolder holder, AutomationModel automation) {
         holder.textViewCardAutomationTitle.setText(automation.getName());
 
-        // TODO abstract
         updateFavourite(holder, automation.isFavourite());
-        holder.imageButtonCardFavourite.setOnClickListener(v -> {
-            automation.setFavourite(!automation.isFavourite());
-            automationService.update(automation)
-                .doOnCompleted(() -> updateFavourite(holder, automation.isFavourite()))
-                .subscribe();
-        });
-
+        onFavouriteChange(holder, automation, automationService);
         updateAutomationStatus(holder, automation.getStatus());
 
         holder.imageButtonCardAutomationUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
@@ -609,6 +591,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void updateFavourite(CommonViewHolder holder, boolean favourite) {
         int favouriteDrawable = favourite ? R.drawable.star : R.drawable.star_outline;
         holder.imageButtonCardFavourite.setImageResource(favouriteDrawable);
+    }
+
+    private <M extends DomoticModel, S extends DomoticService>
+        void onFavouriteChange(CommonViewHolder holder, M model, S service) {
+
+        holder.imageButtonCardFavourite.setOnClickListener(v -> {
+            model.setFavourite(!model.isFavourite());
+            service.update(model)
+                .doOnCompleted(() -> updateFavourite(holder, model.isFavourite()))
+                .subscribe();
+        });
     }
 
     private void showCardMenu(View view, Action0 onMenuEdit, Action0 onMenuDelete) {

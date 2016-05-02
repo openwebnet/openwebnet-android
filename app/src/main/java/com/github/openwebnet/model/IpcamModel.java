@@ -238,6 +238,7 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
         return favourite;
     }
 
+    @Override
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }

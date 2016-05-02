@@ -6,21 +6,7 @@ import java.util.List;
 
 import rx.Observable;
 
-public interface LightService {
-
-    Observable<String> add(LightModel light);
-
-    Observable<Void> update(LightModel light);
-
-    Observable<Void> delete(String uuid);
-
-    Observable<LightModel> findById(String uuid);
-
-    Observable<List<LightModel>> findByEnvironment(Integer id);
-
-    Observable<List<LightModel>> findFavourites();
-
-    /* operate on background threads */
+public interface LightService extends DomoticService<LightModel> {
 
     Observable<List<LightModel>> requestByEnvironment(Integer id);
 
