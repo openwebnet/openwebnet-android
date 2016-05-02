@@ -597,7 +597,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /* Ipcam */
 
     private void initCardIpcam(IpcamViewHolder holder, IpcamModel ipcam) {
-
+        // TODO
     }
 
     /* commons */
