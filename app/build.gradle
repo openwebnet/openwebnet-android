@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.vanniktech.android.junit.jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
+apply from: '../coverage.gradle'
 
 android {
     compileSdkVersion 23
@@ -44,15 +43,6 @@ android {
 
     // Robolectric issue
     useLibrary 'org.apache.http.legacy'
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/debug/jacoco.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
 }
 
 dependencies {

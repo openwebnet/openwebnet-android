@@ -1,7 +1,7 @@
 # openwebnet-android ![openwebnet-android](images/logo.png)
 
 [![Build Status](https://travis-ci.org/openwebnet/openwebnet-android.svg)](https://travis-ci.org/openwebnet/openwebnet-android)
-<!--[![Coverage Status](https://coveralls.io/repos/github/openwebnet/openwebnet-android/badge.svg?branch=master)](https://coveralls.io/github/openwebnet/openwebnet-android?branch=master)-->
+[![Coverage Status](https://coveralls.io/repos/github/openwebnet/openwebnet-android/badge.svg?branch=master)](https://coveralls.io/github/openwebnet/openwebnet-android?branch=master)
 
 > work in progress!
 
