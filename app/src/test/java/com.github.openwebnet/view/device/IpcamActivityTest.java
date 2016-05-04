@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -18,6 +20,7 @@ import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.matcher.IpcamModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.RealmModel;
@@ -40,7 +43,6 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +54,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.fakes.RoboMenuItem;
 import org.robolectric.util.ActivityController;
 
 import java.util.ArrayList;
@@ -72,9 +75,11 @@ import rx.Observable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -119,6 +124,12 @@ public class IpcamActivityTest {
 
     @BindString(R.string.label_none)
     String labelNone;
+
+    @BindString(R.string.validation_required)
+    String validationRequired;
+
+    @BindString(R.string.validation_url)
+    String validationUrl;
 
     @Inject
     IpcamService ipcamService;
@@ -214,7 +225,7 @@ public class IpcamActivityTest {
 
     @After
     public void tearDown() {
-        //controller.pause().stop().destroy();
+        controller.pause().stop().destroy();
     }
 
     private void createWithIntent(String uuidExtra) {
@@ -420,21 +431,114 @@ public class IpcamActivityTest {
         assertEquals("invalid value", IPCAM_PASSWORD, editTextIpcamPassword.getText().toString());
     }
 
-    @Ignore
+    private void expectViewError(TextView view, String error) {
+        activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
+        verify(ipcamService, never()).add(any(IpcamModel.class));
+        verify(ipcamService, never()).update(any(IpcamModel.class));
+        assertEquals("should be required", error, view.getError());
+        // fix error:
+        // The specified child already has a parent. You must call removeView() on the child's parent first.
+        if (view.getParent() != null && view instanceof EditText) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+    }
+
     @Test
     public void shouldVerifyOnCreate_onMenuSave_invalid() {
+        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
 
+        createWithIntent(null);
+
+        expectViewError(editTextIpcamName, validationRequired);
+        editTextIpcamName.setText("ipcamName");
+
+        expectViewError(editTextIpcamUrl, validationRequired);
+        editTextIpcamUrl.setText("invalidUrl");
+        expectViewError(editTextIpcamUrl, validationUrl);
+        editTextIpcamUrl.setText("http://XXX");
+
+        expectViewError((TextView) spinnerDeviceEnvironment.getSelectedView(), validationRequired);
+        ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
+            android.R.layout.simple_spinner_dropdown_item, Arrays.asList("ENVIRONMENT"));
+        spinnerDeviceEnvironment.setAdapter(adapterEnvironment);
+
+        // now is valid
     }
 
-    @Ignore
+    @Test
+    public void shouldVerifyOnCreate_onMenuSave_invalidAuthentication() {
+        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
+
+        createWithIntent(null);
+
+        editTextIpcamName.setText("ipcamName");
+        editTextIpcamUrl.setText("http://XXX");
+        switchIpcamAuthentication.setChecked(true);
+
+        expectViewError(editTextIpcamUsername, validationRequired);
+        editTextIpcamUsername.setText("ipcamUsername");
+
+        expectViewError(editTextIpcamPassword, validationRequired);
+        editTextIpcamPassword.setText("ipcamPassword");
+
+        // now is valid
+    }
+
+    private IpcamModel common_onMenuSave_valid(String uuidExtra) {
+        String IPCAM_NAME = "myName";
+        String IPCAM_URL = "http://myUrl";
+        String IPCAM_USERNAME = "myUsername";
+        String IPCAM_PASSWORD = "myPassword";
+        Integer IPCAM_ENVIRONMENT_SELECTED = 108;
+        boolean IPCAM_FAVOURITE = true;
+
+        when(environmentService.findAll()).thenReturn(Observable.
+            just(Arrays.asList(newEnvironment(IPCAM_ENVIRONMENT_SELECTED, "env1"))));
+
+        String IPCAM_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(ipcamService.add(any(IpcamModel.class))).thenReturn(Observable.just(IPCAM_UUID));
+        when(ipcamService.update(any(IpcamModel.class))).thenReturn(Observable.just(null));
+
+        createWithIntent(uuidExtra);
+
+        editTextIpcamName.setText(IPCAM_NAME);
+        editTextIpcamUrl.setText(IPCAM_URL);
+        switchIpcamAuthentication.setChecked(true);
+        editTextIpcamUsername.setText(IPCAM_USERNAME);
+        editTextIpcamPassword.setText(IPCAM_PASSWORD);
+        spinnerIpcamStreamType.setSelection(0);
+        spinnerDeviceEnvironment.setSelection(0);
+        checkBoxDeviceFavourite.setChecked(IPCAM_FAVOURITE);
+
+        activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
+
+        IpcamModel ipcamModel = IpcamModel.updateBuilder(IPCAM_UUID)
+            .name(IPCAM_NAME)
+            .url(IPCAM_URL)
+            .username(IPCAM_USERNAME)
+            .password(IPCAM_PASSWORD)
+            .streamType(IpcamModel.StreamType.MJPEG)
+            .environment(IPCAM_ENVIRONMENT_SELECTED)
+            .favourite(IPCAM_FAVOURITE)
+            .build();
+        return ipcamModel;
+    }
+
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
+        IpcamModel ipcamMock = common_onMenuSave_valid(null);
 
+        verify(ipcamService, times(1)).add(IpcamModelMatcher.ipcamModelEq(ipcamMock));
+        verify(ipcamService, never()).update(any(IpcamModel.class));
     }
 
-    @Ignore
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validEdit() {
+        when(ipcamService.findById(anyString())).thenReturn(Observable.<IpcamModel>empty());
 
+        IpcamModel ipcamMock = common_onMenuSave_valid("anyUuid");
+
+        verify(ipcamService, never()).add(any(IpcamModel.class));
+        verify(ipcamService, times(1)).update(IpcamModelMatcher.ipcamModelEq(ipcamMock));
     }
 }
