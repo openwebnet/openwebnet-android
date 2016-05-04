@@ -323,7 +323,7 @@ public class LightActivityTest {
             .favourite(LIGHT_FAVOURITE)
             .build();
 
-        when(lightService.findById(anyString())).thenReturn(Observable.just(lightModel));
+        when(lightService.findById(LIGHT_UUID)).thenReturn(Observable.just(lightModel));
 
         createWithIntent(LIGHT_UUID);
 
