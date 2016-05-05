@@ -35,6 +35,7 @@ import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +76,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     CommonService commonService;
+
+    @Inject
+    UtilityService utilityService;
 
     // NO @Inject: need activity to show AppCompactDialog
     Context mContext;
@@ -590,7 +594,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
-        if (!commonService.hasNetworkAccess()) {
+        if (!utilityService.hasNetworkAccess()) {
             log.warn("ipcam has not network access");
             holder.imageButtonCardIpcamPlay.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
