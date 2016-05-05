@@ -4,6 +4,7 @@ package com.github.openwebnet.model;
  * @see DeviceModel
  * @see LightModel
  * @see AutomationModel
+ * @see IpcamModel
  *
  * Note:
  * check https://github.com/openwebnet/openwebnet-android/pull/29
@@ -21,8 +22,10 @@ public interface DomoticModel {
 
     String getGatewayUuid();
 
+    String getName();
+
     boolean isFavourite();
 
-    String getName();
+    void setFavourite(boolean favourite);
 
 }

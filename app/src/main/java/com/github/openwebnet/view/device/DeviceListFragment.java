@@ -17,9 +17,11 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
@@ -55,10 +57,15 @@ public class DeviceListFragment extends Fragment {
 
     @Inject
     LightService lightService;
+
     @Inject
     AutomationService automationService;
+
     @Inject
     DeviceService deviceService;
+
+    @Inject
+    IpcamService ipcamService;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -156,8 +163,12 @@ public class DeviceListFragment extends Fragment {
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable.zip(requestLights, requestAutomations, requestDevices,
-            (lights, automations, devices) -> Lists.<DomoticModel>newArrayList(Iterables.concat(lights, automations, devices)))
+        Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
+            ipcamService.findByEnvironment(environmentId);
+
+        Observable.zip(findIpcams, requestLights, requestAutomations, requestDevices,
+            (ipcams, lights, automations, devices) ->
+                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, lights, automations, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);
@@ -165,7 +176,6 @@ public class DeviceListFragment extends Fragment {
                 domoticItems.addAll(results);
                 mAdapter.notifyDataSetChanged();
             });
-
     }
 
     private void showLoader(boolean refreshing, boolean isFavouriteMenu) {

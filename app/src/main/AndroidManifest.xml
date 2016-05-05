@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.github.openwebnet"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="11"
-    android:versionName="@string/app_version_number">
+<manifest package="com.github.openwebnet"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:versionCode="11"
+          android:versionName="@string/app_version_number">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".OpenWebNetApplication"
@@ -44,6 +44,22 @@
         <activity
             android:name=".view.device.AutomationActivity"
             android:label="@string/activity_automation"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".view.device.IpcamActivity"
+            android:label="@string/activity_ipcam"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".view.device.IpcamStreamActivity"
+            android:label="@string/activity_ipcam"
             android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
