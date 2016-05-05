@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.robolectric.RuntimeEnvironment;
 
@@ -35,6 +37,12 @@ public class ApplicationContextModuleTest {
     @Singleton
     public CommonService provideCommonService() {
         return mock(CommonServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    public UtilityService provideUtilityService() {
+        return mock(UtilityServiceImpl.class);
     }
 
 }

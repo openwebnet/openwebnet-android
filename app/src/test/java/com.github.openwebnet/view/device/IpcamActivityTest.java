@@ -32,6 +32,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
@@ -40,6 +41,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -170,6 +172,12 @@ public class IpcamActivityTest {
         @Singleton
         public CommonService provideCommonService() {
             return new CommonServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        public UtilityService provideUtilityService() {
+            return new UtilityServiceImpl();
         }
 
         @Provides

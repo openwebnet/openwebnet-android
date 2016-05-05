@@ -13,6 +13,7 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -33,6 +34,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
+import io.realm.annotations.Ignore;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
@@ -58,6 +60,9 @@ public class CommonServiceTest {
 
     @Inject
     PreferenceService preferenceService;
+
+    @Ignore
+    UtilityService utilityService;
 
     @Inject
     EnvironmentService environmentService;
@@ -99,6 +104,12 @@ public class CommonServiceTest {
             return new CommonServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        public UtilityService provideUtilityService() {
+            return mock(UtilityServiceImpl.class);
+        }
+
     }
 
     @Before
@@ -124,7 +135,7 @@ public class CommonServiceTest {
 
         when(preferenceService.isFirstRun()).thenReturn(true);
 
-        when(Mockito.mock(CommonServiceImpl.class).getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
+        when(Mockito.mock(UtilityServiceImpl.class).getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
         when(environmentService.add(LABEL_ENVIRONMENT)).thenReturn(Observable.just(ID_ENVIRONMENT));
 
         commonService.initApplication();
@@ -173,7 +184,7 @@ public class CommonServiceTest {
 
     @Test
     public void commonService_getString() {
-        String expected = commonService.getString(R.string.drawer_menu_example);
+        String expected = utilityService.getString(R.string.drawer_menu_example);
         assertEquals("invalid string", "Example environment", expected);
     }
 
