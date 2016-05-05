@@ -4,6 +4,7 @@
     <string name="activity_device">Устройство</string>
     <string name="activity_light">Свет</string>
     <string name="activity_automation">Автопривод</string>
+    <!--<string name="activity_ipcam">Ip Camera</string>-->
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -53,6 +54,7 @@
     <string name="bs_device">Устройство</string>
     <string name="bs_light">Освещение</string>
     <string name="bs_automation">Автопривод</string>
+    <!--<string name="bs_ipcam">Ip Camera</string>-->
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
@@ -69,6 +71,13 @@
     <string name="light_request">Запрос</string>
     <string name="light_dimmer">Диммер</string>
     <string name="automation_request">Запрос</string>
+    <!--<string name="ipcam_url">Url</string>-->
+    <!--<string name="ipcam_url_help">Example <i>http://192.168.1.100:2222/videostream.cgi</i>\nIf you need help to identify the Url correctly, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>-->
+    <!--<string name="ipcam_authentication">Authentication</string>-->
+    <!--<string name="ipcam_username">Username</string>-->
+    <!--<string name="ipcam_password">Password</string>-->
+    <!--<string name="ipcam_stream_mjpeg">MJPEG</string>-->
+    <!--<string name="ipcam_stream_error">Error</string>-->
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

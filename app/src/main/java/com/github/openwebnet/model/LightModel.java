@@ -169,6 +169,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         return favourite;
     }
 
+    @Override
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }

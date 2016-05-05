@@ -4,12 +4,14 @@ import com.github.openwebnet.repository.AutomationRepository;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
+import com.github.openwebnet.repository.IpcamRepository;
 import com.github.openwebnet.repository.LightRepository;
 import com.github.openwebnet.repository.SampleRepository;
 import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
+import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 
 import javax.inject.Singleton;
@@ -62,6 +64,12 @@ public class RepositoryModuleTest {
     @Singleton
     SampleRepository provideSample() {
         return isMocked ? mock(SampleRepository.class) : new SampleRepository();
+    }
+
+    @Provides
+    @Singleton
+    IpcamRepository provideIpcam() {
+        return isMocked ? mock(IpcamRepository.class) : new IpcamRepositoryImpl();
     }
 
 }

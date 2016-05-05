@@ -1,6 +1,7 @@
 package com.github.openwebnet.service.impl;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 
 import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.openwebnet.R;
@@ -13,6 +14,7 @@ import com.github.openwebnet.service.PreferenceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -36,7 +38,7 @@ public class CommonServiceImpl implements CommonService {
     GatewayService gatewayService;
 
     @Inject
-    Context context;
+    Context mContext;
 
     public CommonServiceImpl() {
         Injector.getApplicationComponent().inject(this);
@@ -77,7 +79,29 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public String getString(int id) {
-        return context.getResources().getString(id);
+        return mContext.getResources().getString(id);
+    }
+
+    @Override
+    public boolean hasNetworkAccess() {
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
+    }
+
+    @Override
+    public boolean hasInternetAccess() {
+        // http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-timeouts
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            // ping google DNS
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+
+        } catch (IOException | InterruptedException e) {
+            log.error("hasInternetAccess", e);
+        }
+        return false;
     }
 
 }

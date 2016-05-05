@@ -11,8 +11,8 @@ android {
         applicationId "com.github.openwebnet"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 11
-        versionName "2.2.0"
+        versionCode 12
+        versionName "2.3.0"
         multiDexEnabled true
     }
 
@@ -71,6 +71,7 @@ dependencies {
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 
     compile 'com.github.openwebnet:rx-openwebnet:0.7.2'
+    compile 'com.github.niqdev:mjpeg-view:0.2.1'
 
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.noveogroup.android:android-logger:1.3.6'

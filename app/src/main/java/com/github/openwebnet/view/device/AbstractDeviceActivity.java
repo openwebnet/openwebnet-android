@@ -105,7 +105,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         });
     }
 
-    private <T> SparseArray<T> initSparseArray(List<T> items) {
+    protected <T> SparseArray<T> initSparseArray(List<T> items) {
         SparseArray<T> array = new SparseArray<>();
         for (int index = 0; index < items.size(); index++) {
             array.put(index, items.get(index));
@@ -119,7 +119,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         }
     }
 
-    private void initSpinnerAdapter(Spinner spinner, List<String> values) {
+    protected void initSpinnerAdapter(Spinner spinner, List<String> values) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
             android.R.layout.simple_spinner_dropdown_item, values);
 
