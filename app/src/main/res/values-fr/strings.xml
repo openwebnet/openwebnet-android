@@ -72,9 +72,9 @@
     <string name="light_dimmer">Variateur</string>
     <string name="automation_request">Requête</string>
     <string name="ipcam_url">Url</string>
-    <string name="ipcam_url_help">Exemple <i>http://192.168.1.100:2222/videostream.cgi</i>\nSi vous avez besoin d'aide pour identifier l'Url correctement, lisez ce <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>
+    <string name="ipcam_url_help">Exemple <i>http://192.168.1.100:2222/videostream.cgi</i>\nSi vous avez besoin d\'aide pour identifier l\'Url correctement, lisez ce <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>
     <string name="ipcam_authentication">Authentification</string>
-    <string name="ipcam_username">Nom d'utilisateur</string>
+    <string name="ipcam_username">Nom d\'utilisateur</string>
     <string name="ipcam_password">Mot de passe</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Erreur</string>
