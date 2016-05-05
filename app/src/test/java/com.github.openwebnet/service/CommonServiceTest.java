@@ -182,10 +182,4 @@ public class CommonServiceTest {
         verify(preferenceService).getDefaultGateway();
     }
 
-    @Test
-    public void commonService_getString() {
-        String expected = utilityService.getString(R.string.drawer_menu_example);
-        assertEquals("invalid string", "Example environment", expected);
-    }
-
 }
