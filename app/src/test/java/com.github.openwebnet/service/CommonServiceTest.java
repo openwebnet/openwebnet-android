@@ -19,7 +19,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -34,7 +33,6 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
-import io.realm.annotations.Ignore;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
@@ -61,7 +59,7 @@ public class CommonServiceTest {
     @Inject
     PreferenceService preferenceService;
 
-    @Ignore
+    @Inject
     UtilityService utilityService;
 
     @Inject
@@ -135,7 +133,7 @@ public class CommonServiceTest {
 
         when(preferenceService.isFirstRun()).thenReturn(true);
 
-        when(Mockito.mock(UtilityServiceImpl.class).getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
+        when(utilityService.getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
         when(environmentService.add(LABEL_ENVIRONMENT)).thenReturn(Observable.just(ID_ENVIRONMENT));
 
         commonService.initApplication();

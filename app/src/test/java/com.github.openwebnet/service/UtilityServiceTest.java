@@ -1,6 +1,8 @@
 package com.github.openwebnet.service;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -15,14 +17,18 @@ import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowConnectivityManager;
+import org.robolectric.shadows.ShadowNetworkInfo;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,8 +37,11 @@ import dagger.Component;
 import dagger.Module;
 import dagger.Provides;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
@@ -40,8 +49,14 @@ import static org.mockito.Mockito.mock;
 @PrepareForTest({Injector.class})
 public class UtilityServiceTest {
 
+    @Rule
+    public PowerMockRule rule = new PowerMockRule();
+
     @Inject
     UtilityService utilityService;
+
+    @Inject
+    Context contextMock;
 
     @Singleton
     @Component(modules = {
@@ -106,16 +121,52 @@ public class UtilityServiceTest {
         assertEquals("invalid string", "Example environment", expected);
     }
 
-    @Ignore
-    @Test
-    public void utilityService_hasNetworkAccess() {
+    private void toggleNetwork(int networkType, NetworkInfo.DetailedState detailedState) {
+        NetworkInfo networkInfo = null;
+        switch (detailedState) {
+            case CONNECTED:
+                networkInfo = ShadowNetworkInfo.newInstance(NetworkInfo.DetailedState.CONNECTED, networkType, 0, true, true);
+                break;
+            case DISCONNECTED:
+                networkInfo = ShadowNetworkInfo.newInstance(NetworkInfo.DetailedState.DISCONNECTED, networkType, 0, true, false);
+                break;
+        }
 
+        ConnectivityManager cmMock = (ConnectivityManager) RuntimeEnvironment.application.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ShadowConnectivityManager shadowConnectivityManager = shadowOf(cmMock);
+
+        shadowConnectivityManager.setNetworkInfo(networkType, networkInfo);
+        shadowConnectivityManager.setActiveNetworkInfo(shadowConnectivityManager.getNetworkInfo(networkType));
+    }
+
+    @Test
+    public void utilityService_hasMobileNetworkAccess() {
+        toggleNetwork(ConnectivityManager.TYPE_MOBILE, NetworkInfo.DetailedState.CONNECTED);
+        assertTrue("should have network access", utilityService.hasNetworkAccess());
+    }
+
+    @Test
+    public void utilityService_hasWifiNetworkAccess() {
+        toggleNetwork(ConnectivityManager.TYPE_WIFI, NetworkInfo.DetailedState.CONNECTED);
+        assertTrue("should have network access", utilityService.hasNetworkAccess());
+    }
+
+    @Test
+    public void utilityService_hasNotMobileNetworkAccess() {
+        toggleNetwork(ConnectivityManager.TYPE_MOBILE, NetworkInfo.DetailedState.DISCONNECTED);
+        assertFalse("should have not network access", utilityService.hasNetworkAccess());
+    }
+
+    @Test
+    public void utilityService_hasNotWifiNetworkAccess() {
+        toggleNetwork(ConnectivityManager.TYPE_WIFI, NetworkInfo.DetailedState.DISCONNECTED);
+        assertFalse("should have not network access", utilityService.hasNetworkAccess());
     }
 
     @Ignore
     @Test
     public void utilityService_hasInternetAccess() {
-
+        // not used
     }
 
     @Ignore
