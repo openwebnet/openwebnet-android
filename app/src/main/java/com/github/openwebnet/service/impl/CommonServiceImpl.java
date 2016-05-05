@@ -18,8 +18,6 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import io.realm.annotations.Ignore;
-
 import static com.github.niqdev.openwebnet.OpenWebNet.gateway;
 import static com.github.niqdev.openwebnet.OpenWebNet.newClient;
 
@@ -32,7 +30,7 @@ public class CommonServiceImpl implements CommonService {
     @Inject
     PreferenceService preferenceService;
 
-    @Ignore
+    @Inject
     UtilityService utilityService;
 
     @Inject
