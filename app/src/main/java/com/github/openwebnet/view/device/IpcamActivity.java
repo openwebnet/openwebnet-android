@@ -172,6 +172,7 @@ public class IpcamActivity extends AbstractDeviceActivity {
         editText.setFocusable(false);
         editText.setInputType(InputType.TYPE_NULL);
         editText.setText(null);
+        editText.setError(null);
     }
 
     private void enableEditText(EditText editText) {
