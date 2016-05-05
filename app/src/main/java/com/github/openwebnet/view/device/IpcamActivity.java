@@ -33,8 +33,6 @@ import butterknife.Bind;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 
-// TODO translate
-// TODO test
 public class IpcamActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(IpcamActivity.class);

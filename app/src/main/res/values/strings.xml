@@ -7,7 +7,6 @@
     <string name="activity_device">Device</string>
     <string name="activity_light">Light</string>
     <string name="activity_automation">Automation</string>
-    <!-- TODO -->
     <string name="activity_ipcam">Ip Camera</string>
     <string name="activity_settings">Settings</string>
 
@@ -60,7 +59,6 @@
     <string name="bs_device">Device</string>
     <string name="bs_light">Light</string>
     <string name="bs_automation">Automation</string>
-    <!-- TODO -->
     <string name="bs_ipcam">Ip Camera</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
@@ -87,9 +85,8 @@
     <string name="automation_request">Request Stop</string>
     <string name="automation_prefix" translatable="false">*2*0*</string>
     <string name="automation_suffix" translatable="false">##</string>
-    <!-- TODO -->
     <string name="ipcam_url">Url</string>
-    <string name="ipcam_url_help">Example <i>http://192.168.1.100:2222/videostream.cgi</i>\nIf you need help to identify the url, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>wiki</a></string>
+    <string name="ipcam_url_help">Example <i>http://192.168.1.100:2222/videostream.cgi</i>\nIf you need help to identify the Url correctly, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>
     <string name="ipcam_authentication">Authentication</string>
     <string name="ipcam_username">Username</string>
     <string name="ipcam_password">Password</string>
