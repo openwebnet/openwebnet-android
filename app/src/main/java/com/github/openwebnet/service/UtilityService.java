@@ -12,6 +12,6 @@ public interface UtilityService {
 
     <T extends TextView> boolean isBlankText(T view);
 
-    <T extends TextView> String sanitizeText(T view);
+    <T extends TextView> String sanitizedText(T view);
 
 }

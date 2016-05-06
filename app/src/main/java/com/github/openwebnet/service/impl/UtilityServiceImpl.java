@@ -2,10 +2,12 @@ package com.github.openwebnet.service.impl;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.UtilityService;
+import com.google.common.base.Preconditions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,12 +56,16 @@ public class UtilityServiceImpl implements UtilityService {
 
     @Override
     public <T extends TextView> boolean isBlankText(T view) {
-        throw new UnsupportedOperationException("not implemented yet");
+        if (view != null) {
+            return TextUtils.isEmpty(view.getText().toString().trim());
+        }
+        return true;
     }
 
     @Override
-    public <T extends TextView> String sanitizeText(T view) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public <T extends TextView> String sanitizedText(T view) {
+        Preconditions.checkNotNull(view, "text is null");
+        return view.getText().toString().trim().replaceAll("\\s+", " ");
     }
 
 }

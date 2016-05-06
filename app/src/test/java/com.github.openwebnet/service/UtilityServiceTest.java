@@ -3,6 +3,7 @@ package com.github.openwebnet.service;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.EditText;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -169,16 +170,33 @@ public class UtilityServiceTest {
         // not used
     }
 
-    @Ignore
-    @Test
-    public void utilityService_isBlankText() {
-
+    private EditText initEditText(String text) {
+        EditText editText = new EditText(contextMock);
+        editText.setText(text);
+        return editText;
     }
 
-    @Ignore
     @Test
-    public void utilityService_sanitizeText() {
+    public void utilityService_isBlankText() {
+        assertTrue("should be blank", utilityService.isBlankText(null));
+        assertTrue("should be blank", utilityService.isBlankText(initEditText("")));
+        assertTrue("should be blank", utilityService.isBlankText(initEditText("  ")));
+        assertTrue("should be blank", utilityService.isBlankText(initEditText("\n")));
+        assertTrue("should be blank", utilityService.isBlankText(initEditText("  \n  \t  ")));
 
+        assertFalse("should not be blank", utilityService.isBlankText(initEditText("a")));
+        assertFalse("should not be blank", utilityService.isBlankText(initEditText("  a  a  ")));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void utilityService_sanitizedText_isNull() {
+        utilityService.sanitizedText(null);
+    }
+
+    @Test
+    public void utilityService_sanitizedText() {
+        assertEquals("should be sanitized", "a", utilityService.sanitizedText(initEditText(" a ")));
+        assertEquals("should be sanitized", "a b", utilityService.sanitizedText(initEditText("  \n   a  \t   b  ")));
     }
 
 }
