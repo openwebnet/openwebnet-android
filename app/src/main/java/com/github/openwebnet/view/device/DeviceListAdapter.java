@@ -592,6 +592,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, ipcam.isFavourite());
         onFavouriteChange(holder, ipcam, ipcamService);
 
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
+                mContext.startActivity(intentEditIpcam);
+            },
+            () -> ipcamService.delete(ipcam.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
+
         holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (!utilityService.hasNetworkAccess()) {
@@ -607,17 +618,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
             mContext.startActivity(intentIpcamStream);
         });
-
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
-                mContext.startActivity(intentEditIpcam);
-            },
-            () -> ipcamService.delete(ipcam.getUuid())
-                .doOnCompleted(() -> updateDeviceListEvent())
-                .subscribe()));
     }
 
     /* commons */
