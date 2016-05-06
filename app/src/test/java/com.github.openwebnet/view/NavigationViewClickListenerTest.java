@@ -5,6 +5,7 @@ import android.support.v7.app.ShadowAlertDialogSupport;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -18,6 +19,7 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.matcher.EnvironmentModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.UtilityService;
 import com.google.common.collect.Lists;
 
 import org.junit.Before;
@@ -45,6 +47,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -60,6 +63,9 @@ public class NavigationViewClickListenerTest {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    UtilityService utilityService;
 
     MainActivity activity;
 
@@ -129,6 +135,7 @@ public class NavigationViewClickListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
         View inflatedView = shadowAlertDialog.getInflatedView();
         EditText editTextName = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        when(utilityService.isBlankText(editTextName)).thenReturn(true);
 
         assertNull("no error", editTextName.getError());
         editTextName.setText("");
@@ -148,6 +155,8 @@ public class NavigationViewClickListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
         View inflatedView = shadowAlertDialog.getInflatedView();
         EditText editTextName = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        when(utilityService.isBlankText(editTextName)).thenReturn(false);
+        when(utilityService.sanitizedText(editTextName)).thenReturn(EDIT_ENVIRONMENT);
 
         editTextName.setText(EDIT_ENVIRONMENT);
         shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);

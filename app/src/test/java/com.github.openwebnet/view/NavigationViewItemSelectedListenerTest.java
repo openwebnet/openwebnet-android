@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -20,6 +21,7 @@ import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 import com.google.common.collect.Lists;
@@ -46,6 +48,7 @@ import rx.Observable;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
@@ -53,6 +56,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -67,6 +72,9 @@ public class NavigationViewItemSelectedListenerTest {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    UtilityService utilityService;
 
     @BindString(R.string.app_name)
     String labelApplicationName;
@@ -135,7 +143,7 @@ public class NavigationViewItemSelectedListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
 
         assertThat(activity.getString(R.string.dialog_add_environment_title),
-                equalTo(shadowAlertDialog.getTitle()));
+            equalTo(shadowAlertDialog.getTitle()));
 
         View inflatedView = shadowAlertDialog.getInflatedView();
         assertNotNull("null layout", inflatedView);
@@ -150,6 +158,7 @@ public class NavigationViewItemSelectedListenerTest {
         View inflatedView = shadowAlertDialog.getInflatedView();
 
         EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        when(utilityService.isBlankText(name)).thenReturn(true);
 
         assertNull("no error", name.getError());
         shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);
@@ -170,6 +179,8 @@ public class NavigationViewItemSelectedListenerTest {
 
         EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
         name.setText(NEW_ENVIRONMENT);
+        when(utilityService.isBlankText(name)).thenReturn(false);
+        when(utilityService.sanitizedText(name)).thenReturn(NEW_ENVIRONMENT);
         shadowAlertDialog.performButtonClick(AlertDialog.BUTTON_POSITIVE);
         verify(environmentService).add(NEW_ENVIRONMENT);
     }

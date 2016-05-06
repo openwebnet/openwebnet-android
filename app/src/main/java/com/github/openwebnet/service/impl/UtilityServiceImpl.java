@@ -56,10 +56,7 @@ public class UtilityServiceImpl implements UtilityService {
 
     @Override
     public <T extends TextView> boolean isBlankText(T view) {
-        if (view != null) {
-            return TextUtils.isEmpty(view.getText().toString().trim());
-        }
-        return true;
+        return view == null || TextUtils.isEmpty(view.getText().toString().trim());
     }
 
     @Override
