@@ -95,7 +95,7 @@ public class LightActivity extends AbstractDeviceActivity {
 
     private LightModel parseLight() {
         return (lightUuid == null ? LightModel.addBuilder() : LightModel.updateBuilder(lightUuid))
-            .name(editTextLightName.getText().toString())
+            .name(utilityService.sanitizedText(editTextLightName))
             .where(editTextLightWhere.getText().toString())
             .dimmer(checkBoxLightDimmer.isChecked())
             .environment(getSelectedEnvironment().getId())

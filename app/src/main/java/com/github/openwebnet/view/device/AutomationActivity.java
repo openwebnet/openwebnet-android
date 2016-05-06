@@ -6,7 +6,6 @@ import android.widget.EditText;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
-import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 
@@ -90,7 +89,7 @@ public class AutomationActivity extends AbstractDeviceActivity {
 
     private AutomationModel parseAutomation() {
         return (automationUuid == null ? AutomationModel.addBuilder() : AutomationModel.updateBuilder(automationUuid))
-            .name(editTextAutomationName.getText().toString())
+            .name(utilityService.sanitizedText(editTextAutomationName))
             .where(editTextAutomationWhere.getText().toString())
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())

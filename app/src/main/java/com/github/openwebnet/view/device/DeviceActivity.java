@@ -175,7 +175,7 @@ public class DeviceActivity extends AbstractDeviceActivity {
 
     private DeviceModel parseDevice() {
         return (deviceUuid == null ? DeviceModel.addBuilder() : DeviceModel.updateBuilder(deviceUuid))
-            .name(editTextDeviceName.getText().toString())
+            .name(utilityService.sanitizedText(editTextDeviceName))
             .request(editTextDeviceRequest.getText().toString())
             .response(editTextDeviceResponse.getText().toString())
             .environment(getSelectedEnvironment().getId())

@@ -22,13 +22,17 @@
                 android:id="@+id/editTextIpcamName"
                 style="@style/common.focusable"
                 android:layout_marginBottom="16dp"
-                android:hint="@string/label_name"/>
+                android:hint="@string/label_name"
+                android:inputType="text"
+                android:maxLength="50"/>
 
             <EditText
                 android:id="@+id/editTextIpcamUrl"
                 style="@style/common.focusable"
                 android:hint="@string/ipcam_url"
-                android:inputType="textMultiLine|textUri"/>
+                android:inputType="textMultiLine|textUri"
+                android:maxLength="250"
+                android:maxLines="5"/>
 
             <TextView
                 android:id="@+id/textViewIpcamUrlHelp"
@@ -53,6 +57,7 @@
                 android:layout_marginTop="8dp"
                 android:hint="@string/ipcam_username"
                 android:inputType="text"
+                android:maxLength="100"
                 android:singleLine="true"/>
 
             <EditText
@@ -62,6 +67,7 @@
                 android:layout_marginTop="8dp"
                 android:hint="@string/ipcam_password"
                 android:inputType="textPassword"
+                android:maxLength="100"
                 android:singleLine="true"/>
 
             <Spinner
