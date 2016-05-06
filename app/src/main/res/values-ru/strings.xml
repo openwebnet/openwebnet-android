@@ -27,6 +27,7 @@
     <string name="validation_required">Обязательно поле</string>
     <string name="validation_host">Некорректный IP адрес</string>
     <string name="validation_port">Некорректный порт</string>
+    <!--<string name="validation_url">Invalid url</string>-->
 
     <string name="settings_category_shortcuts">Быстрый выбор</string>
     <string name="settings_title_wireless">Беспроводные сети</string>
