@@ -78,7 +78,7 @@
     <string name="ipcam_username">Nom d\'utilisateur</string>
     <string name="ipcam_password">Mot de passe</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
-    <string name="ipcam_stream_error">Erreur</string>
+    <string name="ipcam_stream_error">Erreur de connexion</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>
