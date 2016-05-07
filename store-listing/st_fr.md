@@ -15,6 +15,7 @@ Gère:
 - Éclairage
 - Automatisme
 - tout OpenWebNet message
+- Caméra IP (MJPEG)
 
 Il est fortement recommandé de vous connecter à votre système domotique à l'aide d'une connexion VPN, mais ce n'est pas obligatoire.
 

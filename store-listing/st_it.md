@@ -14,7 +14,8 @@ Quest'applicazione Android é un client non ufficiale completamente gratuito con
 Gestisce:
 - Illuminazione
 - Automatismi
-- qualsiasi OpenWebNet frame/messaggio
+- qualsiasi frame/messaggio OpenWebNet
+- Ip Camera (MJPEG)
 
 Non é obbligatorio, ma si raccomanda che tutte le connessioni avvengano tramite una connessione VPN.
 
