@@ -17,8 +17,8 @@ This Android application is an unofficial free client under [Creative Commons](h
 <img src="images/screenshot-environment-fab-04.png" alt=menu height="600" />
 <img src="images/screenshot-device-debug.png" alt=menu height="600" />
 
+<img src="images/screenshot-ipcam-01.png" alt=menu height="600" />
 <img src="images/screenshot-add-edit-device.png" alt=menu height="600" />
-<img src="images/screenshot-settings.png" alt=menu height="600" />
 
 <a href="https://play.google.com/store/apps/details?id=com.github.openwebnet&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="200"/></a>
 
