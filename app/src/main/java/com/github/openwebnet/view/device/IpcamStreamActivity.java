@@ -24,6 +24,8 @@ public class IpcamStreamActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(IpcamStreamActivity.class);
 
+    private static final int TIMEOUT = 5; // seconds
+
     @Inject
     IpcamService ipcamService;
 
@@ -44,7 +46,7 @@ public class IpcamStreamActivity extends AppCompatActivity {
             .findById(getIntent().getStringExtra(RealmModel.FIELD_UUID))
             .flatMap(ipcam -> Mjpeg.newInstance()
                 .credential(ipcam.getUsername(), ipcam.getPassword())
-                .open(ipcam.getUrl()))
+                .open(ipcam.getUrl(), TIMEOUT))
             .subscribe(
                 inputStream -> {
                     mjpegView.setSource(inputStream);
