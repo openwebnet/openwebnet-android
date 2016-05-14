@@ -10,10 +10,4 @@ public interface CommonService {
 
     String getDefaultGateway();
 
-    String getString(int id);
-
-    boolean hasNetworkAccess();
-
-    boolean hasInternetAccess();
-
 }

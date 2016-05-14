@@ -27,6 +27,7 @@
     <string name="validation_required">Champ obbligatoire</string>
     <string name="validation_host">Adresse IP invalide</string>
     <string name="validation_port">Port invalide</string>
+    <string name="validation_url">Url invalide</string>
 
     <string name="settings_category_shortcuts">Raccourcis</string>
     <string name="settings_title_wireless">Sans-fil et réseau</string>
@@ -77,7 +78,7 @@
     <string name="ipcam_username">Nom d\'utilisateur</string>
     <string name="ipcam_password">Mot de passe</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
-    <string name="ipcam_stream_error">Erreur</string>
+    <string name="ipcam_stream_error">Erreur de connexion</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>

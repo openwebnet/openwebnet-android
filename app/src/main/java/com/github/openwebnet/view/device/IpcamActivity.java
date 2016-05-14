@@ -225,7 +225,7 @@ public class IpcamActivity extends AbstractDeviceActivity {
             IpcamModel.addBuilder() : IpcamModel.updateBuilder(ipcamUuid));
 
         builder
-            .name(editTextIpcamName.getText().toString())
+            .name(utilityService.sanitizedText(editTextIpcamName))
             .url(editTextIpcamUrl.getText().toString())
             .streamType(getSelectedStreamType())
             .environment(getSelectedEnvironment().getId())

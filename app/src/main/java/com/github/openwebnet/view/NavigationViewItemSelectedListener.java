@@ -8,7 +8,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
@@ -44,6 +44,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    UtilityService utilityService;
 
     @Bind(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
@@ -134,10 +137,10 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {
                 EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
-                if (TextUtils.isEmpty(name.getText())) {
+                if (utilityService.isBlankText(name)) {
                     name.setError(labelValidationRequired);
                 } else {
-                    addEnvironment(name.getText().toString());
+                    addEnvironment(utilityService.sanitizedText(name));
                     dialog.dismiss();
                 }
             });

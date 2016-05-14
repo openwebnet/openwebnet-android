@@ -21,6 +21,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 import com.github.openwebnet.view.MainActivity;
 import com.github.openwebnet.view.NavigationViewClickListener;
 import com.github.openwebnet.view.NavigationViewItemSelectedListener;
@@ -66,9 +67,12 @@ public interface ApplicationComponent {
     // service
     void inject(PreferenceServiceImpl preferenceService);
     void inject(CommonServiceImpl commonService);
-    void inject(DeviceServiceImpl deviceService);
-    void inject(EnvironmentServiceImpl environmentService);
+    void inject(UtilityServiceImpl utilityService);
+
+    // domotic service
     void inject(GatewayServiceImpl gatewayService);
+    void inject(EnvironmentServiceImpl environmentService);
+    void inject(DeviceServiceImpl deviceService);
     void inject(LightServiceImpl lightService);
     void inject(AutomationServiceImpl automationService);
     void inject(IpcamServiceImpl ipcamService);
@@ -78,9 +82,9 @@ public interface ApplicationComponent {
     void inject(DatabaseRealmConfig databaseRealmConfig);
 
     // repository
-    void inject(DeviceRepositoryImpl repository);
-    void inject(EnvironmentRepositoryImpl repository);
     void inject(GatewayRepositoryImpl repository);
+    void inject(EnvironmentRepositoryImpl repository);
+    void inject(DeviceRepositoryImpl repository);
     void inject(LightRepositoryImpl repository);
     void inject(AutomationRepositoryImpl repository);
     void inject(IpcamRepositoryImpl repository);

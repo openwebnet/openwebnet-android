@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.3.0</string>
+    <string name="app_version_number" translatable="false">2.3.1</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet/openwebnet-android</string>
 
     <string name="activity_device">Device</string>
@@ -91,7 +91,7 @@
     <string name="ipcam_username">Username</string>
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
-    <string name="ipcam_stream_error">Error</string>
+    <string name="ipcam_stream_error">Connection error</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>

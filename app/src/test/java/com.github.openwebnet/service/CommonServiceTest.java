@@ -13,12 +13,12 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -60,6 +60,9 @@ public class CommonServiceTest {
     PreferenceService preferenceService;
 
     @Inject
+    UtilityService utilityService;
+
+    @Inject
     EnvironmentService environmentService;
 
     @Inject
@@ -99,6 +102,12 @@ public class CommonServiceTest {
             return new CommonServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        public UtilityService provideUtilityService() {
+            return mock(UtilityServiceImpl.class);
+        }
+
     }
 
     @Before
@@ -124,7 +133,7 @@ public class CommonServiceTest {
 
         when(preferenceService.isFirstRun()).thenReturn(true);
 
-        when(Mockito.mock(CommonServiceImpl.class).getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
+        when(utilityService.getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
         when(environmentService.add(LABEL_ENVIRONMENT)).thenReturn(Observable.just(ID_ENVIRONMENT));
 
         commonService.initApplication();
@@ -169,12 +178,6 @@ public class CommonServiceTest {
         assertEquals("bad value", DEFAULT_GATEWAY, commonService.getDefaultGateway());
 
         verify(preferenceService).getDefaultGateway();
-    }
-
-    @Test
-    public void commonService_getString() {
-        String expected = commonService.getString(R.string.drawer_menu_example);
-        assertEquals("invalid string", "Example environment", expected);
     }
 
 }

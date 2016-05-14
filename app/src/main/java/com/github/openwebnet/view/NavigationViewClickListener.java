@@ -4,7 +4,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +13,7 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +35,9 @@ public class NavigationViewClickListener implements OnClickListener {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    UtilityService utilityService;
 
     @BindString(R.string.validation_required)
     String labelValidationRequired;
@@ -76,10 +79,10 @@ public class NavigationViewClickListener implements OnClickListener {
             dialog.show();
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                 .setOnClickListener(v -> {
-                    if (TextUtils.isEmpty(editTextName.getText())) {
+                    if (utilityService.isBlankText(editTextName)) {
                         editTextName.setError(labelValidationRequired);
                     } else {
-                        editEnvironment(editTextName.getText().toString());
+                        editEnvironment(utilityService.sanitizedText(editTextName));
                         dialog.dismiss();
                     }
                 });

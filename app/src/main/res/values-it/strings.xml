@@ -27,6 +27,7 @@
     <string name="validation_required">Campo obbligatorio</string>
     <string name="validation_host">Indirizzo ip non valido</string>
     <string name="validation_port">Porta non valida</string>
+    <string name="validation_url">Url non valida</string>
 
     <string name="settings_category_shortcuts">Scelta rapida</string>
     <string name="settings_title_wireless">Wireless e reti</string>
@@ -77,7 +78,7 @@
     <string name="ipcam_username">Nome utente</string>
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
-    <string name="ipcam_stream_error">Errore</string>
+    <string name="ipcam_stream_error">Errore di connessione</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

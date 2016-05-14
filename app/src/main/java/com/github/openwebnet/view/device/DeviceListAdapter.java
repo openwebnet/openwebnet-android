@@ -35,6 +35,7 @@ import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +76,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     CommonService commonService;
+
+    @Inject
+    UtilityService utilityService;
 
     // NO @Inject: need activity to show AppCompactDialog
     Context mContext;
@@ -588,9 +592,20 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, ipcam.isFavourite());
         onFavouriteChange(holder, ipcam, ipcamService);
 
+        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
+            () -> {
+                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
+                mContext.startActivity(intentEditIpcam);
+            },
+            () -> ipcamService.delete(ipcam.getUuid())
+                .doOnCompleted(() -> updateDeviceListEvent())
+                .subscribe()));
+
         holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
-        if (!commonService.hasNetworkAccess()) {
+        if (!utilityService.hasNetworkAccess()) {
             log.warn("ipcam has not network access");
             holder.imageButtonCardIpcamPlay.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
@@ -603,17 +618,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
             mContext.startActivity(intentIpcamStream);
         });
-
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
-                mContext.startActivity(intentEditIpcam);
-            },
-            () -> ipcamService.delete(ipcam.getUuid())
-                .doOnCompleted(() -> updateDeviceListEvent())
-                .subscribe()));
     }
 
     /* commons */

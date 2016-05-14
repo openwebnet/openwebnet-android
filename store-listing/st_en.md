@@ -15,6 +15,7 @@ Manages:
 - Lighting
 - Automation
 - any OpenWebNet frame/message
+- Ip Camera (MJPEG)
 
 It isn't mandatory, but it's highly recommended that you connect to your domotic system using a VPN connection.
 

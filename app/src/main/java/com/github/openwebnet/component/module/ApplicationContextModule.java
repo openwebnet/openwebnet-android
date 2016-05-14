@@ -5,8 +5,10 @@ import android.content.Context;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import javax.inject.Singleton;
 
@@ -44,6 +46,12 @@ public class ApplicationContextModule {
     @Singleton
     public CommonService provideCommonService() {
         return new CommonServiceImpl();
+    }
+
+    @Provides
+    @Singleton
+    public UtilityService provideUtilityService() {
+        return new UtilityServiceImpl();
     }
 
 }

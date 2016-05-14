@@ -1,7 +1,6 @@
 package com.github.openwebnet.view.device;
 
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +17,7 @@ import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
+import com.github.openwebnet.service.UtilityService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +53,9 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
 
     @BindString(R.string.label_none)
     String labelNone;
+
+    @Inject
+    UtilityService utilityService;
 
     @Inject
     EnvironmentService environmentService;
@@ -168,7 +171,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     }
 
     protected boolean isValidRequired(TextView view) {
-        if (view != null && (TextUtils.isEmpty(view.getText()) || view.getText().equals(labelNone))) {
+        if (utilityService.isBlankText(view) || view.getText().equals(labelNone)) {
             view.setError(validationRequired);
             view.requestFocus();
             return false;
