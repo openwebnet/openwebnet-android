@@ -3,8 +3,8 @@
 
     <string name="activity_device">Устройство</string>
     <string name="activity_light">Свет</string>
-    <string name="activity_automation">Автопривод</string>
-    <!--<string name="activity_ipcam">Ip Camera</string>-->
+    <string name="activity_automation">Электропривод</string>
+    <string name="activity_ipcam">Ip-камера</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -27,7 +27,7 @@
     <string name="validation_required">Обязательно поле</string>
     <string name="validation_host">Некорректный IP адрес</string>
     <string name="validation_port">Некорректный порт</string>
-    <!--<string name="validation_url">Invalid url</string>-->
+    <string name="validation_url">Некорректный url</string>
 
     <string name="settings_category_shortcuts">Быстрый выбор</string>
     <string name="settings_title_wireless">Беспроводные сети</string>
@@ -54,8 +54,8 @@
     <string name="bs_title">Добавить</string>
     <string name="bs_device">Устройство</string>
     <string name="bs_light">Освещение</string>
-    <string name="bs_automation">Автопривод</string>
-    <!--<string name="bs_ipcam">Ip Camera</string>-->
+    <string name="bs_automation">Электропривод</string>
+    <string name="bs_ipcam">Ip-камера</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
@@ -75,7 +75,7 @@
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">
     Пример <i>http://192.168.1.100:2222/videostream.cgi</i>\n
-    Если вам необходима помощь для определения Url, воспользуйтесь данной 
+    Если вам необходима помощь для определения Url, воспользуйтесь данной
     <a href='https://github.com/niqdev/ipcam-view/wiki'>инструкцией</a></string>
     <string name="ipcam_authentication">Аутентификация</string>
     <string name="ipcam_username">Логин</string>
