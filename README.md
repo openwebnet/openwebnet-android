@@ -24,6 +24,10 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
+#### v2.3.1
+
+- Minor fix
+
 #### v2.3.0
 
 - Add Ip Camera features

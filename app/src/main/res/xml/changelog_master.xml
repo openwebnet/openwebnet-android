@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="2.3.1" versioncode="13">
+        <change>Minor fix</change>
+    </release>
     <release version="2.3.0" versioncode="12">
         <change>Add Ip Camera features</change>
     </release>
