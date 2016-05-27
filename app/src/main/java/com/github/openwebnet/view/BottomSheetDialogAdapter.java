@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.github.openwebnet.R;
 
-import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BottomSheetDialogAdapter extends BaseAdapter {
@@ -79,10 +79,10 @@ public class BottomSheetDialogAdapter extends BaseAdapter {
         @BindColor(R.color.grey_light)
         int iconColor;
 
-        @Bind(R.id.imageViewBottomSheetItemIcon)
+        @BindView(R.id.imageViewBottomSheetItemIcon)
         ImageView icon;
 
-        @Bind(R.id.textViewBottomSheetItemLabel)
+        @BindView(R.id.textViewBottomSheetItemLabel)
         TextView label;
 
         public ItemHolder(View view) {

@@ -62,8 +62,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Component;
 import dagger.Module;
@@ -89,22 +89,22 @@ public class LightActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @Bind(R.id.editTextLightName)
+    @BindView(R.id.editTextLightName)
     EditText editTextLightName;
 
-    @Bind(R.id.editTextLightWhere)
+    @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
-    @Bind(R.id.checkBoxLightDimmer)
+    @BindView(R.id.checkBoxLightDimmer)
     CheckBox checkBoxLightDimmer;
 
     @BindString(R.string.validation_required)

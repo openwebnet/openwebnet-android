@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IpcamStreamActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class IpcamStreamActivity extends AppCompatActivity {
     @Inject
     IpcamService ipcamService;
 
-    @Bind(R.id.mjpegSurfaceViewIpcam)
+    @BindView(R.id.mjpegSurfaceViewIpcam)
     MjpegView mjpegView;
 
     @Override

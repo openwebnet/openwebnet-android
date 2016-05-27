@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
@@ -48,10 +48,10 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     @Inject
     UtilityService utilityService;
 
-    @Bind(R.id.floatingActionButtonMain)
+    @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     @BindString(R.string.app_name)

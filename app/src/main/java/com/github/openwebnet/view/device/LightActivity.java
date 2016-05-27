@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LightActivity extends AbstractDeviceActivity {
@@ -25,13 +25,13 @@ public class LightActivity extends AbstractDeviceActivity {
     @Inject
     LightService lightService;
 
-    @Bind(R.id.editTextLightName)
+    @BindView(R.id.editTextLightName)
     EditText editTextLightName;
 
-    @Bind(R.id.editTextLightWhere)
+    @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
-    @Bind(R.id.checkBoxLightDimmer)
+    @BindView(R.id.checkBoxLightDimmer)
     CheckBox checkBoxLightDimmer;
 
     private String lightUuid;

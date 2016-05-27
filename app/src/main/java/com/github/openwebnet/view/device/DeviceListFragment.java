@@ -37,8 +37,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observable;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
@@ -49,10 +50,10 @@ public class DeviceListFragment extends Fragment {
 
     public static final String ARG_ENVIRONMENT = "com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT";
 
-    @Bind(R.id.recyclerViewDeviceList)
+    @BindView(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.swipeRefreshLayoutDeviceList)
+    @BindView(R.id.swipeRefreshLayoutDeviceList)
     SwipeRefreshLayout swipeRefreshLayoutDeviceList;
 
     @Inject
@@ -67,6 +68,8 @@ public class DeviceListFragment extends Fragment {
     @Inject
     IpcamService ipcamService;
 
+    private Unbinder unbinder;
+
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private List<DomoticModel> domoticItems = new ArrayList<>();
@@ -77,7 +80,7 @@ public class DeviceListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_device, container, false);
 
         Injector.getApplicationComponent().inject(this);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         mLayoutManager = new GridLayoutManager(getContext(), calculateGridColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -123,8 +126,8 @@ public class DeviceListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**

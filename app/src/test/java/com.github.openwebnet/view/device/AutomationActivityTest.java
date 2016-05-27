@@ -62,8 +62,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Component;
 import dagger.Module;
@@ -89,19 +89,19 @@ public class AutomationActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @Bind(R.id.editTextAutomationName)
+    @BindView(R.id.editTextAutomationName)
     EditText editTextAutomationName;
 
-    @Bind(R.id.editTextAutomationWhere)
+    @BindView(R.id.editTextAutomationWhere)
     EditText editTextAutomationWhere;
 
     @BindString(R.string.validation_required)

@@ -34,8 +34,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
     static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navigationView;
 
-    @Bind(R.id.floatingActionButtonMain)
+    @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
 
     @BindString(R.string.error_load_navigation_drawer)

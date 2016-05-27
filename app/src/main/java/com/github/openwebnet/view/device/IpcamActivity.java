@@ -29,8 +29,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class IpcamActivity extends AbstractDeviceActivity {
@@ -40,25 +40,25 @@ public class IpcamActivity extends AbstractDeviceActivity {
     @Inject
     IpcamService ipcamService;
 
-    @Bind(R.id.editTextIpcamName)
+    @BindView(R.id.editTextIpcamName)
     EditText editTextIpcamName;
 
-    @Bind(R.id.editTextIpcamUrl)
+    @BindView(R.id.editTextIpcamUrl)
     EditText editTextIpcamUrl;
 
-    @Bind(R.id.editTextIpcamUsername)
+    @BindView(R.id.editTextIpcamUsername)
     EditText editTextIpcamUsername;
 
-    @Bind(R.id.editTextIpcamPassword)
+    @BindView(R.id.editTextIpcamPassword)
     EditText editTextIpcamPassword;
 
-    @Bind(R.id.textViewIpcamUrlHelp)
+    @BindView(R.id.textViewIpcamUrlHelp)
     TextView textViewIpcamUrlHelp;
 
-    @Bind(R.id.switchIpcamAuthentication)
+    @BindView(R.id.switchIpcamAuthentication)
     Switch switchIpcamAuthentication;
 
-    @Bind(R.id.spinnerIpcamStreamType)
+    @BindView(R.id.spinnerIpcamStreamType)
     Spinner spinnerIpcamStreamType;
 
     @BindString(R.string.validation_url)

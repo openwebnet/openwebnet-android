@@ -19,7 +19,7 @@ import com.github.openwebnet.view.device.LightActivity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
@@ -29,7 +29,7 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
     private static final Logger log = LoggerFactory.getLogger(MainBottomSheetDialogFragment.class);
 
-    @Bind(R.id.gridViewBottomSheet)
+    @BindView(R.id.gridViewBottomSheet)
     GridView gridView;
 
     @Nullable

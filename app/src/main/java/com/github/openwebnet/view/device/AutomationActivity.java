@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AutomationActivity extends AbstractDeviceActivity {
@@ -24,10 +24,10 @@ public class AutomationActivity extends AbstractDeviceActivity {
     @Inject
     AutomationService automationService;
 
-    @Bind(R.id.editTextAutomationName)
+    @BindView(R.id.editTextAutomationName)
     EditText editTextAutomationName;
 
-    @Bind(R.id.editTextAutomationWhere)
+    @BindView(R.id.editTextAutomationWhere)
     EditText editTextAutomationWhere;
 
     private String automationUuid;

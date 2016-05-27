@@ -39,8 +39,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
@@ -66,10 +66,10 @@ public class MainActivityTest {
     @Inject
     EnvironmentService environmentService;
 
-    @Bind(R.id.floatingActionButtonMain)
+    @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
 
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView navigationView;
 
     @BindString(R.string.app_name)
