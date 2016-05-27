@@ -59,6 +59,7 @@
     <string name="bs_device">Device</string>
     <string name="bs_light">Light</string>
     <string name="bs_automation">Automation</string>
+    <string name="bs_heating">Temperature</string>
     <string name="bs_ipcam">Ip Camera</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>

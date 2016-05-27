@@ -9,6 +9,10 @@
         android:icon="@drawable/blinds_white"
         android:title="@string/bs_automation"/>
     <item
+        android:id="@+id/bs_add_heating"
+        android:icon="@drawable/thermometer"
+        android:title="@string/bs_heating"/>
+    <item
         android:id="@+id/bs_add_device"
         android:icon="@drawable/remote"
         android:title="@string/bs_device"/>

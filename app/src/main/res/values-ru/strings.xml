@@ -55,6 +55,7 @@
     <string name="bs_device">Устройство</string>
     <string name="bs_light">Освещение</string>
     <string name="bs_automation">Электропривод</string>
+    <string name="bs_heating">температура</string>
     <string name="bs_ipcam">Ip-камера</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
