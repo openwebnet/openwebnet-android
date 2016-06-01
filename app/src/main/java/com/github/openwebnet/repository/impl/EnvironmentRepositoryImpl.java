@@ -8,6 +8,7 @@ import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.repository.EnvironmentRepository;
 
 import org.slf4j.Logger;
@@ -116,6 +117,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
                 databaseRealm.delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
                 databaseRealm.delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
                 databaseRealm.delete(IpcamModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
+                databaseRealm.delete(TemperatureModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
 
                 databaseRealm.delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
                 subscriber.onCompleted();

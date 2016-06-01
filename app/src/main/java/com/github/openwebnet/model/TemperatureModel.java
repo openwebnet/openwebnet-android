@@ -9,11 +9,7 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AutomationModel extends RealmObject implements RealmModel, DomoticModel {
-
-    public enum Status {
-        STOP, UP, DOWN
-    }
+public class TemperatureModel extends RealmObject implements RealmModel, DomoticModel {
 
     @PrimaryKey
     private String uuid;
@@ -33,13 +29,11 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
     private boolean favourite;
 
     @Ignore
-    private Status status;
+    private String value;
 
-    public AutomationModel() {
+    public TemperatureModel() {}
 
-    }
-
-    private AutomationModel(Builder builder) {
+    private TemperatureModel(Builder builder) {
         this.uuid = builder.uuid;
         this.environmentId = builder.environmentId;
         this.gatewayUuid = builder.gatewayUuid;
@@ -86,13 +80,13 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
             return this;
         }
 
-        public AutomationModel build() {
+        public TemperatureModel build() {
             checkNotNull(environmentId, "environmentId is null");
             checkNotNull(gatewayUuid, "gatewayUuid is null");
             checkNotNull(name, "name is null");
             checkNotNull(where, "where is null");
 
-            return new AutomationModel(this);
+            return new TemperatureModel(this);
         }
     }
 
@@ -122,6 +116,7 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
         this.environmentId = environmentId;
     }
 
+    @Override
     public String getGatewayUuid() {
         return gatewayUuid;
     }
@@ -157,11 +152,12 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
         this.favourite = favourite;
     }
 
-    public Status getStatus() {
-        return status;
+    public String getValue() {
+        return value;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setValue(String value) {
+        this.value = value;
     }
+
 }
