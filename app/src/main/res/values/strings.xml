@@ -93,6 +93,7 @@
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Connection error</string>
+    <string name="temperature_none" translatable="false">-</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>
