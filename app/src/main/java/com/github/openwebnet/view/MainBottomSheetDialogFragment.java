@@ -53,8 +53,8 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 case R.id.bs_add_automation:
                     actionNewIntent(AutomationActivity.class);
                     break;
-                case R.id.bs_add_heating:
-                    log.debug("TODO heating");
+                case R.id.bs_add_temperature:
+                    log.debug("TODO temperature");
                     break;
                 case R.id.bs_add_device:
                     actionNewIntent(DeviceActivity.class);
