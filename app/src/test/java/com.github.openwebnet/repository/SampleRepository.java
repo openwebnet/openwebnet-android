@@ -4,11 +4,11 @@ import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.SampleModel;
-import com.github.openwebnet.repository.impl.CommonRealmRepositoryImpl;
+import com.github.openwebnet.repository.impl.DomoticRepositoryImpl;
 
 import javax.inject.Inject;
 
-public class SampleRepository extends CommonRealmRepositoryImpl<SampleModel> {
+public class SampleRepository extends DomoticRepositoryImpl<SampleModel> {
 
     @Inject
     DatabaseRealm databaseRealm;
