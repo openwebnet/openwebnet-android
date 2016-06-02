@@ -16,7 +16,6 @@ import com.github.openwebnet.repository.LightRepository;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +45,8 @@ import static org.mockito.Mockito.when;
 @PowerMockIgnore({"android.*"})
 @PrepareForTest({Injector.class})
 public class LightServiceTest {
+
+    private static final String GATEWAY_UUID = "myGateway";
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -196,46 +197,40 @@ public class LightServiceTest {
     }
 
     @Test
-    @Ignore
     public void lightService_requestByEnvironment() {
+        Integer ENVIRONMENT = 108;
+        List<LightModel> lights = new ArrayList<>();
 
+        mockClient();
+        when(lightRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(lights));
+
+        TestSubscriber<List<LightModel>> tester = new TestSubscriber<>();
+        lightService.requestByEnvironment(ENVIRONMENT).subscribe(tester);
+
+        tester.assertValue(lights);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
-    @Ignore
     public void lightService_requestFavourites() {
+        List<LightModel> lights = new ArrayList<>();
 
+        mockClient();
+        when(lightRepository.findFavourites()).thenReturn(Observable.just(lights));
+
+        TestSubscriber<List<LightModel>> tester = new TestSubscriber<>();
+        lightService.requestFavourites().subscribe(tester);
+
+        tester.assertValue(lights);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
     public void lightService_turnOn() {
-        String GATEWAY_UUID = "myGateway";
-        String GATEWAY_HOST = "1.1.1.1";
-        Integer GATEWAY_PORT = 1;
-
-        GatewayModel gateway = new GatewayModel();
-        gateway.setUuid(GATEWAY_UUID);
-        gateway.setHost(GATEWAY_HOST);
-        gateway.setPort(GATEWAY_PORT);
-
-        LightModel light = LightModel.updateBuilder("uuid")
-            .environment(108)
-            .gateway(GATEWAY_UUID)
-            .name("light")
-            .where("21")
-            .build();
-
-        OpenMessage request = () -> "*1*1*21##";
-        OpenMessage response = () -> "*#*1##";
-        OpenSession session = OpenSession.newSession(request);
-        session.addResponse(response);
-
-        OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
-        OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
-
-        when(clientSpy.send(request)).thenReturn(Observable.just(session));
-
-        when((Object)commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
+        LightModel light = mockLightModel();
+        mockClient();
 
         TestSubscriber<LightModel> tester = new TestSubscriber<>();
         lightService.turnOn(light).subscribe(tester);
@@ -248,9 +243,50 @@ public class LightServiceTest {
     }
 
     @Test
-    @Ignore
     public void lightService_turnOff() {
+        LightModel light = mockLightModel();
+        mockClient();
 
+        TestSubscriber<LightModel> tester = new TestSubscriber<>();
+        lightService.turnOff(light).subscribe(tester);
+
+        verify(commonService).findClient(GATEWAY_UUID);
+
+        tester.assertValue(light);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    private LightModel mockLightModel() {
+        return LightModel.updateBuilder("uuid")
+            .environment(108)
+            .gateway(GATEWAY_UUID)
+            .name("light")
+            .where("21")
+            .build();
+    }
+
+    private OpenWebNet mockClient() {
+        String GATEWAY_HOST = "1.1.1.1";
+        Integer GATEWAY_PORT = 1;
+
+        GatewayModel gateway = new GatewayModel();
+        gateway.setUuid(GATEWAY_UUID);
+        gateway.setHost(GATEWAY_HOST);
+        gateway.setPort(GATEWAY_PORT);
+
+        OpenMessage request = () -> "REQUEST";
+        OpenMessage response = () -> "RESPONSE";
+        OpenSession session = OpenSession.newSession(request);
+        session.addResponse(response);
+
+        OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
+        OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
+
+        when(clientSpy.send(request)).thenReturn(Observable.just(session));
+        when((Object)commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
+
+        return clientSpy;
     }
 
 }
