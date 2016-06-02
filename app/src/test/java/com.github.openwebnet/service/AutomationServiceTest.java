@@ -44,7 +44,7 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"android.*"})
-@PrepareForTest({Injector.class, OpenWebNet.class})
+@PrepareForTest({Injector.class})
 public class AutomationServiceTest {
 
     @Rule
@@ -231,21 +231,17 @@ public class AutomationServiceTest {
         session.addResponse(response);
 
         OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
-        OpenWebNet clientSpy = PowerMockito.spy(client);
+        OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
 
-        // TODO spy is not working on client.send
-        // ERROR connect: java.net.SocketException: Network is unreachable
         when(commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
-        PowerMockito.doReturn(Observable.just(session)).when(clientSpy).send(request);
 
         TestSubscriber<AutomationModel> tester = new TestSubscriber<>();
         automationService.stop(automation).subscribe(tester);
 
         verify(commonService).findClient(GATEWAY_UUID);
 
-        // TODO
-        //tester.assertValue(automation);
-        //tester.assertCompleted();
+        tester.assertValue(automation);
+        tester.assertCompleted();
         tester.assertNoErrors();
     }
 
