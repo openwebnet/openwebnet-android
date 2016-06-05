@@ -10,12 +10,13 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.model.TemperatureModel;
-import com.github.openwebnet.repository.TemperatureRepository;
+import com.github.openwebnet.repository.DeviceRepository;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,16 +45,16 @@ import static org.mockito.Mockito.when;
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"android.*"})
 @PrepareForTest({Injector.class})
-public class TemperatureServiceTest {
+public class DeviceServiceTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
     @Inject
-    TemperatureRepository temperatureRepository;
+    DeviceRepository deviceRepository;
 
     @Inject
-    TemperatureService temperatureService;
+    DeviceService deviceService;
 
     @Inject
     CommonService commonService;
@@ -65,9 +66,9 @@ public class TemperatureServiceTest {
         RepositoryModuleTest.class,
         DomoticModule.class
     })
-    public interface TemperatureComponentTest extends ApplicationComponent {
+    public interface DeviceComponentTest extends ApplicationComponent {
 
-        void inject(TemperatureServiceTest service);
+        void inject(DeviceServiceTest service);
 
     }
 
@@ -83,7 +84,7 @@ public class TemperatureServiceTest {
 
     @Before
     public void setupDagger() {
-        TemperatureComponentTest applicationComponentTest = DaggerTemperatureServiceTest_TemperatureComponentTest.builder()
+        DeviceComponentTest applicationComponentTest = DaggerDeviceServiceTest_DeviceComponentTest.builder()
             .applicationContextModuleTest(new ApplicationContextModuleTest())
             .databaseModuleTest(new DatabaseModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
@@ -93,136 +94,142 @@ public class TemperatureServiceTest {
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((TemperatureComponentTest) Injector.getApplicationComponent()).inject(this);
+        ((DeviceComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
     @Test
-    public void temperatureService_add() {
-        String TEMPERATURE_UUID = "myUuid";
-        TemperatureModel temperatureModel = new TemperatureModel();
+    public void deviceService_add() {
+        String DEVICE_UUID = "myUuid";
+        DeviceModel deviceModel = new DeviceModel();
 
-        when(temperatureRepository.add(temperatureModel)).thenReturn(Observable.just(TEMPERATURE_UUID));
+        when(deviceRepository.add(deviceModel)).thenReturn(Observable.just(DEVICE_UUID));
 
         TestSubscriber<String> tester = new TestSubscriber<>();
-        temperatureService.add(temperatureModel).subscribe(tester);
+        deviceService.add(deviceModel).subscribe(tester);
 
-        verify(temperatureRepository).add(temperatureModel);
+        verify(deviceRepository).add(deviceModel);
 
-        tester.assertValue(TEMPERATURE_UUID);
+        tester.assertValue(DEVICE_UUID);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_update() {
-        TemperatureModel temperatureModel = new TemperatureModel();
+    public void deviceService_update() {
+        DeviceModel deviceModel = new DeviceModel();
 
-        when(temperatureRepository.update(temperatureModel)).thenReturn(Observable.just(null));
+        when(deviceRepository.update(deviceModel)).thenReturn(Observable.just(null));
 
         TestSubscriber<Void> tester = new TestSubscriber<>();
-        temperatureService.update(temperatureModel).subscribe(tester);
+        deviceService.update(deviceModel).subscribe(tester);
 
-        verify(temperatureRepository).update(temperatureModel);
+        verify(deviceRepository).update(deviceModel);
 
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_delete() {
-        String TEMPERATURE_UUID = "myUuid";
+    public void deviceService_delete() {
+        String DEVICE_UUID = "myUuid";
 
-        when(temperatureRepository.delete(TEMPERATURE_UUID)).thenReturn(Observable.just(null));
+        when(deviceRepository.delete(DEVICE_UUID)).thenReturn(Observable.just(null));
 
         TestSubscriber<Void> tester = new TestSubscriber<>();
-        temperatureService.delete(TEMPERATURE_UUID).subscribe(tester);
+        deviceService.delete(DEVICE_UUID).subscribe(tester);
 
-        verify(temperatureRepository).delete(TEMPERATURE_UUID);
+        verify(deviceRepository).delete(DEVICE_UUID);
 
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_findById() {
-        String TEMPERATURE_UUID = "myUuid";
-        TemperatureModel temperatureModel = new TemperatureModel();
-        temperatureModel.setUuid(TEMPERATURE_UUID);
+    public void deviceService_findById() {
+        String DEVICE_UUID = "myUuid";
+        DeviceModel deviceModel = new DeviceModel();
+        deviceModel.setUuid(DEVICE_UUID);
 
-        when(temperatureRepository.findById(TEMPERATURE_UUID)).thenReturn(Observable.just(temperatureModel));
+        when(deviceRepository.findById(DEVICE_UUID)).thenReturn(Observable.just(deviceModel));
 
-        TestSubscriber<TemperatureModel> tester = new TestSubscriber<>();
-        temperatureService.findById(TEMPERATURE_UUID).subscribe(tester);
+        TestSubscriber<DeviceModel> tester = new TestSubscriber<>();
+        deviceService.findById(DEVICE_UUID).subscribe(tester);
 
-        verify(temperatureRepository).findById(TEMPERATURE_UUID);
+        verify(deviceRepository).findById(DEVICE_UUID);
 
-        tester.assertValue(temperatureModel);
+        tester.assertValue(deviceModel);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_findByEnvironment() {
+    public void deviceService_findByEnvironment() {
         Integer ENVIRONMENT = 108;
-        List<TemperatureModel> temperatures = new ArrayList<>();
+        List<DeviceModel> devices = new ArrayList<>();
 
-        when(temperatureRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(temperatures));
+        when(deviceRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(devices));
 
-        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
-        temperatureService.findByEnvironment(ENVIRONMENT).subscribe(tester);
+        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
+        deviceService.findByEnvironment(ENVIRONMENT).subscribe(tester);
 
-        verify(temperatureRepository).findByEnvironment(ENVIRONMENT);
+        verify(deviceRepository).findByEnvironment(ENVIRONMENT);
 
-        tester.assertValue(temperatures);
+        tester.assertValue(devices);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_findFavourites() {
-        List<TemperatureModel> temperatures = new ArrayList<>();
+    public void deviceService_findFavourites() {
+        List<DeviceModel> devices = new ArrayList<>();
 
-        when(temperatureRepository.findFavourites()).thenReturn(Observable.just(temperatures));
+        when(deviceRepository.findFavourites()).thenReturn(Observable.just(devices));
 
-        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
-        temperatureService.findFavourites().subscribe(tester);
+        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
+        deviceService.findFavourites().subscribe(tester);
 
-        verify(temperatureRepository).findFavourites();
+        verify(deviceRepository).findFavourites();
 
-        tester.assertValue(temperatures);
+        tester.assertValue(devices);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_requestByEnvironment() {
+    public void deviceService_requestByEnvironment() {
         Integer ENVIRONMENT = 108;
-        List<TemperatureModel> temperatures = new ArrayList<>();
+        List<DeviceModel> devices = new ArrayList<>();
 
         mockClient();
-        when(temperatureRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(temperatures));
+        when(deviceRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(devices));
 
-        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
-        temperatureService.requestByEnvironment(ENVIRONMENT).subscribe(tester);
+        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
+        deviceService.requestByEnvironment(ENVIRONMENT).subscribe(tester);
 
-        tester.assertValue(temperatures);
+        tester.assertValue(devices);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void temperatureService_requestFavourites() {
-        List<TemperatureModel> temperatures = new ArrayList<>();
+    public void deviceService_requestFavourites() {
+        List<DeviceModel> devices = new ArrayList<>();
 
         mockClient();
-        when(temperatureRepository.findFavourites()).thenReturn(Observable.just(temperatures));
+        when(deviceRepository.findFavourites()).thenReturn(Observable.just(devices));
 
-        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
-        temperatureService.requestFavourites().subscribe(tester);
+        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
+        deviceService.requestFavourites().subscribe(tester);
 
-        tester.assertValue(temperatures);
+        tester.assertValue(devices);
         tester.assertCompleted();
         tester.assertNoErrors();
+    }
+
+    @Ignore
+    @Test
+    public void deviceService_sendRequest() {
+
     }
 
     private OpenWebNet mockClient() {
@@ -248,5 +255,5 @@ public class TemperatureServiceTest {
 
         return clientSpy;
     }
-
+    
 }
