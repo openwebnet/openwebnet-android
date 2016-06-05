@@ -66,5 +66,4 @@ public class DomoticModuleTest {
         return mock(TemperatureServiceImpl.class);
     }
 
-
 }
