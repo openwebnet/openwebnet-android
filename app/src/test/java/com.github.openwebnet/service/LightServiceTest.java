@@ -284,7 +284,7 @@ public class LightServiceTest {
         OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
 
         when(clientSpy.send(request)).thenReturn(Observable.just(session));
-        when((Object)commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
+        when(commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
 
         return clientSpy;
     }

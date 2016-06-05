@@ -1,5 +1,8 @@
 package com.github.openwebnet.service;
 
+import com.github.niqdev.openwebnet.OpenSession;
+import com.github.niqdev.openwebnet.OpenWebNet;
+import com.github.niqdev.openwebnet.message.OpenMessage;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
@@ -7,6 +10,7 @@ import com.github.openwebnet.component.module.ApplicationContextModuleTest;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModule;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
+import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.repository.TemperatureRepository;
 
@@ -192,12 +196,57 @@ public class TemperatureServiceTest {
 
     @Test
     public void temperatureService_requestByEnvironment() {
+        Integer ENVIRONMENT = 108;
+        List<TemperatureModel> temperatures = new ArrayList<>();
 
+        mockClient();
+        when(temperatureRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(temperatures));
+
+        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
+        temperatureService.requestByEnvironment(ENVIRONMENT).subscribe(tester);
+
+        tester.assertValue(temperatures);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
     public void temperatureService_requestFavourites() {
+        List<TemperatureModel> temperatures = new ArrayList<>();
 
+        mockClient();
+        when(temperatureRepository.findFavourites()).thenReturn(Observable.just(temperatures));
+
+        TestSubscriber<List<TemperatureModel>> tester = new TestSubscriber<>();
+        temperatureService.requestFavourites().subscribe(tester);
+
+        tester.assertValue(temperatures);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    private OpenWebNet mockClient() {
+        String GATEWAY_UUID = "myGateway";
+        String GATEWAY_HOST = "1.1.1.1";
+        Integer GATEWAY_PORT = 1;
+
+        GatewayModel gateway = new GatewayModel();
+        gateway.setUuid(GATEWAY_UUID);
+        gateway.setHost(GATEWAY_HOST);
+        gateway.setPort(GATEWAY_PORT);
+
+        OpenMessage request = () -> "REQUEST";
+        OpenMessage response = () -> "RESPONSE";
+        OpenSession session = OpenSession.newSession(request);
+        session.addResponse(response);
+
+        OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
+        OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
+
+        when(clientSpy.send(request)).thenReturn(Observable.just(session));
+        when(commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
+
+        return clientSpy;
     }
 
 }
