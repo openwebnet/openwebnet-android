@@ -80,7 +80,7 @@ public class LightActivity extends AbstractDeviceActivity {
                 lightService.add(parseLight()).subscribe(uuid -> finish());
             } else {
                 lightService.update(parseLight())
-                    .doOnCompleted(() -> finish())
+                    .doOnCompleted(this::finish)
                     .subscribe();
             }
         }

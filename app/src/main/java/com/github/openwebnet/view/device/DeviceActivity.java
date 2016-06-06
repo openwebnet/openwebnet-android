@@ -152,7 +152,7 @@ public class DeviceActivity extends AbstractDeviceActivity {
                 deviceService.add(parseDevice()).subscribe(uuid -> finish());
             } else {
                 deviceService.update(parseDevice())
-                    .doOnCompleted(() -> finish())
+                    .doOnCompleted(this::finish)
                     .subscribe();
             }
         }

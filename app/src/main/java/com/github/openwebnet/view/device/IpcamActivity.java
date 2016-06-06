@@ -196,7 +196,7 @@ public class IpcamActivity extends AbstractDeviceActivity {
                 ipcamService.add(parseIpcam()).subscribe(uuid -> finish());
             } else {
                 ipcamService.update(parseIpcam())
-                    .doOnCompleted(() -> finish())
+                    .doOnCompleted(this::finish)
                     .subscribe();
             }
         }
