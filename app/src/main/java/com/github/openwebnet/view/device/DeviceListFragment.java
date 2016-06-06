@@ -19,10 +19,12 @@ import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -57,6 +59,12 @@ public class DeviceListFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayoutDeviceList;
 
     @Inject
+    IpcamService ipcamService;
+
+    @Inject
+    TemperatureService temperatureService;
+
+    @Inject
     LightService lightService;
 
     @Inject
@@ -64,9 +72,6 @@ public class DeviceListFragment extends Fragment {
 
     @Inject
     DeviceService deviceService;
-
-    @Inject
-    IpcamService ipcamService;
 
     private Unbinder unbinder;
 
@@ -157,6 +162,12 @@ public class DeviceListFragment extends Fragment {
         showLoader(true, isFavouriteMenu);
         log.debug("initCards-isFavouriteMenu: {}", isFavouriteMenu);
 
+        Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
+            ipcamService.findByEnvironment(environmentId);
+
+        Observable<List<TemperatureModel>> requestTemperatures = isFavouriteMenu ? temperatureService.findFavourites() :
+            temperatureService.requestByEnvironment(environmentId);
+
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
             lightService.requestByEnvironment(environmentId);
 
@@ -166,12 +177,9 @@ public class DeviceListFragment extends Fragment {
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
-            ipcamService.findByEnvironment(environmentId);
-
-        Observable.zip(findIpcams, requestLights, requestAutomations, requestDevices,
-            (ipcams, lights, automations, devices) ->
-                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, lights, automations, devices)))
+        Observable.zip(findIpcams, requestTemperatures, requestLights, requestAutomations, requestDevices,
+            (ipcams, temperatures, lights, automations, devices) ->
+                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, lights, automations, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);
