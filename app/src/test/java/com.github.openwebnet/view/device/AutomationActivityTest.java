@@ -216,6 +216,11 @@ public class AutomationActivityTest {
         ((AutomationActivityComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
+    @After
+    public void tearDown() {
+        controller.pause().stop().destroy();
+    }
+
     private void createWithIntent(String uuidExtra) {
         controller = Robolectric.buildActivity(AutomationActivity.class);
 
@@ -438,11 +443,6 @@ public class AutomationActivityTest {
 
         verify(automationService, never()).add(any(AutomationModel.class));
         verify(automationService, times(1)).update(AutomationModelMatcher.automationModelEq(automationMock));
-    }
-
-    @After
-    public void tearDown() {
-        controller.pause().stop().destroy();
     }
 
 }
