@@ -9,6 +9,7 @@ import com.github.openwebnet.repository.DomoticRepositoryTest;
 import com.github.openwebnet.repository.EnvironmentRepositoryTest;
 import com.github.openwebnet.repository.SampleRepository;
 import com.github.openwebnet.view.MainActivityTest;
+import com.github.openwebnet.view.MainBottomSheetDialogFragmentTest;
 import com.github.openwebnet.view.NavigationViewClickListenerTest;
 import com.github.openwebnet.view.NavigationViewItemSelectedListenerTest;
 
@@ -27,6 +28,7 @@ public interface ApplicationComponentTest extends ApplicationComponent {
     void inject(MainActivityTest activity);
     void inject(NavigationViewClickListenerTest listener);
     void inject(NavigationViewItemSelectedListenerTest listener);
+    void inject(MainBottomSheetDialogFragmentTest fragment);
 
     void inject(SampleRepository repository);
     void inject(CommonRealmRepositoryTest repository);

@@ -15,6 +15,7 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +55,7 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                     actionNewIntent(AutomationActivity.class);
                     break;
                 case R.id.bs_add_temperature:
-                    log.debug("TODO temperature");
+                    actionNewIntent(TemperatureActivity.class);
                     break;
                 case R.id.bs_add_device:
                     actionNewIntent(DeviceActivity.class);
@@ -70,11 +71,11 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
     }
 
     private <T> void actionNewIntent(Class<T> clazz) {
-        this.dismiss();
-
         Intent intentNew = new Intent(this.getContext(), clazz)
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, getArguments().getInt(EXTRA_DEFAULT_ENVIRONMENT))
             .putExtra(EXTRA_DEFAULT_GATEWAY, getArguments().getString(EXTRA_DEFAULT_GATEWAY));
         startActivity(intentNew);
+
+        this.dismiss();
     }
 }
