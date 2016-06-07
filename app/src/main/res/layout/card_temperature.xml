@@ -62,6 +62,7 @@
                 android:orientation="horizontal">
 
                 <com.github.openwebnet.view.custom.TextViewCustom
+                    android:id="@+id/textViewCardTemperatureValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="72dp"
@@ -73,8 +74,8 @@
                     android:id="@+id/imageViewCardTemperatureScale"
                     style="@style/deviceCard.imageButton"
                     android:layout_gravity="center"
-                    android:paddingLeft="12dp"
                     android:minHeight="32dp"
+                    android:paddingLeft="12dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/temperature_celsius"
                     tools:ignore="MissingPrefix"/>
