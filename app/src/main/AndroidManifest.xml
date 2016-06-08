@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.github.openwebnet"
           xmlns:android="http://schemas.android.com/apk/res/android"
-          android:versionCode="13"
+          android:versionCode="14"
           android:versionName="@string/app_version_number">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -60,6 +60,14 @@
         <activity
             android:name=".view.device.IpcamStreamActivity"
             android:label="@string/activity_ipcam"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".view.device.TemperatureActivity"
+            android:label="@string/activity_temperature"
             android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -9,7 +9,8 @@ import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.database.DatabaseRealm;
-import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.SampleModel;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,13 +35,13 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 @PrepareForTest({Injector.class})
-public class DeviceRepositoryTest {
+public class DomoticRepositoryTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
     @Inject
-    DeviceRepository deviceRepository;
+    SampleRepository sampleRepository;
 
     @Inject
     DatabaseRealm databaseRealm;
@@ -61,56 +62,50 @@ public class DeviceRepositoryTest {
     }
 
     @Test
-    public void deviceRepository_findByEnvironment() {
+    public void lightRepository_findByEnvironment() {
         Integer ENVIRONMENT = 108;
 
-        DeviceModel device1 = DeviceModel.updateBuilder("uuid1")
-            .environment(ENVIRONMENT)
-            .gateway("gateway")
-            .name("device1")
-            .request("*#1")
-            .response("*#1")
-            .build();
+        SampleModel model1 = new SampleModel();
+        model1.setUuid("uuid1");
+        model1.setEnvironmentId(ENVIRONMENT);
+        SampleModel model2 = new SampleModel();
+        model2.setUuid("uuid2");
+        model2.setEnvironmentId(ENVIRONMENT);
+        List<SampleModel> models = Arrays.asList(model1, model2);
 
-        List<DeviceModel> devices = Arrays.asList(device1);
+        when(databaseRealm.findCopyWhere(SampleModel.class, DomoticModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DomoticModel.FIELD_NAME)).thenReturn(models);
 
-        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID,
-            ENVIRONMENT, DeviceModel.FIELD_NAME)).thenReturn(devices);
+        TestSubscriber<List<SampleModel>> tester = new TestSubscriber<>();
+        sampleRepository.findByEnvironment(ENVIRONMENT).subscribe(tester);
 
-        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
-        deviceRepository.findByEnvironment(ENVIRONMENT).subscribe(tester);
+        verify(databaseRealm).findCopyWhere(SampleModel.class, DomoticModel.FIELD_ENVIRONMENT_ID,
+            ENVIRONMENT, DomoticModel.FIELD_NAME);
 
-        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_ENVIRONMENT_ID,
-            ENVIRONMENT, DeviceModel.FIELD_NAME);
-
-        tester.assertValue(devices);
+        tester.assertValue(models);
         tester.assertCompleted();
         tester.assertNoErrors();
     }
 
     @Test
-    public void deviceRepository_findFavourites() {
-        DeviceModel device1 = DeviceModel.updateBuilder("uuid1")
-            .environment(108)
-            .gateway("gateway")
-            .name("device1")
-            .request("*#1")
-            .response("*#1")
-            .favourite(true)
-            .build();
+    public void lightRepository_findFavourites() {
+        SampleModel model = new SampleModel();
+        model.setUuid("uuid1");
+        model.setEnvironmentId(108);
+        model.setFavourite(true);
 
-        List<DeviceModel> devices = Arrays.asList(device1);
+        List<SampleModel> lights = Arrays.asList(model);
 
-        when(databaseRealm.findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE,
-            true, DeviceModel.FIELD_NAME)).thenReturn(devices);
+        when(databaseRealm.findCopyWhere(SampleModel.class, DomoticModel.FIELD_FAVOURITE,
+            true, DomoticModel.FIELD_NAME)).thenReturn(lights);
 
-        TestSubscriber<List<DeviceModel>> tester = new TestSubscriber<>();
-        deviceRepository.findFavourites().subscribe(tester);
+        TestSubscriber<List<SampleModel>> tester = new TestSubscriber<>();
+        sampleRepository.findFavourites().subscribe(tester);
 
-        verify(databaseRealm).findCopyWhere(DeviceModel.class, DeviceModel.FIELD_FAVOURITE,
-            true, DeviceModel.FIELD_NAME);
+        verify(databaseRealm).findCopyWhere(SampleModel.class, DomoticModel.FIELD_FAVOURITE,
+            true, DomoticModel.FIELD_NAME);
 
-        tester.assertValue(devices);
+        tester.assertValue(lights);
         tester.assertCompleted();
         tester.assertNoErrors();
     }

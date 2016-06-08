@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DeviceActivity extends AbstractDeviceActivity {
@@ -36,28 +36,28 @@ public class DeviceActivity extends AbstractDeviceActivity {
     @Inject
     PreferenceService preferenceService;
 
-    @Bind(R.id.editTextDeviceName)
+    @BindView(R.id.editTextDeviceName)
     EditText editTextDeviceName;
 
-    @Bind(R.id.editTextDeviceRequest)
+    @BindView(R.id.editTextDeviceRequest)
     EditText editTextDeviceRequest;
 
-    @Bind(R.id.editTextDeviceResponse)
+    @BindView(R.id.editTextDeviceResponse)
     EditText editTextDeviceResponse;
 
-    @Bind(R.id.checkBoxDeviceRunOnLoad)
+    @BindView(R.id.checkBoxDeviceRunOnLoad)
     CheckBox checkBoxDeviceRunOnLoad;
 
-    @Bind(R.id.checkBoxDeviceConfirm)
+    @BindView(R.id.checkBoxDeviceConfirm)
     CheckBox checkBoxDeviceConfirm;
 
-    @Bind(R.id.checkBoxDeviceAccept)
+    @BindView(R.id.checkBoxDeviceAccept)
     CheckBox checkBoxDeviceAccept;
 
-    @Bind(R.id.textViewDevicePasteResponse)
+    @BindView(R.id.textViewDevicePasteResponse)
     TextView textViewDevicePasteResponse;
 
-    @Bind(R.id.imageButtonDevicePasteResponse)
+    @BindView(R.id.imageButtonDevicePasteResponse)
     ImageButton imageButtonDevicePasteResponse;
 
     @BindString(R.string.device_debug_label)
@@ -152,7 +152,7 @@ public class DeviceActivity extends AbstractDeviceActivity {
                 deviceService.add(parseDevice()).subscribe(uuid -> finish());
             } else {
                 deviceService.update(parseDevice())
-                    .doOnCompleted(() -> finish())
+                    .doOnCompleted(this::finish)
                     .subscribe();
             }
         }

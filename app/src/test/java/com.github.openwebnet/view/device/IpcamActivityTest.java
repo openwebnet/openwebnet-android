@@ -32,6 +32,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -41,6 +42,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.After;
@@ -66,8 +68,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Component;
 import dagger.Module;
@@ -94,34 +96,34 @@ public class IpcamActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
-    @Bind(R.id.editTextIpcamName)
+    @BindView(R.id.editTextIpcamName)
     EditText editTextIpcamName;
 
-    @Bind(R.id.editTextIpcamUrl)
+    @BindView(R.id.editTextIpcamUrl)
     EditText editTextIpcamUrl;
 
-    @Bind(R.id.editTextIpcamUsername)
+    @BindView(R.id.editTextIpcamUsername)
     EditText editTextIpcamUsername;
 
-    @Bind(R.id.editTextIpcamPassword)
+    @BindView(R.id.editTextIpcamPassword)
     EditText editTextIpcamPassword;
 
-    @Bind(R.id.textViewIpcamUrlHelp)
+    @BindView(R.id.textViewIpcamUrlHelp)
     TextView textViewIpcamUrlHelp;
 
-    @Bind(R.id.switchIpcamAuthentication)
+    @BindView(R.id.switchIpcamAuthentication)
     Switch switchIpcamAuthentication;
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.spinnerIpcamStreamType)
+    @BindView(R.id.spinnerIpcamStreamType)
     Spinner spinnerIpcamStreamType;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
     @BindString(R.string.label_none)
@@ -214,6 +216,12 @@ public class IpcamActivityTest {
         @Singleton
         IpcamService provideIpcamService() {
             return mock(IpcamServiceImpl.class);
+        }
+
+        @Provides
+        @Singleton
+        TemperatureService provideTemperatureService() {
+            return new TemperatureServiceImpl();
         }
 
     }

@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
@@ -42,7 +42,7 @@ public class NavigationViewClickListener implements OnClickListener {
     @BindString(R.string.validation_required)
     String labelValidationRequired;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     private final AppCompatActivity mActivity;

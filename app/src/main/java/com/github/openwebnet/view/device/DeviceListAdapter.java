@@ -28,6 +28,7 @@ import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
@@ -35,6 +36,7 @@ import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
 
@@ -47,9 +49,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindDrawable;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
 
@@ -70,6 +72,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     IpcamService ipcamService;
+
+    @Inject
+    TemperatureService temperatureService;
 
     @Inject
     PreferenceService preferenceService;
@@ -112,27 +117,27 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindDrawable(R.drawable.triangle_fail)
         Drawable drawableStatusFail;
 
-        @Bind(R.id.relativeLayoutCardDeviceStatus)
+        @BindView(R.id.relativeLayoutCardDeviceStatus)
         RelativeLayout relativeLayoutCardDeviceStatus;
 
-        @Bind(R.id.textViewCardDeviceTitle)
+        @BindView(R.id.textViewCardDeviceTitle)
         TextView textViewCardDevice;
 
-        @Bind(R.id.imageButtonCardDeviceSend)
+        @BindView(R.id.imageButtonCardDeviceSend)
         ImageButton imageButtonCardDeviceSend;
 
         /* card_device_debug */
 
-        @Bind(R.id.linearLayoutCardDeviceDebug)
+        @BindView(R.id.linearLayoutCardDeviceDebug)
         LinearLayout linearLayoutCardDeviceDebug;
 
-        @Bind(R.id.textViewCardDeviceValueDelay)
+        @BindView(R.id.textViewCardDeviceValueDelay)
         TextView textViewCardDeviceValueDelay;
 
-        @Bind(R.id.imageButtonCardDeviceCopy)
+        @BindView(R.id.imageButtonCardDeviceCopy)
         ImageButton imageButtonCardDeviceCopy;
 
-        @Bind(R.id.textViewCustomCardDeviceResponse)
+        @BindView(R.id.textViewCustomCardDeviceResponse)
         TextViewCustom textViewCustomCardDeviceResponse;
 
         public DeviceViewHolder(View view) {
@@ -153,16 +158,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindColor(R.color.white)
         int colorStatusOff;
 
-        @Bind(R.id.cardViewLight)
+        @BindView(R.id.cardViewLight)
         CardView cardViewLight;
 
-        @Bind(R.id.textViewCardLightTitle)
+        @BindView(R.id.textViewCardLightTitle)
         TextView textViewCardLightTitle;
 
-        @Bind(R.id.imageButtonCardLightOff)
+        @BindView(R.id.imageButtonCardLightOff)
         ImageButton imageButtonCardLightOff;
 
-        @Bind(R.id.imageButtonCardLightOn)
+        @BindView(R.id.imageButtonCardLightOn)
         ImageButton imageButtonCardLightOn;
 
         public LightViewHolder(View view) {
@@ -185,16 +190,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindColor(R.color.lime)
         int colorStatusDown;
 
-        @Bind(R.id.cardViewAutomation)
+        @BindView(R.id.cardViewAutomation)
         CardView cardViewAutomation;
 
-        @Bind(R.id.textViewCardAutomationTitle)
+        @BindView(R.id.textViewCardAutomationTitle)
         TextView textViewCardAutomationTitle;
 
-        @Bind(R.id.imageButtonCardAutomationUp)
+        @BindView(R.id.imageButtonCardAutomationUp)
         ImageButton imageButtonCardAutomationUp;
 
-        @Bind(R.id.imageButtonCardAutomationDown)
+        @BindView(R.id.imageButtonCardAutomationDown)
         ImageButton imageButtonCardAutomationDown;
 
         public AutomationViewHolder(View view) {
@@ -210,13 +215,13 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 400;
 
-        @Bind(R.id.cardViewIpcam)
+        @BindView(R.id.cardViewIpcam)
         CardView cardViewIpcam;
 
-        @Bind(R.id.textViewCardIpcamTitle)
+        @BindView(R.id.textViewCardIpcamTitle)
         TextView textViewCardIpcamTitle;
 
-        @Bind(R.id.imageButtonCardIpcamPlay)
+        @BindView(R.id.imageButtonCardIpcamPlay)
         ImageButton imageButtonCardIpcamPlay;
 
         public IpcamViewHolder(View view) {
@@ -228,15 +233,40 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
+    public static class TemperatureViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 500;
+
+        @BindView(R.id.cardViewTemperature)
+        CardView cardViewTemperature;
+
+        @BindView(R.id.textViewCardTemperatureTitle)
+        TextView textViewCardTemperatureTitle;
+
+        @BindView(R.id.textViewCardTemperatureValue)
+        TextView textViewCardTemperatureValue;
+
+        @BindView(R.id.imageViewCardTemperatureScale)
+        ImageView imageViewCardTemperatureScale;
+
+        public TemperatureViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.imageButtonCardFavourite)
+        @BindView(R.id.imageButtonCardFavourite)
         ImageButton imageButtonCardFavourite;
 
-        @Bind(R.id.imageButtonCardMenu)
+        @BindView(R.id.imageButtonCardMenu)
         ImageButton imageButtonCardMenu;
 
-        @Bind(R.id.imageViewCardAlert)
+        @BindView(R.id.imageViewCardAlert)
         ImageView imageViewCardAlert;
 
         public CommonViewHolder(View view) {
@@ -274,6 +304,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof IpcamModel) {
             return IpcamViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof TemperatureModel) {
+            return TemperatureViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -292,6 +325,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case IpcamViewHolder.VIEW_TYPE:
                 return new IpcamViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_ipcam, parent, false));
+            case TemperatureViewHolder.VIEW_TYPE:
+                return new TemperatureViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_temperature, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -314,6 +350,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case IpcamViewHolder.VIEW_TYPE:
                 initCardIpcam((IpcamViewHolder) holder, (IpcamModel) mItems.get(position));
+                break;
+            case TemperatureViewHolder.VIEW_TYPE:
+                initCardTemperature((TemperatureViewHolder) holder, (TemperatureModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -348,17 +387,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         });
 
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditDevice = new Intent(mContext, DeviceActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, device.getUuid());
-                mContext.startActivity(intentEditDevice);
-            },
-            () -> deviceService.delete(device.getUuid())
-                .doOnCompleted(() -> updateDeviceListEvent())
-                .subscribe()));
-
+        onMenuClick(holder, deviceService, device.getUuid(), DeviceActivity.class);
         handleDeviceDebug(holder, device);
     }
 
@@ -440,16 +469,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardLightOff.setOnClickListener(v -> turnLightOff(holder, light));
         holder.imageButtonCardLightOn.setOnClickListener(v -> turnLightOn(holder, light));
 
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditLight = new Intent(mContext, LightActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, light.getUuid());
-                mContext.startActivity(intentEditLight);
-            },
-            () -> lightService.delete(light.getUuid())
-                .doOnCompleted(() -> updateDeviceListEvent())
-                .subscribe()));
+        onMenuClick(holder, lightService, light.getUuid(), LightActivity.class);
     }
 
     private void updateLightStatus(LightViewHolder holder, LightModel.Status status) {
@@ -503,16 +523,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageButtonCardAutomationUp.setOnClickListener(v -> sendAutomationRequestUp(holder, automation));
         holder.imageButtonCardAutomationDown.setOnClickListener(v -> sendAutomationRequestDown(holder, automation));
 
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditAutomation = new Intent(mContext, AutomationActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, automation.getUuid());
-                mContext.startActivity(intentEditAutomation);
-            },
-            () -> automationService.delete(automation.getUuid())
-                .doOnCompleted(this::updateDeviceListEvent)
-                .subscribe()));
+        onMenuClick(holder, automationService, automation.getUuid(), AutomationActivity.class);
     }
 
     private void updateAutomationStatus(AutomationViewHolder holder, AutomationModel.Status status) {
@@ -591,17 +602,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateFavourite(holder, ipcam.isFavourite());
         onFavouriteChange(holder, ipcam, ipcamService);
-
-        holder.imageButtonCardMenu.setOnClickListener(v -> showCardMenu(v,
-            () -> {
-                Intent intentEditIpcam = new Intent(mContext, IpcamActivity.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
-                mContext.startActivity(intentEditIpcam);
-            },
-            () -> ipcamService.delete(ipcam.getUuid())
-                .doOnCompleted(() -> updateDeviceListEvent())
-                .subscribe()));
+        onMenuClick(holder, ipcamService, ipcam.getUuid(), IpcamActivity.class);
 
         holder.imageButtonCardIpcamPlay.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
@@ -618,6 +619,34 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .putExtra(RealmModel.FIELD_UUID, ipcam.getUuid());
             mContext.startActivity(intentIpcamStream);
         });
+    }
+
+    /* Temperature */
+
+    private void initCardTemperature(TemperatureViewHolder holder, TemperatureModel temperature) {
+        holder.textViewCardTemperatureTitle.setText(temperature.getName());
+
+        updateFavourite(holder, temperature.isFavourite());
+        onFavouriteChange(holder, temperature, temperatureService);
+        onMenuClick(holder, temperatureService, temperature.getUuid(), TemperatureActivity.class);
+        updateTemperatureValue(holder, temperature);
+    }
+
+    private void updateTemperatureValue(TemperatureViewHolder holder, TemperatureModel temperature) {
+        String noTemperature = utilityService.getString(R.string.temperature_none);
+        holder.textViewCardTemperatureValue.setText(noTemperature);
+        holder.imageViewCardTemperatureScale.setVisibility(View.INVISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+
+        if (temperature.getValue() == null || temperature.getValue().equals(noTemperature)) {
+            log.warn("temperature value is null or invalid: unable to update");
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        holder.textViewCardTemperatureValue.setText(temperature.getValue());
+        // TODO scale from preferences
+        holder.imageViewCardTemperatureScale.setVisibility(View.VISIBLE);
     }
 
     /* commons */
@@ -640,6 +669,25 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 .doOnCompleted(() -> updateFavourite(holder, model.isFavourite()))
                 .subscribe();
         });
+    }
+
+    private <S extends DomoticService, A extends AbstractDeviceActivity>
+        void onMenuClick(CommonViewHolder holder, S service, String uuid, Class<A> activity) {
+
+        Action0 onMenuEdit = () -> {
+            Intent intentEdit = new Intent(mContext, activity)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(RealmModel.FIELD_UUID, uuid);
+            mContext.startActivity(intentEdit);
+        };
+
+        Action0 onMenuDelete = () ->
+            service.delete(uuid)
+                .doOnCompleted(this::updateDeviceListEvent)
+                .subscribe();
+
+        holder.imageButtonCardMenu.setOnClickListener(v ->
+            showCardMenu(v, onMenuEdit, onMenuDelete));
     }
 
     private void showCardMenu(View view, Action0 onMenuEdit, Action0 onMenuDelete) {

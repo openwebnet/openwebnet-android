@@ -5,7 +5,6 @@ import android.support.v7.app.ShadowAlertDialogSupport;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.R;
@@ -47,14 +46,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"org.robolectric.*", "android.*", "com.getbase.*"})
+@PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
 public class NavigationViewClickListenerTest {
 

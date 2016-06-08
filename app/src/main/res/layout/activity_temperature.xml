@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextTemperatureName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/label_name"
+            android:inputType="text"
+            android:maxLength="50"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="@string/temperature_request"
+            android:textStyle="bold|italic"/>
+
+        <LinearLayout
+            style="@style/message.linearLayout">
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/temperature_prefix"
+                typeface:font="inconsolata"/>
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextTemperatureWhere"
+                style="@style/message.editText"
+                android:hint="@string/device_where"
+                typeface:font="inconsolata"/>
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/temperature_suffix"
+                typeface:font="inconsolata"/>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/activity_common_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</ScrollView>

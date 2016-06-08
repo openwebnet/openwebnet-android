@@ -19,10 +19,12 @@ import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -37,8 +39,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observable;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
@@ -49,11 +52,17 @@ public class DeviceListFragment extends Fragment {
 
     public static final String ARG_ENVIRONMENT = "com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT";
 
-    @Bind(R.id.recyclerViewDeviceList)
+    @BindView(R.id.recyclerViewDeviceList)
     RecyclerView mRecyclerView;
 
-    @Bind(R.id.swipeRefreshLayoutDeviceList)
+    @BindView(R.id.swipeRefreshLayoutDeviceList)
     SwipeRefreshLayout swipeRefreshLayoutDeviceList;
+
+    @Inject
+    IpcamService ipcamService;
+
+    @Inject
+    TemperatureService temperatureService;
 
     @Inject
     LightService lightService;
@@ -64,8 +73,7 @@ public class DeviceListFragment extends Fragment {
     @Inject
     DeviceService deviceService;
 
-    @Inject
-    IpcamService ipcamService;
+    private Unbinder unbinder;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -77,7 +85,7 @@ public class DeviceListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_device, container, false);
 
         Injector.getApplicationComponent().inject(this);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         mLayoutManager = new GridLayoutManager(getContext(), calculateGridColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -123,8 +131,8 @@ public class DeviceListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**
@@ -154,6 +162,12 @@ public class DeviceListFragment extends Fragment {
         showLoader(true, isFavouriteMenu);
         log.debug("initCards-isFavouriteMenu: {}", isFavouriteMenu);
 
+        Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
+            ipcamService.findByEnvironment(environmentId);
+
+        Observable<List<TemperatureModel>> requestTemperatures = isFavouriteMenu ? temperatureService.requestFavourites() :
+            temperatureService.requestByEnvironment(environmentId);
+
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
             lightService.requestByEnvironment(environmentId);
 
@@ -163,12 +177,9 @@ public class DeviceListFragment extends Fragment {
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
-            ipcamService.findByEnvironment(environmentId);
-
-        Observable.zip(findIpcams, requestLights, requestAutomations, requestDevices,
-            (ipcams, lights, automations, devices) ->
-                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, lights, automations, devices)))
+        Observable.zip(findIpcams, requestTemperatures, requestLights, requestAutomations, requestDevices,
+            (ipcams, temperatures, lights, automations, devices) ->
+                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, lights, automations, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);

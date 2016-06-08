@@ -26,8 +26,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MAX;
 import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_ENVIRONMENT_RANGE_MIN;
@@ -39,13 +39,13 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     public static final String EXTRA_DEFAULT_ENVIRONMENT = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT";
     public static final String EXTRA_DEFAULT_GATEWAY = "com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_GATEWAY";
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
     @BindString(R.string.validation_required)

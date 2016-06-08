@@ -11,8 +11,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AutomationModel extends RealmObject implements RealmModel, DomoticModel {
 
-    public static final String FIELD_WHERE = "where";
-
     public enum Status {
         STOP, UP, DOWN
     }

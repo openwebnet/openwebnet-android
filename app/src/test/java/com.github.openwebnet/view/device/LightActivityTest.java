@@ -28,6 +28,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -37,6 +38,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.After;
@@ -62,8 +64,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Component;
 import dagger.Module;
@@ -82,29 +84,29 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
+@PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
 public class LightActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @Bind(R.id.editTextLightName)
+    @BindView(R.id.editTextLightName)
     EditText editTextLightName;
 
-    @Bind(R.id.editTextLightWhere)
+    @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
-    @Bind(R.id.checkBoxLightDimmer)
+    @BindView(R.id.checkBoxLightDimmer)
     CheckBox checkBoxLightDimmer;
 
     @BindString(R.string.validation_required)
@@ -196,6 +198,12 @@ public class LightActivityTest {
             return new IpcamServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        TemperatureService provideTemperatureService() {
+            return new TemperatureServiceImpl();
+        }
+
     }
 
     @Before
@@ -209,6 +217,11 @@ public class LightActivityTest {
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
         ((LightActivityComponentTest) Injector.getApplicationComponent()).inject(this);
+    }
+
+    @After
+    public void tearDown() {
+        controller.pause().stop().destroy();
     }
 
     private void createWithIntent(String uuidExtra) {
@@ -440,11 +453,6 @@ public class LightActivityTest {
 
         verify(lightService, never()).add(any(LightModel.class));
         verify(lightService, times(1)).update(LightModelMatcher.lightModelEq(lightMock));
-    }
-
-    @After
-    public void tearDown() {
-        controller.pause().stop().destroy();
     }
 
 }

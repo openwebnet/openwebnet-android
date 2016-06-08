@@ -28,6 +28,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -37,6 +38,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
 import org.junit.After;
@@ -63,8 +65,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.Component;
 import dagger.Module;
@@ -92,37 +94,37 @@ public class DeviceActivityTest {
     @Rule
     public PowerMockRule rule = new PowerMockRule();
 
-    @Bind(R.id.spinnerDeviceEnvironment)
+    @BindView(R.id.spinnerDeviceEnvironment)
     Spinner spinnerDeviceEnvironment;
 
-    @Bind(R.id.spinnerDeviceGateway)
+    @BindView(R.id.spinnerDeviceGateway)
     Spinner spinnerDeviceGateway;
 
-    @Bind(R.id.editTextDeviceName)
+    @BindView(R.id.editTextDeviceName)
     EditText editTextDeviceName;
 
-    @Bind(R.id.editTextDeviceRequest)
+    @BindView(R.id.editTextDeviceRequest)
     EditText editTextDeviceRequest;
 
-    @Bind(R.id.editTextDeviceResponse)
+    @BindView(R.id.editTextDeviceResponse)
     EditText editTextDeviceResponse;
 
-    @Bind(R.id.checkBoxDeviceFavourite)
+    @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @Bind(R.id.checkBoxDeviceRunOnLoad)
+    @BindView(R.id.checkBoxDeviceRunOnLoad)
     CheckBox checkBoxDeviceRunOnLoad;
 
-    @Bind(R.id.checkBoxDeviceConfirm)
+    @BindView(R.id.checkBoxDeviceConfirm)
     CheckBox checkBoxDeviceConfirm;
 
-    @Bind(R.id.checkBoxDeviceAccept)
+    @BindView(R.id.checkBoxDeviceAccept)
     CheckBox checkBoxDeviceAccept;
 
-    @Bind(R.id.textViewDevicePasteResponse)
+    @BindView(R.id.textViewDevicePasteResponse)
     TextView textViewDevicePasteResponse;
 
-    @Bind(R.id.imageButtonDevicePasteResponse)
+    @BindView(R.id.imageButtonDevicePasteResponse)
     ImageButton imageButtonDevicePasteResponse;
 
     @BindString(R.string.label_none)
@@ -215,6 +217,12 @@ public class DeviceActivityTest {
         @Singleton
         IpcamService provideIpcamService() {
             return new IpcamServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        TemperatureService provideTemperatureService() {
+            return new TemperatureServiceImpl();
         }
 
     }

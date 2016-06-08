@@ -15,11 +15,12 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.github.openwebnet.view.device.AbstractDeviceActivity.EXTRA_DEFAULT_ENVIRONMENT;
@@ -29,7 +30,7 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
     private static final Logger log = LoggerFactory.getLogger(MainBottomSheetDialogFragment.class);
 
-    @Bind(R.id.gridViewBottomSheet)
+    @BindView(R.id.gridViewBottomSheet)
     GridView gridView;
 
     @Nullable
@@ -53,6 +54,9 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 case R.id.bs_add_automation:
                     actionNewIntent(AutomationActivity.class);
                     break;
+                case R.id.bs_add_temperature:
+                    actionNewIntent(TemperatureActivity.class);
+                    break;
                 case R.id.bs_add_device:
                     actionNewIntent(DeviceActivity.class);
                     break;
@@ -67,11 +71,11 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
     }
 
     private <T> void actionNewIntent(Class<T> clazz) {
-        this.dismiss();
-
         Intent intentNew = new Intent(this.getContext(), clazz)
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, getArguments().getInt(EXTRA_DEFAULT_ENVIRONMENT))
             .putExtra(EXTRA_DEFAULT_GATEWAY, getArguments().getString(EXTRA_DEFAULT_GATEWAY));
         startActivity(intentNew);
+
+        this.dismiss();
     }
 }
