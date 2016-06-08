@@ -8,9 +8,9 @@ import rx.Observable;
 
 public interface DomoticService<D extends DomoticModel> {
 
-    Observable<String> add(D automation);
+    Observable<String> add(D item);
 
-    Observable<Void> update(D automation);
+    Observable<Void> update(D item);
 
     Observable<Void> delete(String uuid);
 

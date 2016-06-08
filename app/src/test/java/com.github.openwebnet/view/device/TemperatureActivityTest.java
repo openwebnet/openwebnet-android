@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
@@ -15,11 +14,11 @@ import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
-import com.github.openwebnet.matcher.LightModelMatcher;
+import com.github.openwebnet.matcher.TemperatureModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
@@ -41,7 +40,6 @@ import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,7 +71,6 @@ import dagger.Provides;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -86,7 +83,7 @@ import static org.mockito.Mockito.when;
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
-public class LightActivityTest {
+public class TemperatureActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -100,14 +97,11 @@ public class LightActivityTest {
     @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @BindView(R.id.editTextLightName)
-    EditText editTextLightName;
+    @BindView(R.id.editTextTemperatureName)
+    EditText editTextTemperatureName;
 
-    @BindView(R.id.editTextLightWhere)
-    EditText editTextLightWhere;
-
-    @BindView(R.id.checkBoxLightDimmer)
-    CheckBox checkBoxLightDimmer;
+    @BindView(R.id.editTextTemperatureWhere)
+    EditText editTextTemperatureWhere;
 
     @BindString(R.string.validation_required)
     String validationRequired;
@@ -116,7 +110,7 @@ public class LightActivityTest {
     String labelNone;
 
     @Inject
-    LightService lightService;
+    TemperatureService temperatureService;
 
     @Inject
     EnvironmentService environmentService;
@@ -124,19 +118,19 @@ public class LightActivityTest {
     @Inject
     GatewayService gatewayService;
 
-    private ActivityController<LightActivity> controller;
-    private LightActivity activity;
+    private ActivityController<TemperatureActivity> controller;
+    private TemperatureActivity activity;
 
     @Singleton
-    @Component(modules = {LightActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
-    public interface LightActivityComponentTest extends ApplicationComponent {
+    @Component(modules = {TemperatureActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
+    public interface TemperatureActivityComponentTest extends ApplicationComponent {
 
-        void inject(LightActivityTest activity);
+        void inject(TemperatureActivityTest activity);
 
     }
 
     @Module
-    public class LightActivityModuleTest {
+    public class TemperatureActivityModuleTest {
 
         @Provides
         @Singleton
@@ -183,7 +177,7 @@ public class LightActivityTest {
         @Provides
         @Singleton
         LightService provideLightService() {
-            return mock(LightServiceImpl.class);
+            return new LightServiceImpl();
         }
 
         @Provides
@@ -201,33 +195,28 @@ public class LightActivityTest {
         @Provides
         @Singleton
         TemperatureService provideTemperatureService() {
-            return new TemperatureServiceImpl();
+            return mock(TemperatureServiceImpl.class);
         }
 
     }
 
     @Before
     public void setupDagger() {
-        LightActivityComponentTest applicationComponentTest = DaggerLightActivityTest_LightActivityComponentTest.builder()
-            .lightActivityModuleTest(new LightActivityModuleTest())
+        TemperatureActivityComponentTest applicationComponentTest = DaggerTemperatureActivityTest_TemperatureActivityComponentTest.builder()
+            .temperatureActivityModuleTest(new TemperatureActivityModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((LightActivityComponentTest) Injector.getApplicationComponent()).inject(this);
-    }
-
-    @After
-    public void tearDown() {
-        controller.pause().stop().destroy();
+        ((TemperatureActivityComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(LightActivity.class);
+        controller = Robolectric.buildActivity(TemperatureActivity.class);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, TemperatureActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         activity = controller
             .withIntent(intent)
@@ -256,48 +245,6 @@ public class LightActivityTest {
     }
 
     @Test
-    public void shouldVerifyOnCreate_initSpinner_noResult() {
-        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
-        when(gatewayService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
-
-        createWithIntent(null);
-
-        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
-        assertFalse("should not be empty", adapterEnvironment.isEmpty());
-        assertEquals("should verify first element", labelNone, adapterEnvironment.getItem(0));
-
-        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
-        assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", labelNone, adapterGateway.getItem(0));
-    }
-
-    @Test
-    public void shouldVerifyOnCreate_initSpinner() {
-        List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(101, "env2"));
-
-        List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway("uuid2", "2.2.2.2", 2));
-
-        when(environmentService.findAll()).thenReturn(Observable.just(environments));
-        when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
-
-        createWithIntent(null);
-
-        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
-        assertFalse("should not be empty", adapterEnvironment.isEmpty());
-        assertEquals("should verify first element", "env1", adapterEnvironment.getItem(0));
-        assertEquals("should verify second element", "env2", adapterEnvironment.getItem(1));
-        assertEquals("should select default", 0, spinnerDeviceEnvironment.getSelectedItemPosition());
-
-        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
-        assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", "1.1.1.1:1", adapterGateway.getItem(0));
-        assertEquals("should verify second element", "2.2.2.2:2", adapterGateway.getItem(1));
-        assertEquals("should select default", 0, spinnerDeviceGateway.getSelectedItemPosition());
-    }
-
-    @Test
     public void shouldVerifyOnCreate_initEditWithoutUuid() {
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
         when(gatewayService.findAll()).thenReturn(Observable.<List<GatewayModel>>empty());
@@ -306,10 +253,8 @@ public class LightActivityTest {
 
         verify(mock(LightServiceImpl.class), never()).findById(anyString());
 
-        assertEquals("invalid value", "", editTextLightName.getText().toString());
-        assertEquals("invalid value", "", editTextLightWhere.getText().toString());
-
-        assertEquals("invalid value", false, checkBoxLightDimmer.isChecked());
+        assertEquals("invalid value", "", editTextTemperatureName.getText().toString());
+        assertEquals("invalid value", "", editTextTemperatureWhere.getText().toString());
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
 
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
@@ -318,47 +263,43 @@ public class LightActivityTest {
 
     @Test
     public void shouldVerifyOnCreate_initEditWithUuid() {
-        String LIGHT_UUID = "myUuid";
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 108;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+        String TEMPERATURE_UUID = "myUuid";
+        String TEMPERATURE_NAME = "myName";
+        String TEMPERATURE_GATEWAY_SELECTED = "uuid2";
+        String TEMPERATURE_WHERE = "08";
+        Integer TEMPERATURE_ENVIRONMENT_SELECTED = 108;
+        boolean TEMPERATURE_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env8"));
+            asList(newEnvironment(100, "env1"), newEnvironment(TEMPERATURE_ENVIRONMENT_SELECTED, "env8"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2));
+            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(TEMPERATURE_GATEWAY_SELECTED, "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
 
-        LightModel lightModel = LightModel.updateBuilder(LIGHT_UUID)
-            .name(LIGHT_NAME)
-            .where(LIGHT_WHERE)
-            .dimmer(LIGHT_DIMMER)
-            .environment(LIGHT_ENVIRONMENT_SELECTED)
-            .gateway(LIGHT_GATEWAY_SELECTED)
-            .favourite(LIGHT_FAVOURITE)
+        TemperatureModel temperatureModel = TemperatureModel.updateBuilder(TEMPERATURE_UUID)
+            .name(TEMPERATURE_NAME)
+            .where(TEMPERATURE_WHERE)
+            .environment(TEMPERATURE_ENVIRONMENT_SELECTED)
+            .gateway(TEMPERATURE_GATEWAY_SELECTED)
+            .favourite(TEMPERATURE_FAVOURITE)
             .build();
 
-        when(lightService.findById(LIGHT_UUID)).thenReturn(Observable.just(lightModel));
+        when(temperatureService.findById(TEMPERATURE_UUID)).thenReturn(Observable.just(temperatureModel));
 
-        createWithIntent(LIGHT_UUID);
+        createWithIntent(TEMPERATURE_UUID);
 
-        assertEquals("invalid value", LIGHT_NAME, editTextLightName.getText().toString());
-        assertEquals("invalid value", String.valueOf(LIGHT_WHERE), editTextLightWhere.getText().toString());
-
-        assertEquals("invalid value", LIGHT_DIMMER, checkBoxLightDimmer.isChecked());
-        assertEquals("invalid value", LIGHT_FAVOURITE, checkBoxDeviceFavourite.isChecked());
+        assertEquals("invalid value", TEMPERATURE_NAME, editTextTemperatureName.getText().toString());
+        assertEquals("invalid value", String.valueOf(TEMPERATURE_WHERE), editTextTemperatureWhere.getText().toString());
+        assertEquals("invalid value", TEMPERATURE_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
-        assertEquals("invalid value", environmentSelected.getId(), LIGHT_ENVIRONMENT_SELECTED);
+        assertEquals("invalid value", environmentSelected.getId(), TEMPERATURE_ENVIRONMENT_SELECTED);
 
         GatewayModel gatewaySelected = gateways.get(spinnerDeviceGateway.getSelectedItemPosition());
-        assertEquals("invalid value", LIGHT_GATEWAY_SELECTED, gatewaySelected.getUuid());
+        assertEquals("invalid value", TEMPERATURE_GATEWAY_SELECTED, gatewaySelected.getUuid());
     }
 
     @Test
@@ -368,11 +309,11 @@ public class LightActivityTest {
 
         createWithIntent(null);
 
-        expectRequired(editTextLightName);
-        editTextLightName.setText("nameValue");
+        expectRequired(editTextTemperatureName);
+        editTextTemperatureName.setText("nameValue");
 
-        expectRequired(editTextLightWhere);
-        editTextLightWhere.setText("21");
+        expectRequired(editTextTemperatureWhere);
+        editTextTemperatureWhere.setText("21");
 
         expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
         ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
@@ -389,36 +330,33 @@ public class LightActivityTest {
 
     private void expectRequired(TextView view) {
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(temperatureService, never()).add(any(TemperatureModel.class));
+        verify(temperatureService, never()).update(any(TemperatureModel.class));
         assertEquals("bad validation", validationRequired, view.getError());
-        //assertTrue("bad focus", view.hasFocus());
     }
 
-    private LightModel common_onMenuSave_valid(String uuidExtra) {
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 101;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+    private TemperatureModel common_onMenuSave_valid(String uuidExtra) {
+        String TEMPERATURE_NAME = "myName";
+        String TEMPERATURE_GATEWAY_SELECTED = "uuid2";
+        String TEMPERATURE_WHERE = "08";
+        Integer TEMPERATURE_ENVIRONMENT_SELECTED = 101;
+        boolean TEMPERATURE_DIMMER = true;
+        boolean TEMPERATURE_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
+            just(Arrays.asList(newEnvironment(TEMPERATURE_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+            just(Arrays.asList(newGateway(TEMPERATURE_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
-        String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
-        when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));
-        when(lightService.update(any(LightModel.class))).thenReturn(Observable.just(null));
+        String TEMPERATURE_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(temperatureService.add(any(TemperatureModel.class))).thenReturn(Observable.just(TEMPERATURE_UUID));
+        when(temperatureService.update(any(TemperatureModel.class))).thenReturn(Observable.just(null));
 
         createWithIntent(uuidExtra);
 
-        editTextLightName.setText(String.valueOf(LIGHT_NAME));
-        editTextLightWhere.setText(String.valueOf(LIGHT_WHERE));
-
-        checkBoxLightDimmer.setChecked(LIGHT_DIMMER);
-        checkBoxDeviceFavourite.setChecked(LIGHT_FAVOURITE);
+        editTextTemperatureName.setText(String.valueOf(TEMPERATURE_NAME));
+        editTextTemperatureWhere.setText(String.valueOf(TEMPERATURE_WHERE));
+        checkBoxDeviceFavourite.setChecked(TEMPERATURE_FAVOURITE);
 
         // for simplicity only 1 items
         spinnerDeviceEnvironment.setSelection(0);
@@ -426,33 +364,32 @@ public class LightActivityTest {
 
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
 
-        LightModel lightMock = new LightModel();
-        lightMock.setUuid(uuidExtra);
-        lightMock.setName(LIGHT_NAME);
-        lightMock.setWhere(LIGHT_WHERE);
-        lightMock.setDimmer(LIGHT_DIMMER);
-        lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
-        lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
-        lightMock.setFavourite(LIGHT_FAVOURITE);
-        return lightMock;
+        TemperatureModel temperatureMock = new TemperatureModel();
+        temperatureMock.setUuid(uuidExtra);
+        temperatureMock.setName(TEMPERATURE_NAME);
+        temperatureMock.setWhere(TEMPERATURE_WHERE);
+        temperatureMock.setEnvironmentId(TEMPERATURE_ENVIRONMENT_SELECTED);
+        temperatureMock.setGatewayUuid(TEMPERATURE_GATEWAY_SELECTED);
+        temperatureMock.setFavourite(TEMPERATURE_FAVOURITE);
+        return temperatureMock;
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
-        LightModel lightMock = common_onMenuSave_valid(null);
+        TemperatureModel temperatureMock = common_onMenuSave_valid(null);
 
-        verify(lightService, times(1)).add(LightModelMatcher.lightModelEq(lightMock));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(temperatureService, times(1)).add(TemperatureModelMatcher.temperatureModelEq(temperatureMock));
+        verify(temperatureService, never()).update(any(TemperatureModel.class));
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validEdit() {
-        when(lightService.findById(anyString())).thenReturn(Observable.<LightModel>empty());
+        when(temperatureService.findById(anyString())).thenReturn(Observable.<TemperatureModel>empty());
 
-        LightModel lightMock = common_onMenuSave_valid("anyUuid");
+        TemperatureModel temperatureMock = common_onMenuSave_valid("anyUuid");
 
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, times(1)).update(LightModelMatcher.lightModelEq(lightMock));
+        verify(temperatureService, never()).add(any(TemperatureModel.class));
+        verify(temperatureService, times(1)).update(TemperatureModelMatcher.temperatureModelEq(temperatureMock));
     }
 
 }

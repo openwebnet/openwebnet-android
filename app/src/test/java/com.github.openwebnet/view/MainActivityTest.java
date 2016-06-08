@@ -54,7 +54,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"org.robolectric.*", "android.*", "com.getbase.*"})
+@PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
 public class MainActivityTest {
 
@@ -63,6 +63,7 @@ public class MainActivityTest {
 
     @Inject
     CommonService commonService;
+
     @Inject
     EnvironmentService environmentService;
 
@@ -227,7 +228,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void handleEvent_OnChangeDrawerMenuEvent() {
+    public void handleEvent_onChangeDrawerMenuEvent() {
         int MENU_ID = 88;
         setupActivity();
 
@@ -239,7 +240,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void handleEvent_OnChangeFabVisibilityEvent() {
+    public void handleEvent_onChangeFabVisibilityEvent() {
         setupActivity();
 
         EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(true));
@@ -250,7 +251,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void handleEvent_OnChangePreferenceDeviceDebugEvent() {
+    public void handleEvent_onChangePreferenceDeviceDebugEvent() {
         setupActivity();
         MenuItem menuDebug = activity.toolbar.getMenu().findItem(R.id.action_settings);
 

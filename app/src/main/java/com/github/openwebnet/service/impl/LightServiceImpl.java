@@ -69,8 +69,6 @@ public class LightServiceImpl implements LightService {
         return lightRepository.findFavourites();
     }
 
-    private Func1<String, Lighting> requestStatus = where -> Lighting.requestStatus(where);
-
     private Func2<OpenSession, LightModel, LightModel> handleStatus = (openSession, light) -> {
         Lighting.handleStatus(() -> light.setStatus(ON), () -> light.setStatus(OFF)).call(openSession);
         return light;
@@ -80,40 +78,35 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(requestStatus, handleStatus))
-            .collect(() -> new ArrayList<>(),
-                (lightModels, lightModel) -> lightModels.add(lightModel));
+            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
+            .collect(ArrayList::new, List::add);
     }
 
     @Override
     public Observable<List<LightModel>> requestFavourites() {
         return findFavourites()
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(requestStatus, handleStatus))
-            .collect(() -> new ArrayList<>(),
-                (lightModels, lightModel) -> lightModels.add(lightModel));
+            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
+            .collect(ArrayList::new, List::add);
     }
 
     private Func2<OpenSession, LightModel, LightModel> handleResponse(LightModel.Status status) {
         return (openSession, light) -> {
             Lighting.handleResponse(() ->
-                light.setStatus(status), () -> light.setStatus(null)).call(openSession);
+                light.setStatus(status), () -> light.setStatus(null))
+            .call(openSession);
             return light;
         };
     }
 
     @Override
     public Observable<LightModel> turnOn(LightModel light) {
-        Func1<String, Lighting> requestTurnOn = where -> Lighting.requestTurnOn(where);
-
-        return Observable.just(light).flatMap(requestLight(requestTurnOn, handleResponse(ON)));
+        return Observable.just(light).flatMap(requestLight(Lighting::requestTurnOn, handleResponse(ON)));
     }
 
     @Override
     public Observable<LightModel> turnOff(LightModel light) {
-        Func1<String, Lighting> requestTurnOff = where -> Lighting.requestTurnOff(where);
-
-        return Observable.just(light).flatMap(requestLight(requestTurnOff, handleResponse(OFF)));
+        return Observable.just(light).flatMap(requestLight(Lighting::requestTurnOff, handleResponse(OFF)));
     }
 
     private Func1<LightModel, Observable<LightModel>> requestLight(

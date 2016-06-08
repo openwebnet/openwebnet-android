@@ -16,7 +16,6 @@ import com.github.openwebnet.repository.AutomationRepository;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,8 +43,10 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"android.*"})
-@PrepareForTest({Injector.class, OpenWebNet.class})
+@PrepareForTest({Injector.class})
 public class AutomationServiceTest {
+
+    private static final String GATEWAY_UUID = "myGateway";
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -196,20 +197,91 @@ public class AutomationServiceTest {
     }
 
     @Test
-    @Ignore
     public void automationService_requestByEnvironment() {
+        Integer ENVIRONMENT = 108;
+        List<AutomationModel> automations = new ArrayList<>();
 
+        when(automationRepository.findByEnvironment(ENVIRONMENT)).thenReturn(Observable.just(automations));
+        mockClient();
+
+        TestSubscriber<List<AutomationModel>> tester = new TestSubscriber<>();
+        automationService.requestByEnvironment(ENVIRONMENT).subscribe(tester);
+
+        tester.assertValue(automations);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
-    @Ignore
     public void automationService_requestFavourites() {
+        List<AutomationModel> automations = new ArrayList<>();
 
+        when(automationRepository.findFavourites()).thenReturn(Observable.just(automations));
+        mockClient();
+
+        TestSubscriber<List<AutomationModel>> tester = new TestSubscriber<>();
+        automationService.requestFavourites().subscribe(tester);
+
+        tester.assertValue(automations);
+        tester.assertCompleted();
+        tester.assertNoErrors();
     }
 
     @Test
     public void automationService_stop() {
-        String GATEWAY_UUID = "myGateway";
+        AutomationModel automation = mockAutomationModel();
+        mockClient();
+
+        TestSubscriber<AutomationModel> tester = new TestSubscriber<>();
+        automationService.stop(automation).subscribe(tester);
+
+        verify(commonService).findClient(GATEWAY_UUID);
+
+        tester.assertValue(automation);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void automationService_moveUp() {
+        AutomationModel automation = mockAutomationModel();
+        mockClient();
+
+        TestSubscriber<AutomationModel> tester = new TestSubscriber<>();
+        automationService.moveUp(automation).subscribe(tester);
+
+        verify(commonService).findClient(GATEWAY_UUID);
+
+        tester.assertValue(automation);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    @Test
+    public void automationService_moveDown() {
+        AutomationModel automation = mockAutomationModel();
+        mockClient();
+
+        TestSubscriber<AutomationModel> tester = new TestSubscriber<>();
+        automationService.moveDown(automation).subscribe(tester);
+
+        verify(commonService).findClient(GATEWAY_UUID);
+
+        tester.assertValue(automation);
+        tester.assertCompleted();
+        tester.assertNoErrors();
+    }
+
+    private AutomationModel mockAutomationModel() {
+        return AutomationModel.updateBuilder("uuid")
+            .environment(108)
+            .gateway(GATEWAY_UUID)
+            .name("automation")
+            .where("21")
+            .build();
+    }
+
+    private OpenWebNet mockClient() {
         String GATEWAY_HOST = "1.1.1.1";
         Integer GATEWAY_PORT = 1;
 
@@ -218,47 +290,18 @@ public class AutomationServiceTest {
         gateway.setHost(GATEWAY_HOST);
         gateway.setPort(GATEWAY_PORT);
 
-        AutomationModel automation = AutomationModel.updateBuilder("uuid")
-            .environment(108)
-            .gateway(GATEWAY_UUID)
-            .name("automation")
-            .where("21")
-            .build();
-
-        OpenMessage request = () -> "*2*0*21##";
-        OpenMessage response = () -> "*#*1##";
+        OpenMessage request = () -> "REQUEST";
+        OpenMessage response = () -> "RESPONSE";
         OpenSession session = OpenSession.newSession(request);
         session.addResponse(response);
 
         OpenWebNet client = OpenWebNet.newClient(OpenWebNet.gateway(GATEWAY_HOST, GATEWAY_PORT));
-        OpenWebNet clientSpy = PowerMockito.spy(client);
+        OpenWebNet clientSpy = PowerMockito.mock(OpenWebNet.class, invocation -> Observable.just(client));
 
-        // TODO spy is not working on client.send
-        // ERROR connect: java.net.SocketException: Network is unreachable
+        when(clientSpy.send(request)).thenReturn(Observable.just(session));
         when(commonService.findClient(GATEWAY_UUID)).thenReturn(clientSpy);
-        PowerMockito.doReturn(Observable.just(session)).when(clientSpy).send(request);
 
-        TestSubscriber<AutomationModel> tester = new TestSubscriber<>();
-        automationService.stop(automation).subscribe(tester);
-
-        verify(commonService).findClient(GATEWAY_UUID);
-
-        // TODO
-        //tester.assertValue(automation);
-        //tester.assertCompleted();
-        tester.assertNoErrors();
-    }
-
-    @Test
-    @Ignore
-    public void automationService_moveUp() {
-
-    }
-
-    @Test
-    @Ignore
-    public void automationService_moveDown() {
-
+        return clientSpy;
     }
 
 }

@@ -5,6 +5,7 @@
     <string name="activity_light">Свет</string>
     <string name="activity_automation">Электропривод</string>
     <string name="activity_ipcam">Ip-камера</string>
+    <string name="activity_temperature">температура</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -55,6 +56,7 @@
     <string name="bs_device">Устройство</string>
     <string name="bs_light">Освещение</string>
     <string name="bs_automation">Электропривод</string>
+    <string name="bs_temperature">температура</string>
     <string name="bs_ipcam">Ip-камера</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
@@ -79,6 +81,7 @@
     <string name="ipcam_password">Пароль</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Ошибка соединения</string>
+    <string name="temperature_request">Запрос</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

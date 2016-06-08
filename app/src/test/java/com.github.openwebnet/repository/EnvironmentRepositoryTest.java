@@ -13,7 +13,9 @@ import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.TemperatureModel;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -166,6 +168,8 @@ public class EnvironmentRepositoryTest {
         doNothing().when(databaseRealm).delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
         doNothing().when(databaseRealm).delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
         doNothing().when(databaseRealm).delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        doNothing().when(databaseRealm).delete(IpcamModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        doNothing().when(databaseRealm).delete(TemperatureModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
 
         TestSubscriber<Void> tester = new TestSubscriber<>();
         environmentRepository.delete(ENVIRONMENT_ID).subscribe(tester);
@@ -173,6 +177,8 @@ public class EnvironmentRepositoryTest {
         verify(databaseRealm).delete(LightModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
         verify(databaseRealm).delete(AutomationModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
         verify(databaseRealm).delete(DeviceModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).delete(IpcamModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
+        verify(databaseRealm).delete(TemperatureModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, ENVIRONMENT_ID);
         verify(databaseRealm).delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, ENVIRONMENT_ID);
 
         tester.assertCompleted();

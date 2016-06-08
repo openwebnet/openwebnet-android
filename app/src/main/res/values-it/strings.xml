@@ -5,6 +5,7 @@
     <string name="activity_light">Luce</string>
     <string name="activity_automation">Automatismo</string>
     <string name="activity_ipcam">Ip Camera</string>
+    <string name="activity_temperature">Temperatura</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -55,6 +56,7 @@
     <string name="bs_device">Dispositivo</string>
     <string name="bs_light">Luce</string>
     <string name="bs_automation">Automatismo</string>
+    <string name="bs_temperature">Temperatura</string>
     <string name="bs_ipcam">Ip Camera</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
@@ -79,6 +81,7 @@
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Errore di connessione</string>
+    <string name="temperature_request">Richiesta</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

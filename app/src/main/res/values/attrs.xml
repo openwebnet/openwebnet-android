@@ -9,7 +9,6 @@
 
     <attr name="font" format="enum">
         <enum name="awesome" value="0"/>
-        <enum name="daggersquare" value="1"/>
-        <enum name="inconsolata" value="2"/>
+        <enum name="inconsolata" value="1"/>
     </attr>
 </resources>
