@@ -165,7 +165,7 @@ public class DeviceListFragment extends Fragment {
         Observable<List<IpcamModel>> findIpcams = isFavouriteMenu ? ipcamService.findFavourites() :
             ipcamService.findByEnvironment(environmentId);
 
-        Observable<List<TemperatureModel>> requestTemperatures = isFavouriteMenu ? temperatureService.findFavourites() :
+        Observable<List<TemperatureModel>> requestTemperatures = isFavouriteMenu ? temperatureService.requestFavourites() :
             temperatureService.requestByEnvironment(environmentId);
 
         Observable<List<LightModel>> requestLights = isFavouriteMenu ? lightService.requestFavourites() :
