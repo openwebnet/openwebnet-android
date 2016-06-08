@@ -24,6 +24,10 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
+#### v2.4.0
+
+- Add Temperature features
+
 #### v2.3.1
 
 - Minor fix

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">MyOpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.3.1</string>
+    <string name="app_version_number" translatable="false">2.4.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet/openwebnet-android</string>
 
     <string name="activity_device">Device</string>
