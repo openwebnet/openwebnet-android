@@ -44,6 +44,9 @@
     <string name="settings_category_debug">Debug</string>
     <string name="settings_debug_device_title">Debug dispositivi</string>
     <string name="settings_debug_device_summary">Mostra durata e risposta</string>
+    <string name="settings_category_temperature">Temperatura</string>
+    <string name="settings_temperature_default">Scala di temperatura di default</string>
+    <string name="settings_temperature_default_dialog">Scegli la scala di temperatura di default</string>
 
     <string name="button_add">Aggiungi</string>
     <string name="button_edit">Modifica</string>

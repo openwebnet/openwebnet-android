@@ -1,6 +1,7 @@
 package com.github.openwebnet.view.settings;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
@@ -19,6 +20,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     public static final String PREF_KEY_ABOUT_CHANGELOG = "com.github.openwebnet_preferences.PREF_KEY_ABOUT_CHANGELOG";
     public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
+    public static final String PREF_KEY_TEMPERATURE = "com.github.openwebnet_preferences.PREF_KEY_TEMPERATURE";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,9 @@ public class SettingsFragment extends PreferenceFragment {
             }
         } else if (preference instanceof GatewayListPreference) {
             updateGatewayListPreferenceSummary((GatewayListPreference) preference);
+        } else if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            preference.setSummary(listPreference.getEntry());
         }
     }
 
