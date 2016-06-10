@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="temperature_scale_keys">
+    <string-array name="temperature_scale_keys">
         <item>CELSIUS</item>
         <item>FAHRENHEIT</item>
         <item>KELVIN</item>
-    </array>
+    </string-array>
     <string-array name="temperature_scale_values">
         <item>@string/temperature_scale_celsius</item>
         <item>@string/temperature_scale_fahrenheit</item>

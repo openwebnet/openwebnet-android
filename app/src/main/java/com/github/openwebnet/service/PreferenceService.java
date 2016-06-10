@@ -2,6 +2,8 @@ package com.github.openwebnet.service;
 
 import android.content.SharedPreferences;
 
+import static com.github.niqdev.openwebnet.message.Heating.TemperatureScale;
+
 public interface PreferenceService {
 
     boolean isFirstRun();
@@ -9,6 +11,8 @@ public interface PreferenceService {
     void initFirstRun();
 
     String getDefaultGateway();
+
+    TemperatureScale getDefaultTemperatureScale();
 
     boolean isDeviceDebugEnabled();
 
