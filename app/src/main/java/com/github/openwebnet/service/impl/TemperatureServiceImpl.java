@@ -7,6 +7,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.repository.TemperatureRepository;
 import com.github.openwebnet.service.CommonService;
+import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 
@@ -33,6 +34,9 @@ public class TemperatureServiceImpl implements TemperatureService {
 
     @Inject
     CommonService commonService;
+
+    @Inject
+    PreferenceService preferenceService;
 
     @Inject
     UtilityService utilityService;
@@ -100,10 +104,8 @@ public class TemperatureServiceImpl implements TemperatureService {
             return temperature;
         };
 
-        // TODO TemperatureScale from preferences
-
         return temperature -> commonService.findClient(temperature.getGatewayUuid())
-            .send(request.call(temperature.getWhere(), Heating.TemperatureScale.CELSIUS))
+            .send(request.call(temperature.getWhere(), preferenceService.getDefaultTemperatureScale()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, temperature))
