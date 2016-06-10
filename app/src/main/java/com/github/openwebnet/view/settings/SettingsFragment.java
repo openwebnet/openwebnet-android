@@ -7,10 +7,15 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.text.TextUtils;
 
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
 import com.github.openwebnet.view.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Arrays;
+import java.util.List;
 
 import de.cketti.library.changelog.ChangeLog;
 
@@ -27,6 +32,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         updatePreferenceSummary(getPreferenceScreen());
+        initTemperatureChange();
         initDebug();
         initAbout();
     }
@@ -51,6 +57,22 @@ public class SettingsFragment extends PreferenceFragment {
         if (!TextUtils.isEmpty(value)) {
             preference.setSummary(value);
         }
+    }
+
+    private void initTemperatureChange() {
+        getPreferenceScreen().findPreference(PREF_KEY_TEMPERATURE)
+            .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                List<String> keys = Arrays.asList(getResources().getStringArray(R.array.temperature_scale_keys));
+                Optional<String> label = Stream.of(keys)
+                    .filter(newValue::equals)
+                    .map(keys::indexOf)
+                    .map(index -> getResources().getStringArray(R.array.temperature_scale_values)[index])
+                    .findFirst();
+
+                preference.setSummary(label.get());
+                return true;
+            });
     }
 
     private void initDebug() {
