@@ -1,7 +1,7 @@
 # Store listing
 
 ### Title
-OpenWebNet
+MyOpenWebNet
 
 ### Short description
 Client OpenWebNet Android pour système domotique MyHome BTicino et Legrand
@@ -14,6 +14,7 @@ Cette application Android est un client non officiel distribué sous licence Cre
 Gère:
 - Éclairage
 - Automatisme
+- Température
 - tout OpenWebNet message
 - Caméra IP (MJPEG)
 
