@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="" versionName="2.4.1">
+    <changelogversion changeDate="June 11, 2016" versionName="2.4.1">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add Temperature Scale in settings]]>
+            <![CDATA[<b><font color=red>New!</font></b> Change Temperature Scale in settings]]>
         </changelogtext>
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
         </changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.4.0">
+    <changelogversion changeDate="June 8, 2016" versionName="2.4.0">
         <changelogtext>Add Temperature features</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.3.1">
+    <changelogversion changeDate="May 14, 2016" versionName="2.3.1">
         <changelogtext>Minor fix</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.3.0">
+    <changelogversion changeDate="May 5, 2016" versionName="2.3.0">
         <changelogtext>Add Ip Camera features</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.2.0">
+    <changelogversion changeDate="April 28, 2016" versionName="2.2.0">
         <changelogtext>Encrypted database</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.1.1">
+    <changelogversion changeDate="April 23, 2016" versionName="2.1.1">
         <changelogtext>Update Russian language support</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.1.0">
+    <changelogversion changeDate="April 19, 2016" versionName="2.1.0">
         <changelogtext>Add Russian language support</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="2.0.0">
+    <changelogversion changeDate="March 20, 2016" versionName="2.0.0">
         <changelogtext>New menu</changelogtext>
         <changelogtext>Bug fix</changelogtext>
         <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.4.2">
+    <changelogversion changeDate="March 9, 2016" versionName="1.4.2">
         <changelogtext>Fix error on android 4.1</changelogtext>
         <changelogtext>Delete environments</changelogtext>
         <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.4.1">
+    <changelogversion changeDate="March 3, 2016" versionName="1.4.1">
         <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.4.0">
+    <changelogversion changeDate="March 2, 2016" versionName="1.4.0">
         <changelogtext>Add automation features</changelogtext>
         <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.3.0">
+    <changelogversion changeDate="February 24, 2016" versionName="1.3.0">
         <changelogtext>Add French language support</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.2.0">
+    <changelogversion changeDate="February 10, 2016" versionName="1.2.0">
         <changelogtext>Handle columns on orientation change</changelogtext>
         <changelogtext>Add Italian language support</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.1.0">
+    <changelogversion changeDate="February 8, 2016" versionName="1.1.0">
         <changelogtext>Add device debug</changelogtext>
     </changelogversion>
 
-    <changelogversion changeDate="" versionName="1.0.0">
+    <changelogversion changeDate="January 29, 2016" versionName="1.0.0">
         <changelogtext>Add/edit environments</changelogtext>
         <changelogtext>Add gateways</changelogtext>
         <changelogtext>Show favourites</changelogtext>
