@@ -5,6 +5,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.annimon.stream.Optional;
@@ -16,8 +17,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
 import java.util.List;
-
-import de.cketti.library.changelog.ChangeLog;
 
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 
@@ -87,7 +86,7 @@ public class SettingsFragment extends PreferenceFragment {
     private void initAbout() {
         getPreferenceScreen().findPreference(PREF_KEY_ABOUT_CHANGELOG)
             .setOnPreferenceClickListener(preference -> {
-                new ChangeLog(preference.getContext()).getLogDialog().show();
+                ChangeLogDialogFragment.show((AppCompatActivity) getActivity());
                 return true;
             });
     }
