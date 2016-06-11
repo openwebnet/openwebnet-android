@@ -12,6 +12,7 @@ import com.github.openwebnet.view.MainActivityTest;
 import com.github.openwebnet.view.MainBottomSheetDialogFragmentTest;
 import com.github.openwebnet.view.NavigationViewClickListenerTest;
 import com.github.openwebnet.view.NavigationViewItemSelectedListenerTest;
+import com.github.openwebnet.view.device.DeviceListFragmentTest;
 
 import javax.inject.Singleton;
 
@@ -29,6 +30,7 @@ public interface ApplicationComponentTest extends ApplicationComponent {
     void inject(NavigationViewClickListenerTest listener);
     void inject(NavigationViewItemSelectedListenerTest listener);
     void inject(MainBottomSheetDialogFragmentTest fragment);
+    void inject(DeviceListFragmentTest fragment);
 
     void inject(SampleRepository repository);
     void inject(CommonRealmRepositoryTest repository);

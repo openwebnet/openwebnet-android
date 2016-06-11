@@ -1,6 +1,7 @@
 package com.github.openwebnet.view;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,10 +56,15 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @BindString(R.string.app_name)
     String labelApplicationName;
+
     @BindString(R.string.activity_settings)
     String labelSettings;
+
     @BindString(R.string.validation_required)
     String labelValidationRequired;
 
@@ -105,6 +112,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     }
 
     private void showDeviceList(int id) {
+        toggleScrollActionBar();
         removeFragment();
 
         Fragment fragment = mActivity.getSupportFragmentManager()
@@ -156,6 +164,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     }
 
     private void showSettings() {
+        disableScrollActionBar();
         mActivity.getSupportActionBar().setTitle(labelSettings);
         floatingActionButtonMain.setVisibility(View.INVISIBLE);
         removeCompactFragment();
@@ -185,5 +194,16 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 .beginTransaction()
                 .remove(compactFragment).commit();
         }
+    }
+
+    private void toggleScrollActionBar() {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+            | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+    }
+
+    private void disableScrollActionBar() {
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
     }
 }

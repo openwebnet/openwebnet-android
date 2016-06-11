@@ -1,17 +1,22 @@
 package com.github.openwebnet.view.settings;
 
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
 import com.github.openwebnet.view.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
-import de.cketti.library.changelog.ChangeLog;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEFAULT_GATEWAY_VALUE;
 
@@ -19,12 +24,14 @@ public class SettingsFragment extends PreferenceFragment {
 
     public static final String PREF_KEY_ABOUT_CHANGELOG = "com.github.openwebnet_preferences.PREF_KEY_ABOUT_CHANGELOG";
     public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
+    public static final String PREF_KEY_TEMPERATURE = "com.github.openwebnet_preferences.PREF_KEY_TEMPERATURE";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
         updatePreferenceSummary(getPreferenceScreen());
+        initTemperatureChange();
         initDebug();
         initAbout();
     }
@@ -38,6 +45,9 @@ public class SettingsFragment extends PreferenceFragment {
             }
         } else if (preference instanceof GatewayListPreference) {
             updateGatewayListPreferenceSummary((GatewayListPreference) preference);
+        } else if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            preference.setSummary(listPreference.getEntry());
         }
     }
 
@@ -46,6 +56,22 @@ public class SettingsFragment extends PreferenceFragment {
         if (!TextUtils.isEmpty(value)) {
             preference.setSummary(value);
         }
+    }
+
+    private void initTemperatureChange() {
+        getPreferenceScreen().findPreference(PREF_KEY_TEMPERATURE)
+            .setOnPreferenceChangeListener((preference, newValue) -> {
+
+                List<String> keys = Arrays.asList(getResources().getStringArray(R.array.temperature_scale_keys));
+                Optional<String> label = Stream.of(keys)
+                    .filter(newValue::equals)
+                    .map(keys::indexOf)
+                    .map(index -> getResources().getStringArray(R.array.temperature_scale_values)[index])
+                    .findFirst();
+
+                preference.setSummary(label.get());
+                return true;
+            });
     }
 
     private void initDebug() {
@@ -60,7 +86,7 @@ public class SettingsFragment extends PreferenceFragment {
     private void initAbout() {
         getPreferenceScreen().findPreference(PREF_KEY_ABOUT_CHANGELOG)
             .setOnPreferenceClickListener(preference -> {
-                new ChangeLog(preference.getContext()).getLogDialog().show();
+                ChangeLogDialogFragment.show((AppCompatActivity) getActivity());
                 return true;
             });
     }

@@ -44,6 +44,9 @@
     <string name="settings_category_debug">Débogage</string>
     <string name="settings_debug_device_title">Débogage des dispositifs</string>
     <string name="settings_debug_device_summary">Afficher la durée et la réponse</string>
+    <string name="settings_category_temperature">Température</string>
+    <string name="settings_temperature_default">Échelle de température par défaut</string>
+    <string name="settings_temperature_default_dialog">Choisir l\'échelle de température par défaut</string>
 
     <string name="button_add">Ajouter</string>
     <string name="button_edit">Modifier</string>

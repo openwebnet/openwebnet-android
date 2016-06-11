@@ -1,7 +1,7 @@
 # Store listing
 
 ### Title
-OpenWebNet
+MyOpenWebNet
 
 ### Short description
 OpenWebNet Android client for My Home BTicino and Legrand home automation system
@@ -14,6 +14,7 @@ This Android application is an unofficial free client under Creative Commons lic
 Manages:
 - Lighting
 - Automation
+- Temperature
 - any OpenWebNet frame/message
 - Ip Camera (MJPEG)
 

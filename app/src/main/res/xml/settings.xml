@@ -22,6 +22,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_category_temperature">
+        <ListPreference
+            android:defaultValue="CELSIUS"
+            android:dialogTitle="@string/settings_temperature_default_dialog"
+            android:entries="@array/temperature_scale_values"
+            android:entryValues="@array/temperature_scale_keys"
+            android:key="com.github.openwebnet_preferences.PREF_KEY_TEMPERATURE"
+            android:summary="@string/label_none"
+            android:title="@string/settings_temperature_default"/>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_category_debug">
         <CheckBoxPreference
             android:defaultValue="false"

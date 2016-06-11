@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.niqdev.openwebnet.message.Heating;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
@@ -54,6 +55,7 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
+import rx.functions.Func1;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -645,8 +647,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         holder.textViewCardTemperatureValue.setText(temperature.getValue());
-        // TODO scale from preferences
+
+        Func1<Heating.TemperatureScale, Drawable> getImageTemperature = temperatureScale -> {
+            switch (preferenceService.getDefaultTemperatureScale()) {
+                case FAHRENHEIT: return mContext.getResources().getDrawable(R.drawable.temperature_fahrenheit);
+                case KELVIN: return mContext.getResources().getDrawable(R.drawable.temperature_kelvin);
+                default: return mContext.getResources().getDrawable(R.drawable.temperature_celsius);
+            }
+        };
         holder.imageViewCardTemperatureScale.setVisibility(View.VISIBLE);
+        holder.imageViewCardTemperatureScale
+            .setImageDrawable(getImageTemperature.call(preferenceService.getDefaultTemperatureScale()));
     }
 
     /* commons */
