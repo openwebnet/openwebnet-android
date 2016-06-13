@@ -24,6 +24,10 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
+#### v2.4.2 (June 13, 2016)
+
+- Minor fix
+
 #### v2.4.1 (June 11, 2016)
 
 - Change Temperature Scale in settings

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="June 13, 2016" versionName="2.4.2">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Minor fix]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="June 11, 2016" versionName="2.4.1">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Change Temperature Scale in settings]]>
