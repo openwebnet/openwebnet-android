@@ -1,7 +1,7 @@
 # Store listing
 
 ### Title
-MyOpenWebNet
+OpenWebNet
 
 ### Short description
 OpenWebNet Android client for My Home BTicino and Legrand home automation system

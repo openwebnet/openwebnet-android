@@ -1,10 +1,10 @@
 # Store listing
 
 ### Title
-MyOpenWebNet
+OpenWebNet
 
 ### Short description
-MyOpenWebNet - приложение управления системой Домотики My Home BTicino и Legrand
+OpenWebNet - приложение управления системой Домотики My Home BTicino и Legrand
 
 ### Full description
 MY HOME – это система Домотики, разработанная компанией BTicino, прзволяющая управляь Вашим домом через протокол OpenWebNet.
