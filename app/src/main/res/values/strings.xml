@@ -21,6 +21,7 @@
     <string name="drawer_menu_favourite">Favourites</string>
     <string name="drawer_menu_add">Add environment</string>
     <string name="drawer_menu_settings">Settings</string>
+    <string name="drawer_menu_report" translatable="false">Send report</string>
     <string name="drawer_menu_example">Example environment</string>
 
     <string name="dialog_add_environment_title">Add environment</string>

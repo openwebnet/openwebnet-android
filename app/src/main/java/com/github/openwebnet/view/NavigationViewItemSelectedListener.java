@@ -1,6 +1,9 @@
 package com.github.openwebnet.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -25,6 +28,8 @@ import com.github.openwebnet.view.settings.SettingsFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -96,6 +101,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 break;
             case R.id.nav_settings:
                 showSettings();
+                break;
+            case R.id.nav_report:
+                sendReport();
                 break;
             default:
                 checkArgument(id >= MENU_ENVIRONMENT_RANGE_MIN
@@ -206,4 +214,18 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
     }
+
+    private void sendReport() {
+        String filename = "openwebnet.log";
+        File fileLocation = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), filename);
+        Uri path = Uri.fromFile(fileLocation);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
+        String to[] = {"niqdev@gmail.com"};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "OpenWebNet logs");
+        mActivity.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+    }
+
 }
