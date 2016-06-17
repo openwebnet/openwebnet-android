@@ -1,12 +1,15 @@
 <configuration>
 
+    <property name="PATH_FILES" value="/data/data/com.github.openwebnet/files/log/debug.log" />
+    <property name="PATH_SDCARD" value="/mnt/sdcard/openwebnet.log" />
+
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
         <encoder>
             <pattern>%msg</pattern>
         </encoder>
     </appender>
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>/data/data/com.github.openwebnet/files/log/debug.log</file>
+        <file>${PATH_SDCARD}</file>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
