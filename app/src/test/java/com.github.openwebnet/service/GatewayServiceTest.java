@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -36,6 +37,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
+@PowerMockIgnore({"android.*"})
 @PrepareForTest({Injector.class, GatewayModel.class})
 public class GatewayServiceTest {
 

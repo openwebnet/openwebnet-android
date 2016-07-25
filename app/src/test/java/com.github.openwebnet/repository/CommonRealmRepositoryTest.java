@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"com.noveogroup.android.*"})
+@PowerMockIgnore({"android.*", "com.noveogroup.android.*"})
 @PrepareForTest({Injector.class})
 public class CommonRealmRepositoryTest {
 
