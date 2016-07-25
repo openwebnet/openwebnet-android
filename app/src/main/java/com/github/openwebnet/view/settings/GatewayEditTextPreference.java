@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -14,7 +13,10 @@ import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.service.GatewayService;
+import com.github.openwebnet.service.UtilityService;
+import com.google.common.base.Strings;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +30,13 @@ public class GatewayEditTextPreference extends EditTextPreference {
     @Inject
     GatewayService gatewayService;
 
+    @Inject
+    UtilityService utilityService;
+
     private View mDialogView;
     private EditText mEditTextHost;
     private EditText mEditTextPort;
+    private EditText mEditTextPassword;
 
     public GatewayEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,6 +48,7 @@ public class GatewayEditTextPreference extends EditTextPreference {
         mDialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_gateway, null);
         mEditTextHost = (EditText) mDialogView.findViewById(R.id.editTextDialogGatewayHost);
         mEditTextPort = (EditText) mDialogView.findViewById(R.id.editTextDialogGatewayPort);
+        mEditTextPassword = (EditText) mDialogView.findViewById(R.id.editTextDialogGatewayPassword);
         return mDialogView;
     }
 
@@ -59,39 +66,38 @@ public class GatewayEditTextPreference extends EditTextPreference {
             });
     }
 
-    private String getString(int id) {
-        return getContext().getResources().getString(id);
-    }
-
     private boolean isValidHost() {
-        if (TextUtils.isEmpty(mEditTextHost.getText())) {
-            mEditTextHost.setError(getString(R.string.validation_required));
+        if (utilityService.isBlankText(mEditTextHost)) {
+            mEditTextHost.setError(utilityService.getString(R.string.validation_required));
             return false;
         }
-        if (!Patterns.IP_ADDRESS.matcher(mEditTextHost.getText().toString()).matches()) {
-            mEditTextHost.setError(getString(R.string.validation_host));
+        String host = utilityService.sanitizedText(mEditTextHost);
+        if (!Patterns.IP_ADDRESS.matcher(host).matches() && !Patterns.DOMAIN_NAME.matcher(host).matches()) {
+            mEditTextHost.setError(utilityService.getString(R.string.validation_host));
             return false;
         }
         return true;
     }
 
     private boolean isValidPort() {
-        if (TextUtils.isEmpty(mEditTextPort.getText())) {
-            mEditTextPort.setError(getString(R.string.validation_required));
+        if (utilityService.isBlankText(mEditTextPort)) {
+            mEditTextPort.setError(utilityService.getString(R.string.validation_required));
             return false;
         }
-        Integer port = Integer.parseInt(mEditTextPort.getText().toString());
+        Integer port = Integer.parseInt(utilityService.sanitizedText(mEditTextPort));
         if (port < 0 || port > 65535) {
-            mEditTextPort.setError(getString(R.string.validation_port));
+            mEditTextPort.setError(utilityService.getString(R.string.validation_port));
             return false;
         }
         return true;
     }
 
     private void addGateway(Dialog dialog) {
-        String host = mEditTextHost.getText().toString();
-        Integer port = Integer.parseInt(mEditTextPort.getText().toString());
-        gatewayService.add(host, port)
+        String host = utilityService.sanitizedText(mEditTextHost);
+        Integer port = Integer.parseInt(utilityService.sanitizedText(mEditTextPort));
+        String password = Strings.emptyToNull(utilityService.sanitizedText(mEditTextPassword));
+
+        gatewayService.add(GatewayModel.newGateway(host, port, password))
             .subscribe(uuid -> {
                 log.debug("NEW gateway: {}", uuid);
                 dialog.dismiss();

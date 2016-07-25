@@ -21,8 +21,8 @@ public class GatewayServiceImpl implements GatewayService {
     }
 
     @Override
-    public Observable<String> add(String host, Integer port) {
-        return gatewayRepository.add(GatewayModel.newGateway(host, port));
+    public Observable<String> add(GatewayModel gateway) {
+        return gatewayRepository.add(gateway);
     }
 
     @Override
