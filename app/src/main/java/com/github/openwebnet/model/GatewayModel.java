@@ -10,6 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GatewayModel extends RealmObject implements RealmModel {
 
+    @Required
     @PrimaryKey
     private String uuid;
 

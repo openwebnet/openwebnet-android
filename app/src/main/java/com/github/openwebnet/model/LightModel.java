@@ -15,6 +15,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         ON, OFF
     }
 
+    @Required
     @PrimaryKey
     private String uuid;
 

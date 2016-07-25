@@ -17,6 +17,7 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         SUCCESS, FAIL
     }
 
+    @Required
     @PrimaryKey
     private String uuid;
 
