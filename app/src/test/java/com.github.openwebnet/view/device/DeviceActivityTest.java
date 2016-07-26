@@ -131,6 +131,9 @@ public class DeviceActivityTest {
     @BindString(R.string.label_none)
     String labelNone;
 
+    @BindString(R.string.label_missing_gateway)
+    String labelMissingGateway;
+
     @BindString(R.string.validation_required)
     String validationRequired;
 
@@ -300,7 +303,7 @@ public class DeviceActivityTest {
 
         SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
         assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", labelNone, adapterGateway.getItem(0));
+        assertEquals("should verify first element", labelMissingGateway, adapterGateway.getItem(0));
     }
 
     @Test

@@ -54,6 +54,7 @@
     <string name="button_close">Chiudi</string>
     <string name="label_none">Nessuna</string>
     <string name="label_name">Nome</string>
+    <string name="label_missing_gateway">Gateway mancante</string>
 
     <string name="bs_title">Aggiungi</string>
     <string name="bs_device">Dispositivo</string>

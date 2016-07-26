@@ -67,6 +67,7 @@
     <string name="button_close">Close</string>
     <string name="label_none">None</string>
     <string name="label_name">Name</string>
+    <string name="label_missing_gateway">Missing gateway</string>
 
     <string name="bs_title">Add</string>
     <string name="bs_device">Device</string>

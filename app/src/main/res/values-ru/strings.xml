@@ -54,6 +54,7 @@
     <string name="button_close">Закрыть</string>
     <string name="label_none">Отсутствует</string>
     <string name="label_name">Имя</string>
+    <string name="label_missing_gateway">Отсутствует шлюз</string>
 
     <string name="bs_title">Добавить</string>
     <string name="bs_device">Устройство</string>

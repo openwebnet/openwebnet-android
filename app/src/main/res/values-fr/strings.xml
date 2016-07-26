@@ -54,6 +54,7 @@
     <string name="button_close">Fermer</string>
     <string name="label_none">Aucun</string>
     <string name="label_name">Nom</string>
+    <string name="label_missing_gateway">Passerelle manquante</string>
 
     <string name="bs_title">Ajouter</string>
     <string name="bs_device">Dispositif</string>
