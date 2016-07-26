@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import com.google.common.base.Strings;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -63,6 +65,13 @@ public class GatewayModel extends RealmObject implements RealmModel {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getPasswordNullable() {
+        if (password != null) {
+            return Strings.emptyToNull((password.trim().replaceAll("\\s+", "")));
+        }
+        return null;
     }
 
     public void setPassword(String password) {

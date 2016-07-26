@@ -1,6 +1,5 @@
 package com.github.openwebnet.view.settings;
 
-import android.preference.DialogPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class GatewayModelTest {
 
@@ -29,5 +30,28 @@ public class GatewayModelTest {
         assertEquals("invalid host", GATEWAY_HOST, gateway.getHost());
         assertEquals("invalid port", GATEWAY_PORT, gateway.getPort());
         assertEquals("invalid password", GATEWAY_PASSWORD, gateway.getPassword());
+    }
+
+    @Test
+    public void testPasswordNullable() {
+        GatewayModel gateway = new GatewayModel();
+
+        gateway.setPassword(null);
+        assertNull("should be null", gateway.getPasswordNullable());
+
+        gateway.setPassword("");
+        assertNull("should be null", gateway.getPasswordNullable());
+
+        gateway.setPassword("   ");
+        assertNull("should be null", gateway.getPasswordNullable());
+
+        gateway.setPassword(" \t \n    \t ");
+        assertNull("should be null", gateway.getPasswordNullable());
+
+        gateway.setPassword(" 12345 ");
+        assertEquals("invalid password", "12345", gateway.getPasswordNullable());
+
+        gateway.setPassword(" \t\n12  \t345 \n ");
+        assertEquals("invalid password", "12345", gateway.getPasswordNullable());
     }
 }
