@@ -26,7 +26,7 @@
 
     <string name="error_load_navigation_drawer">Errore caricamento menu</string>
     <string name="validation_required">Campo obbligatorio</string>
-    <string name="validation_host">Indirizzo ip non valido</string>
+    <string name="validation_host">Indirizzo ip o dominio non valido</string>
     <string name="validation_port">Porta non valida</string>
     <string name="validation_url">Url non valida</string>
     <string name="validation_bad_value">Valore non consentito</string>
@@ -37,9 +37,13 @@
     <string name="settings_gateway_add">Aggiungi gateway</string>
     <string name="settings_gateway_default">Gateway di default</string>
     <string name="settings_gateway_default_dialog">Scegli il Gateway di default</string>
-    <string name="settings_gateway_default_hint">Porta predefinita: 20000</string>
-    <string name="dialog_gateway_host">Indirizzo ip</string>
-    <string name="dialog_gateway_port">Porta</string>
+    <string name="dialog_gateway_host">Host*</string>
+    <string name="dialog_gateway_host_hint">Indirizzo IP o dominio</string>
+    <string name="dialog_gateway_port">Porta*</string>
+    <string name="dialog_gateway_port_default">20000</string>
+    <string name="dialog_gateway_password">Password (opzionale)</string>
+    <string name="dialog_gateway_password_hint">Password</string>
+    <string name="dialog_gateway_password_default">Lasciare questo campo vuoto se non è necessario.\nIl valore di default è 12345.</string>
     <string name="settings_category_about">Informazioni</string>
     <string name="settings_title_changelog">Changelogs</string>
     <string name="settings_category_debug">Debug</string>
