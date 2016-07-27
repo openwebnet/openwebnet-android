@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,6 +30,9 @@ public class TemperatureActivity extends AbstractDeviceActivity {
 
     @BindView(R.id.editTextTemperatureWhere)
     EditText editTextTemperatureWhere;
+
+    @BindString(R.string.validation_bad_value)
+    String validationBadValue;
 
     private String temperatureUuid;
 
@@ -83,8 +87,19 @@ public class TemperatureActivity extends AbstractDeviceActivity {
     private boolean isValidTemperature() {
         return isValidRequired(editTextTemperatureName) &&
             isValidRequired(editTextTemperatureWhere) &&
+            isValidWhereRange(editTextTemperatureWhere) &&
             isValidDeviceEnvironment() &&
             isValidDeviceGateway();
+    }
+
+    private boolean isValidWhereRange(EditText editText) {
+        int where = Integer.parseInt(utilityService.sanitizedText(editTextTemperatureWhere));
+        if (where < 0 || where > 899) {
+            editText.setError(validationBadValue);
+            editText.requestFocus();
+            return false;
+        }
+        return true;
     }
 
     private TemperatureModel parseTemperature() {

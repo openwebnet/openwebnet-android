@@ -29,6 +29,7 @@
     <string name="validation_host">Adresse IP invalide</string>
     <string name="validation_port">Port invalide</string>
     <string name="validation_url">Url invalide</string>
+    <string name="validation_bad_value">Valeur non autorisée</string>
 
     <string name="settings_category_shortcuts">Raccourcis</string>
     <string name="settings_title_wireless">Sans-fil et réseau</string>

@@ -35,6 +35,7 @@
     <string name="validation_host">Invalid ip address or domain</string>
     <string name="validation_port">Invalid port range</string>
     <string name="validation_url">Invalid url</string>
+    <string name="validation_bad_value">Value not allowed</string>
 
     <string name="settings_category_shortcuts">Shortcuts</string>
     <string name="settings_title_wireless">Wireless &amp; networks</string>

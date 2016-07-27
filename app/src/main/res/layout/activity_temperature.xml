@@ -40,6 +40,7 @@
                 android:id="@+id/editTextTemperatureWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
+                android:maxLength="3"
                 typeface:font="inconsolata"/>
 
             <com.github.openwebnet.view.custom.TextViewCustom
