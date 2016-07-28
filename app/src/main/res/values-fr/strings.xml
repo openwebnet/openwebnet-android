@@ -26,9 +26,10 @@
 
     <string name="error_load_navigation_drawer">Erreur de chargement du menu</string>
     <string name="validation_required">Champ obbligatoire</string>
-    <string name="validation_host">Adresse IP invalide</string>
+    <string name="validation_host">Adresse IP ou le domaine invalide</string>
     <string name="validation_port">Port invalide</string>
     <string name="validation_url">Url invalide</string>
+    <string name="validation_bad_value">Valeur non autorisée</string>
 
     <string name="settings_category_shortcuts">Raccourcis</string>
     <string name="settings_title_wireless">Sans-fil et réseau</string>
@@ -36,9 +37,13 @@
     <string name="settings_gateway_add">Ajouter passerelle</string>
     <string name="settings_gateway_default">Passerelle par defaut</string>
     <string name="settings_gateway_default_dialog">Choisir la passerelle par défaut</string>
-    <string name="settings_gateway_default_hint">Port par défaut : 20000</string>
-    <string name="dialog_gateway_host">Adresse IP</string>
-    <string name="dialog_gateway_port">Port</string>
+    <string name="dialog_gateway_host">Hôte*</string>
+    <string name="dialog_gateway_host_hint">Adresse IP ou le domaine</string>
+    <string name="dialog_gateway_port">Port*</string>
+    <string name="dialog_gateway_port_default">20000</string>
+    <string name="dialog_gateway_password">Mot de passe (facultatif)</string>
+    <string name="dialog_gateway_password_hint">Mot de passe</string>
+    <string name="dialog_gateway_password_default">Laissez ce champ vide, sauf si est nécessaire.\nMot de passe par défaut est 12345.</string>
     <string name="settings_category_about">À propos</string>
     <string name="settings_title_changelog">Changelog</string>
     <string name="settings_category_debug">Débogage</string>
@@ -54,6 +59,7 @@
     <string name="button_close">Fermer</string>
     <string name="label_none">Aucun</string>
     <string name="label_name">Nom</string>
+    <string name="label_missing_gateway">Passerelle manquante</string>
 
     <string name="bs_title">Ajouter</string>
     <string name="bs_device">Dispositif</string>

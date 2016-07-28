@@ -1,6 +1,7 @@
 package com.github.openwebnet.service;
 
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.ApplicationContextModuleTest;
@@ -15,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -34,7 +36,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
+@PowerMockIgnore({"android.*"})
 @PrepareForTest({Injector.class, GatewayModel.class})
 public class GatewayServiceTest {
 
@@ -80,18 +83,20 @@ public class GatewayServiceTest {
         String GATEWAY_UUID = "gatewayUuid";
         String GATEWAY_HOST = "1.1.1.1";
         Integer GATEWAY_PORT = 88;
+        String GATEWAY_PASSWORD = "PASSWORD";
 
         GatewayModel gateway = new GatewayModel();
         gateway.setUuid(GATEWAY_UUID);
         gateway.setHost(GATEWAY_HOST);
         gateway.setPort(GATEWAY_PORT);
+        gateway.setPassword(GATEWAY_PASSWORD);
 
         PowerMockito.mockStatic(GatewayModel.class);
-        when(GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT)).thenReturn(gateway);
+        when(GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT, GATEWAY_PASSWORD)).thenReturn(gateway);
         when(gatewayRepository.add(gateway)).thenReturn(Observable.just(GATEWAY_UUID));
 
         TestSubscriber<String> tester = new TestSubscriber<>();
-        gatewayService.add(GATEWAY_HOST, GATEWAY_PORT).subscribe(tester);
+        gatewayService.add(gateway).subscribe(tester);
 
         verify(gatewayRepository).add(gateway);
 

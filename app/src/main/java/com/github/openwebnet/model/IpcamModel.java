@@ -60,6 +60,7 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
         }
     }
 
+    @Required
     @PrimaryKey
     private String uuid;
 

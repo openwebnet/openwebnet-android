@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.DaggerApplicationComponentTest;
@@ -53,7 +54,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
 public class MainActivityTest {

@@ -1,5 +1,7 @@
 package com.github.openwebnet.database;
 
+import com.github.openwebnet.model.GatewayModel;
+
 import io.realm.DynamicRealm;
 import io.realm.FieldAttribute;
 import io.realm.RealmMigration;
@@ -61,6 +63,14 @@ public class MigrationStrategy implements RealmMigration {
                 .addField(FIELD_NAME, String.class, FieldAttribute.REQUIRED)
                 .addField(FIELD_WHERE, String.class, FieldAttribute.REQUIRED)
                 .addField(FIELD_FAVOURITE, boolean.class);
+
+            ++oldVersion;
+        }
+
+        // migrate to version 5
+        if (oldVersion == 4) {
+           schema.get("GatewayModel")
+               .addField(GatewayModel.FIELD_PASSWORD, String.class);
 
             ++oldVersion;
         }

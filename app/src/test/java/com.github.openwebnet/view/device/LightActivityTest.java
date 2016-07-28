@@ -10,6 +10,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
@@ -83,7 +84,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
 public class LightActivityTest {
@@ -114,6 +115,9 @@ public class LightActivityTest {
 
     @BindString(R.string.label_none)
     String labelNone;
+
+    @BindString(R.string.label_missing_gateway)
+    String labelMissingGateway;
 
     @Inject
     LightService lightService;
@@ -268,7 +272,7 @@ public class LightActivityTest {
 
         SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
         assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", labelNone, adapterGateway.getItem(0));
+        assertEquals("should verify first element", labelMissingGateway, adapterGateway.getItem(0));
     }
 
     @Test

@@ -11,6 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class TemperatureModel extends RealmObject implements RealmModel, DomoticModel {
 
+    @Required
     @PrimaryKey
     private String uuid;
 

@@ -15,6 +15,7 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
         STOP, UP, DOWN
     }
 
+    @Required
     @PrimaryKey
     private String uuid;
 

@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'realm-android'
 apply from: '../coverage.gradle'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.github.openwebnet"
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 16
-        versionName "2.4.2"
+        targetSdkVersion 24
+        versionCode 17
+        versionName "2.5.0"
         multiDexEnabled true
     }
 
@@ -31,6 +32,9 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
+    // Robolectric issue
+    useLibrary 'org.apache.http.legacy'
+
     buildTypes {
         release {
             minifyEnabled false
@@ -40,9 +44,6 @@ android {
             testCoverageEnabled true
         }
     }
-
-    // Robolectric issue
-    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -53,46 +54,45 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-core:1.3'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
-    testCompile 'org.powermock:powermock-core:1.6.4'
-    testCompile 'org.powermock:powermock-module-junit4:1.6.4'
-    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.4'
-    testCompile 'org.powermock:powermock-api-mockito:1.6.4'
-    testCompile 'org.powermock:powermock-classloading-xstream:1.6.4'
-    testProvided 'com.google.dagger:dagger-compiler:2.0.2'
-    testProvided 'com.jakewharton:butterknife-compiler:8.0.1'
+    testCompile 'org.powermock:powermock-core:1.6.5'
+    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.5'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
+    testCompile 'org.powermock:powermock-classloading-xstream:1.6.5'
+    testProvided 'com.google.dagger:dagger-compiler:2.5'
+    testProvided 'com.jakewharton:butterknife-compiler:8.2.1'
 
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:support-annotations:23.4.0'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:support-annotations:24.1.1'
 
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 
-    compile 'com.github.openwebnet:rx-openwebnet:0.8.0'
-    compile 'com.github.niqdev:mjpeg-view:0.3.2'
+    compile 'com.github.openwebnet:rx-openwebnet:1.0.0'
+    compile 'com.github.niqdev:mjpeg-view:0.3.3'
 
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.noveogroup.android:android-logger:1.3.6'
     compile 'com.google.guava:guava:19.0'
 
-    compile 'com.annimon:stream:1.0.8'
-    compile 'org.threeten:threetenbp:1.3.1'
+    compile 'com.annimon:stream:1.1.1'
+    compile 'org.threeten:threetenbp:1.3.2'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'io.realm:realm-android:0.87.5'
 
-    compile 'io.reactivex:rxjava:1.1.5'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.8'
+    compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava-computation-expressions:0.21.0'
 
-    compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
-    compile 'com.google.dagger:dagger:2.0.2'
+    compile 'com.google.dagger:dagger:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
+    apt 'com.google.dagger:dagger-compiler:2.5'
 }
 
 task hello(dependsOn: build) {

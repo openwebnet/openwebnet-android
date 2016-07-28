@@ -1,6 +1,7 @@
 package com.github.openwebnet.repository;
 
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.DaggerApplicationComponentTest;
 import com.github.openwebnet.component.Injector;
@@ -22,6 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.RobolectricGradleTestRunner;
@@ -39,7 +41,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
+@PowerMockIgnore({"android.*"})
 @PrepareForTest({Injector.class})
 public class EnvironmentRepositoryTest {
 

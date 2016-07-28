@@ -54,6 +54,9 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     @BindString(R.string.label_none)
     String labelNone;
 
+    @BindString(R.string.label_missing_gateway)
+    String labelMissingGateway;
+
     @Inject
     UtilityService utilityService;
 
@@ -78,7 +81,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
             List<String> environmentValues = Stream.of(environments)
                 .map(environment -> environment.getName()).collect(Collectors.toList());
 
-            initEmptyList(environmentValues);
+            initEmptyList(environmentValues, labelNone);
             initSpinnerAdapter(spinnerDeviceEnvironment, environmentValues);
 
             int defaultEnvironment = getIntent().getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1);
@@ -97,7 +100,7 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
                 .map(gateway -> String.format("%s:%d", gateway.getHost(),
                     gateway.getPort())).collect(Collectors.toList());
 
-            initEmptyList(gatewayValues);
+            initEmptyList(gatewayValues, labelMissingGateway);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
 
             String defaultGateway = getIntent().getStringExtra(EXTRA_DEFAULT_GATEWAY);
@@ -116,9 +119,9 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         return array;
     }
 
-    private void initEmptyList(List<String> values) {
+    private void initEmptyList(List<String> values, String label) {
         if (values.isEmpty()) {
-            values.add(labelNone);
+            values.add(label);
         }
     }
 
@@ -171,7 +174,9 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
     }
 
     protected boolean isValidRequired(TextView view) {
-        if (utilityService.isBlankText(view) || view.getText().equals(labelNone)) {
+        if (utilityService.isBlankText(view)
+                || view.getText().equals(labelNone)
+                || view.getText().equals(labelMissingGateway)) {
             view.setError(validationRequired);
             view.requestFocus();
             return false;

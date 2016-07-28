@@ -1,6 +1,7 @@
 package com.github.openwebnet.repository;
 
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.component.ApplicationComponentTest;
 import com.github.openwebnet.component.DaggerApplicationComponentTest;
 import com.github.openwebnet.component.Injector;
@@ -36,8 +37,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
-@PowerMockIgnore({"com.noveogroup.android.*"})
+@Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
+@PowerMockIgnore({"android.*", "com.noveogroup.android.*"})
 @PrepareForTest({Injector.class})
 public class CommonRealmRepositoryTest {
 

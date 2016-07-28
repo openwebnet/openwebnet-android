@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import com.google.common.base.Strings;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -10,6 +12,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GatewayModel extends RealmObject implements RealmModel {
 
+    public static final String FIELD_PASSWORD = "password";
+
+    @Required
     @PrimaryKey
     private String uuid;
 
@@ -19,7 +24,9 @@ public class GatewayModel extends RealmObject implements RealmModel {
     @Required
     private Integer port;
 
-    public static GatewayModel newGateway(String host, Integer port) {
+    private String password;
+
+    public static GatewayModel newGateway(String host, Integer port, String password) {
         checkNotNull(host, "host is null");
         checkNotNull(port, "port is null");
 
@@ -27,6 +34,7 @@ public class GatewayModel extends RealmObject implements RealmModel {
         gateway.setUuid(UUID.randomUUID().toString());
         gateway.setHost(host);
         gateway.setPort(port);
+        gateway.setPassword(password);
         return gateway;
     }
 
@@ -54,4 +62,20 @@ public class GatewayModel extends RealmObject implements RealmModel {
     public void setPort(Integer port) {
         this.port = port;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordNullable() {
+        if (password != null) {
+            return Strings.emptyToNull((password.trim().replaceAll("\\s+", "")));
+        }
+        return null;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 }

@@ -18,9 +18,16 @@ public class OpenWebNetApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initDagger();
+        initRealm();
+    }
 
+    protected void initDagger() {
         Injector.initializeApplicationComponent(this);
         Injector.getApplicationComponent().inject(this);
+    }
+
+    protected void initRealm() {
         databaseRealm.setup();
     }
 }
