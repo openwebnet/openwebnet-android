@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="June 13, 2016" versionName="2.4.2">
+    <changelogversion changeDate="July 28, 2016" versionName="2.5.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Minor fix]]>
+            <![CDATA[<b><font color=red>New!</font></b> Add support for gateway with password and domain]]>
         </changelogtext>
     </changelogversion>
 
+    <changelogversion changeDate="June 13, 2016" versionName="2.4.2">
+        <changelogtext>Minor fix</changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="June 11, 2016" versionName="2.4.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Change Temperature Scale in settings]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
-        </changelogtext>
+        <changelogtext>Change Temperature Scale in settings</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="June 8, 2016" versionName="2.4.0">
