@@ -57,7 +57,7 @@ public class DatabaseRealm {
         Realm realm = getRealmInstance();
         RealmResults<T> models = realm.where(clazz).equalTo(field, value).findAll();
         realm.beginTransaction();
-        models.clear();
+        models.deleteAllFromRealm();
         realm.commitTransaction();
     }
 
@@ -65,7 +65,7 @@ public class DatabaseRealm {
         Realm realm = getRealmInstance();
         RealmResults<T> models = realm.where(clazz).equalTo(field, value).findAll();
         realm.beginTransaction();
-        models.clear();
+        models.deleteAllFromRealm();
         realm.commitTransaction();
     }
 

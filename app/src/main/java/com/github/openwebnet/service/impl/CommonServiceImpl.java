@@ -10,6 +10,7 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
+import com.google.common.base.Strings;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +67,11 @@ public class CommonServiceImpl implements CommonService {
         if (!CLIENT_CACHE.containsKey(gatewayUuid)) {
             // blocking - same thread
             gatewayService.findById(gatewayUuid).subscribe(gatewayModel -> {
-                OpenWebNet client = newClient(gateway(gatewayModel.getHost(), gatewayModel.getPort()));
+                OpenWebNet.OpenGateway gateway = gateway(
+                    gatewayModel.getHost(),
+                    gatewayModel.getPort(),
+                    gatewayModel.getPasswordNullable());
+                OpenWebNet client = newClient(gateway);
                 CLIENT_CACHE.put(gatewayUuid, client);
                 log.info("new client cached: {}", gatewayUuid);
             });

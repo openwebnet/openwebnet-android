@@ -8,7 +8,7 @@ import rx.Observable;
 
 public interface GatewayService {
 
-    Observable<String> add(String host, Integer port);
+    Observable<String> add(GatewayModel gateway);
 
     Observable<List<GatewayModel>> findAll();
 

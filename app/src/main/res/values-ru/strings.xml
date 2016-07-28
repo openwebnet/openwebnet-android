@@ -26,9 +26,10 @@
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="validation_required">Обязательно поле</string>
-    <string name="validation_host">Некорректный IP адрес</string>
+    <string name="validation_host">Неверный адрес IP или домен</string>
     <string name="validation_port">Некорректный порт</string>
     <string name="validation_url">Некорректный url</string>
+    <string name="validation_bad_value">Значение не допускается</string>
 
     <string name="settings_category_shortcuts">Быстрый выбор</string>
     <string name="settings_title_wireless">Беспроводные сети</string>
@@ -36,9 +37,13 @@
     <string name="settings_gateway_add">Добавить шлюз</string>
     <string name="settings_gateway_default">Стандартный шлюз</string>
     <string name="settings_gateway_default_dialog">Выберите стандартный шлюз</string>
-    <string name="settings_gateway_default_hint">Стандартный порт: 20000</string>
-    <string name="dialog_gateway_host">IP адрес</string>
-    <string name="dialog_gateway_port">Порт</string>
+    <string name="dialog_gateway_host">хозяин*</string>
+    <string name="dialog_gateway_host_hint">Ip адрес или домен</string>
+    <string name="dialog_gateway_port">Порт*</string>
+    <string name="dialog_gateway_port_default">20000</string>
+    <string name="dialog_gateway_password">Пароль (опционально)</string>
+    <string name="dialog_gateway_password_hint">Пароль</string>
+    <string name="dialog_gateway_password_default">Оставьте это поле пустым, если не требуется.\nЗначение по умолчанию 12345.</string>
     <string name="settings_category_about">Информация</string>
     <string name="settings_title_changelog">Список изменений</string>
     <string name="settings_category_debug">Отладка</string>
@@ -54,6 +59,7 @@
     <string name="button_close">Закрыть</string>
     <string name="label_none">Отсутствует</string>
     <string name="label_name">Имя</string>
+    <string name="label_missing_gateway">Отсутствует шлюз</string>
 
     <string name="bs_title">Добавить</string>
     <string name="bs_device">Устройство</string>

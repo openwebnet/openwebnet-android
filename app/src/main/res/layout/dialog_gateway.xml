@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_gateway_host"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDialogGatewayHost"
@@ -12,23 +21,51 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:hint="@string/dialog_gateway_host_hint"
+        android:inputType="text"
+        android:maxLength="200" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginTop="@dimen/dialog_margin"
-        android:hint="@string/dialog_gateway_host"
-        android:inputType="phone"
-        android:maxLength="15"/>
+        android:text="@string/dialog_gateway_port"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDialogGatewayPort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/dialog_margin"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:inputType="number"
+        android:maxLength="5"
+        android:text="@string/dialog_gateway_port_default" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="@dimen/dialog_margin"
-        android:hint="@string/dialog_gateway_port"
-        android:inputType="number"
-        android:maxLength="5"/>
+        android:text="@string/dialog_gateway_password"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextDialogGatewayPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:hint="@string/dialog_gateway_password_hint"
+        android:inputType="numberPassword"
+        android:maxLength="50" />
 
     <TextView
         android:layout_width="match_parent"
@@ -36,8 +73,9 @@
         android:layout_marginBottom="@dimen/dialog_margin"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:textColor="#616161"
-        android:textStyle="bold|italic"
-        android:text="@string/settings_gateway_default_hint"/>
+        android:gravity="center_horizontal"
+        android:text="@string/dialog_gateway_password_default"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="italic" />
 
 </LinearLayout>

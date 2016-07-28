@@ -83,18 +83,20 @@ public class GatewayServiceTest {
         String GATEWAY_UUID = "gatewayUuid";
         String GATEWAY_HOST = "1.1.1.1";
         Integer GATEWAY_PORT = 88;
+        String GATEWAY_PASSWORD = "PASSWORD";
 
         GatewayModel gateway = new GatewayModel();
         gateway.setUuid(GATEWAY_UUID);
         gateway.setHost(GATEWAY_HOST);
         gateway.setPort(GATEWAY_PORT);
+        gateway.setPassword(GATEWAY_PASSWORD);
 
         PowerMockito.mockStatic(GatewayModel.class);
-        when(GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT)).thenReturn(gateway);
+        when(GatewayModel.newGateway(GATEWAY_HOST, GATEWAY_PORT, GATEWAY_PASSWORD)).thenReturn(gateway);
         when(gatewayRepository.add(gateway)).thenReturn(Observable.just(GATEWAY_UUID));
 
         TestSubscriber<String> tester = new TestSubscriber<>();
-        gatewayService.add(GATEWAY_HOST, GATEWAY_PORT).subscribe(tester);
+        gatewayService.add(gateway).subscribe(tester);
 
         verify(gatewayRepository).add(gateway);
 
