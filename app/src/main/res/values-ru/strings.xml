@@ -43,7 +43,7 @@
     <string name="dialog_gateway_port_default">20000</string>
     <string name="dialog_gateway_password">Пароль (опционально)</string>
     <string name="dialog_gateway_password_hint">Пароль</string>
-    <string name="dialog_gateway_password_default">Оставьте это поле пустым, если не требуется.\nЗначение по умолчанию 12345.</string>
+    <string name="dialog_gateway_password_default">Оставьте это поле пустым, если не требуется.\nПо умолчанию пароль 12345.</string>
     <string name="settings_category_about">Информация</string>
     <string name="settings_title_changelog">Список изменений</string>
     <string name="settings_category_debug">Отладка</string>

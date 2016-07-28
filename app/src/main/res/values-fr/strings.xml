@@ -43,7 +43,7 @@
     <string name="dialog_gateway_port_default">20000</string>
     <string name="dialog_gateway_password">Mot de passe (facultatif)</string>
     <string name="dialog_gateway_password_hint">Mot de passe</string>
-    <string name="dialog_gateway_password_default">Laissez ce champ vide, sauf si est nécessaire.\nLa valeur par défaut est 12345.</string>
+    <string name="dialog_gateway_password_default">Laissez ce champ vide, sauf si est nécessaire.\nMot de passe par défaut est 12345.</string>
     <string name="settings_category_about">À propos</string>
     <string name="settings_title_changelog">Changelog</string>
     <string name="settings_category_debug">Débogage</string>

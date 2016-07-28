@@ -48,7 +48,7 @@
     <string name="dialog_gateway_port_default">20000</string>
     <string name="dialog_gateway_password">Password (optional)</string>
     <string name="dialog_gateway_password_hint">Password</string>
-    <string name="dialog_gateway_password_default">Leave this field empty unless is needed.\nDefault value is 12345.</string>
+    <string name="dialog_gateway_password_default">Leave this field empty unless is needed.\nDefault password is 12345.</string>
     <string name="settings_category_about">About</string>
     <string name="settings_title_changelog">Changelogs</string>
     <string name="settings_category_debug">Debug</string>
