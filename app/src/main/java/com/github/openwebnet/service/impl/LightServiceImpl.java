@@ -118,7 +118,7 @@ public class LightServiceImpl implements LightService {
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, light))
             .onErrorReturn(throwable -> {
-                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                log.warn("light={} | failing request={} | {}", light.getUuid(), request.call(light.getWhere()).getValue(), throwable);
                 // unreadable status
                 return light;
             });
