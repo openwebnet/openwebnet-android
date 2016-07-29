@@ -18,6 +18,7 @@ public class OpenWebNetApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        StdOutErrLog.tieSystemOutAndErrToLog();
         initDagger();
         initRealm();
     }
