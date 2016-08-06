@@ -50,7 +50,11 @@ public class GatewayListPreference extends ListPreference {
             .subscribe(gateways -> {
                 // split stream
                 Stream.of(gateways).forEach(gateway -> {
-                    entries.add(String.format("%s:%d", gateway.getHost(), gateway.getPort()));
+                    String gatewayStr = String.format("%s:%d", gateway.getHost(), gateway.getPort());
+                    if (gateway.getPasswordNullable() != null) {
+                        gatewayStr = gatewayStr.concat(" (*)");
+                    }
+                    entries.add(gatewayStr);
                     entryValues.add(gateway.getUuid());
                 });
                 setEntries(listToCharSequence(entries));
