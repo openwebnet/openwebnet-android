@@ -97,8 +97,13 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
             gatewayArray = initSparseArray(gateways);
 
             List<String> gatewayValues = Stream.of(gateways)
-                .map(gateway -> String.format("%s:%d", gateway.getHost(),
-                    gateway.getPort())).collect(Collectors.toList());
+                .map(gateway -> {
+                    String gatewayStr = String.format("%s:%d", gateway.getHost(), gateway.getPort());
+                    if (gateway.getPasswordNullable() != null) {
+                        return gatewayStr.concat(" (*)");
+                    }
+                    return gatewayStr;
+                }).collect(Collectors.toList());
 
             initEmptyList(gatewayValues, labelMissingGateway);
             initSpinnerAdapter(spinnerDeviceGateway, gatewayValues);
