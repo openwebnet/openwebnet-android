@@ -24,6 +24,10 @@ This Android application is an unofficial free client under [Creative Commons](h
 
 ### Changelog
 
+#### v2.5.1 (August 6, 2016)
+
+- Fix error gateway with password
+
 #### v2.5.0 (July 28, 2016)
 
 - Add support for gateway with password and domain
