@@ -29,6 +29,12 @@ allprojects {
     repositories {
         jcenter()
     }
+
+    // CURRENT APP VERSION
+    project.ext {
+        currentVersionCode=19
+        currentVersionName="2.6.0"
+    }
 }
 
 task clean(type: Delete) {

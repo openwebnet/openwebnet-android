@@ -12,8 +12,8 @@ android {
         applicationId "com.github.openwebnet"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 19
-        versionName "2.6.0"
+        versionCode currentVersionCode
+        versionName currentVersionName
         multiDexEnabled true
     }
 
