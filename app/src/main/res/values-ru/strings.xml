@@ -16,6 +16,8 @@
     <string name="drawer_menu_favourite">Избранное</string>
     <string name="drawer_menu_add">Добавить окружение</string>
     <string name="drawer_menu_settings">Настройки</string>
+    <string name="drawer_menu_donation">Пожертвование</string>
+    <string name="drawer_menu_changelog">Список изменений</string>
     <string name="drawer_menu_example">Пример окружения</string>
 
     <string name="dialog_add_environment_title">Добавьте окружение</string>
@@ -44,8 +46,6 @@
     <string name="dialog_gateway_password">Пароль (опционально)</string>
     <string name="dialog_gateway_password_hint">Пароль</string>
     <string name="dialog_gateway_password_default">Оставьте это поле пустым, если не требуется.\nПо умолчанию пароль 12345.</string>
-    <string name="settings_category_about">Информация</string>
-    <string name="settings_title_changelog">Список изменений</string>
     <string name="settings_category_debug">Отладка</string>
     <string name="settings_debug_device_title">Отладка устройств</string>
     <string name="settings_debug_device_summary">Отображать время и ответ</string>

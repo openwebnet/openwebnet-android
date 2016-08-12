@@ -97,6 +97,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             case R.id.nav_settings:
                 showSettings();
                 break;
+            case R.id.nav_donation:
+                // TODO
+                break;
+            case R.id.nav_changelog:
+                ChangeLogDialogFragment.show(mActivity);
+                break;
             default:
                 checkArgument(id >= MENU_ENVIRONMENT_RANGE_MIN
                     || id <= MENU_ENVIRONMENT_RANGE_MAX, "invalid environment menu id");

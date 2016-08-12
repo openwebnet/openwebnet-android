@@ -16,6 +16,8 @@
     <string name="drawer_menu_favourite">Preferiti</string>
     <string name="drawer_menu_add">Aggiungi ambiente</string>
     <string name="drawer_menu_settings">Impostazioni</string>
+    <string name="drawer_menu_donation">Donazione</string>
+    <string name="drawer_menu_changelog">Changelogs</string>
     <string name="drawer_menu_example">Esempio ambiente</string>
 
     <string name="dialog_add_environment_title">Aggiungi ambiente</string>
@@ -44,8 +46,6 @@
     <string name="dialog_gateway_password">Password (opzionale)</string>
     <string name="dialog_gateway_password_hint">Password</string>
     <string name="dialog_gateway_password_default">Lasciare questo campo vuoto se non è necessario.\nLa password di default è 12345.</string>
-    <string name="settings_category_about">Informazioni</string>
-    <string name="settings_title_changelog">Changelogs</string>
     <string name="settings_category_debug">Debug</string>
     <string name="settings_debug_device_title">Debug dispositivi</string>
     <string name="settings_debug_device_summary">Mostra durata e risposta</string>
