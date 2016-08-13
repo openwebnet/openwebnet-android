@@ -1,16 +1,22 @@
 package com.github.openwebnet.iabutil;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
+import com.annimon.stream.Stream;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.iabutil.IabHelper.IabAsyncInProgressException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author niqdev
@@ -51,20 +57,43 @@ public class IabUtil {
     private static final String SKU_COFFEE = "coffee";
     private static final String SKU_BEER = "beer";
     private static final String SKU_PIZZA = "pizza";
+    // TODO
+    private final List<String> skus = ImmutableList.of(
+        SKU_TEST_PURCHASED, SKU_TEST_CANCELED, SKU_TEST_REFUNDED, SKU_TEST_ITEM_UNAVAILABLE,
+        SKU_COFFEE, SKU_BEER, SKU_PIZZA);
+    private final Map<String, DonationEntry> donations = new HashMap<>();
 
+    // RUN ~/Android/Sdk/platform-tools/adb shell pm clear com.android.vending
+    private static final String SKU_TEST_PURCHASED = "android.test.purchased";
+    private static final String SKU_TEST_CANCELED = "android.test.canceled";
+    private static final String SKU_TEST_REFUNDED = "android.test.refunded";
+    private static final String SKU_TEST_ITEM_UNAVAILABLE = "android.test.item_unavailable";
+
+    // TODO release
+    private static final boolean DEBUG_IAB = true;
+
+    /**
+     *
+     */
     public static IabUtil newInstance(Activity activity) {
-        Preconditions.checkArgument(mIabUtil == null, "iab must be instantiated only once");
+        if (mIabUtil != null) {
+            return mIabUtil;
+        }
 
         if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
             log.warn("missing IAB_KEY: fake instance");
             mIabUtil = new IabUtil();
         } else {
+            log.debug("found IAB_KEY: new instance");
             mIabUtil = new IabUtil(activity);
         }
 
         return mIabUtil;
     }
 
+    /**
+     *
+     */
     public static IabUtil getInstance() {
         Preconditions.checkNotNull(mIabUtil, "iab is not instantiated");
         return mIabUtil;
@@ -84,10 +113,9 @@ public class IabUtil {
         mIabUtil.mHelper = new IabHelper(mActivity, base64EncodedPublicKey);
 
         // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(DEBUG_IAB);
 
-        // Start setup. This is asynchronous and the specified listener
-        // will be called once setup completes.
+        // Start setup. This is asynchronous and the specified listener will be called once setup completes.
         log.debug("Starting setup.");
         mHelper.startSetup(result -> {
             log.debug("Setup finished.");
@@ -104,7 +132,7 @@ public class IabUtil {
             // IAB is fully set up. Now, let's get an inventory of stuff we own.
             log.debug("Setup successful. Querying inventory.");
             try {
-                mHelper.queryInventoryAsync(mGotInventoryListener);
+                mHelper.queryInventoryAsync(true, skus, null, mGotInventoryListener);
             } catch (IabAsyncInProgressException e) {
                 log.error("Error querying inventory. Another async operation in progress.");
             }
@@ -129,22 +157,36 @@ public class IabUtil {
 
             /*
              * Check for items we own. Notice that for each purchase, we check
-             * the developer payload to see if it's correct! See
-             * verifyDeveloperPayload().
+             * the developer payload to see if it's correct! See verifyDeveloperPayload().
              */
 
-            isAlreadyPurchased(inventory, SKU_COFFEE);
-            isAlreadyPurchased(inventory, SKU_BEER);
-            isAlreadyPurchased(inventory, SKU_PIZZA);
+            if (inventory != null) {
+                Stream.of(skus).forEach(sku -> donations.put(sku, consumableDonation(inventory, sku)));
+            }
+
             log.debug("Initial inventory query finished.");
         }
     };
 
-    private boolean isAlreadyPurchased(Inventory inventory, String sku) {
-        Purchase purchase = inventory.getPurchase(sku);
-        boolean isPurchased = (purchase != null && verifyDeveloperPayload(purchase));
-        log.debug("User has purchased {}: {}", sku, isPurchased);
-        return isPurchased;
+    private DonationEntry consumableDonation(Inventory inventory, String sku) {
+        Preconditions.checkArgument(inventory.hasDetails(sku), "missing sku details");
+        SkuDetails details = inventory.getSkuDetails(sku);
+
+        boolean isPurchased = false;
+        if (inventory.hasPurchase(sku)) {
+            Purchase purchase = inventory.getPurchase(sku);
+            isPurchased = (purchase != null && verifyDeveloperPayload(purchase));
+            log.debug("User has purchased {}: {}", sku, isPurchased);
+            consumeItem(purchase);
+        }
+
+        return new DonationEntry.Builder(details.getSku())
+            .name(details.getTitle())
+            .description(details.getDescription())
+            .price(details.getPrice())
+            .currencyCode(details.getPriceCurrencyCode())
+            .purchased(isPurchased)
+            .build();
     }
 
     /** Verifies the developer payload of a purchase. */
@@ -179,7 +221,7 @@ public class IabUtil {
     }
 
     /**
-     *
+     * TODO
      */
     public void purchase() {
         if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
@@ -188,7 +230,6 @@ public class IabUtil {
         }
 
         log.debug("Launching purchase flow for donation.");
-        // TODO setWaitScreen(true);
 
         /* TODO:
          * for security, generate your payload here for verification. See the comments on
@@ -198,10 +239,9 @@ public class IabUtil {
         String payload = "";
 
         try {
-            mHelper.launchPurchaseFlow(mActivity, "android.test.purchased", RC_REQUEST,  mPurchaseFinishedListener, payload);
+            mHelper.launchPurchaseFlow(mActivity, SKU_TEST_PURCHASED, RC_REQUEST,  mPurchaseFinishedListener, payload);
         } catch (IabAsyncInProgressException e) {
             log.error("Error launching purchase flow. Another async operation in progress.");
-            // TODO setWaitScreen(false);
         }
     }
 
@@ -215,29 +255,56 @@ public class IabUtil {
 
             if (result.isFailure()) {
                 log.error("Error purchasing: " + result);
-                // TODO setWaitScreen(false);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
                 log.error("Error purchasing. Authenticity verification failed.");
-                // TODO setWaitScreen(false);
                 return;
             }
 
             log.debug("Purchase successful: {}", purchase.getSku());
 
-            /*
-            log.debug("Starting consumption.");
-            try {
-                mHelper.consumeAsync(purchase, mConsumeFinishedListener);
-            } catch (IabAsyncInProgressException e) {
-                log.error("Error consuming gas. Another async operation in progress.");
-                // TODO setWaitScreen(false);
-                return;
-            }
-            */
+            consumeItem(purchase);
         }
     };
+
+    private void consumeItem(Purchase purchase) {
+        log.debug("Starting consumption.");
+        try {
+            mHelper.consumeAsync(purchase, mConsumeFinishedListener);
+        } catch (IabAsyncInProgressException e) {
+            log.error("Error consuming donation. Another async operation in progress.");
+            return;
+        }
+    }
+
+    // Called when consumption is complete
+    private IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+        public void onConsumeFinished(Purchase purchase, IabResult result) {
+            log.debug("Consumption finished. Purchase: " + purchase + ", result: " + result);
+
+            // if we were disposed of in the meantime, quit.
+            if (mHelper == null) return;
+
+            if (result.isSuccess()) {
+                log.debug("Consumption successful. Ready to donate again.");
+                donations.get(purchase.getSku()).setPurchased(false);
+            } else {
+                log.error("Error while consuming: " + result);
+            }
+            log.debug("End consumption flow.");
+        }
+    };
+
+    /**
+     *
+     */
+    public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
+        log.debug("onActivityResult({}, {}, {})", requestCode, requestCode, data);
+        boolean isIabResult = mHelper.handleActivityResult(requestCode, resultCode, data);
+        log.debug("onActivityResult handled by IABUtil: {}", isIabResult);
+        return isIabResult;
+    }
 
     /**
      *

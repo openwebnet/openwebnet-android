@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
     int drawerMenuItemSelected;
 
-    IabUtil mIabUtil;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
-        mIabUtil = IabUtil.newInstance(this);
-        mIabUtil.init();
+        IabUtil.newInstance(this).init();
 
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
@@ -214,7 +211,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mIabUtil.destroy();
+        IabUtil.getInstance().destroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!IabUtil.getInstance().handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /**
