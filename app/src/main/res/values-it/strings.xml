@@ -25,6 +25,7 @@
     <string name="dialog_environment_name">Nome</string>
     <string name="dialog_device_confirmation_title">Conferma</string>
     <string name="dialog_device_confirmation_message">Sei sicuro?</string>
+    <string name="dialog_donation_title">Donazione</string>
 
     <string name="error_load_navigation_drawer">Errore caricamento menu</string>
     <string name="validation_required">Campo obbligatorio</string>

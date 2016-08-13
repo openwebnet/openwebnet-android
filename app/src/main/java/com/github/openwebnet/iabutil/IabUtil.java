@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -220,8 +221,12 @@ public class IabUtil {
         return true;
     }
 
+    public List<DonationEntry> getDonationEntries() {
+        return new ArrayList<>(donations.values());
+    }
+
     /**
-     * TODO
+     * TODO by sku
      */
     public void purchase() {
         if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {

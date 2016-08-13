@@ -30,6 +30,7 @@
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Confirmation request</string>
     <string name="dialog_device_confirmation_message">Are you sure?</string>
+    <string name="dialog_donation_title">Donation</string>
 
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="validation_required">Required field</string>
