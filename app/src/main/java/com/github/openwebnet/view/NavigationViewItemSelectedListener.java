@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.iabutil.IabUtil;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
@@ -99,6 +100,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 break;
             case R.id.nav_donation:
                 // TODO
+                IabUtil.getInstance().purchase();
                 break;
             case R.id.nav_changelog:
                 ChangeLogDialogFragment.show(mActivity);

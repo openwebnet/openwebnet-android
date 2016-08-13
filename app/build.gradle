@@ -43,6 +43,9 @@ android {
         debug {
             testCoverageEnabled true
         }
+        buildTypes.each {
+            it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
+        }
     }
 }
 

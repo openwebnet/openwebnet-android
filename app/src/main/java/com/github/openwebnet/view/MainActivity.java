@@ -19,6 +19,7 @@ import android.view.View;
 import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.iabutil.IabUtil;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
@@ -78,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     int drawerMenuItemSelected;
 
+    IabUtil mIabUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
+        mIabUtil = IabUtil.newInstance(this);
+        mIabUtil.init();
 
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
@@ -204,6 +209,12 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mIabUtil.destroy();
     }
 
     /**
