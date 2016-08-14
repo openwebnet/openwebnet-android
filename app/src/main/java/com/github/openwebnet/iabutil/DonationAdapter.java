@@ -1,10 +1,12 @@
 package com.github.openwebnet.iabutil;
 
 import android.content.Context;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
@@ -16,11 +18,11 @@ import butterknife.ButterKnife;
 
 public class DonationAdapter extends BaseAdapter {
 
-    private final Context context;
+    private final DialogFragment dialog;
     private final List<DonationEntry> donationEntries;
 
-    public DonationAdapter(Context context, List<DonationEntry> donationEntries) {
-        this.context = context;
+    public DonationAdapter(DialogFragment dialog, List<DonationEntry> donationEntries) {
+        this.dialog = dialog;
         this.donationEntries = donationEntries;
     }
 
@@ -45,23 +47,38 @@ public class DonationAdapter extends BaseAdapter {
         if (view != null) {
             holder = (DonationViewHolder) view.getTag();
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.dialog_donation_item, null);
+            view = LayoutInflater.from(dialog.getContext()).inflate(R.layout.dialog_donation_item, null);
             holder = new DonationViewHolder(view);
             view.setTag(holder);
         }
 
         DonationEntry donationEntry = (DonationEntry) getItem(position);
         holder.name.setText(donationEntry.getName());
+        holder.description.setText(donationEntry.getDescription());
+        holder.price.setText(donationEntry.getPrice().concat(" ").concat(donationEntry.getCurrencyCode()));
+        holder.item.setOnClickListener(v -> {
+            IabUtil.getInstance().purchase(donationEntry.getSku());
+            dialog.dismiss();
+        });
         return view;
     }
 
     /**
-     * TODO IabUtil.getInstance().purchase(SKU);
+     *
      */
     static class DonationViewHolder {
 
+        @BindView(R.id.linearLayoutDialogDonationItem)
+        LinearLayout item;
+
         @BindView(R.id.textViewDonationName)
         TextView name;
+
+        @BindView(R.id.textViewDonationDescription)
+        TextView description;
+
+        @BindView(R.id.textViewDonationPrice)
+        TextView price;
 
         public DonationViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -10,11 +10,11 @@ import com.github.openwebnet.iabutil.IabHelper.IabAsyncInProgressException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,10 +50,6 @@ public class IabUtil {
      * of their own and then fake messages from the server.
      */
     private static final String base64EncodedPublicKey = BuildConfig.IAB_KEY;
-
-    // TODO
-    // (arbitrary) request code for the purchase flow
-    private static final int RC_REQUEST = 10001;
 
     private static final String SKU_COFFEE = "coffee";
     private static final String SKU_BEER = "beer";
@@ -204,10 +200,32 @@ public class IabUtil {
     }
 
     /**
-     *
+     * TODO translations
      */
     public List<DonationEntry> getDonationEntries() {
-        return new ArrayList<>(donations.values());
+        //return new ArrayList<>(donations.values());
+
+        // show entries also if there is no internet connection and prices tax excluded
+        return Lists.newArrayList(
+            new DonationEntry.Builder(SKU_COFFEE)
+                .name("Coffee")
+                .description("des1")
+                .price("1")
+                .currencyCode("€")
+                .build(),
+            new DonationEntry.Builder(SKU_BEER)
+                .name("Beer")
+                .description("des2")
+                .price("2")
+                .currencyCode("€")
+                .build(),
+            new DonationEntry.Builder(SKU_PIZZA)
+                .name("Pizza")
+                .description("des3")
+                .price("5")
+                .currencyCode("€")
+                .build()
+        );
     }
 
     /**
@@ -219,14 +237,22 @@ public class IabUtil {
             return;
         }
 
+        // if we were disposed of in the meantime, quit.
+        if (mHelper == null || !mHelper.mSetupDone) return;
+
         log.debug("Launching purchase flow for donation.");
 
-        /* TODO:
+        /* TODO
+         * (arbitrary) request code for the purchase flow
+         */
+        final int RC_REQUEST = 10001;
+
+        /* TODO
          * for security, generate your payload here for verification. See the comments on
          * verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
          * an empty string, but on a production app you should carefully generate this.
          */
-        String payload = "";
+        final String payload = "";
 
         try {
             mHelper.launchPurchaseFlow(mActivity, sku, RC_REQUEST,  mPurchaseFinishedListener, payload);

@@ -40,7 +40,7 @@ public class DonationDialogFragment extends DialogFragment {
             .from(getContext()).inflate(R.layout.dialog_donation, null);
 
         ListView list = (ListView) layout.findViewById(R.id.listViewDialogDonation);
-        list.setAdapter(new DonationAdapter(getContext(), IabUtil.getInstance().getDonationEntries()));
+        list.setAdapter(new DonationAdapter(this, IabUtil.getInstance().getDonationEntries()));
 
         return new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle)
             .setTitle(R.string.dialog_donation_title)
