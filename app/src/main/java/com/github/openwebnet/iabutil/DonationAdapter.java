@@ -46,7 +46,6 @@ public class DonationAdapter extends BaseAdapter {
             holder = (DonationViewHolder) view.getTag();
         } else {
             view = LayoutInflater.from(context).inflate(R.layout.dialog_donation_item, null);
-            //view = LayoutInflater.from(context).inflate(R.layout.dialog_donation_item, parent, false);
             holder = new DonationViewHolder(view);
             view.setTag(holder);
         }

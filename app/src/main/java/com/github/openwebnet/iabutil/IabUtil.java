@@ -39,13 +39,13 @@ public class IabUtil {
     }
 
     /* base64EncodedPublicKey should be YOUR APPLICATION'S PUBLIC KEY
-     * (that you got from the Google Play developer console). This is not your
-     * developer public key, it's the *app-specific* public key.
+     * (that you got from the Google Play developer console).
+     * This is not your developer public key, it's the *app-specific* public key.
      *
      * Instead of just storing the entire literal string here embedded in the
-     * program,  construct the key at runtime from pieces or
+     * program, construct the key at runtime from pieces or
      * use bit manipulation (for example, XOR with some other string) to hide
-     * the actual key.  The key itself is not secret information, but we don't
+     * the actual key. The key itself is not secret information, but we don't
      * want to make it easy for an attacker to replace the public key with one
      * of their own and then fake messages from the server.
      */
@@ -60,7 +60,7 @@ public class IabUtil {
     private static final String SKU_PIZZA = "pizza";
     // TODO
     private final List<String> skus = ImmutableList.of(
-        SKU_TEST_PURCHASED, SKU_TEST_CANCELED, SKU_TEST_REFUNDED, SKU_TEST_ITEM_UNAVAILABLE,
+        //SKU_TEST_PURCHASED, SKU_TEST_CANCELED, SKU_TEST_REFUNDED, SKU_TEST_ITEM_UNAVAILABLE,
         SKU_COFFEE, SKU_BEER, SKU_PIZZA);
     private final Map<String, DonationEntry> donations = new HashMap<>();
 
@@ -109,29 +109,20 @@ public class IabUtil {
             return;
         }
 
-        // Create the helper, passing it our context and the public key to verify signatures with
-        log.debug("Creating IAB helper.");
         mIabUtil.mHelper = new IabHelper(mActivity, base64EncodedPublicKey);
-
-        // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(DEBUG_IAB);
 
-        // Start setup. This is asynchronous and the specified listener will be called once setup completes.
-        log.debug("Starting setup.");
         mHelper.startSetup(result -> {
-            log.debug("Setup finished.");
 
             if (!result.isSuccess()) {
-                // Oh noes, there was a problem.
-                log.error("Problem setting up in-app billing: " + result);
+                log.error("Problem setting up in-app billing: {}", result);
                 return;
             }
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
 
-            // IAB is fully set up. Now, let's get an inventory of stuff we own.
-            log.debug("Setup successful. Querying inventory.");
+            log.debug("in-app billing setup successful: querying inventory");
             try {
                 mHelper.queryInventoryAsync(true, skus, null, mGotInventoryListener);
             } catch (IabAsyncInProgressException e) {
@@ -140,21 +131,16 @@ public class IabUtil {
         });
     }
 
-    // Listener that's called when we finish querying the items and subscriptions we own
     private IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-            log.debug("Query inventory finished.");
 
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
 
-            // Is it a failure?
             if (result.isFailure()) {
-                log.error("Failed to query inventory: " + result);
+                log.error("Failed to query inventory: {}", result);
                 return;
             }
-
-            log.debug("Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -164,8 +150,6 @@ public class IabUtil {
             if (inventory != null) {
                 Stream.of(skus).forEach(sku -> donations.put(sku, consumableDonation(inventory, sku)));
             }
-
-            log.debug("Initial inventory query finished.");
         }
     };
 
@@ -190,13 +174,11 @@ public class IabUtil {
             .build();
     }
 
-    /** Verifies the developer payload of a purchase. */
     private boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
         /*
-         * TODO:
-         * verify that the developer payload of the purchase is correct. It will be
+         * Verify that the developer payload of the purchase is correct. It will be
          * the same one that you sent when initiating the purchase.
          *
          * WARNING: Locally generating a random string when starting a purchase and
@@ -221,14 +203,17 @@ public class IabUtil {
         return true;
     }
 
+    /**
+     *
+     */
     public List<DonationEntry> getDonationEntries() {
         return new ArrayList<>(donations.values());
     }
 
     /**
-     * TODO by sku
+     *
      */
-    public void purchase() {
+    public void purchase(String sku) {
         if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
             log.warn("missing IAB_KEY: do nothing");
             return;
@@ -244,13 +229,12 @@ public class IabUtil {
         String payload = "";
 
         try {
-            mHelper.launchPurchaseFlow(mActivity, SKU_TEST_PURCHASED, RC_REQUEST,  mPurchaseFinishedListener, payload);
+            mHelper.launchPurchaseFlow(mActivity, sku, RC_REQUEST,  mPurchaseFinishedListener, payload);
         } catch (IabAsyncInProgressException e) {
             log.error("Error launching purchase flow. Another async operation in progress.");
         }
     }
 
-    // Callback for when a purchase is finished
     private IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             log.debug("Purchase finished: " + result + ", purchase: " + purchase);
@@ -274,7 +258,6 @@ public class IabUtil {
     };
 
     private void consumeItem(Purchase purchase) {
-        log.debug("Starting consumption.");
         try {
             mHelper.consumeAsync(purchase, mConsumeFinishedListener);
         } catch (IabAsyncInProgressException e) {
@@ -297,7 +280,6 @@ public class IabUtil {
             } else {
                 log.error("Error while consuming: " + result);
             }
-            log.debug("End consumption flow.");
         }
     };
 
@@ -305,9 +287,8 @@ public class IabUtil {
      *
      */
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
-        log.debug("onActivityResult({}, {}, {})", requestCode, requestCode, data);
         boolean isIabResult = mHelper.handleActivityResult(requestCode, resultCode, data);
-        log.debug("onActivityResult handled by IABUtil: {}", isIabResult);
+        log.debug("onActivityResult({}, {}, {}) handled by IABUtil: {}", requestCode, requestCode, data, isIabResult);
         return isIabResult;
     }
 
@@ -320,8 +301,7 @@ public class IabUtil {
             return;
         }
 
-        // very important:
-        log.debug("Destroying helper.");
+        log.debug("Destroying iab helper");
         if (mHelper != null) {
             mHelper.disposeWhenFinished();
             mHelper = null;
