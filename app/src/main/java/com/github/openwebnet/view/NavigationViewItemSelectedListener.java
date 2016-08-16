@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.iabutil.DonationDialogFragment;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
@@ -96,6 +97,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 break;
             case R.id.nav_settings:
                 showSettings();
+                break;
+            case R.id.nav_donation:
+                DonationDialogFragment.show(mActivity);
+                break;
+            case R.id.nav_changelog:
+                ChangeLogDialogFragment.show(mActivity);
                 break;
             default:
                 checkArgument(id >= MENU_ENVIRONMENT_RANGE_MIN

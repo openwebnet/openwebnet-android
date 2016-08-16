@@ -41,6 +41,14 @@ This Android application is an unofficial free and Open Source client under MIT 
 
 ### Changelog
 
+#### v2.6.1 (August 16, 2016)
+
+- TODO
+
+#### v2.6.0 (August 11, 2016)
+
+- TODO
+
 #### v2.5.1 (August 6, 2016)
 
 - Fix error gateway with password

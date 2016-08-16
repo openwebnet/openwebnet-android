@@ -41,10 +41,4 @@
             android:title="@string/settings_debug_device_title"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_category_about">
-        <Preference
-            android:key="com.github.openwebnet_preferences.PREF_KEY_ABOUT_CHANGELOG"
-            android:title="@string/settings_title_changelog"/>
-    </PreferenceCategory>
-
 </PreferenceScreen>
