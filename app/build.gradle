@@ -39,12 +39,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
         }
         debug {
             testCoverageEnabled true
-        }
-        buildTypes.each {
-            it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
+            it.buildConfigField 'String', 'IAB_KEY', '\"\"'
         }
     }
 }
