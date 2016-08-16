@@ -67,8 +67,7 @@ public class IabUtil {
     private static final String SKU_TEST_REFUNDED = "android.test.refunded";
     private static final String SKU_TEST_ITEM_UNAVAILABLE = "android.test.item_unavailable";
 
-    // TODO release
-    private static final boolean DEBUG_IAB = true;
+    private static final boolean DEBUG_IAB = false;
 
     /**
      *
