@@ -41,13 +41,17 @@ This Android application is an unofficial free and Open Source client under MIT 
 
 ### Changelog
 
+#### v2.6.2 (August 16, 2016)
+
+- Fix donation
+
 #### v2.6.1 (August 16, 2016)
 
-- TODO
+- Add donation feature
 
 #### v2.6.0 (August 11, 2016)
 
-- TODO
+- Add billing permission
 
 #### v2.5.1 (August 6, 2016)
 
