@@ -69,15 +69,20 @@ public class IabUtil {
 
     private static final boolean DEBUG_IAB = false;
 
+    private static boolean isInvalidIabKey() {
+        return TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey));
+    }
+
     /**
      *
      */
     public static IabUtil newInstance(Activity activity) {
         if (mIabUtil != null) {
+            // singleton
             return mIabUtil;
         }
 
-        if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
+        if (isInvalidIabKey()) {
             log.warn("missing IAB_KEY: fake instance");
             mIabUtil = new IabUtil();
         } else {
@@ -100,7 +105,7 @@ public class IabUtil {
      *
      */
     public void init() {
-        if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
+        if (isInvalidIabKey()) {
             log.warn("missing IAB_KEY: do nothing");
             return;
         }
@@ -204,6 +209,11 @@ public class IabUtil {
      *
      */
     public List<DonationEntry> getDonationEntries() {
+        if (isInvalidIabKey()) {
+            log.warn("missing IAB_KEY: do nothing");
+            return Lists.newArrayList();
+        }
+
         //return new ArrayList<>(donations.values());
 
         // show entries also if there is no internet connection and prices tax excluded
@@ -234,7 +244,7 @@ public class IabUtil {
      *
      */
     public void purchase(String sku) {
-        if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
+        if (isInvalidIabKey()) {
             log.warn("missing IAB_KEY: do nothing");
             return;
         }
@@ -314,6 +324,11 @@ public class IabUtil {
      *
      */
     public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
+        if (isInvalidIabKey()) {
+            log.warn("missing IAB_KEY: do nothing");
+            return false;
+        }
+
         boolean isIabResult = mHelper.handleActivityResult(requestCode, resultCode, data);
         log.debug("onActivityResult({}, {}, {}) handled by IABUtil: {}", requestCode, requestCode, data, isIabResult);
         return isIabResult;
@@ -323,7 +338,7 @@ public class IabUtil {
      *
      */
     public void destroy() {
-        if (TextUtils.isEmpty(Strings.emptyToNull(base64EncodedPublicKey))) {
+        if (isInvalidIabKey()) {
             log.warn("missing IAB_KEY: do nothing");
             return;
         }
