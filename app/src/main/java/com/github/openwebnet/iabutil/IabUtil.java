@@ -330,7 +330,7 @@ public class IabUtil {
         }
 
         log.debug("Destroying iab helper");
-        if (mHelper != null) {
+        if (mHelper != null && mHelper.mSetupDone) {
             mHelper.disposeWhenFinished();
             mHelper = null;
         }
