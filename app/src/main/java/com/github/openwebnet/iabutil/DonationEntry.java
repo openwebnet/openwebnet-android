@@ -1,5 +1,8 @@
 package com.github.openwebnet.iabutil;
 
+/**
+ * @author niqdev
+ */
 public class DonationEntry {
 
     private final String sku;

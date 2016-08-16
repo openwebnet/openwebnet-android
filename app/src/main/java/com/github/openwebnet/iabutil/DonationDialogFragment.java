@@ -15,6 +15,9 @@ import android.widget.ListView;
 
 import com.github.openwebnet.R;
 
+/**
+ * @author niqdev
+ */
 public class DonationDialogFragment extends DialogFragment {
 
     private static final String TAG_FRAGMENT = "donation_dialog";

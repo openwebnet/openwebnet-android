@@ -1,6 +1,5 @@
 package com.github.openwebnet.iabutil;
 
-import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author niqdev
+ */
 public class DonationAdapter extends BaseAdapter {
 
     private final DialogFragment dialog;

@@ -55,7 +55,7 @@ public class IabUtil {
     private static final String SKU_COFFEE = "coffee";
     private static final String SKU_BEER = "beer";
     private static final String SKU_PIZZA = "pizza";
-    // TODO
+
     private final List<String> skus = ImmutableList.of(
         //SKU_TEST_PURCHASED, SKU_TEST_CANCELED, SKU_TEST_REFUNDED, SKU_TEST_ITEM_UNAVAILABLE,
         SKU_COFFEE, SKU_BEER, SKU_PIZZA);
@@ -170,6 +170,7 @@ public class IabUtil {
             .build();
     }
 
+    // TODO
     private boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
@@ -293,7 +294,6 @@ public class IabUtil {
         }
     }
 
-    // Called when consumption is complete
     private IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             log.debug("Consumption finished. Purchase: " + purchase + ", result: " + result);
