@@ -5,7 +5,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.annimon.stream.Optional;
@@ -22,7 +21,6 @@ import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEF
 
 public class SettingsFragment extends PreferenceFragment {
 
-    public static final String PREF_KEY_ABOUT_CHANGELOG = "com.github.openwebnet_preferences.PREF_KEY_ABOUT_CHANGELOG";
     public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
     public static final String PREF_KEY_TEMPERATURE = "com.github.openwebnet_preferences.PREF_KEY_TEMPERATURE";
 
@@ -33,7 +31,6 @@ public class SettingsFragment extends PreferenceFragment {
         updatePreferenceSummary(getPreferenceScreen());
         initTemperatureChange();
         initDebug();
-        initAbout();
     }
 
     private void updatePreferenceSummary(Preference preference) {
@@ -83,11 +80,4 @@ public class SettingsFragment extends PreferenceFragment {
             });
     }
 
-    private void initAbout() {
-        getPreferenceScreen().findPreference(PREF_KEY_ABOUT_CHANGELOG)
-            .setOnPreferenceClickListener(preference -> {
-                ChangeLogDialogFragment.show((AppCompatActivity) getActivity());
-                return true;
-            });
-    }
 }

@@ -24,6 +24,14 @@ Database encrypted to increase security.
 
 This Android application is an unofficial free and Open Source client under MIT license.
 
+If you like this app and find it useful please consider making a donation. Some possible future improvements:
+- Sound System / Radio
+- Energy Management
+- Quick search and sorting
+- Backup / Import / Export configuration
+
+If you find a bug or have any suggestions do not leave a negative rating but contact me via email, I will try to help you.
+
 *OpenWebNet is a BTicino registered trademark*
 
 ### Screenshots
@@ -40,6 +48,18 @@ This Android application is an unofficial free and Open Source client under MIT 
 <a href="https://play.google.com/store/apps/details?id=com.github.openwebnet&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="200"/></a>
 
 ### Changelog
+
+#### v2.6.2 (August 16, 2016)
+
+- Fix donation
+
+#### v2.6.1 (August 16, 2016)
+
+- Add donation feature
+
+#### v2.6.0 (August 11, 2016)
+
+- Add billing permission
 
 #### v2.5.1 (August 6, 2016)
 

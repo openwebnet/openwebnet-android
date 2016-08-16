@@ -26,4 +26,14 @@ Quest'applicazione Android é un client Open Source non ufficiale completamente 
 
 Tutto il codice sorgente é disponibile online https://github.com/openwebnet/openwebnet-android
 
+Se ti piace quest'app e la trovi utile puoi fare una donazione. Alcuni possibili futuri sviluppi:
+- Diffusione sonore / Radio
+- Controllo energia
+- Ricerca rapida e ordinamento
+- Backup / Importazione / Esportazione delle configurazioni
+
+Puoi tener traccia di tutte le issue aperte https://github.com/openwebnet/openwebnet-android/issues
+
+Se trovi un bug o hai qualche suggerimento non lasciare un rating negativo ma contattami via mail, farò il possibile per aiutarti.
+
 OpenWebNet é un marchio registrato BTicino.

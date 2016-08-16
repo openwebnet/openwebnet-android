@@ -27,6 +27,7 @@ import com.github.openwebnet.view.settings.SettingsFragment;
 import com.google.common.collect.Lists;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -233,6 +234,18 @@ public class NavigationViewItemSelectedListenerTest {
         assertEquals("invalid fragment", MENU_ENVIRONMENT_ID, argumentEnvironment);
 
         assertFalse("should be close", activity.drawerLayout.isDrawerOpen(GravityCompat.START));
+    }
+
+    @Ignore
+    @Test
+    public void onNavigationItemSelected_shouldSelectDonation() {
+        // TODO
+    }
+
+    @Ignore
+    @Test
+    public void onNavigationItemSelected_shouldSelectChangelogs() {
+        // TODO
     }
 
 }
