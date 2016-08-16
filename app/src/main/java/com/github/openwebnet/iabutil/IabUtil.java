@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.annimon.stream.Stream;
 import com.github.openwebnet.BuildConfig;
+import com.github.openwebnet.R;
 import com.github.openwebnet.iabutil.IabHelper.IabAsyncInProgressException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -200,30 +201,31 @@ public class IabUtil {
     }
 
     /**
-     * TODO translations
+     *
      */
     public List<DonationEntry> getDonationEntries() {
         //return new ArrayList<>(donations.values());
 
         // show entries also if there is no internet connection and prices tax excluded
+        final String CURRENCY = "€";
         return Lists.newArrayList(
             new DonationEntry.Builder(SKU_COFFEE)
-                .name("Coffee")
-                .description("des1")
+                .name(mActivity.getString(R.string.donation_coffee_name))
+                .description(mActivity.getString(R.string.donation_coffee_description))
                 .price("1")
-                .currencyCode("€")
+                .currencyCode(CURRENCY)
                 .build(),
             new DonationEntry.Builder(SKU_BEER)
-                .name("Beer")
-                .description("des2")
+                .name(mActivity.getString(R.string.donation_beer_name))
+                .description(mActivity.getString(R.string.donation_beer_description))
                 .price("2")
-                .currencyCode("€")
+                .currencyCode(CURRENCY)
                 .build(),
             new DonationEntry.Builder(SKU_PIZZA)
-                .name("Pizza")
-                .description("des3")
+                .name(mActivity.getString(R.string.donation_pizza_name))
+                .description(mActivity.getString(R.string.donation_pizza_description))
                 .price("5")
-                .currencyCode("€")
+                .currencyCode(CURRENCY)
                 .build()
         );
     }
