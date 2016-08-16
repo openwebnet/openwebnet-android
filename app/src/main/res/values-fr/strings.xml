@@ -98,4 +98,11 @@
     <string name="card_device_debug_copy">Copier</string>
     <string name="card_device_debug_none">aucune réponse</string>
     <string name="card_device_debug_clipboard_copied">Réponse copiée</string>
+
+    <string name="donation_coffee_name">Café</string>
+    <string name="donation_coffee_description">Un café pour me garder éveillé quand je programme pendant la nuit!</string>
+    <string name="donation_beer_name">Bière</string>
+    <string name="donation_beer_description">Une bière froide pour augmenter ma productivité!</string>
+    <string name="donation_pizza_name">Pizza</string>
+    <string name="donation_pizza_description">Une pizza pour me faire plaisir!</string>
 </resources>

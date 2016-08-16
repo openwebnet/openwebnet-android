@@ -119,4 +119,11 @@
     <string name="card_device_debug_copy">Copy</string>
     <string name="card_device_debug_none">no response</string>
     <string name="card_device_debug_clipboard_copied">Response copied</string>
+
+    <string name="donation_coffee_name">Coffee</string>
+    <string name="donation_coffee_description">A coffee to keep me awake when I program during the night!</string>
+    <string name="donation_beer_name">Beer</string>
+    <string name="donation_beer_description">A cold beer to increase my productivity!</string>
+    <string name="donation_pizza_name">Pizza</string>
+    <string name="donation_pizza_description">A pizza to make me happy!</string>
 </resources>

@@ -98,4 +98,11 @@
     <string name="card_device_debug_copy">Копировать</string>
     <string name="card_device_debug_none">нет ответа</string>
     <string name="card_device_debug_clipboard_copied">Ответ скопирован</string>
+
+    <string name="donation_coffee_name">Кофе</string>
+    <string name="donation_coffee_description">Кофе, чтобы держать меня разбудила, когда я программу в течение ночи!</string>
+    <string name="donation_beer_name">Пиво</string>
+    <string name="donation_beer_description">Холодное пиво, чтобы увеличить свою производительность!</string>
+    <string name="donation_pizza_name">Пицца</string>
+    <string name="donation_pizza_description">Пицца, чтобы сделать меня счастливым!</string>
 </resources>
