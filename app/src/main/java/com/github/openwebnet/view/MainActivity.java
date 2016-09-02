@@ -19,6 +19,7 @@ import android.view.View;
 import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.iabutil.IabUtil;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
+        IabUtil.newInstance(this).init();
 
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
@@ -204,6 +206,22 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        IabUtil.getInstance().destroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!IabUtil.getInstance().handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /**

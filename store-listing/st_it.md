@@ -7,9 +7,7 @@ OpenWebNet
 OpenWebNet é l'app per gestire gli impianti domotici My Home BTicino e Legrand
 
 ### Full description
-MyHome é il prodotto BTicino e Legrand per gestire gli impianti domotici da dispositivi remoti come smartphone utilizzando il protocollo OpenWebNet.
-
-Quest'applicazione Android é un client non ufficiale completamente gratuito con licenza Creative Commons.
+My Home é il prodotto BTicino e Legrand per gestire gli impianti domotici da dispositivi remoti come smartphone utilizzando il protocollo OpenWebNet.
 
 Gestisce:
 - Illuminazione
@@ -18,10 +16,24 @@ Gestisce:
 - qualsiasi frame/messaggio OpenWebNet
 - Ip Camera (MJPEG)
 
-Non é obbligatorio, ma si raccomanda che tutte le connessioni avvengano tramite una connessione VPN.
+Gestisce gateway multipli contemporaneamente con IP o Dominio e Password.
+
+Non é obbligatorio, ma si raccomanda che tutti gli accessi avvengano tramite una connessione VPN.
 
 Database crittografato per aumentare la sicurezza.
 
-Lingue supportate: Italiano, Inglese, Francese e Russo.
+Quest'applicazione Android é un client Open Source non ufficiale completamente gratuito con licenza MIT.
 
 Tutto il codice sorgente é disponibile online https://github.com/openwebnet/openwebnet-android
+
+Se ti piace quest'app e la trovi utile puoi fare una donazione. Alcuni possibili futuri sviluppi:
+- Diffusione sonora / Radio
+- Controllo energia
+- Ricerca rapida e ordinamento
+- Backup / Importazione / Esportazione delle configurazioni
+
+Puoi tener traccia di tutte le issue aperte https://github.com/openwebnet/openwebnet-android/issues
+
+Se trovi un bug o hai qualche suggerimento non lasciare un rating negativo ma contattami via mail, farò il possibile per aiutarti.
+
+OpenWebNet é un marchio registrato BTicino.

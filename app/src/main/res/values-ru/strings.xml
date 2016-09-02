@@ -16,6 +16,8 @@
     <string name="drawer_menu_favourite">Избранное</string>
     <string name="drawer_menu_add">Добавить окружение</string>
     <string name="drawer_menu_settings">Настройки</string>
+    <string name="drawer_menu_donation">Пожертвование</string>
+    <string name="drawer_menu_changelog">Список изменений</string>
     <string name="drawer_menu_example">Пример окружения</string>
 
     <string name="dialog_add_environment_title">Добавьте окружение</string>
@@ -23,6 +25,7 @@
     <string name="dialog_environment_name">Имя</string>
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">Вы уверены?</string>
+    <string name="dialog_donation_title">Пожертвование</string>
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="validation_required">Обязательно поле</string>
@@ -44,8 +47,6 @@
     <string name="dialog_gateway_password">Пароль (опционально)</string>
     <string name="dialog_gateway_password_hint">Пароль</string>
     <string name="dialog_gateway_password_default">Оставьте это поле пустым, если не требуется.\nПо умолчанию пароль 12345.</string>
-    <string name="settings_category_about">Информация</string>
-    <string name="settings_title_changelog">Список изменений</string>
     <string name="settings_category_debug">Отладка</string>
     <string name="settings_debug_device_title">Отладка устройств</string>
     <string name="settings_debug_device_summary">Отображать время и ответ</string>
@@ -97,4 +98,11 @@
     <string name="card_device_debug_copy">Копировать</string>
     <string name="card_device_debug_none">нет ответа</string>
     <string name="card_device_debug_clipboard_copied">Ответ скопирован</string>
+
+    <string name="donation_coffee_name">Кофе</string>
+    <string name="donation_coffee_description">Кофе, чтобы держать меня разбудила, когда я программу в течение ночи!</string>
+    <string name="donation_beer_name">Пиво</string>
+    <string name="donation_beer_description">Холодное пиво, чтобы увеличить свою производительность!</string>
+    <string name="donation_pizza_name">Пицца</string>
+    <string name="donation_pizza_description">Пицца, чтобы сделать меня счастливым!</string>
 </resources>

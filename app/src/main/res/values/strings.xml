@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.5.0</string>
+    <string name="app_version_number" translatable="false">2.6.2</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet/openwebnet-android</string>
 
     <string name="activity_device">Device</string>
@@ -21,6 +21,8 @@
     <string name="drawer_menu_favourite">Favourites</string>
     <string name="drawer_menu_add">Add environment</string>
     <string name="drawer_menu_settings">Settings</string>
+    <string name="drawer_menu_donation">Donation</string>
+    <string name="drawer_menu_changelog">Changelogs</string>
     <string name="drawer_menu_report" translatable="false">Send report</string>
     <string name="drawer_menu_example">Example environment</string>
 
@@ -29,6 +31,7 @@
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Confirmation request</string>
     <string name="dialog_device_confirmation_message">Are you sure?</string>
+    <string name="dialog_donation_title">Donation</string>
 
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="validation_required">Required field</string>
@@ -50,8 +53,6 @@
     <string name="dialog_gateway_password">Password (optional)</string>
     <string name="dialog_gateway_password_hint">Password</string>
     <string name="dialog_gateway_password_default">Leave this field empty unless is needed.\nDefault password is 12345.</string>
-    <string name="settings_category_about">About</string>
-    <string name="settings_title_changelog">Changelogs</string>
     <string name="settings_category_debug">Debug</string>
     <string name="settings_debug_device_title">Debug device messages</string>
     <string name="settings_debug_device_summary">Show delay and response value</string>
@@ -119,4 +120,11 @@
     <string name="card_device_debug_copy">Copy</string>
     <string name="card_device_debug_none">no response</string>
     <string name="card_device_debug_clipboard_copied">Response copied</string>
+
+    <string name="donation_coffee_name">Coffee</string>
+    <string name="donation_coffee_description">A coffee to keep me awake when I program during the night!</string>
+    <string name="donation_beer_name">Beer</string>
+    <string name="donation_beer_description">A cold beer to increase my productivity!</string>
+    <string name="donation_pizza_name">Pizza</string>
+    <string name="donation_pizza_description">A pizza to make me happy!</string>
 </resources>

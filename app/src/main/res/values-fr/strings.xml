@@ -16,6 +16,8 @@
     <string name="drawer_menu_favourite">Favoris</string>
     <string name="drawer_menu_add">Ajouter environnement</string>
     <string name="drawer_menu_settings">Paramètres</string>
+    <string name="drawer_menu_donation">Don</string>
+    <string name="drawer_menu_changelog">Changelog</string>
     <string name="drawer_menu_example">Environnement d\'exemple</string>
 
     <string name="dialog_add_environment_title">Ajouter environnement</string>
@@ -23,6 +25,7 @@
     <string name="dialog_environment_name">Nom</string>
     <string name="dialog_device_confirmation_title">Confirmer</string>
     <string name="dialog_device_confirmation_message">Êtes-vous sûr ?</string>
+    <string name="dialog_donation_title">Don</string>
 
     <string name="error_load_navigation_drawer">Erreur de chargement du menu</string>
     <string name="validation_required">Champ obbligatoire</string>
@@ -44,8 +47,6 @@
     <string name="dialog_gateway_password">Mot de passe (facultatif)</string>
     <string name="dialog_gateway_password_hint">Mot de passe</string>
     <string name="dialog_gateway_password_default">Laissez ce champ vide, sauf si est nécessaire.\nMot de passe par défaut est 12345.</string>
-    <string name="settings_category_about">À propos</string>
-    <string name="settings_title_changelog">Changelog</string>
     <string name="settings_category_debug">Débogage</string>
     <string name="settings_debug_device_title">Débogage des dispositifs</string>
     <string name="settings_debug_device_summary">Afficher la durée et la réponse</string>
@@ -97,4 +98,11 @@
     <string name="card_device_debug_copy">Copier</string>
     <string name="card_device_debug_none">aucune réponse</string>
     <string name="card_device_debug_clipboard_copied">Réponse copiée</string>
+
+    <string name="donation_coffee_name">Café</string>
+    <string name="donation_coffee_description">Un café pour me garder éveillé quand je programme pendant la nuit!</string>
+    <string name="donation_beer_name">Bière</string>
+    <string name="donation_beer_description">Une bière froide pour augmenter ma productivité!</string>
+    <string name="donation_pizza_name">Pizza</string>
+    <string name="donation_pizza_description">Une pizza pour me faire plaisir!</string>
 </resources>

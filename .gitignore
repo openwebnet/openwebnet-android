@@ -3,6 +3,7 @@
 .idea/
 *.iml
 
+gradle.properties
 /local.properties
 /build
 /release

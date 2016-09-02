@@ -1,4 +1,4 @@
-package com.github.openwebnet.view.settings;
+package com.github.openwebnet.view;
 
 import android.app.Dialog;
 import android.os.Bundle;
