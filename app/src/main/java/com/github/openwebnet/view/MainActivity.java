@@ -1,11 +1,15 @@
 package com.github.openwebnet.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.github.openwebnet.R;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
     static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
+    private static final int REQUEST_WRITE_STORAGE = 112;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -88,8 +94,33 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         IabUtil.newInstance(this).init();
 
+        checkMarshmallowWritePermission();
+
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
+    }
+
+    private void checkMarshmallowWritePermission() {
+        boolean hasPermission = (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        Toast.makeText(this, "Permission: " + hasPermission, Toast.LENGTH_LONG).show();
+
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                REQUEST_WRITE_STORAGE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_WRITE_STORAGE: {
+                boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                Toast.makeText(this, "Permission granted: " + granted, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
