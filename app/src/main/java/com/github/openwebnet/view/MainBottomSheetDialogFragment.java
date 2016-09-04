@@ -60,6 +60,9 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 case R.id.bs_add_device:
                     actionNewIntent(DeviceActivity.class);
                     break;
+                case R.id.bs_add_scenario:
+                    // TODO
+                    break;
                 case R.id.bs_add_ipcam:
                     actionNewIntent(IpcamActivity.class);
                     break;

@@ -69,6 +69,7 @@
     <string name="bs_automation">Automatismo</string>
     <string name="bs_temperature">Temperatura</string>
     <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_scenario">Scenario</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
     <string name="device_where">dove</string>

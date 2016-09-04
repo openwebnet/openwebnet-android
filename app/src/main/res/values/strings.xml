@@ -75,6 +75,7 @@
     <string name="bs_automation">Automation</string>
     <string name="bs_temperature">Temperature</string>
     <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_scenario">Scenario</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>
