@@ -26,6 +26,7 @@
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">Вы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
+    <string name="dialog_donation_tax">Пожертвования исключены налог и может варьироваться от одной страны в другую</string>
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="validation_required">Обязательно поле</string>
