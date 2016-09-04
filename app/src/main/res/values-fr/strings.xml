@@ -26,7 +26,7 @@
     <string name="dialog_device_confirmation_title">Confirmer</string>
     <string name="dialog_device_confirmation_message">Êtes-vous sûr ?</string>
     <string name="dialog_donation_title">Don</string>
-    <string name="dialog_donation_tax">Les dons sont HT et peuvent varier d'un pays à l'autre</string>
+    <string name="dialog_donation_tax">Les dons sont HT et peuvent varier d\'un pays à l\'autre</string>
 
     <string name="error_load_navigation_drawer">Erreur de chargement du menu</string>
     <string name="validation_required">Champ obbligatoire</string>
