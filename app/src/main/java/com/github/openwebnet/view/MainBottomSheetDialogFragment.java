@@ -15,6 +15,7 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.ScenarioActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                     actionNewIntent(DeviceActivity.class);
                     break;
                 case R.id.bs_add_scenario:
-                    // TODO
+                    actionNewIntent(ScenarioActivity.class);
                     break;
                 case R.id.bs_add_ipcam:
                     actionNewIntent(IpcamActivity.class);
