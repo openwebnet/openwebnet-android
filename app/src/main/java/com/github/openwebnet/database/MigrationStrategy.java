@@ -69,10 +69,24 @@ public class MigrationStrategy implements RealmMigration {
 
         // migrate to version 5
         if (oldVersion == 4) {
-           schema.get("GatewayModel")
-               .addField(GatewayModel.FIELD_PASSWORD, String.class);
+            schema.get("GatewayModel")
+                .addField(GatewayModel.FIELD_PASSWORD, String.class);
 
             ++oldVersion;
         }
+
+        // migrate to version 6
+        if (oldVersion == 5) {
+            schema.create("ScenarioModel")
+                .addField(FIELD_UUID, String.class, FieldAttribute.PRIMARY_KEY)
+                .addField(FIELD_ENVIRONMENT_ID, Integer.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_GATEWAY_UUID, String.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_NAME, String.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_WHERE, String.class, FieldAttribute.REQUIRED)
+                .addField(FIELD_FAVOURITE, boolean.class);
+
+            ++oldVersion;
+        }
+
     }
 }
