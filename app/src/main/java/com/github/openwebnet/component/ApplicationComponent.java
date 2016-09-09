@@ -23,6 +23,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.ScenarioServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 import com.github.openwebnet.view.MainActivity;
@@ -82,6 +83,7 @@ public interface ApplicationComponent {
     void inject(AutomationServiceImpl automationService);
     void inject(IpcamServiceImpl ipcamService);
     void inject(TemperatureServiceImpl temperatureService);
+    void inject(ScenarioServiceImpl scenarioService);
 
     // database
     void inject(DatabaseRealm databaseRealm);
