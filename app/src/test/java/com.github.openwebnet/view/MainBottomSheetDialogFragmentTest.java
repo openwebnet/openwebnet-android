@@ -158,7 +158,7 @@ public class MainBottomSheetDialogFragmentTest {
     @Test
     public void onItemClick_shouldStartIpcamActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_ipcam, IpcamActivity.class);
+        expectStartActivity(5, R.string.activity_ipcam, IpcamActivity.class);
     }
 
 }
