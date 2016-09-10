@@ -2,11 +2,12 @@ package com.github.openwebnet.view.device;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.service.ScenarioService;
 
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class ScenarioActivity extends AbstractDeviceActivity {
     @BindView(R.id.editTextScenarioWhere)
     EditText editTextScenarioWhere;
 
-    private String ScenarioUuid;
+    private String scenarioUuid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,12 +44,58 @@ public class ScenarioActivity extends AbstractDeviceActivity {
 
         initSpinnerEnvironment();
         initSpinnerGateway();
-        //initEditScenario();
+        initEditScenario();
+    }
+
+    private void initEditScenario() {
+        scenarioUuid = getIntent().getStringExtra(RealmModel.FIELD_UUID);
+        log.debug("initEditScenario: {}", scenarioUuid);
+        if (scenarioUuid != null) {
+            scenarioService.findById(scenarioUuid).subscribe(automation -> {
+                editTextScenarioName.setText(String.valueOf(automation.getName()));
+                editTextScenarioWhere.setText(String.valueOf(automation.getWhere()));
+
+                selectEnvironment(automation.getEnvironmentId());
+                selectGateway(automation.getGatewayUuid());
+                setFavourite(automation.isFavourite());
+            });
+        }
     }
 
     @Override
     protected void onMenuSave() {
-        
+        log.debug("name: {}", editTextScenarioName.getText());
+        log.debug("where: {}", editTextScenarioWhere.getText());
+        log.debug("environment: {}", getSelectedEnvironment());
+        log.debug("gateway: {}", getSelectedGateway());
+        log.debug("favourite: {}", isFavourite());
+
+        if (isValidScenario()) {
+            if (scenarioUuid == null) {
+                scenarioService.add(parseScenario()).subscribe(uuid -> finish());
+            } else {
+                scenarioService.update(parseScenario())
+                    .doOnCompleted(this::finish)
+                    .subscribe();
+            }
+        }
     }
-    
+
+    private boolean isValidScenario() {
+        return isValidRequired(editTextScenarioName) &&
+            isValidRequired(editTextScenarioWhere) &&
+            isValidDeviceEnvironment() &&
+            isValidDeviceGateway();
+    }
+
+    private ScenarioModel parseScenario() {
+        return (scenarioUuid == null ? ScenarioModel.addBuilder() : ScenarioModel.updateBuilder(scenarioUuid))
+            .name(utilityService.sanitizedText(editTextScenarioName))
+            .where(editTextScenarioWhere.getText().toString())
+            .environment(getSelectedEnvironment().getId())
+            .gateway(getSelectedGateway().getUuid())
+            .favourite(isFavourite())
+            .build();
+    }
+
 }
