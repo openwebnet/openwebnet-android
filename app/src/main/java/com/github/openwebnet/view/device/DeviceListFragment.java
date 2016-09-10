@@ -19,11 +19,13 @@ import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.ScenarioService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
@@ -72,6 +74,9 @@ public class DeviceListFragment extends Fragment {
 
     @Inject
     DeviceService deviceService;
+
+    @Inject
+    ScenarioService scenarioService;
 
     private Unbinder unbinder;
 
@@ -174,12 +179,15 @@ public class DeviceListFragment extends Fragment {
         Observable<List<AutomationModel>> requestAutomations = isFavouriteMenu ? automationService.requestFavourites() :
             automationService.requestByEnvironment(environmentId);
 
+        Observable<List<ScenarioModel>> requestScenarios = isFavouriteMenu ? scenarioService.requestFavourites() :
+            scenarioService.requestByEnvironment(environmentId);
+
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable.zip(findIpcams, requestTemperatures, requestLights, requestAutomations, requestDevices,
-            (ipcams, temperatures, lights, automations, devices) ->
-                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, lights, automations, devices)))
+        Observable.zip(findIpcams, requestTemperatures, requestLights, requestAutomations, requestScenarios, requestDevices,
+            (ipcams, temperatures, lights, automations, scenarios, devices) ->
+                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, lights, automations, scenarios, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);

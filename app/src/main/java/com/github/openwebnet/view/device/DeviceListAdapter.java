@@ -29,6 +29,7 @@ import com.github.openwebnet.model.DomoticModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
@@ -37,6 +38,7 @@ import com.github.openwebnet.service.DomoticService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.ScenarioService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
@@ -77,6 +79,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     TemperatureService temperatureService;
+
+    @Inject
+    ScenarioService scenarioService;
 
     @Inject
     PreferenceService preferenceService;
@@ -260,6 +265,37 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
+    public static class ScenarioViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 600;
+
+
+        @BindColor(R.color.lime)
+        int colorStatusStart;
+        @BindColor(R.color.white)
+        int colorStatusStop;
+
+        @BindView(R.id.cardViewScenario)
+        CardView cardViewScenario;
+
+        @BindView(R.id.textViewCardScenarioTitle)
+        TextView textViewCardScenarioTitle;
+
+        @BindView(R.id.imageButtonCardScenarioStart)
+        ImageButton imageButtonCardScenarioStart;
+
+        @BindView(R.id.imageButtonCardScenarioStop)
+        ImageButton imageButtonCardScenarioStop;
+
+        public ScenarioViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageButtonCardFavourite)
@@ -309,6 +345,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof TemperatureModel) {
             return TemperatureViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof ScenarioModel) {
+            return ScenarioViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -330,6 +369,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case TemperatureViewHolder.VIEW_TYPE:
                 return new TemperatureViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_temperature, parent, false));
+            case ScenarioViewHolder.VIEW_TYPE:
+                return new ScenarioViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_scenario, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -355,6 +397,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case TemperatureViewHolder.VIEW_TYPE:
                 initCardTemperature((TemperatureViewHolder) holder, (TemperatureModel) mItems.get(position));
+                break;
+            case ScenarioViewHolder.VIEW_TYPE:
+                initCardScenario((ScenarioViewHolder) holder, (ScenarioModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -658,6 +703,60 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageViewCardTemperatureScale.setVisibility(View.VISIBLE);
         holder.imageViewCardTemperatureScale
             .setImageDrawable(getImageTemperature.call(preferenceService.getDefaultTemperatureScale()));
+    }
+
+    /* Scenario */
+
+    private void initCardScenario(ScenarioViewHolder holder, ScenarioModel scenario) {
+        holder.textViewCardScenarioTitle.setText(scenario.getName());
+
+        updateFavourite(holder, scenario.isFavourite());
+        onFavouriteChange(holder, scenario, scenarioService);
+        updateScenarioStatus(holder, scenario.getStatus());
+
+        holder.imageButtonCardScenarioStart.setOnClickListener(v -> sendScenarioRequestStart(holder, scenario));
+        holder.imageButtonCardScenarioStop.setOnClickListener(v -> sendScenarioRequestStop(holder, scenario));
+
+        onMenuClick(holder, scenarioService, scenario.getUuid(), ScenarioActivity.class);
+    }
+
+    private void updateScenarioStatus(ScenarioViewHolder holder, ScenarioModel.Status status) {
+        holder.imageButtonCardScenarioStart.setVisibility(View.VISIBLE);
+        holder.imageButtonCardScenarioStop.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        if (status == null) {
+            log.warn("scenario status is null: unable to update");
+            holder.imageButtonCardScenarioStart.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioStop.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        switch (status) {
+            case START: holder.cardViewScenario.setCardBackgroundColor(holder.colorStatusStart); break;
+            case STOP: holder.cardViewScenario.setCardBackgroundColor(holder.colorStatusStop); break;
+        }
+    }
+
+    private void sendScenarioRequestStart(ScenarioViewHolder holder, ScenarioModel scenario) {
+        log.debug("start scenario {}", scenario.getUuid());
+        if (scenario.getStatus() == null) {
+            log.warn("scenario status is null: unable to start");
+            return;
+        }
+
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus());
+        scenarioService.start(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
+    }
+
+    private void sendScenarioRequestStop(ScenarioViewHolder holder, ScenarioModel scenario) {
+        log.debug("stop scenario {}", scenario.getUuid());
+        if (scenario.getStatus() == null) {
+            log.warn("scenario status is null: unable to stop");
+            return;
+        }
+
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus());
+        scenarioService.stop(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
     }
 
     /* commons */
