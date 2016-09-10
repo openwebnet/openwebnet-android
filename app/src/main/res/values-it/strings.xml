@@ -96,6 +96,7 @@
     <string name="ipcam_stream_error">Errore di connessione</string>
     <string name="temperature_request">Richiesta</string>
     <string name="scenario_request">Richiesta</string>
+    <string name="scenario_support">Supporta MH200N e MH202</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

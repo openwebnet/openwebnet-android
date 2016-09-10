@@ -119,6 +119,7 @@
     <string name="scenario_request">Request Start</string>
     <string name="scenario_prefix" translatable="false">*17*1*</string>
     <string name="scenario_suffix" translatable="false">##</string>
+    <string name="scenario_support">Supports MH200N and MH202</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>
