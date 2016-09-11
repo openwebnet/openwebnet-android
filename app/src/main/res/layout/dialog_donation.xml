@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:layout_weight="1"
         android:divider="@null"
         android:dividerHeight="0dp" />
 
@@ -16,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textStyle="italic"
-        android:text="@string/dialog_donation_tax" />
+        android:text="@string/dialog_donation_tax"
+        android:textStyle="italic" />
 
 </LinearLayout>
