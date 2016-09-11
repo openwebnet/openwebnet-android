@@ -151,15 +151,15 @@ public class MainBottomSheetDialogFragmentTest {
     }
 
     @Test
-    public void onItemClick_shouldStartDeviceActivity() {
+    public void onItemClick_shouldStartScenarioActivity() {
         setupFragment();
-        expectStartActivity(3, R.string.activity_device, DeviceActivity.class);
+        expectStartActivity(3, R.string.activity_scenario, ScenarioActivity.class);
     }
 
     @Test
-    public void onItemClick_shouldStartScenarioActivity() {
+    public void onItemClick_shouldStartDeviceActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_scenario, ScenarioActivity.class);
+        expectStartActivity(4, R.string.activity_device, DeviceActivity.class);
     }
 
     @Test
