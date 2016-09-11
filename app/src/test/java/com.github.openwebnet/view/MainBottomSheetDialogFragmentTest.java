@@ -24,6 +24,7 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.ScenarioActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -156,9 +157,15 @@ public class MainBottomSheetDialogFragmentTest {
     }
 
     @Test
+    public void onItemClick_shouldStartScenarioActivity() {
+        setupFragment();
+        expectStartActivity(4, R.string.activity_scenario, ScenarioActivity.class);
+    }
+
+    @Test
     public void onItemClick_shouldStartIpcamActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_ipcam, IpcamActivity.class);
+        expectStartActivity(5, R.string.activity_ipcam, IpcamActivity.class);
     }
 
 }

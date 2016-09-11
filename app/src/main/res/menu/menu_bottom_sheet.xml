@@ -17,6 +17,10 @@
         android:icon="@drawable/remote"
         android:title="@string/bs_device"/>
     <item
+        android:id="@+id/bs_add_scenario"
+        android:icon="@drawable/cube_outline"
+        android:title="@string/bs_scenario"/>
+    <item
         android:id="@+id/bs_add_ipcam"
         android:icon="@drawable/webcam"
         android:title="@string/bs_ipcam"/>

@@ -13,6 +13,7 @@ import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
+import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -22,6 +23,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.ScenarioServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 import com.github.openwebnet.view.MainActivity;
@@ -34,6 +36,7 @@ import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.IpcamStreamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.ScenarioActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
@@ -61,6 +64,7 @@ public interface ApplicationComponent {
     void inject(IpcamActivity activity);
     void inject(IpcamStreamActivity activity);
     void inject(DeviceListFragment fragment);
+    void inject(ScenarioActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);
@@ -81,6 +85,7 @@ public interface ApplicationComponent {
     void inject(AutomationServiceImpl automationService);
     void inject(IpcamServiceImpl ipcamService);
     void inject(TemperatureServiceImpl temperatureService);
+    void inject(ScenarioServiceImpl scenarioService);
 
     // database
     void inject(DatabaseRealm databaseRealm);
@@ -94,5 +99,6 @@ public interface ApplicationComponent {
     void inject(AutomationRepositoryImpl repository);
     void inject(IpcamRepositoryImpl repository);
     void inject(TemperatureRepositoryImpl repository);
+    void inject(ScenarioRepositoryImpl repository);
 
 }

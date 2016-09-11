@@ -6,6 +6,7 @@
     <string name="activity_automation">Automatisme</string>
     <string name="activity_ipcam">Caméra IP</string>
     <string name="activity_temperature">Température</string>
+    <string name="activity_scenario">Scénario</string>
     <string name="activity_settings">Paramètres</string>
 
     <string name="menu_save">Enregistrer</string>
@@ -69,6 +70,7 @@
     <string name="bs_automation">Automatisme</string>
     <string name="bs_temperature">Température</string>
     <string name="bs_ipcam">Caméra IP</string>
+    <string name="bs_scenario">Scénario</string>
 
     <string name="list_empty">Aucun élément trouvé</string>
     <string name="device_where">Où</string>
@@ -93,6 +95,8 @@
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Erreur de connexion</string>
     <string name="temperature_request">Requête</string>
+    <string name="scenario_request">Requête</string>
+    <string name="scenario_support">Supporte MH200N et MH202</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>

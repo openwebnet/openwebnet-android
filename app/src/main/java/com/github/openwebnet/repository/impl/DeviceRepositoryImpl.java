@@ -1,8 +1,8 @@
 package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.database.DatabaseRealm;
+import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.repository.DeviceRepository;
 
 import javax.inject.Inject;
