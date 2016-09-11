@@ -4,7 +4,7 @@ import com.github.niqdev.openwebnet.OpenSession;
 import com.github.niqdev.openwebnet.message.Scenario;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.ScenarioModel;
-import com.github.openwebnet.repository.ScenerioRepository;
+import com.github.openwebnet.repository.ScenarioRepository;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.ScenarioService;
 
@@ -31,7 +31,7 @@ public class ScenarioServiceImpl implements ScenarioService {
     private static final Logger log = LoggerFactory.getLogger(ScenarioService.class);
 
     @Inject
-    ScenerioRepository scenerioRepository;
+    ScenarioRepository scenarioRepository;
 
     @Inject
     CommonService commonService;
@@ -42,32 +42,32 @@ public class ScenarioServiceImpl implements ScenarioService {
 
     @Override
     public Observable<String> add(ScenarioModel scenario) {
-        return scenerioRepository.add(scenario);
+        return scenarioRepository.add(scenario);
     }
 
     @Override
     public Observable<Void> update(ScenarioModel scenario) {
-        return scenerioRepository.update(scenario);
+        return scenarioRepository.update(scenario);
     }
 
     @Override
     public Observable<Void> delete(String uuid) {
-        return scenerioRepository.delete(uuid);
+        return scenarioRepository.delete(uuid);
     }
 
     @Override
     public Observable<ScenarioModel> findById(String uuid) {
-        return scenerioRepository.findById(uuid);
+        return scenarioRepository.findById(uuid);
     }
 
     @Override
     public Observable<List<ScenarioModel>> findByEnvironment(Integer id) {
-        return scenerioRepository.findByEnvironment(id);
+        return scenarioRepository.findByEnvironment(id);
     }
 
     @Override
     public Observable<List<ScenarioModel>> findFavourites() {
-        return scenerioRepository.findFavourites();
+        return scenarioRepository.findFavourites();
     }
 
     private Func1<String, Scenario> requestStatus = Scenario::requestStatus;

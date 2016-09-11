@@ -13,7 +13,7 @@ import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
-import com.github.openwebnet.repository.impl.ScenerioRepositoryImpl;
+import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -99,6 +99,6 @@ public interface ApplicationComponent {
     void inject(AutomationRepositoryImpl repository);
     void inject(IpcamRepositoryImpl repository);
     void inject(TemperatureRepositoryImpl repository);
-    void inject(ScenerioRepositoryImpl repository);
+    void inject(ScenarioRepositoryImpl repository);
 
 }

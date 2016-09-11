@@ -6,7 +6,7 @@ import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.GatewayRepository;
 import com.github.openwebnet.repository.IpcamRepository;
 import com.github.openwebnet.repository.LightRepository;
-import com.github.openwebnet.repository.ScenerioRepository;
+import com.github.openwebnet.repository.ScenarioRepository;
 import com.github.openwebnet.repository.TemperatureRepository;
 import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
@@ -14,7 +14,7 @@ import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
-import com.github.openwebnet.repository.impl.ScenerioRepositoryImpl;
+import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 
 import javax.inject.Singleton;
@@ -69,8 +69,8 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    ScenerioRepository provideScenerio() {
-        return new ScenerioRepositoryImpl();
+    ScenarioRepository provideScenerio() {
+        return new ScenarioRepositoryImpl();
     }
 
 }
