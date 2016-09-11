@@ -269,7 +269,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 600;
 
-
         @BindColor(R.color.lime)
         int colorStatusStart;
         @BindColor(R.color.white)
@@ -286,6 +285,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @BindView(R.id.imageButtonCardScenarioStop)
         ImageButton imageButtonCardScenarioStop;
+
+        @BindView(R.id.imageButtonCardScenarioDisabled)
+        ImageButton imageButtonCardScenarioDisabled;
 
         public ScenarioViewHolder(View view) {
             super(view);
@@ -712,7 +714,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         updateFavourite(holder, scenario.isFavourite());
         onFavouriteChange(holder, scenario, scenarioService);
-        updateScenarioStatus(holder, scenario.getStatus());
+        updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
 
         holder.imageButtonCardScenarioStart.setOnClickListener(v -> sendScenarioRequestStart(holder, scenario));
         holder.imageButtonCardScenarioStop.setOnClickListener(v -> sendScenarioRequestStop(holder, scenario));
@@ -720,15 +722,25 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         onMenuClick(holder, scenarioService, scenario.getUuid(), ScenarioActivity.class);
     }
 
-    private void updateScenarioStatus(ScenarioViewHolder holder, ScenarioModel.Status status) {
+    private void updateScenarioStatus(ScenarioViewHolder holder, ScenarioModel.Status status, boolean enabled) {
         holder.imageButtonCardScenarioStart.setVisibility(View.VISIBLE);
         holder.imageButtonCardScenarioStop.setVisibility(View.VISIBLE);
+        holder.imageButtonCardScenarioDisabled.setVisibility(View.INVISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("scenario status is null: unable to update");
             holder.imageButtonCardScenarioStart.setVisibility(View.INVISIBLE);
             holder.imageButtonCardScenarioStop.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioDisabled.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        if (!enabled) {
+            log.warn("scenario status is disabled");
+            holder.imageButtonCardScenarioStart.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioStop.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioDisabled.setVisibility(View.VISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
             return;
         }
         switch (status) {
@@ -744,7 +756,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return;
         }
 
-        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus());
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
         scenarioService.start(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
     }
 
@@ -755,7 +767,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return;
         }
 
-        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus());
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
         scenarioService.stop(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
     }
 
