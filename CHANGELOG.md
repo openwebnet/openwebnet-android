@@ -1,3 +1,7 @@
+#### v2.7.0 (September 11, 2016)
+
+- Add scenario feature
+
 #### v2.6.2 (August 16, 2016)
 
 - Fix donation

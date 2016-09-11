@@ -11,8 +11,9 @@ My Home é il prodotto BTicino e Legrand per gestire gli impianti domotici da di
 
 Gestisce:
 - Illuminazione
-- Automatismi
+- Automatismo
 - Temperatura
+- Scenario MH200N e MH202
 - qualsiasi frame/messaggio OpenWebNet
 - Ip Camera (MJPEG)
 

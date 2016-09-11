@@ -13,6 +13,7 @@ Gère:
 - Éclairage
 - Automatisme
 - Température
+- Scénario MH200N et MH202
 - tout OpenWebNet message
 - Caméra IP (MJPEG)
 
