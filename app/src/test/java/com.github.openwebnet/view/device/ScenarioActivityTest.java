@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.github.openwebnet.BuildConfig;
@@ -15,11 +16,11 @@ import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
-import com.github.openwebnet.matcher.TemperatureModelMatcher;
+import com.github.openwebnet.matcher.ScenarioModelMatcher;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.RealmModel;
-import com.github.openwebnet.model.TemperatureModel;
+import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
@@ -43,6 +44,7 @@ import com.github.openwebnet.service.impl.ScenarioServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,6 +76,7 @@ import dagger.Provides;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -86,7 +89,7 @@ import static org.mockito.Mockito.when;
 @Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
-public class TemperatureActivityTest {
+public class ScenarioActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -100,11 +103,11 @@ public class TemperatureActivityTest {
     @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @BindView(R.id.editTextTemperatureName)
-    EditText editTextTemperatureName;
+    @BindView(R.id.editTextScenarioName)
+    EditText editTextScenarioName;
 
-    @BindView(R.id.editTextTemperatureWhere)
-    EditText editTextTemperatureWhere;
+    @BindView(R.id.editTextScenarioWhere)
+    EditText editTextScenarioWhere;
 
     @BindString(R.string.validation_required)
     String validationRequired;
@@ -112,8 +115,11 @@ public class TemperatureActivityTest {
     @BindString(R.string.label_none)
     String labelNone;
 
+    @BindString(R.string.label_missing_gateway)
+    String labelMissingGateway;
+
     @Inject
-    TemperatureService temperatureService;
+    ScenarioService scenarioService;
 
     @Inject
     EnvironmentService environmentService;
@@ -121,19 +127,19 @@ public class TemperatureActivityTest {
     @Inject
     GatewayService gatewayService;
 
-    private ActivityController<TemperatureActivity> controller;
-    private TemperatureActivity activity;
+    private ActivityController<ScenarioActivity> controller;
+    private ScenarioActivity activity;
 
     @Singleton
-    @Component(modules = {TemperatureActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
-    public interface TemperatureActivityComponentTest extends ApplicationComponent {
+    @Component(modules = {ScenarioActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
+    public interface ScenarioActivityComponentTest extends ApplicationComponent {
 
-        void inject(TemperatureActivityTest activity);
+        void inject(ScenarioActivityTest activity);
 
     }
 
     @Module
-    public class TemperatureActivityModuleTest {
+    public class ScenarioActivityModuleTest {
 
         @Provides
         @Singleton
@@ -198,34 +204,39 @@ public class TemperatureActivityTest {
         @Provides
         @Singleton
         TemperatureService provideTemperatureService() {
-            return mock(TemperatureServiceImpl.class);
+            return new TemperatureServiceImpl();
         }
 
         @Provides
         @Singleton
         ScenarioService provideScenarioService() {
-            return new ScenarioServiceImpl();
+            return mock(ScenarioServiceImpl.class);
         }
 
     }
 
     @Before
     public void setupDagger() {
-        TemperatureActivityComponentTest applicationComponentTest = DaggerTemperatureActivityTest_TemperatureActivityComponentTest.builder()
-            .temperatureActivityModuleTest(new TemperatureActivityModuleTest())
+        ScenarioActivityComponentTest applicationComponentTest = DaggerScenarioActivityTest_ScenarioActivityComponentTest.builder()
+            .scenarioActivityModuleTest(new ScenarioActivityModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((TemperatureActivityComponentTest) Injector.getApplicationComponent()).inject(this);
+        ((ScenarioActivityComponentTest) Injector.getApplicationComponent()).inject(this);
+    }
+    
+    @After
+    public void tearDown() {
+        controller.pause().stop().destroy();
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(TemperatureActivity.class);
+        controller = Robolectric.buildActivity(ScenarioActivity.class);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, TemperatureActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, ScenarioActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         activity = controller
             .withIntent(intent)
@@ -254,61 +265,104 @@ public class TemperatureActivityTest {
     }
 
     @Test
+    public void shouldVerifyOnCreate_initSpinner_noResult() {
+        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
+        when(gatewayService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
+
+        createWithIntent(null);
+
+        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
+        assertFalse("should not be empty", adapterEnvironment.isEmpty());
+        assertEquals("should verify first element", labelNone, adapterEnvironment.getItem(0));
+
+        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
+        assertFalse("should not be empty", adapterGateway.isEmpty());
+        assertEquals("should verify first element", labelMissingGateway, adapterGateway.getItem(0));
+    }
+
+    @Test
+    public void shouldVerifyOnCreate_initSpinner() {
+        List<EnvironmentModel> environments = Arrays.
+            asList(newEnvironment(100, "env1"), newEnvironment(101, "env2"));
+
+        List<GatewayModel> gateways = Arrays.
+            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway("uuid2", "2.2.2.2", 2));
+
+        when(environmentService.findAll()).thenReturn(Observable.just(environments));
+        when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
+
+        createWithIntent(null);
+
+        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
+        assertFalse("should not be empty", adapterEnvironment.isEmpty());
+        assertEquals("should verify first element", "env1", adapterEnvironment.getItem(0));
+        assertEquals("should verify second element", "env2", adapterEnvironment.getItem(1));
+        assertEquals("should select default", 0, spinnerDeviceEnvironment.getSelectedItemPosition());
+
+        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
+        assertFalse("should not be empty", adapterGateway.isEmpty());
+        assertEquals("should verify first element", "1.1.1.1:1", adapterGateway.getItem(0));
+        assertEquals("should verify second element", "2.2.2.2:2", adapterGateway.getItem(1));
+        assertEquals("should select default", 0, spinnerDeviceGateway.getSelectedItemPosition());
+    }
+
+    @Test
     public void shouldVerifyOnCreate_initEditWithoutUuid() {
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
         when(gatewayService.findAll()).thenReturn(Observable.<List<GatewayModel>>empty());
 
         createWithIntent(null);
 
-        verify(mock(LightServiceImpl.class), never()).findById(anyString());
+        verify(mock(ScenarioServiceImpl.class), never()).findById(anyString());
 
-        assertEquals("invalid value", "", editTextTemperatureName.getText().toString());
-        assertEquals("invalid value", "", editTextTemperatureWhere.getText().toString());
+        assertEquals("invalid value", "", editTextScenarioName.getText().toString());
+        assertEquals("invalid value", "", editTextScenarioWhere.getText().toString());
+        
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
-
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
         assertEquals("invalid value", -1, spinnerDeviceGateway.getSelectedItemPosition());
     }
 
     @Test
     public void shouldVerifyOnCreate_initEditWithUuid() {
-        String TEMPERATURE_UUID = "myUuid";
-        String TEMPERATURE_NAME = "myName";
-        String TEMPERATURE_GATEWAY_SELECTED = "uuid2";
-        String TEMPERATURE_WHERE = "08";
-        Integer TEMPERATURE_ENVIRONMENT_SELECTED = 108;
-        boolean TEMPERATURE_FAVOURITE = true;
+        String SCENARIO_UUID = "myUuid";
+        String SCENARIO_NAME = "myName";
+        String SCENARIO_GATEWAY_SELECTED = "uuid2";
+        String SCENARIO_WHERE = "08";
+        Integer SCENARIO_ENVIRONMENT_SELECTED = 108;
+        boolean SCENARIO_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(TEMPERATURE_ENVIRONMENT_SELECTED, "env8"));
+            asList(newEnvironment(100, "env1"), newEnvironment(SCENARIO_ENVIRONMENT_SELECTED, "env8"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(TEMPERATURE_GATEWAY_SELECTED, "2.2.2.2", 2));
+            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(SCENARIO_GATEWAY_SELECTED, "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
 
-        TemperatureModel temperatureModel = TemperatureModel.updateBuilder(TEMPERATURE_UUID)
-            .name(TEMPERATURE_NAME)
-            .where(TEMPERATURE_WHERE)
-            .environment(TEMPERATURE_ENVIRONMENT_SELECTED)
-            .gateway(TEMPERATURE_GATEWAY_SELECTED)
-            .favourite(TEMPERATURE_FAVOURITE)
+        ScenarioModel scenarioModel = ScenarioModel.updateBuilder(SCENARIO_UUID)
+            .name(SCENARIO_NAME)
+            .where(SCENARIO_WHERE)
+            .environment(SCENARIO_ENVIRONMENT_SELECTED)
+            .gateway(SCENARIO_GATEWAY_SELECTED)
+            .favourite(SCENARIO_FAVOURITE)
             .build();
 
-        when(temperatureService.findById(TEMPERATURE_UUID)).thenReturn(Observable.just(temperatureModel));
+        when(scenarioService.findById(SCENARIO_UUID)).thenReturn(Observable.just(scenarioModel));
 
-        createWithIntent(TEMPERATURE_UUID);
+        createWithIntent(SCENARIO_UUID);
 
-        assertEquals("invalid value", TEMPERATURE_NAME, editTextTemperatureName.getText().toString());
-        assertEquals("invalid value", String.valueOf(TEMPERATURE_WHERE), editTextTemperatureWhere.getText().toString());
-        assertEquals("invalid value", TEMPERATURE_FAVOURITE, checkBoxDeviceFavourite.isChecked());
+        assertEquals("invalid value", SCENARIO_NAME, editTextScenarioName.getText().toString());
+        assertEquals("invalid value", String.valueOf(SCENARIO_WHERE), editTextScenarioWhere.getText().toString());
+
+        assertEquals("invalid value", SCENARIO_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
-        assertEquals("invalid value", environmentSelected.getId(), TEMPERATURE_ENVIRONMENT_SELECTED);
+        assertEquals("invalid value", environmentSelected.getId(), SCENARIO_ENVIRONMENT_SELECTED);
 
         GatewayModel gatewaySelected = gateways.get(spinnerDeviceGateway.getSelectedItemPosition());
-        assertEquals("invalid value", TEMPERATURE_GATEWAY_SELECTED, gatewaySelected.getUuid());
+        assertEquals("invalid value", SCENARIO_GATEWAY_SELECTED, gatewaySelected.getUuid());
     }
 
     @Test
@@ -318,11 +372,11 @@ public class TemperatureActivityTest {
 
         createWithIntent(null);
 
-        expectRequired(editTextTemperatureName);
-        editTextTemperatureName.setText("nameValue");
+        expectRequired(editTextScenarioName);
+        editTextScenarioName.setText("nameValue");
 
-        expectRequired(editTextTemperatureWhere);
-        editTextTemperatureWhere.setText("21");
+        expectRequired(editTextScenarioWhere);
+        editTextScenarioWhere.setText("31");
 
         expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
         ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
@@ -339,33 +393,34 @@ public class TemperatureActivityTest {
 
     private void expectRequired(TextView view) {
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
-        verify(temperatureService, never()).add(any(TemperatureModel.class));
-        verify(temperatureService, never()).update(any(TemperatureModel.class));
+        verify(scenarioService, never()).add(any(ScenarioModel.class));
+        verify(scenarioService, never()).update(any(ScenarioModel.class));
         assertEquals("bad validation", validationRequired, view.getError());
+        //assertTrue("bad focus", view.hasFocus());
     }
 
-    private TemperatureModel common_onMenuSave_valid(String uuidExtra) {
-        String TEMPERATURE_NAME = "myName";
-        String TEMPERATURE_GATEWAY_SELECTED = "uuid2";
-        String TEMPERATURE_WHERE = "08";
-        Integer TEMPERATURE_ENVIRONMENT_SELECTED = 101;
-        boolean TEMPERATURE_DIMMER = true;
-        boolean TEMPERATURE_FAVOURITE = true;
+    private ScenarioModel common_onMenuSave_valid(String uuidExtra) {
+        String SCENARIO_NAME = "myName";
+        String SCENARIO_GATEWAY_SELECTED = "uuid2";
+        String SCENARIO_WHERE = "08";
+        Integer SCENARIO_ENVIRONMENT_SELECTED = 101;
+        boolean SCENARIO_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newEnvironment(TEMPERATURE_ENVIRONMENT_SELECTED, "env1"))));
+            just(Arrays.asList(newEnvironment(SCENARIO_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newGateway(TEMPERATURE_GATEWAY_SELECTED, "2.2.2.2", 2))));
+            just(Arrays.asList(newGateway(SCENARIO_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
-        String TEMPERATURE_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
-        when(temperatureService.add(any(TemperatureModel.class))).thenReturn(Observable.just(TEMPERATURE_UUID));
-        when(temperatureService.update(any(TemperatureModel.class))).thenReturn(Observable.just(null));
+        String SCENARIO_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(scenarioService.add(any(ScenarioModel.class))).thenReturn(Observable.just(SCENARIO_UUID));
+        when(scenarioService.update(any(ScenarioModel.class))).thenReturn(Observable.just(null));
 
         createWithIntent(uuidExtra);
 
-        editTextTemperatureName.setText(String.valueOf(TEMPERATURE_NAME));
-        editTextTemperatureWhere.setText(String.valueOf(TEMPERATURE_WHERE));
-        checkBoxDeviceFavourite.setChecked(TEMPERATURE_FAVOURITE);
+        editTextScenarioName.setText(String.valueOf(SCENARIO_NAME));
+        editTextScenarioWhere.setText(String.valueOf(SCENARIO_WHERE));
+
+        checkBoxDeviceFavourite.setChecked(SCENARIO_FAVOURITE);
 
         // for simplicity only 1 items
         spinnerDeviceEnvironment.setSelection(0);
@@ -373,32 +428,32 @@ public class TemperatureActivityTest {
 
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
 
-        TemperatureModel temperatureMock = new TemperatureModel();
-        temperatureMock.setUuid(uuidExtra);
-        temperatureMock.setName(TEMPERATURE_NAME);
-        temperatureMock.setWhere(TEMPERATURE_WHERE);
-        temperatureMock.setEnvironmentId(TEMPERATURE_ENVIRONMENT_SELECTED);
-        temperatureMock.setGatewayUuid(TEMPERATURE_GATEWAY_SELECTED);
-        temperatureMock.setFavourite(TEMPERATURE_FAVOURITE);
-        return temperatureMock;
+        ScenarioModel scenarioModel = new ScenarioModel();
+        scenarioModel.setUuid(uuidExtra);
+        scenarioModel.setName(SCENARIO_NAME);
+        scenarioModel.setWhere(SCENARIO_WHERE);
+        scenarioModel.setEnvironmentId(SCENARIO_ENVIRONMENT_SELECTED);
+        scenarioModel.setGatewayUuid(SCENARIO_GATEWAY_SELECTED);
+        scenarioModel.setFavourite(SCENARIO_FAVOURITE);
+        return scenarioModel;
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
-        TemperatureModel temperatureMock = common_onMenuSave_valid(null);
+        ScenarioModel scenarioMock = common_onMenuSave_valid(null);
 
-        verify(temperatureService, times(1)).add(TemperatureModelMatcher.temperatureModelEq(temperatureMock));
-        verify(temperatureService, never()).update(any(TemperatureModel.class));
+        verify(scenarioService, times(1)).add(ScenarioModelMatcher.scenarioModelEq(scenarioMock));
+        verify(scenarioService, never()).update(any(ScenarioModel.class));
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validEdit() {
-        when(temperatureService.findById(anyString())).thenReturn(Observable.<TemperatureModel>empty());
+        when(scenarioService.findById(anyString())).thenReturn(Observable.<ScenarioModel>empty());
 
-        TemperatureModel temperatureMock = common_onMenuSave_valid("anyUuid");
+        ScenarioModel scenarioMock = common_onMenuSave_valid("anyUuid");
 
-        verify(temperatureService, never()).add(any(TemperatureModel.class));
-        verify(temperatureService, times(1)).update(TemperatureModelMatcher.temperatureModelEq(temperatureMock));
+        verify(scenarioService, never()).add(any(ScenarioModel.class));
+        verify(scenarioService, times(1)).update(ScenarioModelMatcher.scenarioModelEq(scenarioMock));
     }
 
 }

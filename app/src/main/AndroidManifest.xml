@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.openwebnet"
-    android:versionCode="21"
+    android:versionCode="22"
     android:versionName="@string/app_version_number">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -69,6 +69,14 @@
         <activity
             android:name=".view.device.TemperatureActivity"
             android:label="@string/activity_temperature"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity" />
+        </activity>
+        <activity
+            android:name=".view.device.ScenarioActivity"
+            android:label="@string/activity_scenario"
             android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

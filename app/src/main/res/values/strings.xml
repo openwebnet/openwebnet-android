@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.6.2</string>
+    <string name="app_version_number" translatable="false">2.7.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet/openwebnet-android</string>
 
     <string name="activity_device">Device</string>
@@ -9,6 +9,7 @@
     <string name="activity_automation">Automation</string>
     <string name="activity_ipcam">Ip Camera</string>
     <string name="activity_temperature">Temperature</string>
+    <string name="activity_scenario">Scenario</string>
     <string name="activity_settings">Settings</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -31,6 +32,7 @@
     <string name="dialog_device_confirmation_title">Confirmation request</string>
     <string name="dialog_device_confirmation_message">Are you sure?</string>
     <string name="dialog_donation_title">Donation</string>
+    <string name="dialog_donation_tax">Donations are tax excluded and may vary from one country to another</string>
 
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="validation_required">Required field</string>
@@ -74,6 +76,7 @@
     <string name="bs_automation">Automation</string>
     <string name="bs_temperature">Temperature</string>
     <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_scenario">Scenario</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>
@@ -113,6 +116,10 @@
     <string name="temperature_scale_celsius" translatable="false">Celsius</string>
     <string name="temperature_scale_fahrenheit" translatable="false">Fahrenheit</string>
     <string name="temperature_scale_kelvin" translatable="false">Kelvin</string>
+    <string name="scenario_request">Request Start</string>
+    <string name="scenario_prefix" translatable="false">*17*1*</string>
+    <string name="scenario_suffix" translatable="false">##</string>
+    <string name="scenario_support">Supports MH200N and MH202</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>

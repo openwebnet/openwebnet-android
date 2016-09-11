@@ -81,7 +81,7 @@ public class AutomationServiceImpl implements AutomationService {
     @Override
     public Observable<List<AutomationModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
-            .flatMapIterable(lightModels -> lightModels)
+            .flatMapIterable(automationModels -> automationModels)
             .flatMap(requestAutomation(requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
@@ -89,7 +89,7 @@ public class AutomationServiceImpl implements AutomationService {
     @Override
     public Observable<List<AutomationModel>> requestFavourites() {
         return findFavourites()
-            .flatMapIterable(lightModels -> lightModels)
+            .flatMapIterable(automationModels -> automationModels)
             .flatMap(requestAutomation(requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }

@@ -6,6 +6,7 @@
     <string name="activity_automation">Automatismo</string>
     <string name="activity_ipcam">Ip Camera</string>
     <string name="activity_temperature">Temperatura</string>
+    <string name="activity_scenario">Scenario</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -26,6 +27,7 @@
     <string name="dialog_device_confirmation_title">Conferma</string>
     <string name="dialog_device_confirmation_message">Sei sicuro?</string>
     <string name="dialog_donation_title">Donazione</string>
+    <string name="dialog_donation_tax">Le donazioni sono iva esclusa e possono variare da paese a paese</string>
 
     <string name="error_load_navigation_drawer">Errore caricamento menu</string>
     <string name="validation_required">Campo obbligatorio</string>
@@ -68,6 +70,7 @@
     <string name="bs_automation">Automatismo</string>
     <string name="bs_temperature">Temperatura</string>
     <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_scenario">Scenario</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
     <string name="device_where">dove</string>
@@ -92,6 +95,8 @@
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Errore di connessione</string>
     <string name="temperature_request">Richiesta</string>
+    <string name="scenario_request">Richiesta</string>
+    <string name="scenario_support">Supporta MH200N e MH202</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

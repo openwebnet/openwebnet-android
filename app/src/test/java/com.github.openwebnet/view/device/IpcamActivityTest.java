@@ -33,6 +33,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.ScenarioService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
@@ -43,6 +44,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.ScenarioServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
@@ -223,6 +225,12 @@ public class IpcamActivityTest {
         @Singleton
         TemperatureService provideTemperatureService() {
             return new TemperatureServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        ScenarioService provideScenarioService() {
+            return new ScenarioServiceImpl();
         }
 
     }
