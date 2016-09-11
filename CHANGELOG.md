@@ -1,4 +1,8 @@
-#### v2.7.0 (September 11, 2016)
+#### v2.7.2 (September 11, 2016)
+
+- Minor style changes
+
+#### v2.7.1 (September 11, 2016)
 
 - Fix scenario
 
