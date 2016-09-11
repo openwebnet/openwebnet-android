@@ -13,6 +13,7 @@ Manages:
 - Lighting
 - Automation
 - Temperature
+- Scenario MH200N and MH202
 - any OpenWebNet frame/message
 - Ip Camera (MJPEG)
 
