@@ -58,6 +58,9 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                 case R.id.bs_add_temperature:
                     actionNewIntent(TemperatureActivity.class);
                     break;
+                case R.id.bs_add_energy:
+                    // TODO
+                    break;
                 case R.id.bs_add_scenario:
                     actionNewIntent(ScenarioActivity.class);
                     break;

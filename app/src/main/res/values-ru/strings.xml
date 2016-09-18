@@ -71,6 +71,7 @@
     <string name="bs_temperature">Температура</string>
     <string name="bs_ipcam">Ip-камера</string>
     <string name="bs_scenario">сценарий</string>
+    <string name="bs_energy">Потребление энергии</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
