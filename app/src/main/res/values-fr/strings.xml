@@ -7,6 +7,7 @@
     <string name="activity_ipcam">Caméra IP</string>
     <string name="activity_temperature">Température</string>
     <string name="activity_scenario">Scénario</string>
+    <string name="activity_energy">Consommation d\'énergie</string>
     <string name="activity_settings">Paramètres</string>
 
     <string name="menu_save">Enregistrer</string>
@@ -98,6 +99,7 @@
     <string name="temperature_request">Requête</string>
     <string name="scenario_request">Requête</string>
     <string name="scenario_support">Supporte MH200N et MH202</string>
+    <string name="energy_request">Requête</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>

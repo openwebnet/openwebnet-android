@@ -35,6 +35,7 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.DeviceListAdapter;
 import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.IpcamStreamActivity;
 import com.github.openwebnet.view.device.LightActivity;
@@ -67,6 +68,7 @@ public interface ApplicationComponent {
     void inject(IpcamStreamActivity activity);
     void inject(DeviceListFragment fragment);
     void inject(ScenarioActivity activity);
+    void inject(EnergyActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);
