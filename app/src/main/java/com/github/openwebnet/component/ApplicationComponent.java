@@ -9,6 +9,7 @@ import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
+import com.github.openwebnet.repository.impl.EnergyRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
@@ -18,6 +19,7 @@ import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
@@ -86,6 +88,7 @@ public interface ApplicationComponent {
     void inject(IpcamServiceImpl ipcamService);
     void inject(TemperatureServiceImpl temperatureService);
     void inject(ScenarioServiceImpl scenarioService);
+    void inject(EnergyServiceImpl energyService);
 
     // database
     void inject(DatabaseRealm databaseRealm);
@@ -100,5 +103,6 @@ public interface ApplicationComponent {
     void inject(IpcamRepositoryImpl repository);
     void inject(TemperatureRepositoryImpl repository);
     void inject(ScenarioRepositoryImpl repository);
+    void inject(EnergyRepositoryImpl repository);
 
 }
