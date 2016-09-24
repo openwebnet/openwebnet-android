@@ -2,6 +2,7 @@ package com.github.openwebnet.component.module;
 
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
@@ -10,6 +11,7 @@ import com.github.openwebnet.service.ScenarioService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
@@ -71,6 +73,12 @@ public class DomoticModule {
     @Singleton
     ScenarioService provideScenarioService() {
         return new ScenarioServiceImpl();
+    }
+
+    @Provides
+    @Singleton
+    EnergyService provideEnergyService() {
+        return new EnergyServiceImpl();
     }
 
 }
