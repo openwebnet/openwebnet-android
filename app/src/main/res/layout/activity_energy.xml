@@ -30,6 +30,7 @@
         <LinearLayout style="@style/message.linearLayout">
 
             <com.github.openwebnet.view.custom.TextViewCustom
+                android:id="@+id/textViewEnergyPrefix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/energy_prefix_v1"
                 typeface:font="inconsolata" />
@@ -42,6 +43,7 @@
                 typeface:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
+                android:id="@+id/textViewEnergySuffix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/energy_suffix_v1"
                 typeface:font="inconsolata" />
@@ -51,10 +53,10 @@
         <Spinner
             android:id="@+id/spinnerEnergyVersion"
             style="@style/common.focusable"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp" />
 
         <include
             layout="@layout/activity_common_device"
