@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.niqdev.openwebnet.message.EnergyManagement;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.EnergyService;
@@ -29,6 +28,11 @@ import butterknife.ButterKnife;
 public class EnergyActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(EnergyActivity.class);
+
+    private enum EnergyGroup {
+        VERSION_1,
+        VERSION_2
+    }
 
     @Inject
     EnergyService energyService;
@@ -51,7 +55,7 @@ public class EnergyActivity extends AbstractDeviceActivity {
     @BindString(R.string.validation_bad_value)
     String validationBadValue;
 
-    private SparseArray<EnergyManagement.Version> energyVersionsArray;
+    private SparseArray<EnergyGroup> energyVersionsArray;
 
     private String energyUuid;
 
@@ -72,7 +76,7 @@ public class EnergyActivity extends AbstractDeviceActivity {
 
     private void initSpinnerEnergyVersion() {
         energyVersionsArray = initSparseArray(Lists.newArrayList(
-            EnergyManagement.Version.MODEL_F523, EnergyManagement.Version.MODEL_F523_A
+                EnergyGroup.VERSION_1, EnergyGroup.VERSION_2
         ));
 
         List<String> energyVersionLabels = Lists.newArrayList(
@@ -84,12 +88,12 @@ public class EnergyActivity extends AbstractDeviceActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (energyVersionsArray.get(spinnerEnergyVersion.getSelectedItemPosition())) {
-                    case MODEL_F523: {
+                    case VERSION_1: {
                         textViewEnergyPrefix.setText(getString(R.string.energy_prefix_v1));
                         textViewEnergySuffix.setText(getString(R.string.energy_suffix_v1));
                         break;
                     }
-                    case MODEL_F523_A: {
+                    case VERSION_2: {
                         textViewEnergyPrefix.setText(getString(R.string.energy_prefix_v2));
                         textViewEnergySuffix.setText(getString(R.string.energy_suffix_v2));
                         break;
