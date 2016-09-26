@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import com.github.niqdev.openwebnet.message.EnergyManagement;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -33,6 +35,10 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
     private String version;
 
     private boolean favourite;
+
+    // NOT USED: realm error otherwise
+    @Ignore
+    private EnergyManagement.Version energyManagementVersion;
 
     @Ignore
     private String instantaneousPower;
@@ -163,11 +169,11 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
     }
 
     public String getVersion() {
-        return version;
+        throw new UnsupportedOperationException("method not implemented: use EnergyModel#getEnergyManagementVersion()");
     }
 
     public void setVersion(String version) {
-        this.version = version;
+        throw new UnsupportedOperationException("method not implemented: use EnergyModel#setEnergyManagementVersion(EnergyManagement.Version)");
     }
 
     @Override
@@ -178,6 +184,14 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
     @Override
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
+    }
+
+    public EnergyManagement.Version getEnergyManagementVersion() {
+        return EnergyManagement.Version.valueOf(getVersion());
+    }
+
+    public void setEnergyManagementVersion(EnergyManagement.Version energyManagementVersion) {
+        setVersion(energyManagementVersion.name());
     }
 
     public String getInstantaneousPower() {
