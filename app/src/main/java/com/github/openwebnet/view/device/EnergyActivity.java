@@ -13,6 +13,7 @@ import com.annimon.stream.function.Function;
 import com.github.niqdev.openwebnet.message.EnergyManagement;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.EnergyService;
 import com.google.common.collect.Lists;
@@ -156,9 +157,70 @@ public class EnergyActivity extends AbstractDeviceActivity {
         }
     }
 
+    // use just one model for each version
+    private EnergyManagement.Version getSelectedEnergyVersion() {
+        switch (energyVersionsArray.get(spinnerEnergyVersion.getSelectedItemPosition())) {
+            case VERSION_1:
+                return EnergyManagement.Version.MODEL_F523;
+            case VERSION_2:
+                return EnergyManagement.Version.MODEL_F523_A;
+            default:
+                throw new IllegalArgumentException("invalid energy version");
+        }
+    }
+
     @Override
     protected void onMenuSave() {
+        log.debug("name: {}", editTextEnergyName.getText());
+        log.debug("where: {}", editTextEnergyWhere.getText());
+        log.debug("version: {}", getSelectedEnergyVersion());
+        log.debug("environment: {}", getSelectedEnvironment());
+        log.debug("gateway: {}", getSelectedGateway());
+        log.debug("favourite: {}", isFavourite());
 
+        if (isValidEnergy()) {
+            if (energyUuid == null) {
+                energyService.add(parseEnergy()).subscribe(uuid -> finish());
+            } else {
+                energyService.update(parseEnergy())
+                    .doOnCompleted(this::finish)
+                    .subscribe();
+            }
+        }
+    }
+
+    private boolean isValidEnergy() {
+        return isValidRequired(editTextEnergyName) &&
+            isValidRequired(editTextEnergyWhere) &&
+            isValidWhereRange(editTextEnergyWhere) &&
+            isValidEnergyVersion() &&
+            isValidDeviceEnvironment() &&
+            isValidDeviceGateway();
+    }
+
+    private boolean isValidWhereRange(EditText editText) {
+        int where = Integer.parseInt(utilityService.sanitizedText(editTextEnergyWhere));
+        if (where < 1 || where > 255) {
+            editText.setError(validationBadValue);
+            editText.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean isValidEnergyVersion() {
+        return isValidRequired((TextView) spinnerEnergyVersion.getSelectedView());
+    }
+
+    private EnergyModel parseEnergy() {
+        return (energyUuid == null ? EnergyModel.addBuilder() : EnergyModel.updateBuilder(energyUuid))
+            .name(utilityService.sanitizedText(editTextEnergyName))
+            .where(editTextEnergyWhere.getText().toString())
+            .version(getSelectedEnergyVersion().name())
+            .environment(getSelectedEnvironment().getId())
+            .gateway(getSelectedGateway().getUuid())
+            .favourite(isFavourite())
+            .build();
     }
 
 }
