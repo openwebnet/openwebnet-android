@@ -100,6 +100,9 @@
     <string name="scenario_request">Richiesta</string>
     <string name="scenario_support">Supporta MH200N e MH202</string>
     <string name="energy_request">Richiesta</string>
+    <string name="energy_instantaneous_power">Potenza Instantanea:</string>
+    <string name="energy_daily_power">Potenza Giornaliera:</string>
+    <string name="energy_monthly_power">Potenza Mensile:</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>
