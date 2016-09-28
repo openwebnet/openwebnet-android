@@ -129,6 +129,10 @@
     <string name="energy_suffix_v2" translatable="false">#0*X##</string>
     <string name="energy_label_v1" translatable="false">F520, F523, 3522</string>
     <string name="energy_label_v2" translatable="false">F522, F523</string>
+    <string name="energy_instantaneous_power">Instantaneous Power:</string>
+    <string name="energy_daily_power">Daily Power:</string>
+    <string name="energy_monthly_power">Monthly Power:</string>
+    <string name="energy_power_unit" translatable="false">Watt</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>
