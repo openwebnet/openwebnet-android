@@ -1,5 +1,8 @@
 package com.github.openwebnet.service.impl;
 
+import com.github.niqdev.openwebnet.OpenSession;
+import com.github.niqdev.openwebnet.message.EnergyManagement;
+import com.github.niqdev.openwebnet.message.OpenMessage;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.repository.EnergyRepository;
@@ -11,11 +14,18 @@ import com.github.openwebnet.service.UtilityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
+
+import static java.util.Arrays.asList;
 
 public class EnergyServiceImpl implements EnergyService {
 
@@ -69,12 +79,52 @@ public class EnergyServiceImpl implements EnergyService {
 
     @Override
     public Observable<List<EnergyModel>> requestByEnvironment(Integer id) {
-        return null;
+        return findByEnvironment(id)
+            .flatMapIterable(energyModels -> energyModels)
+            .flatMap(requestPowerConsumption())
+            .collect(ArrayList::new, List::add);
     }
 
     @Override
     public Observable<List<EnergyModel>> requestFavourites() {
-        return null;
+        return findFavourites()
+            .flatMapIterable(energyModels -> energyModels)
+            .flatMap(requestPowerConsumption())
+            .collect(ArrayList::new, List::add);
+    }
+
+    private Func1<EnergyModel, Observable<EnergyModel>> requestPowerConsumption() {
+
+        final Func1<EnergyModel, List<OpenMessage>> requests = energy ->
+            asList(
+                EnergyManagement.requestInstantaneousPower(energy.getWhere(), energy.getEnergyManagementVersion()),
+                EnergyManagement.requestDailyPower(energy.getWhere(), energy.getEnergyManagementVersion()),
+                EnergyManagement.requestMonthlyPower(energy.getWhere(), energy.getEnergyManagementVersion()));
+
+        final Func2<List<OpenSession>, EnergyModel, EnergyModel> handler = (openSessions, energy) -> {
+            EnergyManagement.handlePowers(values -> {
+                energy.setInstantaneousPower(values.get(0));
+                energy.setDailyPower(values.get(1));
+                energy.setMonthlyPower(values.get(2));
+            }, () -> {
+                energy.setInstantaneousPower(null);
+                energy.setDailyPower(null);
+                energy.setMonthlyPower(null);
+            }).call(openSessions);
+            return energy;
+        };
+
+        return energy -> commonService.findClient(energy.getGatewayUuid())
+            .send(requests.call(energy))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(openSessions -> handler.call(openSessions, energy))
+            .onErrorReturn(throwable -> {
+                log.warn("energy={} | failing requests={}", energy.getUuid(), requests);
+                // unreadable energy
+                return energy;
+            });
+
     }
 
 }

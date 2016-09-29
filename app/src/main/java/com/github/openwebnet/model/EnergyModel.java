@@ -187,11 +187,11 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
     }
 
     public EnergyManagement.Version getEnergyManagementVersion() {
-        return EnergyManagement.Version.valueOf(getVersion());
+        return EnergyManagement.Version.valueOf(this.version);
     }
 
     public void setEnergyManagementVersion(EnergyManagement.Version energyManagementVersion) {
-        setVersion(energyManagementVersion.name());
+        this.version = energyManagementVersion.name();
     }
 
     public String getInstantaneousPower() {

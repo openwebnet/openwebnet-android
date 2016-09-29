@@ -839,8 +839,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return;
         }
 
-        Action2<TextView, String> updateEnergy = (textView, s) ->
-            textView.setText(TextUtils.isEmpty(s) ? utilityService.getString(R.string.energy_none) : s);
+        Action2<TextView, String> updateEnergy = (textView, value) ->
+            textView.setText(TextUtils.isEmpty(value) ? utilityService.getString(R.string.energy_none) :
+                value + " " + utilityService.getString(R.string.energy_power_unit));
 
         updateEnergy.call(holder.textViewEnergyInstantaneousPower, energy.getInstantaneousPower());
         updateEnergy.call(holder.textViewEnergyDailyPower, energy.getDailyPower());
