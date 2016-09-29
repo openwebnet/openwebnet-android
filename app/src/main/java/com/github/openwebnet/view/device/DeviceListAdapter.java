@@ -26,6 +26,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
@@ -35,6 +36,7 @@ import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
@@ -57,6 +59,7 @@ import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
+import rx.functions.Action2;
 import rx.functions.Func1;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -82,6 +85,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     ScenarioService scenarioService;
+
+    @Inject
+    EnergyService energyService;
 
     @Inject
     PreferenceService preferenceService;
@@ -298,6 +304,37 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
+    public static class EnergyViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 700;
+
+        @BindView(R.id.cardViewEnergy)
+        CardView cardViewEnergy;
+
+        @BindView(R.id.textViewCardEnergyTitle)
+        TextView textViewCardEnergyTitle;
+
+        @BindView(R.id.textViewEnergyInstantaneousPower)
+        TextView textViewEnergyInstantaneousPower;
+
+        @BindView(R.id.textViewEnergyDailyPower)
+        TextView textViewEnergyDailyPower;
+
+        @BindView(R.id.textViewEnergyMonthlyPower)
+        TextView textViewEnergyMonthlyPower;
+
+        @BindView(R.id.linearLayoutEnergyValues)
+        LinearLayout linearLayoutEnergyValues;
+
+        public EnergyViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageButtonCardFavourite)
@@ -350,6 +387,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof ScenarioModel) {
             return ScenarioViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof EnergyModel) {
+            return EnergyViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -374,6 +414,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case ScenarioViewHolder.VIEW_TYPE:
                 return new ScenarioViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_scenario, parent, false));
+            case EnergyViewHolder.VIEW_TYPE:
+                return new EnergyViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_energy, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -402,6 +445,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case ScenarioViewHolder.VIEW_TYPE:
                 initCardScenario((ScenarioViewHolder) holder, (ScenarioModel) mItems.get(position));
+                break;
+            case EnergyViewHolder.VIEW_TYPE:
+                initCardEnergy((EnergyViewHolder) holder, (EnergyModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -769,6 +815,36 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
         scenarioService.stop(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
+    }
+
+    private void initCardEnergy(EnergyViewHolder holder, EnergyModel energy) {
+        holder.textViewCardEnergyTitle.setText(energy.getName());
+
+        updateFavourite(holder, energy.isFavourite());
+        onFavouriteChange(holder, energy, energyService);
+        onMenuClick(holder, energyService, energy.getUuid(), EnergyActivity.class);
+        updateEnergyValues(holder, energy);
+    }
+
+    private void updateEnergyValues(EnergyViewHolder holder, EnergyModel energy) {
+        holder.linearLayoutEnergyValues.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+
+        if (energy.getInstantaneousPower() == null &&
+                energy.getDailyPower() == null &&
+                energy.getMonthlyPower() == null) {
+            log.warn("energy values are null or invalid: unable to update");
+            holder.linearLayoutEnergyValues.setVisibility(View.GONE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        Action2<TextView, String> updateEnergy = (textView, s) ->
+            textView.setText(TextUtils.isEmpty(s) ? utilityService.getString(R.string.energy_none) : s);
+
+        updateEnergy.call(holder.textViewEnergyInstantaneousPower, energy.getInstantaneousPower());
+        updateEnergy.call(holder.textViewEnergyDailyPower, energy.getDailyPower());
+        updateEnergy.call(holder.textViewEnergyMonthlyPower, energy.getMonthlyPower());
     }
 
     /* commons */
