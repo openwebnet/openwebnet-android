@@ -216,7 +216,7 @@ public class EnergyActivity extends AbstractDeviceActivity {
         return (energyUuid == null ? EnergyModel.addBuilder() : EnergyModel.updateBuilder(energyUuid))
             .name(utilityService.sanitizedText(editTextEnergyName))
             .where(editTextEnergyWhere.getText().toString())
-            .version(getSelectedEnergyVersion().name())
+            .version(getSelectedEnergyVersion())
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())

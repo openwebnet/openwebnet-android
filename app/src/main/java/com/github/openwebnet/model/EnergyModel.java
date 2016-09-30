@@ -95,8 +95,8 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
             return this;
         }
 
-        public Builder version(String version) {
-            this.version = version;
+        public Builder version(EnergyManagement.Version version) {
+            this.version = version.name();
             return this;
         }
 
