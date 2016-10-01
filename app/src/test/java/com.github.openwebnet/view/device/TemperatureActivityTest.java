@@ -268,7 +268,7 @@ public class TemperatureActivityTest {
 
         createWithIntent(null);
 
-        verify(mock(LightServiceImpl.class), never()).findById(anyString());
+        verify(mock(TemperatureServiceImpl.class), never()).findById(anyString());
 
         assertEquals("invalid value", "", editTextTemperatureName.getText().toString());
         assertEquals("invalid value", "", editTextTemperatureWhere.getText().toString());
@@ -357,7 +357,6 @@ public class TemperatureActivityTest {
         String TEMPERATURE_GATEWAY_SELECTED = "uuid2";
         String TEMPERATURE_WHERE = "08";
         Integer TEMPERATURE_ENVIRONMENT_SELECTED = 101;
-        boolean TEMPERATURE_DIMMER = true;
         boolean TEMPERATURE_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.

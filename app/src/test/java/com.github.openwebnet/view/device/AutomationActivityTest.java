@@ -244,7 +244,7 @@ public class AutomationActivityTest {
     private void createWithIntent(String uuidExtra) {
         controller = Robolectric.buildActivity(AutomationActivity.class);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, AutomationActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         activity = controller
             .withIntent(intent)
@@ -321,7 +321,7 @@ public class AutomationActivityTest {
 
         createWithIntent(null);
 
-        verify(mock(LightServiceImpl.class), never()).findById(anyString());
+        verify(mock(AutomationServiceImpl.class), never()).findById(anyString());
 
         assertEquals("invalid value", "", editTextAutomationName.getText().toString());
         assertEquals("invalid value", "", editTextAutomationWhere.getText().toString());
