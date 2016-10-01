@@ -33,7 +33,7 @@ public class EnergyActivity extends AbstractDeviceActivity {
 
     private static final Logger log = LoggerFactory.getLogger(EnergyActivity.class);
 
-    private enum EnergyGroup {
+    protected enum EnergyGroup {
         VERSION_1,
         VERSION_2
     }
