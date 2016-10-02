@@ -13,7 +13,8 @@ Manages:
 - Lighting
 - Automation
 - Temperature
-- Scenario MH200N and MH202
+- Power Consumption
+- Scenario
 - any OpenWebNet frame/message
 - Ip Camera (MJPEG)
 
@@ -29,7 +30,6 @@ All source code is available online https://github.com/openwebnet/openwebnet-and
 
 If you like this app and find it useful please consider making a donation. Some possible future improvements:
 - Sound System / Radio
-- Energy Management
 - Quick search and sorting
 - Backup / Import / Export configuration
 

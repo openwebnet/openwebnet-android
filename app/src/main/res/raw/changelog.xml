@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="September 11, 2016" versionName="2.7.2">
+    <changelogversion changeDate="October 2, 2016" versionName="2.8.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
+            <![CDATA[<b><font color=red>New!</font></b> Add Power Consumption feature]]>
         </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="September 11, 2016" versionName="2.7.2">
+        <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="September 11, 2016" versionName="2.7.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Fix scenario]]>
-        </changelogtext>
+        <changelogtext>Fix scenario</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="September 11, 2016" versionName="2.7.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add scenario feature]]>
-        </changelogtext>
+        <changelogtext>Add scenario feature</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="August 16, 2016" versionName="2.6.2">
