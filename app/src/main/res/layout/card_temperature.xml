@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    style="@style/deviceCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    style="@style/deviceCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardViewTemperature"
         style="@style/deviceCard.layout"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
         card_view:cardPreventCornerOverlap="true">
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="4dp"
+                android:paddingBottom="10dp"
                 android:paddingTop="16dp">
 
                 <ImageView
@@ -35,7 +35,7 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="4dp"
                     app:srcCompat="@drawable/thermometer"
-                    tools:ignore="MissingPrefix"/>
+                    tools:ignore="MissingPrefix" />
 
                 <TextView
                     android:id="@+id/textViewCardTemperatureTitle"
@@ -43,7 +43,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
 
                 <ImageButton
                     android:id="@+id/imageButtonCardMenu"
@@ -53,23 +53,24 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:paddingTop="4dp"
                     app:srcCompat="@drawable/dots_vertical"
-                    tools:ignore="MissingPrefix"/>
+                    tools:ignore="MissingPrefix" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayoutCardTemperatureValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.github.openwebnet.view.custom.TextViewCustom
                     android:id="@+id/textViewCardTemperatureValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/temperature_none"
+                    android:text=""
                     android:textSize="48sp"
-                    typeface:font="inconsolata"/>
+                    typeface:font="inconsolata" />
 
             </LinearLayout>
 
@@ -79,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp" />
 
         </LinearLayout>
 

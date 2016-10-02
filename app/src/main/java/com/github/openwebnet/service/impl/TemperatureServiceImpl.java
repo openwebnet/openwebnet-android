@@ -99,7 +99,7 @@ public class TemperatureServiceImpl implements TemperatureService {
         final Func2<OpenSession, TemperatureModel, TemperatureModel> handler = (openSession, temperature) -> {
             Heating.handleTemperature(
                 value -> temperature.setValue(String.valueOf(value)),
-                () -> temperature.setValue(utilityService.getString(R.string.temperature_none)))
+                () -> temperature.setValue(null))
             .call(openSession);
             return temperature;
         };

@@ -111,7 +111,6 @@
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Connection error</string>
-    <string name="temperature_none" translatable="false">--</string>
     <string name="temperature_request">Request Temperature</string>
     <string name="temperature_prefix" translatable="false">*#4*</string>
     <string name="temperature_suffix" translatable="false">*0##</string>
