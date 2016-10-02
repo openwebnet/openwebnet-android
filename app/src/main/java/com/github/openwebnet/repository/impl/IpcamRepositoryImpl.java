@@ -7,7 +7,8 @@ import com.github.openwebnet.repository.IpcamRepository;
 
 import javax.inject.Inject;
 
-public class IpcamRepositoryImpl extends DomoticRepositoryImpl<IpcamModel> implements IpcamRepository {
+public class IpcamRepositoryImpl extends DomoticRepositoryImpl<IpcamModel>
+        implements IpcamRepository {
 
     @Inject
     DatabaseRealm databaseRealm;

@@ -6,6 +6,8 @@ package com.github.openwebnet.model;
  * @see AutomationModel
  * @see IpcamModel
  * @see TemperatureModel
+ * @see ScenarioModel
+ * @see EnergyModel
  *
  * Note:
  * check https://github.com/openwebnet/openwebnet-android/pull/29

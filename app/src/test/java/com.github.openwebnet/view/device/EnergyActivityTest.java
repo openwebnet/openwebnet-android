@@ -6,9 +6,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.github.niqdev.openwebnet.message.EnergyManagement;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.R;
@@ -16,10 +16,10 @@ import com.github.openwebnet.component.ApplicationComponent;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
-import com.github.openwebnet.matcher.LightModelMatcher;
+import com.github.openwebnet.matcher.EnergyModelMatcher;
+import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.GatewayModel;
-import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
@@ -46,7 +46,6 @@ import com.github.openwebnet.service.impl.ScenarioServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -78,7 +77,6 @@ import dagger.Provides;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -91,7 +89,7 @@ import static org.mockito.Mockito.when;
 @Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
-public class LightActivityTest {
+public class EnergyActivityTest {
 
     @Rule
     public PowerMockRule rule = new PowerMockRule();
@@ -105,14 +103,20 @@ public class LightActivityTest {
     @BindView(R.id.checkBoxDeviceFavourite)
     CheckBox checkBoxDeviceFavourite;
 
-    @BindView(R.id.editTextLightName)
-    EditText editTextLightName;
+    @BindView(R.id.editTextEnergyName)
+    EditText editTextEnergyName;
 
-    @BindView(R.id.editTextLightWhere)
-    EditText editTextLightWhere;
+    @BindView(R.id.editTextEnergyWhere)
+    EditText editTextEnergyWhere;
 
-    @BindView(R.id.checkBoxLightDimmer)
-    CheckBox checkBoxLightDimmer;
+    @BindView(R.id.spinnerEnergyVersion)
+    Spinner spinnerEnergyVersion;
+
+    @BindView(R.id.textViewEnergyPrefix)
+    TextView textViewEnergyPrefix;
+
+    @BindView(R.id.textViewEnergySuffix)
+    TextView textViewEnergySuffix;
 
     @BindString(R.string.validation_required)
     String validationRequired;
@@ -120,11 +124,8 @@ public class LightActivityTest {
     @BindString(R.string.label_none)
     String labelNone;
 
-    @BindString(R.string.label_missing_gateway)
-    String labelMissingGateway;
-
     @Inject
-    LightService lightService;
+    EnergyService energyService;
 
     @Inject
     EnvironmentService environmentService;
@@ -132,19 +133,19 @@ public class LightActivityTest {
     @Inject
     GatewayService gatewayService;
 
-    private ActivityController<LightActivity> controller;
-    private LightActivity activity;
+    private ActivityController<EnergyActivity> controller;
+    private EnergyActivity activity;
 
     @Singleton
-    @Component(modules = {LightActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
-    public interface LightActivityComponentTest extends ApplicationComponent {
+    @Component(modules = {EnergyActivityModuleTest.class, DatabaseModuleTest.class, RepositoryModuleTest.class})
+    public interface EnergyActivityComponentTest extends ApplicationComponent {
 
-        void inject(LightActivityTest activity);
+        void inject(EnergyActivityTest activity);
 
     }
 
     @Module
-    public class LightActivityModuleTest {
+    public class EnergyActivityModuleTest {
 
         @Provides
         @Singleton
@@ -191,7 +192,7 @@ public class LightActivityTest {
         @Provides
         @Singleton
         LightService provideLightService() {
-            return mock(LightServiceImpl.class);
+            return new LightServiceImpl();
         }
 
         @Provides
@@ -221,33 +222,28 @@ public class LightActivityTest {
         @Provides
         @Singleton
         EnergyService provideEnergyService() {
-            return new EnergyServiceImpl();
+            return mock(EnergyServiceImpl.class);
         }
 
     }
 
     @Before
     public void setupDagger() {
-        LightActivityComponentTest applicationComponentTest = DaggerLightActivityTest_LightActivityComponentTest.builder()
-            .lightActivityModuleTest(new LightActivityModuleTest())
+        EnergyActivityComponentTest applicationComponentTest = DaggerEnergyActivityTest_EnergyActivityComponentTest.builder()
+            .energyActivityModuleTest(new EnergyActivityModuleTest())
             .repositoryModuleTest(new RepositoryModuleTest(true))
             .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
 
-        ((LightActivityComponentTest) Injector.getApplicationComponent()).inject(this);
-    }
-
-    @After
-    public void tearDown() {
-        controller.pause().stop().destroy();
+        ((EnergyActivityComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(LightActivity.class);
+        controller = Robolectric.buildActivity(EnergyActivity.class);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, EnergyActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         activity = controller
             .withIntent(intent)
@@ -276,109 +272,71 @@ public class LightActivityTest {
     }
 
     @Test
-    public void shouldVerifyOnCreate_initSpinner_noResult() {
-        when(environmentService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
-        when(gatewayService.findAll()).thenReturn(Observable.just(new ArrayList<>()));
-
-        createWithIntent(null);
-
-        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
-        assertFalse("should not be empty", adapterEnvironment.isEmpty());
-        assertEquals("should verify first element", labelNone, adapterEnvironment.getItem(0));
-
-        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
-        assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", labelMissingGateway, adapterGateway.getItem(0));
-    }
-
-    @Test
-    public void shouldVerifyOnCreate_initSpinner() {
-        List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(101, "env2"));
-
-        List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway("uuid2", "2.2.2.2", 2));
-
-        when(environmentService.findAll()).thenReturn(Observable.just(environments));
-        when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
-
-        createWithIntent(null);
-
-        SpinnerAdapter adapterEnvironment = spinnerDeviceEnvironment.getAdapter();
-        assertFalse("should not be empty", adapterEnvironment.isEmpty());
-        assertEquals("should verify first element", "env1", adapterEnvironment.getItem(0));
-        assertEquals("should verify second element", "env2", adapterEnvironment.getItem(1));
-        assertEquals("should select default", 0, spinnerDeviceEnvironment.getSelectedItemPosition());
-
-        SpinnerAdapter adapterGateway = spinnerDeviceGateway.getAdapter();
-        assertFalse("should not be empty", adapterGateway.isEmpty());
-        assertEquals("should verify first element", "1.1.1.1:1", adapterGateway.getItem(0));
-        assertEquals("should verify second element", "2.2.2.2:2", adapterGateway.getItem(1));
-        assertEquals("should select default", 0, spinnerDeviceGateway.getSelectedItemPosition());
-    }
-
-    @Test
     public void shouldVerifyOnCreate_initEditWithoutUuid() {
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
         when(gatewayService.findAll()).thenReturn(Observable.<List<GatewayModel>>empty());
 
         createWithIntent(null);
 
-        verify(mock(LightServiceImpl.class), never()).findById(anyString());
+        verify(mock(EnergyServiceImpl.class), never()).findById(anyString());
 
-        assertEquals("invalid value", "", editTextLightName.getText().toString());
-        assertEquals("invalid value", "", editTextLightWhere.getText().toString());
+        assertEquals("invalid value", "", editTextEnergyName.getText().toString());
+        assertEquals("invalid value", "", editTextEnergyWhere.getText().toString());
+        assertEquals("invalid value", 0, spinnerEnergyVersion.getSelectedItemPosition());
+        assertEquals("invalid prefix value", "*#18*5", textViewEnergyPrefix.getText().toString());
+        assertEquals("invalid suffix value", "*X##", textViewEnergySuffix.getText().toString());
 
-        assertEquals("invalid value", false, checkBoxLightDimmer.isChecked());
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
-
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
         assertEquals("invalid value", -1, spinnerDeviceGateway.getSelectedItemPosition());
     }
 
     @Test
     public void shouldVerifyOnCreate_initEditWithUuid() {
-        String LIGHT_UUID = "myUuid";
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 108;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+        String ENERGY_UUID = "myUuid";
+        String ENERGY_NAME = "myName";
+        String ENERGY_GATEWAY_SELECTED = "uuid2";
+        String ENERGY_WHERE = "08";
+        EnergyManagement.Version ENERGY_VERSION = EnergyManagement.Version.MODEL_F523_A;
+        Integer ENERGY_ENVIRONMENT_SELECTED = 108;
+        boolean ENERGY_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env8"));
+            asList(newEnvironment(100, "env1"), newEnvironment(ENERGY_ENVIRONMENT_SELECTED, "env8"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2));
+            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(ENERGY_GATEWAY_SELECTED, "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
 
-        LightModel lightModel = LightModel.updateBuilder(LIGHT_UUID)
-            .name(LIGHT_NAME)
-            .where(LIGHT_WHERE)
-            .dimmer(LIGHT_DIMMER)
-            .environment(LIGHT_ENVIRONMENT_SELECTED)
-            .gateway(LIGHT_GATEWAY_SELECTED)
-            .favourite(LIGHT_FAVOURITE)
+        EnergyModel energyModel = EnergyModel.updateBuilder(ENERGY_UUID)
+            .name(ENERGY_NAME)
+            .where(ENERGY_WHERE)
+            .version(ENERGY_VERSION)
+            .environment(ENERGY_ENVIRONMENT_SELECTED)
+            .gateway(ENERGY_GATEWAY_SELECTED)
+            .favourite(ENERGY_FAVOURITE)
             .build();
 
-        when(lightService.findById(LIGHT_UUID)).thenReturn(Observable.just(lightModel));
+        when(energyService.findById(ENERGY_UUID)).thenReturn(Observable.just(energyModel));
 
-        createWithIntent(LIGHT_UUID);
+        createWithIntent(ENERGY_UUID);
 
-        assertEquals("invalid value", LIGHT_NAME, editTextLightName.getText().toString());
-        assertEquals("invalid value", String.valueOf(LIGHT_WHERE), editTextLightWhere.getText().toString());
+        assertEquals("invalid value", ENERGY_NAME, editTextEnergyName.getText().toString());
+        assertEquals("invalid value", String.valueOf(ENERGY_WHERE), editTextEnergyWhere.getText().toString());
 
-        assertEquals("invalid value", LIGHT_DIMMER, checkBoxLightDimmer.isChecked());
-        assertEquals("invalid value", LIGHT_FAVOURITE, checkBoxDeviceFavourite.isChecked());
+        assertEquals("invalid value", 1, spinnerEnergyVersion.getSelectedItemPosition());
+        assertEquals("invalid prefix value", "*#18*7", textViewEnergyPrefix.getText().toString());
+        assertEquals("invalid suffix value", "#0*X##", textViewEnergySuffix.getText().toString());
+
+        assertEquals("invalid value", ENERGY_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
-        assertEquals("invalid value", environmentSelected.getId(), LIGHT_ENVIRONMENT_SELECTED);
+        assertEquals("invalid value", environmentSelected.getId(), ENERGY_ENVIRONMENT_SELECTED);
 
         GatewayModel gatewaySelected = gateways.get(spinnerDeviceGateway.getSelectedItemPosition());
-        assertEquals("invalid value", LIGHT_GATEWAY_SELECTED, gatewaySelected.getUuid());
+        assertEquals("invalid value", ENERGY_GATEWAY_SELECTED, gatewaySelected.getUuid());
     }
 
     @Test
@@ -388,11 +346,11 @@ public class LightActivityTest {
 
         createWithIntent(null);
 
-        expectRequired(editTextLightName);
-        editTextLightName.setText("nameValue");
+        expectRequired(editTextEnergyName);
+        editTextEnergyName.setText("nameValue");
 
-        expectRequired(editTextLightWhere);
-        editTextLightWhere.setText("21");
+        expectRequired(editTextEnergyWhere);
+        editTextEnergyWhere.setText("21");
 
         expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
         ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
@@ -409,36 +367,35 @@ public class LightActivityTest {
 
     private void expectRequired(TextView view) {
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(energyService, never()).add(any(EnergyModel.class));
+        verify(energyService, never()).update(any(EnergyModel.class));
         assertEquals("bad validation", validationRequired, view.getError());
-        //assertTrue("bad focus", view.hasFocus());
     }
 
-    private LightModel common_onMenuSave_valid(String uuidExtra) {
-        String LIGHT_NAME = "myName";
-        String LIGHT_GATEWAY_SELECTED = "uuid2";
-        String LIGHT_WHERE = "08";
-        Integer LIGHT_ENVIRONMENT_SELECTED = 101;
-        boolean LIGHT_DIMMER = true;
-        boolean LIGHT_FAVOURITE = true;
+    private EnergyModel common_onMenuSave_valid(String uuidExtra) {
+        String ENERGY_NAME = "myName";
+        String ENERGY_GATEWAY_SELECTED = "uuid2";
+        String ENERGY_WHERE = "08";
+        EnergyManagement.Version ENERGY_VERSION = EnergyManagement.Version.MODEL_F523_A;
+        Integer ENERGY_ENVIRONMENT_SELECTED = 101;
+        boolean ENERGY_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
+            just(Arrays.asList(newEnvironment(ENERGY_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+            just(Arrays.asList(newGateway(ENERGY_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
-        String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
-        when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));
-        when(lightService.update(any(LightModel.class))).thenReturn(Observable.just(null));
+        String ENERGY_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
+        when(energyService.add(any(EnergyModel.class))).thenReturn(Observable.just(ENERGY_UUID));
+        when(energyService.update(any(EnergyModel.class))).thenReturn(Observable.just(null));
 
         createWithIntent(uuidExtra);
 
-        editTextLightName.setText(String.valueOf(LIGHT_NAME));
-        editTextLightWhere.setText(String.valueOf(LIGHT_WHERE));
+        editTextEnergyName.setText(String.valueOf(ENERGY_NAME));
+        editTextEnergyWhere.setText(String.valueOf(ENERGY_WHERE));
+        checkBoxDeviceFavourite.setChecked(ENERGY_FAVOURITE);
 
-        checkBoxLightDimmer.setChecked(LIGHT_DIMMER);
-        checkBoxDeviceFavourite.setChecked(LIGHT_FAVOURITE);
+        spinnerEnergyVersion.setSelection(1);
 
         // for simplicity only 1 items
         spinnerDeviceEnvironment.setSelection(0);
@@ -446,33 +403,33 @@ public class LightActivityTest {
 
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
 
-        LightModel lightMock = new LightModel();
-        lightMock.setUuid(uuidExtra);
-        lightMock.setName(LIGHT_NAME);
-        lightMock.setWhere(LIGHT_WHERE);
-        lightMock.setDimmer(LIGHT_DIMMER);
-        lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
-        lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
-        lightMock.setFavourite(LIGHT_FAVOURITE);
-        return lightMock;
+        EnergyModel energyModelMock = new EnergyModel();
+        energyModelMock.setUuid(uuidExtra);
+        energyModelMock.setName(ENERGY_NAME);
+        energyModelMock.setWhere(ENERGY_WHERE);
+        energyModelMock.setEnergyManagementVersion(ENERGY_VERSION);
+        energyModelMock.setEnvironmentId(ENERGY_ENVIRONMENT_SELECTED);
+        energyModelMock.setGatewayUuid(ENERGY_GATEWAY_SELECTED);
+        energyModelMock.setFavourite(ENERGY_FAVOURITE);
+        return energyModelMock;
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validAdd() {
-        LightModel lightMock = common_onMenuSave_valid(null);
+        EnergyModel energyModelMock = common_onMenuSave_valid(null);
 
-        verify(lightService, times(1)).add(LightModelMatcher.lightModelEq(lightMock));
-        verify(lightService, never()).update(any(LightModel.class));
+        verify(energyService, times(1)).add(EnergyModelMatcher.energyModelEq(energyModelMock));
+        verify(energyService, never()).update(any(EnergyModel.class));
     }
 
     @Test
     public void shouldVerifyOnCreate_onMenuSave_validEdit() {
-        when(lightService.findById(anyString())).thenReturn(Observable.<LightModel>empty());
+        when(energyService.findById(anyString())).thenReturn(Observable.<EnergyModel>empty());
 
-        LightModel lightMock = common_onMenuSave_valid("anyUuid");
+        EnergyModel energyModelMock = common_onMenuSave_valid("anyUuid");
 
-        verify(lightService, never()).add(any(LightModel.class));
-        verify(lightService, times(1)).update(LightModelMatcher.lightModelEq(lightMock));
+        verify(energyService, never()).add(any(EnergyModel.class));
+        verify(energyService, times(1)).update(EnergyModelMatcher.energyModelEq(energyModelMock));
     }
 
 }

@@ -22,6 +22,7 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.AbstractDeviceActivity;
 import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.device.ScenarioActivity;
@@ -151,21 +152,27 @@ public class MainBottomSheetDialogFragmentTest {
     }
 
     @Test
+    public void onItemClick_shouldStartEnergyActivity() {
+        setupFragment();
+        expectStartActivity(3, R.string.activity_energy, EnergyActivity.class);
+    }
+
+    @Test
     public void onItemClick_shouldStartScenarioActivity() {
         setupFragment();
-        expectStartActivity(3, R.string.activity_scenario, ScenarioActivity.class);
+        expectStartActivity(4, R.string.activity_scenario, ScenarioActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartDeviceActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_device, DeviceActivity.class);
+        expectStartActivity(5, R.string.activity_device, DeviceActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartIpcamActivity() {
         setupFragment();
-        expectStartActivity(5, R.string.activity_ipcam, IpcamActivity.class);
+        expectStartActivity(6, R.string.activity_ipcam, IpcamActivity.class);
     }
 
 }

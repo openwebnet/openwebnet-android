@@ -122,7 +122,7 @@ public class IpcamActivity extends AbstractDeviceActivity {
             }
             throw new IllegalStateException("unable to find a valid streamType");
         };
-        spinnerDeviceEnvironment.setSelection(findSelectedIpcam.apply(streamType));
+        spinnerIpcamStreamType.setSelection(findSelectedIpcam.apply(streamType));
     }
 
     private void initEditIpcam() {

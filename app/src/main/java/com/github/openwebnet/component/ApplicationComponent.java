@@ -9,6 +9,7 @@ import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
+import com.github.openwebnet.repository.impl.EnergyRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
@@ -18,6 +19,7 @@ import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
@@ -33,6 +35,7 @@ import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
 import com.github.openwebnet.view.device.DeviceListAdapter;
 import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.IpcamStreamActivity;
 import com.github.openwebnet.view.device.LightActivity;
@@ -65,6 +68,7 @@ public interface ApplicationComponent {
     void inject(IpcamStreamActivity activity);
     void inject(DeviceListFragment fragment);
     void inject(ScenarioActivity activity);
+    void inject(EnergyActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);
@@ -86,6 +90,7 @@ public interface ApplicationComponent {
     void inject(IpcamServiceImpl ipcamService);
     void inject(TemperatureServiceImpl temperatureService);
     void inject(ScenarioServiceImpl scenarioService);
+    void inject(EnergyServiceImpl energyService);
 
     // database
     void inject(DatabaseRealm databaseRealm);
@@ -100,5 +105,6 @@ public interface ApplicationComponent {
     void inject(IpcamRepositoryImpl repository);
     void inject(TemperatureRepositoryImpl repository);
     void inject(ScenarioRepositoryImpl repository);
+    void inject(EnergyRepositoryImpl repository);
 
 }

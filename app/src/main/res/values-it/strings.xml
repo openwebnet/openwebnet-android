@@ -7,6 +7,7 @@
     <string name="activity_ipcam">Ip Camera</string>
     <string name="activity_temperature">Temperatura</string>
     <string name="activity_scenario">Scenario</string>
+    <string name="activity_energy">Consumo Energetico</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -71,6 +72,7 @@
     <string name="bs_temperature">Temperatura</string>
     <string name="bs_ipcam">Ip Camera</string>
     <string name="bs_scenario">Scenario</string>
+    <string name="bs_energy">Consumo Energetico</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
     <string name="device_where">dove</string>
@@ -97,6 +99,10 @@
     <string name="temperature_request">Richiesta</string>
     <string name="scenario_request">Richiesta</string>
     <string name="scenario_support">Supporta MH200N e MH202</string>
+    <string name="energy_request">Richiesta</string>
+    <string name="energy_instantaneous_power">Potenza Instantanea:</string>
+    <string name="energy_daily_power">Potenza Giornaliera:</string>
+    <string name="energy_monthly_power">Potenza Mensile:</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

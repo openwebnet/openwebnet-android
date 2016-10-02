@@ -8,7 +8,7 @@ import com.github.openwebnet.repository.TemperatureRepository;
 import javax.inject.Inject;
 
 public class TemperatureRepositoryImpl extends DomoticRepositoryImpl<TemperatureModel>
-    implements TemperatureRepository{
+        implements TemperatureRepository {
 
     @Inject
     DatabaseRealm databaseRealm;
