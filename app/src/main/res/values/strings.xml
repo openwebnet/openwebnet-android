@@ -134,6 +134,7 @@
     <string name="energy_monthly_power">Monthly Power:</string>
     <string name="energy_power_unit" translatable="false">Watt</string>
     <string name="energy_none" translatable="false">--</string>
+    <string name="energy_info_best_effort">The gateway does not always respond properly and some values ​​may be partial or incorrect</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>

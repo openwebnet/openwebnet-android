@@ -103,6 +103,7 @@
     <string name="energy_instantaneous_power">мгновенная мощность:</string>
     <string name="energy_daily_power">Ежедневная мощность:</string>
     <string name="energy_monthly_power">Ежемесячная мощность:</string>
+    <string name="energy_info_best_effort">Шлюз не всегда реагирует должным образом а некоторые значения могут быть частичным или неправильным</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>
