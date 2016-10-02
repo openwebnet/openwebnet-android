@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="October 2, 2016" versionName="2.8.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Fix Power Consumption]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="October 2, 2016" versionName="2.8.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Add Power Consumption feature]]>

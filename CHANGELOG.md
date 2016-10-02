@@ -1,3 +1,8 @@
+#### v2.8.1 (October 2, 2016)
+
+- Fix Power Consumption
+- Minor style changes
+
 #### v2.8.0 (October 2, 2016)
 
 - Add Power Consumption feature

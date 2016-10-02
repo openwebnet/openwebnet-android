@@ -262,6 +262,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.imageViewCardTemperatureScale)
         ImageView imageViewCardTemperatureScale;
 
+        @BindView(R.id.linearLayoutCardTemperatureValue)
+        LinearLayout linearLayoutCardTemperatureValue;
+
         public TemperatureViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -728,17 +731,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateTemperatureValue(TemperatureViewHolder holder, TemperatureModel temperature) {
-        String noTemperature = utilityService.getString(R.string.temperature_none);
-        holder.textViewCardTemperatureValue.setText(noTemperature);
+        holder.linearLayoutCardTemperatureValue.setVisibility(View.GONE);
         holder.imageViewCardTemperatureScale.setVisibility(View.INVISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
 
-        if (temperature.getValue() == null || temperature.getValue().equals(noTemperature)) {
+        if (temperature.getValue() == null) {
             log.warn("temperature value is null or invalid: unable to update");
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
 
+        holder.linearLayoutCardTemperatureValue.setVisibility(View.VISIBLE);
         holder.textViewCardTemperatureValue.setText(temperature.getValue());
 
         Func1<Heating.TemperatureScale, Drawable> getImageTemperature = temperatureScale -> {

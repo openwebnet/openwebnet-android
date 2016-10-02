@@ -33,19 +33,23 @@
                 android:id="@+id/textViewEnergyPrefix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/energy_prefix_v1"
+                android:textSize="24sp"
                 typeface:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextEnergyWhere"
                 style="@style/message.editText"
+                android:layout_width="100dp"
                 android:hint="@string/device_where"
                 android:maxLength="3"
+                android:textSize="24sp"
                 typeface:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 android:id="@+id/textViewEnergySuffix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/energy_suffix_v1"
+                android:textSize="24sp"
                 typeface:font="inconsolata" />
 
         </LinearLayout>
@@ -62,6 +66,14 @@
             layout="@layout/activity_common_device"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="@string/energy_info_best_effort"
+            android:textStyle="italic" />
 
     </LinearLayout>
 

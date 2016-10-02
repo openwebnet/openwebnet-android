@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.8.0</string>
+    <string name="app_version_number" translatable="false">2.8.1</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
 
     <string name="activity_device">Device</string>
@@ -111,7 +111,6 @@
     <string name="ipcam_password">Password</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Connection error</string>
-    <string name="temperature_none" translatable="false">--</string>
     <string name="temperature_request">Request Temperature</string>
     <string name="temperature_prefix" translatable="false">*#4*</string>
     <string name="temperature_suffix" translatable="false">*0##</string>
@@ -134,6 +133,7 @@
     <string name="energy_monthly_power">Monthly Power:</string>
     <string name="energy_power_unit" translatable="false">Watt</string>
     <string name="energy_none" translatable="false">--</string>
+    <string name="energy_info_best_effort">The gateway does not always respond properly and some values ​​may be partial or incorrect</string>
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>
