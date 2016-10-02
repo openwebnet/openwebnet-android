@@ -6,7 +6,8 @@
     <string name="activity_automation">Электропривод</string>
     <string name="activity_ipcam">Ip-камера</string>
     <string name="activity_temperature">Температура</string>
-    <string name="activity_scenario">сценарий</string>
+    <string name="activity_scenario">Сценарий</string>
+    <string name="activity_energy">Потребление энергии</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -70,7 +71,8 @@
     <string name="bs_automation">Электропривод</string>
     <string name="bs_temperature">Температура</string>
     <string name="bs_ipcam">Ip-камера</string>
-    <string name="bs_scenario">сценарий</string>
+    <string name="bs_scenario">Сценарий</string>
+    <string name="bs_energy">Потребление энергии</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
@@ -97,6 +99,10 @@
     <string name="temperature_request">Запрос</string>
     <string name="scenario_request">Запрос</string>
     <string name="scenario_support">Поддержка MH200N и MH202</string>
+    <string name="energy_request">Запрос</string>
+    <string name="energy_instantaneous_power">мгновенная мощность:</string>
+    <string name="energy_daily_power">Ежедневная мощность:</string>
+    <string name="energy_monthly_power">Ежемесячная мощность:</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

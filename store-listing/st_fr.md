@@ -13,7 +13,8 @@ Gère:
 - Éclairage
 - Automatisme
 - Température
-- Scénario MH200N et MH202
+- Consommation d'énergie
+- Scénario
 - tout OpenWebNet message
 - Caméra IP (MJPEG)
 
@@ -29,7 +30,6 @@ L'intégralité du code source est disponible en ligne: https://github.com/openw
 
 Si vous aimez cette application et sera utile s'il vous plaît envisager de faire un don. Quelques améliorations futures possibles:
 - Système audio / Radio
-- Gestion de l'énergie
 - Recherche rapide et le tri
 - Sauvegarde / Importation / Exportation des configurations
 

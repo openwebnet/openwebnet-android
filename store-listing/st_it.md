@@ -11,9 +11,10 @@ My Home é il prodotto BTicino e Legrand per gestire gli impianti domotici da di
 
 Gestisce:
 - Illuminazione
-- Automatismo
+- Automatismi
 - Temperatura
-- Scenario MH200N e MH202
+- Consumo Energetico
+- Scenari
 - qualsiasi frame/messaggio OpenWebNet
 - Ip Camera (MJPEG)
 
@@ -29,7 +30,6 @@ Tutto il codice sorgente é disponibile online https://github.com/openwebnet/ope
 
 Se ti piace quest'app e la trovi utile puoi fare una donazione. Alcuni possibili futuri sviluppi:
 - Diffusione sonora / Radio
-- Controllo energia
 - Ricerca rapida e ordinamento
 - Backup / Importazione / Esportazione delle configurazioni
 

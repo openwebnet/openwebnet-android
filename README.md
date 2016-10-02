@@ -13,7 +13,8 @@ Manages:
 - Lighting
 - Automation
 - Temperature
-- Scenario MH200N and MH202
+- Scenario
+- Power Consumption
 - any OpenWebNet frame/message
 - Ip Camera (MJPEG)
 
@@ -27,7 +28,6 @@ This Android application is an unofficial free and Open Source client under MIT 
 
 If you like this app and find it useful please consider making a donation. Some possible future improvements:
 - Sound System / Radio
-- Energy Management
 - Quick search and sorting
 - Backup / Import / Export configuration
 
