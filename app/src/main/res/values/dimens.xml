@@ -12,8 +12,8 @@
     <dimen name="dialog_margin">16dp</dimen>
 
     <!-- Device Card Dimensions -->
-    <dimen name="deviceCard_marginTop">6dp</dimen>
-    <dimen name="deviceCard_marginBottom">6dp</dimen>
+    <dimen name="deviceCard_marginTop">4dp</dimen>
+    <dimen name="deviceCard_marginBottom">4dp</dimen>
     <dimen name="deviceCard_marginLeft">8dp</dimen>
     <dimen name="deviceCard_marginRight">8dp</dimen>
 
