@@ -24,6 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 android:paddingBottom="4dp"
                 android:paddingTop="16dp">
@@ -115,7 +116,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <include
                 layout="@layout/card_common_action"
