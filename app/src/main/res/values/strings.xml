@@ -99,8 +99,10 @@
     <string name="device_debug_label_invalid">Invalid paste</string>
     <string name="light_request">Request Turn On</string>
     <string name="light_dimmer">Dimmer</string>
-    <string name="light_prefix" translatable="false">*1*1*</string>
+    <string name="light_prefix_default" translatable="false">*1*1*</string>
+    <string name="light_prefix_group" translatable="false">*1*1*#</string>
     <string name="light_suffix" translatable="false">##</string>
+    <string name="light_value_general" translatable="false">*1*1*0##</string>
     <string name="light_info_area">Allowed values: 00, 1−9, 100</string>
     <string name="light_info_group">Allowed values: 1-255</string>
     <string name="light_info_point_to_point">Where = Area + Light Id</string>
