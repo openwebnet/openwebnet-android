@@ -19,35 +19,42 @@
             android:focusableInTouchMode="true"
             android:hint="@string/label_name"
             android:inputType="text"
-            android:maxLength="50"/>
+            android:maxLength="50" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:text="@string/light_request"
-            android:textStyle="bold|italic"/>
+            android:textStyle="bold|italic" />
 
-        <LinearLayout
-            style="@style/message.linearLayout">
+        <LinearLayout style="@style/message.linearLayout">
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_prefix"
-                app:font="inconsolata"/>
+                app:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextLightWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                app:font="inconsolata"/>
+                app:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_suffix"
-                app:font="inconsolata"/>
+                app:font="inconsolata" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:text=""
+            android:textStyle="italic" />
 
         <CheckBox
             android:id="@+id/checkBoxLightDimmer"
@@ -55,12 +62,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:enabled="false"
-            android:text="@string/light_dimmer"/>
+            android:text="@string/light_dimmer" />
+
+        <Spinner
+            android:id="@+id/spinnerLightType"
+            style="@style/common.focusable"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp" />
 
         <include
             layout="@layout/activity_common_device"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
