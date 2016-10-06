@@ -1,5 +1,6 @@
 package com.github.openwebnet.database;
 
+import com.github.niqdev.openwebnet.message.Lighting;
 import com.github.openwebnet.model.GatewayModel;
 
 import io.realm.DynamicRealm;
@@ -17,6 +18,7 @@ import static com.github.openwebnet.model.IpcamModel.FIELD_PASSWORD;
 import static com.github.openwebnet.model.IpcamModel.FIELD_STREAM_TYPE;
 import static com.github.openwebnet.model.IpcamModel.FIELD_URL;
 import static com.github.openwebnet.model.IpcamModel.FIELD_USERNAME;
+import static com.github.openwebnet.model.LightModel.FIELD_TYPE;
 import static com.github.openwebnet.model.RealmModel.FIELD_UUID;
 
 public class MigrationStrategy implements RealmMigration {
@@ -99,6 +101,15 @@ public class MigrationStrategy implements RealmMigration {
                 .addField(FIELD_WHERE, String.class, FieldAttribute.REQUIRED)
                 .addField(FIELD_VERSION, String.class, FieldAttribute.REQUIRED)
                 .addField(FIELD_FAVOURITE, boolean.class);
+
+            ++oldVersion;
+        }
+
+        // migrate to version 8
+        if (oldVersion == 7) {
+            schema.get("LightModel")
+                .addField(FIELD_TYPE, String.class, FieldAttribute.REQUIRED)
+                .transform(obj -> obj.set(FIELD_TYPE, Lighting.Type.POINT_TO_POINT.name()));
 
             ++oldVersion;
         }
