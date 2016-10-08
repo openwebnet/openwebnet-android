@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.annimon.stream.function.Function;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.IpcamModel;
@@ -114,15 +113,7 @@ public class IpcamActivity extends AbstractDeviceActivity {
     }
 
     private void selectStreamType(IpcamModel.StreamType streamType) {
-        Function<IpcamModel.StreamType, Integer> findSelectedIpcam = type -> {
-            for (int i = 0; i < streamTypeArray.size(); i++) {
-                if (streamTypeArray.valueAt(i).equals(type)) {
-                    return i;
-                }
-            }
-            throw new IllegalStateException("unable to find a valid streamType");
-        };
-        spinnerIpcamStreamType.setSelection(findSelectedIpcam.apply(streamType));
+        spinnerIpcamStreamType.setSelection(findSelectedItem(streamTypeArray).apply(streamType));
     }
 
     private void initEditIpcam() {

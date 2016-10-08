@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import com.github.niqdev.openwebnet.message.Lighting;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -10,6 +12,8 @@ import io.realm.annotations.Required;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LightModel extends RealmObject implements RealmModel, DomoticModel {
+
+    public static final String FIELD_TYPE = "type";
 
     public enum Status {
         ON, OFF
@@ -31,12 +35,19 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     @Required
     private String where;
 
+    @Required
+    private String type;
+
     private boolean dimmer;
 
     private boolean favourite;
 
     @Ignore
     private Status status;
+
+    // NOT USED: realm error otherwise
+    @Ignore
+    private Lighting.Type lightingType;
 
     // TODO @Ignore dimmerValue
 
@@ -48,6 +59,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.gatewayUuid = builder.gatewayUuid;
         this.name = builder.name;
         this.where = builder.where;
+        this.type = builder.type;
         this.dimmer = builder.dimmer;
         this.favourite = builder.favourite;
     }
@@ -59,6 +71,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         private String gatewayUuid;
         private String name;
         private String where;
+        private String type;
         private boolean dimmer;
         private boolean favourite;
 
@@ -86,6 +99,11 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
             return this;
         }
 
+        public Builder type(Lighting.Type type) {
+            this.type = type.name();
+            return this;
+        }
+
         public Builder dimmer(boolean dimmer) {
             this.dimmer = dimmer;
             return this;
@@ -101,6 +119,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
             checkNotNull(gatewayUuid, "gatewayUuid is null");
             checkNotNull(name, "name is null");
             checkNotNull(where, "where is null");
+            checkNotNull(type, "type is null");
 
             return new LightModel(this);
         }
@@ -132,6 +151,7 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.environmentId = environmentId;
     }
 
+    @Override
     public String getGatewayUuid() {
         return gatewayUuid;
     }
@@ -155,6 +175,14 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
 
     public void setWhere(String where) {
         this.where = where;
+    }
+
+    public String getType() {
+        throw new UnsupportedOperationException("method not implemented: use LightModel#getLightingType()");
+    }
+
+    public void setType(String type) {
+        throw new UnsupportedOperationException("method not implemented: use LightModel#setLightingType()");
     }
 
     public boolean isDimmer() {
@@ -182,4 +210,13 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public Lighting.Type getLightingType() {
+        return Lighting.Type.valueOf(this.type);
+    }
+
+    public void setLightingType(Lighting.Type lightingType) {
+        this.type = lightingType.name();
+    }
+
 }

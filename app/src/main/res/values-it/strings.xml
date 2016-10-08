@@ -88,6 +88,13 @@
     <string name="device_debug_label_invalid">Valore non valido</string>
     <string name="light_request">Richiesta</string>
     <string name="light_dimmer">Dimmer</string>
+    <string name="light_info_area">Valori consentiti: 00, 1−9, 100</string>
+    <string name="light_info_group">Valori consentiti: 1-255</string>
+    <string name="light_info_point_to_point">Dove = Area + Punto Luce</string>
+    <string name="light_label_general">Generale</string>
+    <string name="light_label_area">Area</string>
+    <string name="light_label_group">Gruppo</string>
+    <string name="light_label_point_to_point">Punto Luce</string>
     <string name="automation_request">Richiesta</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Esempio <i>http://192.168.1.100:2222/videostream.cgi</i>\nSe hai bisogno di aiuto per identificare l\'Url correttamente, leggi questa <a href='https://github.com/niqdev/ipcam-view/wiki'>guida</a></string>
