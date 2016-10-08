@@ -65,7 +65,7 @@ public class LightActivity extends AbstractDeviceActivity {
      * editTextLightWhere to be initialized to ""
      * the first time when initEditLight is invoked
      */
-    private boolean initLightTypeFirstTime = true;
+    protected boolean initLightTypeFirstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +166,9 @@ public class LightActivity extends AbstractDeviceActivity {
                 selectGateway(light.getGatewayUuid());
                 setFavourite(light.isFavourite());
             });
+        } else {
+            // default must be "Point to Point"
+            spinnerLightType.setSelection(3);
         }
     }
 
