@@ -110,7 +110,7 @@
     <string name="energy_instantaneous_power">Potenza Instantanea:</string>
     <string name="energy_daily_power">Potenza Giornaliera:</string>
     <string name="energy_monthly_power">Potenza Mensile:</string>
-    <string name="energy_info_best_effort">Il gateway non sempre risponde correttamente e alcuni valori potrebbero essere parziali o errati</string>
+    <string name="energy_info_best_effort">Il gateway saltuariamente non risponde correttamente e alcuni valori potrebbero essere parziali o errati.\nSi consiglia inoltre di tener questo componente separato dagli altri perché potrebbe rallentare al caricamento.</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

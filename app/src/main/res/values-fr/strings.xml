@@ -110,7 +110,7 @@
     <string name="energy_instantaneous_power">Puissance Instantanée:</string>
     <string name="energy_daily_power">Puissance Quotidienne:</string>
     <string name="energy_monthly_power">Puissance Mensuelle:</string>
-    <string name="energy_info_best_effort">La passerelle ne répond pas toujours correctement et certaines valeurs peut être partielle ou incorrecte</string>
+    <string name="energy_info_best_effort">La passerelle ne répond pas toujours correctement et certaines valeurs peut être partielle ou incorrecte.\nEn outre, vous devez garder ce composant séparé de l\'autre pour éviter les ralentissements.</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>
