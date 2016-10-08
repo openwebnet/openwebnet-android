@@ -28,31 +28,12 @@
             android:text="@string/light_request"
             android:textStyle="bold|italic" />
 
-        <LinearLayout
-            android:id="@+id/linearLayoutLightGeneral"
-            style="@style/message.linearLayout"
-            android:visibility="gone">
-
-            <com.github.openwebnet.view.custom.TextViewCustom
-                style="@style/message.textViewFontCustom"
-                android:text="@string/light_value_general"
-                app:font="inconsolata" />
-
-        </LinearLayout>
-
         <LinearLayout style="@style/message.linearLayout">
 
             <com.github.openwebnet.view.custom.TextViewCustom
-                android:id="@+id/textViewLightPrefixDefault"
+                android:id="@+id/textViewLightPrefix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_prefix_default"
-                app:font="inconsolata" />
-
-            <com.github.openwebnet.view.custom.TextViewCustom
-                android:id="@+id/textViewLightPrefixGroup"
-                style="@style/message.textViewFontCustom"
-                android:text="@string/light_prefix_group"
-                android:visibility="gone"
                 app:font="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
