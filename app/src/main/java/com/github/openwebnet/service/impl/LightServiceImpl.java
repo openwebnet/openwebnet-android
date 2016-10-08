@@ -78,7 +78,7 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
+            .flatMap(requestLightStatus(Lighting::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
 
@@ -86,8 +86,24 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestFavourites() {
         return findFavourites()
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
+            .flatMap(requestLightStatus(Lighting::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
+    }
+
+    // TODO improvement: group by gateway and for each gateway send all requests together
+    private Func1<LightModel, Observable<LightModel>> requestLightStatus(
+        Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
+
+        return light -> commonService.findClient(light.getGatewayUuid())
+            .send(request.call(light.getWhere()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(openSession -> handler.call(openSession, light))
+            .onErrorReturn(throwable -> {
+                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                // unreadable status
+                return light;
+            });
     }
 
     private Func2<OpenSession, LightModel, LightModel> handleResponse(LightModel.Status status) {
@@ -110,15 +126,16 @@ public class LightServiceImpl implements LightService {
     }
 
     private Func1<LightModel, Observable<LightModel>> requestLight(
-        Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
-        // TODO improvement: group by gateway and for each gateway send all requests together
+        Func2<String, Lighting.Type, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
+
         return light -> commonService.findClient(light.getGatewayUuid())
-            .send(request.call(light.getWhere()))
+            .send(request.call(light.getWhere(), light.getLightingType()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, light))
             .onErrorReturn(throwable -> {
-                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
+                log.warn("light={} | failing request={}", light.getUuid(),
+                    request.call(light.getWhere(), light.getLightingType()).getValue());
                 // unreadable status
                 return light;
             });
