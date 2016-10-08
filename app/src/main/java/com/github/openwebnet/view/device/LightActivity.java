@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
@@ -55,6 +56,9 @@ public class LightActivity extends AbstractDeviceActivity {
 
     @BindView(R.id.spinnerLightType)
     Spinner spinnerLightType;
+
+    @BindString(R.string.validation_bad_value)
+    String validationBadValue;
 
     private SparseArray<Lighting.Type> lightTypeArray;
 
@@ -113,6 +117,8 @@ public class LightActivity extends AbstractDeviceActivity {
         };
 
         Action1<String> initWhereValue = value -> {
+            editTextLightWhere.setError(null);
+
             // initialize all subsequent calls except the first time
             if (!initLightTypeFirstTime) {
                 editTextLightWhere.setText(value);
@@ -201,12 +207,25 @@ public class LightActivity extends AbstractDeviceActivity {
         return isValidRequired(editTextLightName) &&
             isValidRequired(editTextLightWhere) &&
             isValidLightType() &&
+            isValidWhereRange() &&
             isValidDeviceEnvironment() &&
             isValidDeviceGateway();
     }
 
     protected boolean isValidLightType() {
         return isValidRequired((TextView) spinnerLightType.getSelectedView());
+    }
+
+    private boolean isValidWhereRange() {
+        boolean isValid = Lighting.isValidRangeType(
+            utilityService.sanitizedText(editTextLightWhere),
+            getSelectedLightType()
+        );
+        if (!isValid) {
+            editTextLightWhere.setError(validationBadValue);
+            editTextLightWhere.requestFocus();
+        }
+        return isValid;
     }
 
     private LightModel parseLight() {
