@@ -78,7 +78,7 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLightStatus(Lighting::requestStatus, handleStatus))
+            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
 
@@ -86,23 +86,8 @@ public class LightServiceImpl implements LightService {
     public Observable<List<LightModel>> requestFavourites() {
         return findFavourites()
             .flatMapIterable(lightModels -> lightModels)
-            .flatMap(requestLightStatus(Lighting::requestStatus, handleStatus))
+            .flatMap(requestLight(Lighting::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
-    }
-
-    private Func1<LightModel, Observable<LightModel>> requestLightStatus(
-        Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
-
-        return light -> commonService.findClient(light.getGatewayUuid())
-            .send(request.call(light.getWhere()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(openSession -> handler.call(openSession, light))
-            .onErrorReturn(throwable -> {
-                log.warn("light={} | failing request={}", light.getUuid(), request.call(light.getWhere()).getValue());
-                // unreadable status
-                return light;
-            });
     }
 
     private Func2<OpenSession, LightModel, LightModel> handleResponse(LightModel.Status status) {
