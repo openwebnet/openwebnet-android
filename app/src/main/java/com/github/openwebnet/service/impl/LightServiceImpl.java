@@ -90,7 +90,6 @@ public class LightServiceImpl implements LightService {
             .collect(ArrayList::new, List::add);
     }
 
-    // TODO improvement: group by gateway and for each gateway send all requests together
     private Func1<LightModel, Observable<LightModel>> requestLightStatus(
         Func1<String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
 
