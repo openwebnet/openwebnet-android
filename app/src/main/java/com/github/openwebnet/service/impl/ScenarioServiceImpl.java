@@ -118,7 +118,7 @@ public class ScenarioServiceImpl implements ScenarioService {
 
     private Func1<ScenarioModel, Observable<ScenarioModel>> requestScenario(
         Func1<String, Scenario> request, Func2<OpenSession, ScenarioModel, ScenarioModel> handler) {
-        // TODO improvement: group by gateway and for each gateway send all requests together
+
         return scenario -> commonService.findClient(scenario.getGatewayUuid())
             .send(request.call(scenario.getWhere()))
             .subscribeOn(Schedulers.io())

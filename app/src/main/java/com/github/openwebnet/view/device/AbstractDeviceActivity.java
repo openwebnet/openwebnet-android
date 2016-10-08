@@ -197,6 +197,17 @@ public abstract class AbstractDeviceActivity extends AppCompatActivity {
         checkBoxDeviceFavourite.setChecked(checked);
     }
 
+    protected <S> Function<S, Integer> findSelectedItem(SparseArray<S> sparseArray) {
+        return type -> {
+            for (int i = 0; i < sparseArray.size(); i++) {
+                if (sparseArray.valueAt(i).equals(type)) {
+                    return i;
+                }
+            }
+            throw new IllegalStateException("unable to find an item");
+        };
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

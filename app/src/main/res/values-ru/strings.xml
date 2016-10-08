@@ -88,6 +88,13 @@
     <string name="device_debug_label_invalid">Значение некорректно</string>
     <string name="light_request">Запрос</string>
     <string name="light_dimmer">Диммер</string>
+    <string name="light_info_area">Допустимые значения: 00, 1−9, 100</string>
+    <string name="light_info_group">Допустимые значения: 1-255</string>
+    <string name="light_info_point_to_point">где: Область + свет Id</string>
+    <string name="light_label_general">Генеральная</string>
+    <string name="light_label_area">Область</string>
+    <string name="light_label_group">группа</string>
+    <string name="light_label_point_to_point">свет Id</string>
     <string name="automation_request">Запрос</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Пример <i>http://192.168.1.100:2222/videostream.cgi</i>\nЕсли вам необходима помощь для определения Url, воспользуйтесь данной<a href='https://github.com/niqdev/ipcam-view/wiki'>инструкцией</a></string>
@@ -103,7 +110,7 @@
     <string name="energy_instantaneous_power">мгновенная мощность:</string>
     <string name="energy_daily_power">Ежедневная мощность:</string>
     <string name="energy_monthly_power">Ежемесячная мощность:</string>
-    <string name="energy_info_best_effort">Шлюз не всегда реагирует должным образом а некоторые значения могут быть частичным или неправильным</string>
+    <string name="energy_info_best_effort">Шлюз не всегда реагирует должным образом а некоторые значения могут быть частичным или неправильным.\nКроме того, вы должны держать этот компонент отделен от другого, чтобы избежать замедлений.</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

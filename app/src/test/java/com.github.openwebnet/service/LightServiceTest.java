@@ -2,6 +2,7 @@ package com.github.openwebnet.service;
 
 import com.github.niqdev.openwebnet.OpenSession;
 import com.github.niqdev.openwebnet.OpenWebNet;
+import com.github.niqdev.openwebnet.message.Lighting;
 import com.github.niqdev.openwebnet.message.OpenMessage;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.OpenWebNetApplicationTest;
@@ -264,6 +265,7 @@ public class LightServiceTest {
             .gateway(GATEWAY_UUID)
             .name("light")
             .where("21")
+            .type(Lighting.Type.POINT_TO_POINT)
             .build();
     }
 

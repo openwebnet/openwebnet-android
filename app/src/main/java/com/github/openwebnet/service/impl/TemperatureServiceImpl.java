@@ -2,7 +2,6 @@ package com.github.openwebnet.service.impl;
 
 import com.github.niqdev.openwebnet.OpenSession;
 import com.github.niqdev.openwebnet.message.Heating;
-import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.repository.TemperatureRepository;

@@ -1,3 +1,8 @@
+#### v2.9.0 (October 8, 2016)
+
+- Lighting: handle types
+- Minor style changes
+
 #### v2.8.1 (October 2, 2016)
 
 - Fix Power Consumption

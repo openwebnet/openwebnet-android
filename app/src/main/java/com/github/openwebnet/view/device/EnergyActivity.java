@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.annimon.stream.function.Function;
 import com.github.niqdev.openwebnet.message.EnergyManagement;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -134,23 +133,14 @@ public class EnergyActivity extends AbstractDeviceActivity {
     }
 
     private void selectEnergyVersion(EnergyManagement.Version energyManagementVersion) {
-        Function<EnergyGroup, Integer> findSelectedIpcam = type -> {
-            for (int i = 0; i < energyVersionsArray.size(); i++) {
-                if (energyVersionsArray.valueAt(i).equals(type)) {
-                    return i;
-                }
-            }
-            throw new IllegalStateException("unable to find a valid group");
-        };
-
         switch (energyManagementVersion) {
             case MODEL_F520: case MODEL_F523: case MODEL_3522:
                 initEnergyGroup(EnergyGroup.VERSION_1);
-                spinnerEnergyVersion.setSelection(findSelectedIpcam.apply(EnergyGroup.VERSION_1));
+                spinnerEnergyVersion.setSelection(findSelectedItem(energyVersionsArray).apply(EnergyGroup.VERSION_1));
                 break;
             case MODEL_F522_A: case MODEL_F523_A:
                 initEnergyGroup(EnergyGroup.VERSION_2);
-                spinnerEnergyVersion.setSelection(findSelectedIpcam.apply(EnergyGroup.VERSION_2));
+                spinnerEnergyVersion.setSelection(findSelectedItem(energyVersionsArray).apply(EnergyGroup.VERSION_2));
                 break;
             default:
                 throw new IllegalArgumentException("invalid energy version");
@@ -192,17 +182,17 @@ public class EnergyActivity extends AbstractDeviceActivity {
     private boolean isValidEnergy() {
         return isValidRequired(editTextEnergyName) &&
             isValidRequired(editTextEnergyWhere) &&
-            isValidWhereRange(editTextEnergyWhere) &&
+            isValidWhereRange() &&
             isValidEnergyVersion() &&
             isValidDeviceEnvironment() &&
             isValidDeviceGateway();
     }
 
-    private boolean isValidWhereRange(EditText editText) {
+    private boolean isValidWhereRange() {
         int where = Integer.parseInt(utilityService.sanitizedText(editTextEnergyWhere));
         if (where < 1 || where > 255) {
-            editText.setError(validationBadValue);
-            editText.requestFocus();
+            editTextEnergyWhere.setError(validationBadValue);
+            editTextEnergyWhere.requestFocus();
             return false;
         }
         return true;

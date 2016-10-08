@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="October 2, 2016" versionName="2.8.1">
+    <changelogversion changeDate="October 8, 2016" versionName="2.9.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Fix Power Consumption]]>
+            <![CDATA[<b><font color=red>New!</font></b> Lighting: handle types]]>
         </changelogtext>
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
         </changelogtext>
     </changelogversion>
 
+    <changelogversion changeDate="October 2, 2016" versionName="2.8.1">
+        <changelogtext>Fix Power Consumption</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="October 2, 2016" versionName="2.8.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add Power Consumption feature]]>
-        </changelogtext>
+        <changelogtext>Add Power Consumption feature</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="September 11, 2016" versionName="2.7.2">
