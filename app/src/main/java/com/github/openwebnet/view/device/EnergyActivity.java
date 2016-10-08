@@ -182,17 +182,17 @@ public class EnergyActivity extends AbstractDeviceActivity {
     private boolean isValidEnergy() {
         return isValidRequired(editTextEnergyName) &&
             isValidRequired(editTextEnergyWhere) &&
-            isValidWhereRange(editTextEnergyWhere) &&
+            isValidWhereRange() &&
             isValidEnergyVersion() &&
             isValidDeviceEnvironment() &&
             isValidDeviceGateway();
     }
 
-    private boolean isValidWhereRange(EditText editText) {
+    private boolean isValidWhereRange() {
         int where = Integer.parseInt(utilityService.sanitizedText(editTextEnergyWhere));
         if (where < 1 || where > 255) {
-            editText.setError(validationBadValue);
-            editText.requestFocus();
+            editTextEnergyWhere.setError(validationBadValue);
+            editTextEnergyWhere.requestFocus();
             return false;
         }
         return true;
