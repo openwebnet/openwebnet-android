@@ -84,6 +84,9 @@ public class LightActivity extends AbstractDeviceActivity {
         initSpinnerGateway();
         initSpinnerLightType();
         initEditLight();
+
+        // TODO not implemented
+        checkBoxLightDimmer.setVisibility(View.GONE);
     }
 
     private void initSpinnerLightType() {
