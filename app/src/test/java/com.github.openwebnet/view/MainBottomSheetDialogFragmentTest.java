@@ -122,7 +122,8 @@ public class MainBottomSheetDialogFragmentTest {
         assertTrue("invalid instance type", gridView.getAdapter() instanceof BottomSheetDialogAdapter);
         BottomSheetDialogAdapter adapter = (BottomSheetDialogAdapter) gridView.getAdapter();
         MenuItem item = (MenuItem) adapter.getItem(position);
-        assertEquals("invalid title", activity.getResources().getString(title), item.getTitle());
+        assertEquals("invalid title", activity.getResources().getString(title),
+            item.getTitle().toString().replace("\\n", " "));
 
         gridView.performItemClick(item.getActionView(), position, gridView.getAdapter().getItemId(position));
 
