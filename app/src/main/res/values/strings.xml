@@ -7,7 +7,7 @@
     <string name="activity_device">Device</string>
     <string name="activity_light">Light</string>
     <string name="activity_automation">Automation</string>
-    <string name="activity_ipcam">Ip Camera</string>
+    <string name="activity_ipcam">IP Camera</string>
     <string name="activity_temperature">Temperature</string>
     <string name="activity_scenario">Scenario</string>
     <string name="activity_energy">Power Consumption</string>
@@ -76,7 +76,7 @@
     <string name="bs_light">Light</string>
     <string name="bs_automation">Automation</string>
     <string name="bs_temperature">Temperature</string>
-    <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_ipcam">IP Camera</string>
     <string name="bs_scenario">Scenario</string>
     <string name="bs_energy">Power\nConsumption</string>
     <string name="bs_sound">Sound\nSystem</string>
