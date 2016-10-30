@@ -37,4 +37,4 @@ before_script:
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
 
 script:
-  - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls
+  - ./gradlew clean build --stacktrace connectedCheck jacocoTestReportDebug coveralls
