@@ -73,6 +73,7 @@
     <string name="bs_ipcam">Caméra IP</string>
     <string name="bs_scenario">Scénario</string>
     <string name="bs_energy">Consommation\nd\'énergie</string>
+    <string name="bs_sound">Systeme\nAudio</string>
 
     <string name="list_empty">Aucun élément trouvé</string>
     <string name="device_where">Où</string>

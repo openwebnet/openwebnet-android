@@ -79,6 +79,7 @@
     <string name="bs_ipcam">Ip Camera</string>
     <string name="bs_scenario">Scenario</string>
     <string name="bs_energy">Power\nConsumption</string>
+    <string name="bs_sound">Sound\nSystem</string>
 
     <string name="fa_asterisk" translatable="false">&#xf069;</string>
     <string name="fa_hashtag" translatable="false">&#xf292;</string>
