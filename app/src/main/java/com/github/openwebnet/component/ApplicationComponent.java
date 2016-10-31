@@ -42,6 +42,7 @@ import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.IpcamStreamActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.device.ScenarioActivity;
+import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
@@ -71,6 +72,7 @@ public interface ApplicationComponent {
     void inject(DeviceListFragment fragment);
     void inject(ScenarioActivity activity);
     void inject(EnergyActivity activity);
+    void inject(SoundActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);

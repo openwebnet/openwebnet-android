@@ -11,6 +11,7 @@
     <string name="activity_temperature">Temperature</string>
     <string name="activity_scenario">Scenario</string>
     <string name="activity_energy">Power Consumption</string>
+    <string name="activity_sound">Sound System</string>
     <string name="activity_settings">Settings</string>
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
@@ -144,6 +145,22 @@
     <string name="energy_power_unit" translatable="false">Watt</string>
     <string name="energy_none" translatable="false">--</string>
     <string name="energy_info_best_effort">The gateway does not always respond properly and some values ​​may be partial or incorrect.\nMoreover you should keep this component separated from the other to avoid slowdowns.</string>
+    <string name="sound_request">Request Turn On</string>
+    <string name="sound_prefix_stereo" translatable="false">*16*3*</string>
+    <string name="sound_prefix_stereo_group" translatable="false">*16*3*#</string>
+    <string name="sound_suffix" translatable="false">##</string>
+    <string name="sound_value_general_amplifier_stereo" translatable="false">*16*3*0##</string>
+    <string name="sound_value_general_source_stereo" translatable="false">*16*3*100##</string>
+    <string name="sound_info_amplifier_group">Allowed values: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Allowed values: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Allowed values: 101&#8211;109</string>
+    <!-- sound base band not used -->
+    <!--
+    <string name="sound_prefix_bb" translatable="false">*16*0*</string>
+    <string name="sound_prefix_bb_group" translatable="false">*16*0*#</string>
+    <string name="sound_value_general_amplifier_bb" translatable="false">*16*0*0##</string>
+    <string name="sound_value_general_source_bb" translatable="false">*16*0*100##</string>
+    -->
 
     <string name="card_device_debug_delay">Delay:</string>
     <string name="card_device_debug_timeunit">milliseconds</string>

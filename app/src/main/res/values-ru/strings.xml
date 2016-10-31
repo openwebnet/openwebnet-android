@@ -8,6 +8,7 @@
     <string name="activity_temperature">Температура</string>
     <string name="activity_scenario">Сценарий</string>
     <string name="activity_energy">Потребление энергии</string>
+    <string name="activity_sound">Аудиосистема</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -112,6 +113,10 @@
     <string name="energy_daily_power">Ежедневная мощность:</string>
     <string name="energy_monthly_power">Ежемесячная мощность:</string>
     <string name="energy_info_best_effort">Шлюз не всегда реагирует должным образом а некоторые значения могут быть частичным или неправильным.\nКроме того, вы должны держать этот компонент отделен от другого, чтобы избежать замедлений.</string>
+    <string name="sound_request">Запрос</string>
+    <string name="sound_info_amplifier_group">Допустимые значения: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Допустимые значения: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Допустимые значения: 101&#8211;109</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

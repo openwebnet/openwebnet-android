@@ -8,6 +8,7 @@
     <string name="activity_temperature">Temperatura</string>
     <string name="activity_scenario">Scenario</string>
     <string name="activity_energy">Consumo Energetico</string>
+    <string name="activity_sound">Diffusione Sonora</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -112,6 +113,10 @@
     <string name="energy_daily_power">Potenza Giornaliera:</string>
     <string name="energy_monthly_power">Potenza Mensile:</string>
     <string name="energy_info_best_effort">Il gateway saltuariamente non risponde correttamente e alcuni valori potrebbero essere parziali o errati.\nSi consiglia inoltre di tener questo componente separato dagli altri perché potrebbe rallentare al caricamento.</string>
+    <string name="sound_request">Richiesta</string>
+    <string name="sound_info_amplifier_group">Valori consentiti: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Valori consentiti: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Valori consentiti: 101&#8211;109</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

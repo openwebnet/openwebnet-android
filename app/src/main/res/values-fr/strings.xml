@@ -8,6 +8,7 @@
     <string name="activity_temperature">Température</string>
     <string name="activity_scenario">Scénario</string>
     <string name="activity_energy">Consommation d\'énergie</string>
+    <string name="activity_sound">Systeme Audio</string>
     <string name="activity_settings">Paramètres</string>
 
     <string name="menu_save">Enregistrer</string>
@@ -112,6 +113,10 @@
     <string name="energy_daily_power">Puissance Quotidienne:</string>
     <string name="energy_monthly_power">Puissance Mensuelle:</string>
     <string name="energy_info_best_effort">La passerelle ne répond pas toujours correctement et certaines valeurs peut être partielle ou incorrecte.\nEn outre, vous devez garder ce composant séparé de l\'autre pour éviter les ralentissements.</string>
+    <string name="sound_request">Requête</string>
+    <string name="sound_info_amplifier_group">Les valeurs autorisées: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Les valeurs autorisées: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Les valeurs autorisées: 101&#8211;109</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>
