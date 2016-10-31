@@ -15,6 +15,7 @@ import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
+import com.github.openwebnet.repository.impl.SoundRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
@@ -26,6 +27,7 @@ import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.service.impl.ScenarioServiceImpl;
+import com.github.openwebnet.service.impl.SoundServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 import com.github.openwebnet.view.MainActivity;
@@ -91,6 +93,7 @@ public interface ApplicationComponent {
     void inject(TemperatureServiceImpl temperatureService);
     void inject(ScenarioServiceImpl scenarioService);
     void inject(EnergyServiceImpl energyService);
+    void inject(SoundServiceImpl soundService);
 
     // database
     void inject(DatabaseRealm databaseRealm);
@@ -106,5 +109,6 @@ public interface ApplicationComponent {
     void inject(TemperatureRepositoryImpl repository);
     void inject(ScenarioRepositoryImpl repository);
     void inject(EnergyRepositoryImpl repository);
+    void inject(SoundRepositoryImpl repository);
 
 }
