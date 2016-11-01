@@ -19,11 +19,15 @@ android:
     - build-tools-24.0.3
     - android-24
     - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
+    - extra-google-google_play_services
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
   licenses:
     - 'android-sdk-preview-license-.+'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+    - 'intel-android-extra-license.+'
 
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
