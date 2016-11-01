@@ -203,8 +203,6 @@ public class NavigationViewItemSelectedListenerTest {
         return environment;
     }
 
-    // skip: robolectric issue
-    @Ignore
     @Test
     public void onNavigationItemSelected_shouldSelectDefault() {
         int MENU_ENVIRONMENT_POSITION = 102;
