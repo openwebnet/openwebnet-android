@@ -90,8 +90,8 @@
     <string name="device_debug_label_invalid">Valeur invalide</string>
     <string name="light_request">Requête</string>
     <string name="light_dimmer">Variateur</string>
-    <string name="light_info_area">Les valeurs autorisées: 00, 1−9, 100</string>
-    <string name="light_info_group">Les valeurs autorisées: 1-255</string>
+    <string name="light_info_area">Les valeurs autorisées: 00, 1&#8211;9, 100</string>
+    <string name="light_info_group">Les valeurs autorisées: 1&#8211;255</string>
     <string name="light_info_point_to_point">Où = Zone + Id lumière</string>
     <string name="light_label_general">Général</string>
     <string name="light_label_area">Zone</string>
@@ -117,6 +117,11 @@
     <string name="sound_info_amplifier_group">Les valeurs autorisées: 0&#8211;9</string>
     <string name="sound_info_amplifier_point_to_point">Les valeurs autorisées: 01&#8211;99</string>
     <string name="sound_info_source_point_to_point">Les valeurs autorisées: 101&#8211;109</string>
+    <string name="sound_label_amplifier_general">Amplificateur: général</string>
+    <string name="sound_label_amplifier_group">Amplificateur: groupe</string>
+    <string name="sound_label_amplifier_point_to_point">Amplificateur: point audio</string>
+    <string name="sound_label_source_general">Source: général</string>
+    <string name="sound_label_source_point_to_point">Source: point audio</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>

@@ -27,7 +27,9 @@
             android:text="@string/sound_request"
             android:textStyle="bold|italic" />
 
-        <LinearLayout style="@style/message.linearLayout">
+        <LinearLayout
+            style="@style/message.linearLayout"
+            android:layout_marginBottom="6dp">
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 android:id="@+id/textViewSoundPrefix"
@@ -54,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text=""
             android:textStyle="italic"
             android:visibility="gone" />
@@ -65,8 +67,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            android:visibility="gone" />
+            android:layout_marginTop="8dp" />
 
         <Spinner
             android:id="@+id/spinnerSoundType"
