@@ -4,6 +4,10 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 apply from: '../coverage.gradle'
 
+// TODO watch this issues
+// travis android license https://github.com/travis-ci/travis-ci/issues/6801
+// robolectric activity https://github.com/robolectric/robolectric/issues/1737
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"

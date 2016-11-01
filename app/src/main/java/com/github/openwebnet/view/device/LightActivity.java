@@ -69,7 +69,7 @@ public class LightActivity extends AbstractDeviceActivity {
      * editTextLightWhere to be initialized to ""
      * the first time when initEditLight is invoked
      */
-    protected boolean initLightTypeFirstTime = true;
+    private boolean initLightTypeFirstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,7 @@ public class LightActivity extends AbstractDeviceActivity {
             case GENERAL:
                 textViewLightPrefix.setText(getString(R.string.light_value_general));
                 initView.call(View.GONE);
+                textViewLightInfo.setVisibility(View.INVISIBLE);
                 initWhereValue.call(Lighting.WHERE_GENERAL_VALUE);
                 break;
             case AREA:
