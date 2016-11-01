@@ -26,6 +26,7 @@ import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.device.ScenarioActivity;
+import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -153,27 +154,33 @@ public class MainBottomSheetDialogFragmentTest {
     }
 
     @Test
+    public void onItemClick_shouldStartSoundActivity() {
+        setupFragment();
+        expectStartActivity(3, R.string.activity_sound, SoundActivity.class);
+    }
+
+    @Test
     public void onItemClick_shouldStartEnergyActivity() {
         setupFragment();
-        expectStartActivity(3, R.string.activity_energy, EnergyActivity.class);
+        expectStartActivity(4, R.string.activity_energy, EnergyActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartScenarioActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_scenario, ScenarioActivity.class);
+        expectStartActivity(5, R.string.activity_scenario, ScenarioActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartDeviceActivity() {
         setupFragment();
-        expectStartActivity(5, R.string.activity_device, DeviceActivity.class);
+        expectStartActivity(6, R.string.activity_device, DeviceActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartIpcamActivity() {
         setupFragment();
-        expectStartActivity(6, R.string.activity_ipcam, IpcamActivity.class);
+        expectStartActivity(7, R.string.activity_ipcam, IpcamActivity.class);
     }
 
 }
