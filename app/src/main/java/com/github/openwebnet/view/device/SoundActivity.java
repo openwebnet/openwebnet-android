@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.github.niqdev.openwebnet.message.SoundSystem;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.service.SoundService;
 import com.google.common.collect.Lists;
 
@@ -167,11 +169,84 @@ public class SoundActivity extends AbstractDeviceActivity {
     }
 
     private void initEditSound() {
-        // TODO
+        soundUuid = getIntent().getStringExtra(RealmModel.FIELD_UUID);
+        log.debug("initEditSound: {}", soundUuid);
+        if (soundUuid != null) {
+            soundService.findById(soundUuid).subscribe(sound -> {
+                spinnerSoundType.setSelection(findSelectedItem(soundTypeArray).apply(sound.getSoundSystemType()));
+
+                editTextSoundName.setText(String.valueOf(sound.getName()));
+                editTextSoundWhere.setText(String.valueOf(sound.getWhere()));
+
+                selectEnvironment(sound.getEnvironmentId());
+                selectGateway(sound.getGatewayUuid());
+                setFavourite(sound.isFavourite());
+            });
+        } else {
+            // default must be AMPLIFIER_P2P
+            spinnerSoundType.setSelection(2);
+        }
+    }
+
+    protected SoundSystem.Type getSelectedSoundType() {
+        return soundTypeArray.get(spinnerSoundType.getSelectedItemPosition());
     }
 
     @Override
     protected void onMenuSave() {
+        log.debug("name: {}", editTextSoundName.getText());
+        log.debug("where: {}", editTextSoundWhere.getText());
+        log.debug("type: {}", getSelectedSoundType());
+        log.debug("environment: {}", getSelectedEnvironment());
+        log.debug("gateway: {}", getSelectedGateway());
+        log.debug("favourite: {}", isFavourite());
 
+        if (isValidSound()) {
+            if (soundUuid == null) {
+                soundService.add(parseSound()).subscribe(uuid -> finish());
+            } else {
+                soundService.update(parseSound())
+                    .doOnCompleted(this::finish)
+                    .subscribe();
+            }
+        }
+    }
+
+    private boolean isValidSound() {
+        return isValidRequired(editTextSoundName) &&
+            isValidRequired(editTextSoundWhere) &&
+            isValidSoundType() &&
+            isValidWhereRange() &&
+            isValidDeviceEnvironment() &&
+            isValidDeviceGateway();
+    }
+
+    protected boolean isValidSoundType() {
+        return isValidRequired((TextView) spinnerSoundType.getSelectedView());
+    }
+
+    private boolean isValidWhereRange() {
+        boolean isValid = SoundSystem.Type.isValid(
+            getSelectedSoundType(),
+            utilityService.sanitizedText(editTextSoundWhere)
+        );
+        if (!isValid) {
+            editTextSoundWhere.setError(validationBadValue);
+            editTextSoundWhere.requestFocus();
+        }
+        return isValid;
+    }
+
+    private SoundModel parseSound() {
+        return (soundUuid == null ? SoundModel.addBuilder() : SoundModel.updateBuilder(soundUuid))
+            .name(utilityService.sanitizedText(editTextSoundName))
+            .where(editTextSoundWhere.getText().toString())
+            // default
+            .source(SoundSystem.Source.STEREO_CHANNEL)
+            .type(getSelectedSoundType())
+            .environment(getSelectedEnvironment().getId())
+            .gateway(getSelectedGateway().getUuid())
+            .favourite(isFavourite())
+            .build();
     }
 }
