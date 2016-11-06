@@ -1,5 +1,7 @@
 package com.github.openwebnet.service.impl;
 
+import com.github.niqdev.openwebnet.OpenSession;
+import com.github.niqdev.openwebnet.message.SoundSystem;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.repository.SoundRepository;
@@ -9,11 +11,20 @@ import com.github.openwebnet.service.SoundService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.functions.Func3;
+import rx.schedulers.Schedulers;
+
+import static com.github.openwebnet.model.SoundModel.Status.OFF;
+import static com.github.openwebnet.model.SoundModel.Status.ON;
 
 public class SoundServiceImpl implements SoundService {
 
@@ -59,24 +70,77 @@ public class SoundServiceImpl implements SoundService {
         return soundRepository.findFavourites();
     }
 
+    private Func2<OpenSession, SoundModel, SoundModel> handleStatus = (openSession, sound) -> {
+        SoundSystem.handleStatus(() -> sound.setStatus(ON), () -> sound.setStatus(OFF)).call(openSession);
+        return sound;
+    };
+
     @Override
     public Observable<List<SoundModel>> requestByEnvironment(Integer id) {
-        throw new UnsupportedOperationException("TODO");
+        return findByEnvironment(id)
+            .flatMapIterable(soundModels -> soundModels)
+            .flatMap(requestSoundStatus(SoundSystem::requestStatus, handleStatus))
+            .collect(ArrayList::new, List::add);
     }
 
     @Override
     public Observable<List<SoundModel>> requestFavourites() {
-        throw new UnsupportedOperationException("TODO");
+        return findFavourites()
+            .flatMapIterable(soundModels -> soundModels)
+            .flatMap(requestSoundStatus(SoundSystem::requestStatus, handleStatus))
+            .collect(ArrayList::new, List::add);
+    }
+
+    private Func1<SoundModel, Observable<SoundModel>> requestSoundStatus(
+        Func2<String, SoundSystem.Type, SoundSystem> request, Func2<OpenSession, SoundModel, SoundModel> handler) {
+
+        return sound -> commonService.findClient(sound.getGatewayUuid())
+            .send(request.call(sound.getWhere(), sound.getSoundSystemType()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(openSession -> handler.call(openSession, sound))
+            .onErrorReturn(throwable -> {
+                log.warn("sound={} | failing request={}", sound.getUuid(),
+                    request.call(sound.getWhere(), sound.getSoundSystemType()).getValue());
+                // unreadable status
+                return sound;
+            });
+    }
+
+    private Func2<OpenSession, SoundModel, SoundModel> handleResponse(SoundModel.Status status) {
+        return (openSession, sound) -> {
+            SoundSystem.handleResponse(() ->
+                sound.setStatus(status), () -> sound.setStatus(null))
+                .call(openSession);
+            return sound;
+        };
     }
 
     @Override
     public Observable<SoundModel> turnOn(SoundModel sound) {
-        throw new UnsupportedOperationException("TODO");
+        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOn, handleResponse(ON)));
     }
 
     @Override
     public Observable<SoundModel> turnOff(SoundModel sound) {
-        throw new UnsupportedOperationException("TODO");
+        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOff, handleResponse(OFF)));
+    }
+
+    private Func1<SoundModel, Observable<SoundModel>> requestSound(
+        Func3<String, SoundSystem.Type, SoundSystem.Source, SoundSystem> request,
+        Func2<OpenSession, SoundModel, SoundModel> handler) {
+
+        return sound -> commonService.findClient(sound.getGatewayUuid())
+            .send(request.call(sound.getWhere(), sound.getSoundSystemType(), sound.getSoundSystemSource()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(openSession -> handler.call(openSession, sound))
+            .onErrorReturn(throwable -> {
+                log.warn("sound={} | failing request={}", sound.getUuid(),
+                    request.call(sound.getWhere(), sound.getSoundSystemType(), sound.getSoundSystemSource()).getValue());
+                // unreadable status
+                return sound;
+            });
     }
 
 }

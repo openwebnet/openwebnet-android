@@ -19,6 +19,7 @@ android {
         versionCode currentVersionCode
         versionName currentVersionName
         multiDexEnabled true
+        //vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {

@@ -215,18 +215,18 @@ public class SoundModel extends RealmObject implements RealmModel, DomoticModel 
     }
 
     public SoundSystem.Source getSoundSystemSource() {
-        return soundSystemSource;
+        return SoundSystem.Source.valueOf(this.source);
     }
 
     public void setSoundSystemSource(SoundSystem.Source soundSystemSource) {
-        this.soundSystemSource = soundSystemSource;
+        this.source = soundSystemSource.name();
     }
 
     public SoundSystem.Type getSoundSystemType() {
-        return soundSystemType;
+        return SoundSystem.Type.valueOf(this.type);
     }
 
     public void setSoundSystemType(SoundSystem.Type soundSystemType) {
-        this.soundSystemType = soundSystemType;
+        this.type = soundSystemType.name();
     }
 }
