@@ -31,7 +31,7 @@
         android:layout_toLeftOf="@id/imageButtonCardSoundOn"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:visibility="visible"
-        app:srcCompat="@drawable/volume_off"
+        app:srcCompat="@drawable/volume_low"
         tools:ignore="MissingPrefix" />
 
 </RelativeLayout>
