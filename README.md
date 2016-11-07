@@ -13,6 +13,7 @@ Manages:
 - Lighting
 - Automation
 - Temperature
+- Sound System
 - Scenario
 - Power Consumption
 - any OpenWebNet frame/message
@@ -27,7 +28,7 @@ Database encrypted to increase security.
 This Android application is an unofficial free and Open Source client under MIT license.
 
 If you like this app and find it useful please consider making a donation. Some possible future improvements:
-- Sound System / Radio
+- Radio
 - Quick search and sorting
 - Backup / Import / Export configuration
 
