@@ -5,6 +5,9 @@ apply plugin: 'com.github.kt3k.coveralls'
 
 junitJacoco {
     //jacocoVersion = '0.7.6.201602180812'
+    excludes = [
+        '**/iabutil/**'
+    ]
 }
 
 coveralls {
