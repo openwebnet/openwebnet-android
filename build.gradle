@@ -32,8 +32,8 @@ allprojects {
 
     // CURRENT APP VERSION
     project.ext {
-        currentVersionCode = 27
-        currentVersionName = "2.9.0"
+        currentVersionCode = 28
+        currentVersionName = "2.10.0"
     }
 }
 

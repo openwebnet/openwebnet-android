@@ -13,6 +13,7 @@ Manages:
 - Lighting
 - Automation
 - Temperature
+- Sound System
 - Power Consumption
 - Scenario
 - any OpenWebNet frame/message
@@ -29,7 +30,7 @@ This Android application is an unofficial free and Open Source client under MIT 
 All source code is available online https://github.com/openwebnet/openwebnet-android
 
 If you like this app and find it useful please consider making a donation. Some possible future improvements:
-- Sound System / Radio
+- Radio
 - Quick search and sorting
 - Backup / Import / Export configuration
 

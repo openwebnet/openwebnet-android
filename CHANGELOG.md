@@ -1,3 +1,8 @@
+#### v2.10.0 (November 7, 2016)
+
+- Add Sound System
+- Minor style changes
+
 #### v2.9.0 (October 8, 2016)
 
 - Lighting: handle types
