@@ -13,6 +13,10 @@
         android:icon="@drawable/thermometer"
         android:title="@string/bs_temperature"/>
     <item
+        android:id="@+id/bs_add_sound"
+        android:icon="@drawable/music_note"
+        android:title="@string/bs_sound"/>
+    <item
         android:id="@+id/bs_add_energy"
         android:icon="@drawable/counter"
         android:title="@string/bs_energy"/>

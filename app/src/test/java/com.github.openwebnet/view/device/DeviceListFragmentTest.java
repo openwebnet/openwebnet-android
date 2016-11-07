@@ -13,15 +13,21 @@ import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.ScenarioModel;
+import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.google.common.collect.Lists;
 
@@ -76,6 +82,15 @@ public class DeviceListFragmentTest {
     @Inject
     DeviceService deviceService;
 
+    @Inject
+    ScenarioService scenarioService;
+
+    @Inject
+    EnergyService energyService;
+
+    @Inject
+    SoundService soundService;
+
     @Before
     public void setup() {
         ApplicationComponentTest applicationComponentTest = DaggerApplicationComponentTest.builder()
@@ -123,6 +138,9 @@ public class DeviceListFragmentTest {
         when(lightService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<LightModel>>empty());
         when(automationService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<AutomationModel>>empty());
         when(deviceService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<DeviceModel>>empty());
+        when(scenarioService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<ScenarioModel>>empty());
+        when(energyService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<EnergyModel>>empty());
+        when(soundService.requestByEnvironment(ENVIRONMENT)).thenReturn(Observable.<List<SoundModel>>empty());
 
         setupFragment(ENVIRONMENT);
 
@@ -131,6 +149,9 @@ public class DeviceListFragmentTest {
         verify(lightService).requestByEnvironment(ENVIRONMENT);
         verify(automationService).requestByEnvironment(ENVIRONMENT);
         verify(deviceService).requestByEnvironment(ENVIRONMENT);
+        verify(scenarioService).requestByEnvironment(ENVIRONMENT);
+        verify(energyService).requestByEnvironment(ENVIRONMENT);
+        verify(soundService).requestByEnvironment(ENVIRONMENT);
     }
 
     @Test
@@ -140,6 +161,9 @@ public class DeviceListFragmentTest {
         when(lightService.requestFavourites()).thenReturn(Observable.<List<LightModel>>empty());
         when(automationService.requestFavourites()).thenReturn(Observable.<List<AutomationModel>>empty());
         when(deviceService.requestFavourites()).thenReturn(Observable.<List<DeviceModel>>empty());
+        when(scenarioService.requestFavourites()).thenReturn(Observable.<List<ScenarioModel>>empty());
+        when(energyService.requestFavourites()).thenReturn(Observable.<List<EnergyModel>>empty());
+        when(soundService.requestFavourites()).thenReturn(Observable.<List<SoundModel>>empty());
 
         setupFragment(MENU_FAVOURITE);
 
@@ -148,6 +172,9 @@ public class DeviceListFragmentTest {
         verify(lightService).requestFavourites();
         verify(automationService).requestFavourites();
         verify(deviceService).requestFavourites();
+        verify(scenarioService).requestFavourites();
+        verify(energyService).requestFavourites();
+        verify(soundService).requestFavourites();
     }
 
 }

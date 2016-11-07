@@ -13,6 +13,7 @@ Gère:
 - Éclairage
 - Automatisme
 - Température
+- Système audio
 - Consommation d'énergie
 - Scénario
 - tout OpenWebNet message
@@ -29,7 +30,7 @@ Cette application Android est un client Open Source non officiel distribué sous
 L'intégralité du code source est disponible en ligne: https://github.com/openwebnet/openwebnet-android
 
 Si vous aimez cette application et sera utile s'il vous plaît envisager de faire un don. Quelques améliorations futures possibles:
-- Système audio / Radio
+- Radio
 - Recherche rapide et le tri
 - Sauvegarde / Importation / Exportation des configurations
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        layout="@layout/card_common_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCardSoundOn"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        app:srcCompat="@drawable/volume_high"
+        tools:ignore="MissingPrefix" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCardSoundOff"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardSoundOn"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="visible"
+        app:srcCompat="@drawable/volume_low"
+        tools:ignore="MissingPrefix" />
+
+</RelativeLayout>
