@@ -31,6 +31,7 @@ import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.model.ScenarioModel;
+import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
@@ -41,6 +42,7 @@ import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
@@ -88,6 +90,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     EnergyService energyService;
+
+    @Inject
+    SoundService soundService;
 
     @Inject
     PreferenceService preferenceService;
@@ -338,6 +343,36 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      *
      */
+    public static class SoundViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 800;
+
+        @BindColor(R.color.amber)
+        int colorStatusOn;
+        @BindColor(R.color.white)
+        int colorStatusOff;
+
+        @BindView(R.id.cardViewSound)
+        CardView cardViewSound;
+
+        @BindView(R.id.textViewCardSoundTitle)
+        TextView textViewCardSoundTitle;
+
+        @BindView(R.id.imageButtonCardSoundOff)
+        ImageButton imageButtonCardSoundOff;
+
+        @BindView(R.id.imageButtonCardSoundOn)
+        ImageButton imageButtonCardSoundOn;
+
+        public SoundViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
     public static class CommonViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageButtonCardFavourite)
@@ -393,6 +428,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof EnergyModel) {
             return EnergyViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof SoundModel) {
+            return SoundViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -420,6 +458,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case EnergyViewHolder.VIEW_TYPE:
                 return new EnergyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_energy, parent, false));
+            case SoundViewHolder.VIEW_TYPE:
+                return new SoundViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_sound, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -451,6 +492,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case EnergyViewHolder.VIEW_TYPE:
                 initCardEnergy((EnergyViewHolder) holder, (EnergyModel) mItems.get(position));
+                break;
+            case SoundViewHolder.VIEW_TYPE:
+                initCardSound((SoundViewHolder) holder, (SoundModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -820,6 +864,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         scenarioService.stop(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
     }
 
+    /* Energy */
+
     private void initCardEnergy(EnergyViewHolder holder, EnergyModel energy) {
         holder.textViewCardEnergyTitle.setText(energy.getName());
 
@@ -849,6 +895,60 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateEnergy.call(holder.textViewEnergyInstantaneousPower, energy.getInstantaneousPower());
         updateEnergy.call(holder.textViewEnergyDailyPower, energy.getDailyPower());
         updateEnergy.call(holder.textViewEnergyMonthlyPower, energy.getMonthlyPower());
+    }
+
+    /* Sound */
+
+    private void initCardSound(SoundViewHolder holder, SoundModel sound) {
+        holder.textViewCardSoundTitle.setText(sound.getName());
+
+        updateFavourite(holder, sound.isFavourite());
+        onFavouriteChange(holder, sound, soundService);
+        updateSoundStatus(holder, sound.getStatus());
+
+        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
+        holder.imageButtonCardSoundOn.setOnClickListener(v -> turnSoundOn(holder, sound));
+
+        onMenuClick(holder, soundService, sound.getUuid(), SoundActivity.class);
+    }
+
+    private void updateSoundStatus(SoundViewHolder holder, SoundModel.Status status) {
+        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
+        holder.imageButtonCardSoundOn.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        if (status == null) {
+            log.warn("sound status is null: unable to update");
+            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardSoundOn.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        switch (status) {
+            case ON: holder.cardViewSound.setCardBackgroundColor(holder.colorStatusOn); break;
+            case OFF: holder.cardViewSound.setCardBackgroundColor(holder.colorStatusOff); break;
+        }
+    }
+
+    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
+        log.debug("turn sound off {}", sound.getUuid());
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to turn off");
+            return;
+        }
+
+        Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
+        soundService.turnOff(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+    }
+
+    private void turnSoundOn(SoundViewHolder holder, SoundModel sound) {
+        log.debug("turn sound on {}", sound.getUuid());
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to turn on");
+            return;
+        }
+
+        Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
+        soundService.turnOn(sound).doOnCompleted(updateSoundStatusAction).subscribe();
     }
 
     /* commons */

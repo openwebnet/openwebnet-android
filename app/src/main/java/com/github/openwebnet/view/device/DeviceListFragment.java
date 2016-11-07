@@ -21,6 +21,7 @@ import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.ScenarioModel;
+import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
@@ -28,6 +29,7 @@ import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Iterables;
@@ -82,6 +84,9 @@ public class DeviceListFragment extends Fragment {
 
     @Inject
     EnergyService energyService;
+
+    @Inject
+    SoundService soundService;
 
     private Unbinder unbinder;
 
@@ -190,12 +195,15 @@ public class DeviceListFragment extends Fragment {
         Observable<List<ScenarioModel>> requestScenarios = isFavouriteMenu ? scenarioService.requestFavourites() :
             scenarioService.requestByEnvironment(environmentId);
 
+        Observable<List<SoundModel>> requestSounds = isFavouriteMenu ? soundService.requestFavourites() :
+            soundService.requestByEnvironment(environmentId);
+
         Observable<List<DeviceModel>> requestDevices = isFavouriteMenu ? deviceService.requestFavourites() :
             deviceService.requestByEnvironment(environmentId);
 
-        Observable.zip(findIpcams, requestTemperatures, requestEnergies, requestLights, requestAutomations, requestScenarios, requestDevices,
-            (ipcams, temperatures, energies, lights, automations, scenarios, devices) ->
-                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, energies, lights, automations, scenarios, devices)))
+        Observable.zip(findIpcams, requestTemperatures, requestEnergies, requestLights, requestAutomations, requestScenarios, requestSounds, requestDevices,
+            (ipcams, temperatures, energies, lights, automations, scenarios, sounds, devices) ->
+                Lists.<DomoticModel>newArrayList(Iterables.concat(ipcams, temperatures, energies, lights, automations, scenarios, sounds, devices)))
             .doOnError(throwable -> log.error("ERROR initCards", throwable))
             .subscribe(results -> {
                 showLoader(false, isFavouriteMenu);

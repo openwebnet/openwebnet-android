@@ -8,6 +8,7 @@ import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.EnergyServiceImpl;
@@ -16,6 +17,7 @@ import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.ScenarioServiceImpl;
+import com.github.openwebnet.service.impl.SoundServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 
 import javax.inject.Singleton;
@@ -80,6 +82,12 @@ public class DomoticModuleTest {
     @Singleton
     EnergyService provideEnergyService() {
         return mock(EnergyServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    SoundService provideSoundService() {
+        return mock(SoundServiceImpl.class);
     }
 
 }

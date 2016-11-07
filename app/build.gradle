@@ -4,9 +4,13 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 apply from: '../coverage.gradle'
 
+// TODO watch this issues
+// travis android license https://github.com/travis-ci/travis-ci/issues/6801
+// robolectric activity https://github.com/robolectric/robolectric/issues/1737
+
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.github.openwebnet"
@@ -15,6 +19,7 @@ android {
         versionCode currentVersionCode
         versionName currentVersionName
         multiDexEnabled true
+        //vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {
@@ -64,7 +69,6 @@ dependencies {
     testProvided 'com.google.dagger:dagger-compiler:2.7'
     testProvided 'com.jakewharton:butterknife-compiler:8.4.0'
 
-    // errors: skip version 24.2.1
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
@@ -75,14 +79,14 @@ dependencies {
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 
-    compile 'com.github.openwebnet:rx-openwebnet:1.3.4'
+    compile 'com.github.openwebnet:rx-openwebnet:1.4.1'
     compile 'com.github.niqdev:mjpeg-view:0.3.6'
 
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.noveogroup.android:android-logger:1.3.6'
     compile 'com.google.guava:guava:19.0'
 
-    compile 'com.annimon:stream:1.1.2'
+    compile 'com.annimon:stream:1.1.3'
     compile 'org.threeten:threetenbp:1.3.2'
     compile 'org.greenrobot:eventbus:3.0.0'
 
