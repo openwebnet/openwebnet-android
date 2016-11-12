@@ -17,7 +17,7 @@ Gestisce:
 - Consumo Energetico
 - Scenari
 - qualsiasi frame/messaggio OpenWebNet
-- Ip Camera (MJPEG)
+- IP Camera (MJPEG)
 
 Gestisce gateway multipli contemporaneamente con IP o Dominio e Password.
 
