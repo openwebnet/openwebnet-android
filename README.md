@@ -17,7 +17,7 @@ Manages:
 - Scenario
 - Power Consumption
 - any OpenWebNet frame/message
-- Ip Camera (MJPEG)
+- IP Camera (MJPEG)
 
 Handle multiple gateway simultaneously with IP or Domain and password.
 
