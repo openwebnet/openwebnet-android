@@ -171,7 +171,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 200;
 
-        @BindColor(R.color.yellow)
+        @BindColor(R.color.yellow_a400)
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
@@ -203,9 +203,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @BindColor(R.color.white)
         int colorStatusStop;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusUp;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusDown;
 
         @BindView(R.id.cardViewAutomation)
@@ -283,7 +283,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 600;
 
-        @BindColor(R.color.lime)
+        @BindColor(R.color.green_a400)
         int colorStatusStart;
         @BindColor(R.color.white)
         int colorStatusStop;
@@ -347,7 +347,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 800;
 
-        @BindColor(R.color.amber)
+        @BindColor(R.color.green_a200)
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;

@@ -4,9 +4,11 @@
     <color name="colorPrimaryDark">@color/primary_dark</color>
     <color name="colorAccent">@color/accent</color>
 
-    <color name="lime">#CDDC39</color>
-    <color name="yellow">#FFEB3B</color>
-    <color name="amber">#FFC107</color>
+    <color name="yellow_a400">#FFEA00</color>
+    <color name="lime_a400">#C6FF00</color>
+    <color name="green_a400">#00E676</color>
+    <color name="green_a200">#69F0AE</color>
+
     <color name="black_semi_transparent">#B2000000</color>
     <color name="white">#FFF</color>
     <color name="grey_light">#f5f5f5</color>
