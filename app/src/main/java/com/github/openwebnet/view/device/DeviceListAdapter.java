@@ -358,11 +358,23 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.textViewCardSoundTitle)
         TextView textViewCardSoundTitle;
 
+        @BindView(R.id.imageButtonCardSoundOn)
+        ImageButton imageButtonCardSoundOn;
+
         @BindView(R.id.imageButtonCardSoundOff)
         ImageButton imageButtonCardSoundOff;
 
-        @BindView(R.id.imageButtonCardSoundOn)
-        ImageButton imageButtonCardSoundOn;
+        @BindView(R.id.imageButtonCardVolumeUp)
+        ImageButton imageButtonCardVolumeUp;
+
+        @BindView(R.id.imageButtonCardVolumeDown)
+        ImageButton imageButtonCardVolumeDown;
+
+        @BindView(R.id.imageButtonCardStationUp)
+        ImageButton imageButtonCardStationUp;
+
+        @BindView(R.id.imageButtonCardStationDown)
+        ImageButton imageButtonCardStationDown;
 
         public SoundViewHolder(View view) {
             super(view);
@@ -905,6 +917,8 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, sound.isFavourite());
         onFavouriteChange(holder, sound, soundService);
         updateSoundStatus(holder, sound.getStatus());
+        updateAmplifierVolume(holder, sound);
+        updateSourceStation(holder, sound);
 
         holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
         holder.imageButtonCardSoundOn.setOnClickListener(v -> turnSoundOn(holder, sound));
@@ -949,6 +963,51 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
         soundService.turnOn(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+    }
+
+    // TODO
+    private void updateAmplifierVolume(SoundViewHolder holder, SoundModel sound) {
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to show volume");
+            holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
+            holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
+            return;
+        }
+
+        Action0 enableAmplifierVolume = () -> {
+            holder.imageButtonCardVolumeUp.setVisibility(View.VISIBLE);
+            holder.imageButtonCardVolumeDown.setVisibility(View.VISIBLE);
+            // TODO onClick
+        };
+
+        switch (sound.getSoundSystemType()) {
+            case AMPLIFIER_GENERAL:
+            case AMPLIFIER_GROUP:
+            case AMPLIFIER_P2P:
+                enableAmplifierVolume.call();
+        }
+    }
+
+    // TODO
+    private void updateSourceStation(SoundViewHolder holder, SoundModel sound) {
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to show station");
+            holder.imageButtonCardStationUp.setVisibility(View.GONE);
+            holder.imageButtonCardStationDown.setVisibility(View.GONE);
+            return;
+        }
+
+        Action0 enableSourceStation = () -> {
+            holder.imageButtonCardStationUp.setVisibility(View.VISIBLE);
+            holder.imageButtonCardStationDown.setVisibility(View.VISIBLE);
+            // TODO onClick
+        };
+
+        switch (sound.getSoundSystemType()) {
+            case SOURCE_GENERAL:
+            case SOURCE_P2P:
+                enableSourceStation.call();
+        }
     }
 
     /* commons */
