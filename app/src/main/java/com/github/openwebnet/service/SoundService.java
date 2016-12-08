@@ -16,4 +16,12 @@ public interface SoundService extends DomoticService<SoundModel> {
 
     Observable<SoundModel> turnOff(SoundModel sound);
 
+    Observable<SoundModel> volumeUp(SoundModel sound);
+
+    Observable<SoundModel> volumeDown(SoundModel sound);
+
+    Observable<SoundModel> stationUp(SoundModel sound);
+
+    Observable<SoundModel> stationDown(SoundModel sound);
+
 }

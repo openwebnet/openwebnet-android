@@ -60,6 +60,7 @@ import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action2;
 import rx.functions.Func1;
@@ -171,7 +172,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 200;
 
-        @BindColor(R.color.yellow)
+        @BindColor(R.color.yellow_a400)
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
@@ -203,9 +204,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @BindColor(R.color.white)
         int colorStatusStop;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusUp;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusDown;
 
         @BindView(R.id.cardViewAutomation)
@@ -283,7 +284,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 600;
 
-        @BindColor(R.color.lime)
+        @BindColor(R.color.green_a400)
         int colorStatusStart;
         @BindColor(R.color.white)
         int colorStatusStop;
@@ -347,7 +348,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 800;
 
-        @BindColor(R.color.amber)
+        @BindColor(R.color.green_a200)
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
@@ -358,11 +359,23 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.textViewCardSoundTitle)
         TextView textViewCardSoundTitle;
 
+        @BindView(R.id.imageButtonCardSoundOn)
+        ImageButton imageButtonCardSoundOn;
+
         @BindView(R.id.imageButtonCardSoundOff)
         ImageButton imageButtonCardSoundOff;
 
-        @BindView(R.id.imageButtonCardSoundOn)
-        ImageButton imageButtonCardSoundOn;
+        @BindView(R.id.imageButtonCardVolumeUp)
+        ImageButton imageButtonCardVolumeUp;
+
+        @BindView(R.id.imageButtonCardVolumeDown)
+        ImageButton imageButtonCardVolumeDown;
+
+        @BindView(R.id.imageButtonCardStationUp)
+        ImageButton imageButtonCardStationUp;
+
+        @BindView(R.id.imageButtonCardStationDown)
+        ImageButton imageButtonCardStationDown;
 
         public SoundViewHolder(View view) {
             super(view);
@@ -905,21 +918,26 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, sound.isFavourite());
         onFavouriteChange(holder, sound, soundService);
         updateSoundStatus(holder, sound.getStatus());
+        updateSoundSystemType(holder, sound);
 
-        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
         holder.imageButtonCardSoundOn.setOnClickListener(v -> turnSoundOn(holder, sound));
+        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
+        holder.imageButtonCardVolumeUp.setOnClickListener(v -> soundVolumeUp(holder, sound));
+        holder.imageButtonCardVolumeDown.setOnClickListener(v -> soundVolumeDown(holder, sound));
+        holder.imageButtonCardStationUp.setOnClickListener(v -> soundStationUp(holder, sound));
+        holder.imageButtonCardStationDown.setOnClickListener(v -> soundStationDown(holder, sound));
 
         onMenuClick(holder, soundService, sound.getUuid(), SoundActivity.class);
     }
 
     private void updateSoundStatus(SoundViewHolder holder, SoundModel.Status status) {
-        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
         holder.imageButtonCardSoundOn.setVisibility(View.VISIBLE);
+        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("sound status is null: unable to update");
-            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
             holder.imageButtonCardSoundOn.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
@@ -929,26 +947,63 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
-        log.debug("turn sound off {}", sound.getUuid());
+    private void onUpdateSoundStatus(SoundViewHolder holder, SoundModel sound, Observable<SoundModel> observable) {
+        log.debug("update sound status {}", sound.getUuid());
         if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to turn off");
+            log.warn("sound status is null: unable to update");
             return;
         }
-
         Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
-        soundService.turnOff(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+        observable.doOnCompleted(updateSoundStatusAction).subscribe();
     }
 
     private void turnSoundOn(SoundViewHolder holder, SoundModel sound) {
-        log.debug("turn sound on {}", sound.getUuid());
+        onUpdateSoundStatus(holder, sound, soundService.turnOn(sound));
+    }
+
+    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.turnOff(sound));
+    }
+
+    private void soundVolumeUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeUp(sound));
+    }
+
+    private void soundVolumeDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeDown(sound));
+    }
+
+    private void soundStationUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationUp(sound));
+    }
+
+    private void soundStationDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationDown(sound));
+    }
+
+    private void updateSoundSystemType(SoundViewHolder holder, SoundModel sound) {
+        holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
+        holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
+        holder.imageButtonCardStationUp.setVisibility(View.GONE);
+        holder.imageButtonCardStationDown.setVisibility(View.GONE);
         if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to turn on");
+            log.warn("sound status is null: unable to show volume/station");
             return;
         }
 
-        Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
-        soundService.turnOn(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+        switch (sound.getSoundSystemType()) {
+            case AMPLIFIER_GENERAL:
+            case AMPLIFIER_GROUP:
+            case AMPLIFIER_P2P:
+                holder.imageButtonCardVolumeUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardVolumeDown.setVisibility(View.VISIBLE);
+                break;
+            case SOURCE_GENERAL:
+            case SOURCE_P2P:
+                holder.imageButtonCardStationUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardStationDown.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     /* commons */

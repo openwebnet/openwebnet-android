@@ -34,4 +34,52 @@
         app:srcCompat="@drawable/volume_low"
         tools:ignore="MissingPrefix" />
 
+    <ImageButton
+        android:id="@+id/imageButtonCardVolumeUp"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardSoundOff"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:srcCompat="@drawable/plus_circle_outline"
+        tools:ignore="MissingPrefix" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCardVolumeDown"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardVolumeUp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:srcCompat="@drawable/minus_circle_outline"
+        tools:ignore="MissingPrefix" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCardStationUp"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardVolumeDown"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:srcCompat="@drawable/skip_next_circle_outline"
+        tools:ignore="MissingPrefix" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCardStationDown"
+        style="@style/deviceCard.imageButton"
+        android:layout_alignParentRight="false"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@id/imageButtonCardStationUp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:visibility="gone"
+        app:srcCompat="@drawable/skip_previous_circle_outline"
+        tools:ignore="MissingPrefix" />
+
 </RelativeLayout>

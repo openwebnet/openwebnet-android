@@ -107,7 +107,7 @@ public class DeviceListFragment extends Fragment {
         mAdapter = new DeviceListAdapter(getActivity(), getArguments().getInt(ARG_ENVIRONMENT), domoticItems);
         mRecyclerView.setAdapter(mAdapter);
 
-        swipeRefreshLayoutDeviceList.setColorSchemeResources(R.color.primary, R.color.yellow, R.color.accent);
+        swipeRefreshLayoutDeviceList.setColorSchemeResources(R.color.primary, R.color.yellow_a400, R.color.accent);
         swipeRefreshLayoutDeviceList.setOnRefreshListener(() ->
             EventBus.getDefault().post(new UpdateDeviceListEvent(getArguments().getInt(ARG_ENVIRONMENT))));
 
