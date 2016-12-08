@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="November 7, 2016" versionName="2.10.0">
+    <changelogversion changeDate="December 8, 2016" versionName="2.11.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add Sound System]]>
+            <![CDATA[<b><font color=red>New!</font></b> Turn up/down Amplifier Volume]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Change Source Station]]>
         </changelogtext>
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
         </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="November 7, 2016" versionName="2.10.0">
+        <changelogtext>Add Sound System</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="October 8, 2016" versionName="2.9.0">
