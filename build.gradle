@@ -9,7 +9,7 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.5.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.7.1'
         classpath 'io.realm:realm-gradle-plugin:1.2.0'
     }
 
@@ -32,8 +32,8 @@ allprojects {
 
     // CURRENT APP VERSION
     project.ext {
-        currentVersionCode = 28
-        currentVersionName = "2.10.0"
+        currentVersionCode = 29
+        currentVersionName = "2.11.0"
     }
 }
 

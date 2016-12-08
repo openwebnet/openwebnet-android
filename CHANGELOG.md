@@ -1,3 +1,9 @@
+#### v2.11.0 (December 8, 2016)
+
+- Turn up/down Amplifier Volume
+- Change Source Station
+- Minor style changes
+
 #### v2.10.0 (November 7, 2016)
 
 - Add Sound System
