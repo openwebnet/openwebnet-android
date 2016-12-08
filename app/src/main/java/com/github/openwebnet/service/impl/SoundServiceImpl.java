@@ -70,16 +70,11 @@ public class SoundServiceImpl implements SoundService {
         return soundRepository.findFavourites();
     }
 
-    private Func2<OpenSession, SoundModel, SoundModel> handleStatus = (openSession, sound) -> {
-        SoundSystem.handleStatus(() -> sound.setStatus(ON), () -> sound.setStatus(OFF)).call(openSession);
-        return sound;
-    };
-
     @Override
     public Observable<List<SoundModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
             .flatMapIterable(soundModels -> soundModels)
-            .flatMap(requestSoundStatus(SoundSystem::requestStatus, handleStatus))
+            .flatMap(requestSound(SoundSystem::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
 
@@ -87,11 +82,61 @@ public class SoundServiceImpl implements SoundService {
     public Observable<List<SoundModel>> requestFavourites() {
         return findFavourites()
             .flatMapIterable(soundModels -> soundModels)
-            .flatMap(requestSoundStatus(SoundSystem::requestStatus, handleStatus))
+            .flatMap(requestSound(SoundSystem::requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
 
-    private Func1<SoundModel, Observable<SoundModel>> requestSoundStatus(
+    @Override
+    public Observable<SoundModel> turnOn(SoundModel sound) {
+        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOn, handleResponse(ON)));
+    }
+
+    @Override
+    public Observable<SoundModel> turnOff(SoundModel sound) {
+        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOff, handleResponse(OFF)));
+    }
+
+    @Override
+    public Observable<SoundModel> volumeUp(SoundModel sound) {
+        // use current status
+        return Observable.just(sound)
+            .flatMap(requestSound(SoundSystem::requestVolumeUp, handleResponse(sound.getStatus())));
+    }
+
+    @Override
+    public Observable<SoundModel> volumeDown(SoundModel sound) {
+        // use current status
+        return Observable.just(sound)
+            .flatMap(requestSound(SoundSystem::requestVolumeDown, handleResponse(sound.getStatus())));
+    }
+
+    @Override
+    public Observable<SoundModel> stationUp(SoundModel sound) {
+        // use current status
+        return Observable.just(sound)
+            .flatMap(requestSound(SoundSystem::requestStationUp, handleResponse(sound.getStatus())));
+    }
+
+    @Override
+    public Observable<SoundModel> stationDown(SoundModel sound) {
+        // use current status
+        return Observable.just(sound)
+            .flatMap(requestSound(SoundSystem::requestStationDown, handleResponse(sound.getStatus())));
+    }
+
+    private Func2<OpenSession, SoundModel, SoundModel> handleStatus = (openSession, sound) -> {
+        SoundSystem.handleStatus(() -> sound.setStatus(ON), () -> sound.setStatus(OFF)).call(openSession);
+        return sound;
+    };
+
+    private Func2<OpenSession, SoundModel, SoundModel> handleResponse(SoundModel.Status status) {
+        return (openSession, sound) -> {
+            SoundSystem.handleResponse(() -> sound.setStatus(status), () -> sound.setStatus(null)).call(openSession);
+            return sound;
+        };
+    }
+
+    private Func1<SoundModel, Observable<SoundModel>> requestSound(
         Func2<String, SoundSystem.Type, SoundSystem> request, Func2<OpenSession, SoundModel, SoundModel> handler) {
 
         return sound -> commonService.findClient(sound.getGatewayUuid())
@@ -107,25 +152,7 @@ public class SoundServiceImpl implements SoundService {
             });
     }
 
-    private Func2<OpenSession, SoundModel, SoundModel> handleResponse(SoundModel.Status status) {
-        return (openSession, sound) -> {
-            SoundSystem.handleResponse(() ->
-                sound.setStatus(status), () -> sound.setStatus(null))
-                .call(openSession);
-            return sound;
-        };
-    }
-
-    @Override
-    public Observable<SoundModel> turnOn(SoundModel sound) {
-        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOn, handleResponse(ON)));
-    }
-
-    @Override
-    public Observable<SoundModel> turnOff(SoundModel sound) {
-        return Observable.just(sound).flatMap(requestSound(SoundSystem::requestTurnOff, handleResponse(OFF)));
-    }
-
+    // with source: turnOn/turnOff
     private Func1<SoundModel, Observable<SoundModel>> requestSound(
         Func3<String, SoundSystem.Type, SoundSystem.Source, SoundSystem> request,
         Func2<OpenSession, SoundModel, SoundModel> handler) {

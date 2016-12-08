@@ -60,6 +60,7 @@ import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.functions.Action0;
 import rx.functions.Action2;
 import rx.functions.Func1;
@@ -917,23 +918,26 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         updateFavourite(holder, sound.isFavourite());
         onFavouriteChange(holder, sound, soundService);
         updateSoundStatus(holder, sound.getStatus());
-        updateAmplifierVolume(holder, sound);
-        updateSourceStation(holder, sound);
+        updateSoundSystemType(holder, sound);
 
-        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
         holder.imageButtonCardSoundOn.setOnClickListener(v -> turnSoundOn(holder, sound));
+        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
+        holder.imageButtonCardVolumeUp.setOnClickListener(v -> soundVolumeUp(holder, sound));
+        holder.imageButtonCardVolumeDown.setOnClickListener(v -> soundVolumeDown(holder, sound));
+        holder.imageButtonCardStationUp.setOnClickListener(v -> soundStationUp(holder, sound));
+        holder.imageButtonCardStationDown.setOnClickListener(v -> soundStationDown(holder, sound));
 
         onMenuClick(holder, soundService, sound.getUuid(), SoundActivity.class);
     }
 
     private void updateSoundStatus(SoundViewHolder holder, SoundModel.Status status) {
-        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
         holder.imageButtonCardSoundOn.setVisibility(View.VISIBLE);
+        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
         if (status == null) {
             log.warn("sound status is null: unable to update");
-            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
             holder.imageButtonCardSoundOn.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
@@ -943,70 +947,62 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
-        log.debug("turn sound off {}", sound.getUuid());
+    private void onUpdateSoundStatus(SoundViewHolder holder, SoundModel sound, Observable<SoundModel> observable) {
+        log.debug("update sound status {}", sound.getUuid());
         if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to turn off");
+            log.warn("sound status is null: unable to update");
             return;
         }
-
         Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
-        soundService.turnOff(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+        observable.doOnCompleted(updateSoundStatusAction).subscribe();
     }
 
     private void turnSoundOn(SoundViewHolder holder, SoundModel sound) {
-        log.debug("turn sound on {}", sound.getUuid());
-        if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to turn on");
-            return;
-        }
-
-        Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
-        soundService.turnOn(sound).doOnCompleted(updateSoundStatusAction).subscribe();
+        onUpdateSoundStatus(holder, sound, soundService.turnOn(sound));
     }
 
-    // TODO
-    private void updateAmplifierVolume(SoundViewHolder holder, SoundModel sound) {
+    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.turnOff(sound));
+    }
+
+    private void soundVolumeUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeUp(sound));
+    }
+
+    private void soundVolumeDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeDown(sound));
+    }
+
+    private void soundStationUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationUp(sound));
+    }
+
+    private void soundStationDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationDown(sound));
+    }
+
+    private void updateSoundSystemType(SoundViewHolder holder, SoundModel sound) {
         if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to show volume");
+            log.warn("sound status is null: unable to show volume/station");
             holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
             holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
-            return;
-        }
-
-        Action0 enableAmplifierVolume = () -> {
-            holder.imageButtonCardVolumeUp.setVisibility(View.VISIBLE);
-            holder.imageButtonCardVolumeDown.setVisibility(View.VISIBLE);
-            // TODO onClick
-        };
-
-        switch (sound.getSoundSystemType()) {
-            case AMPLIFIER_GENERAL:
-            case AMPLIFIER_GROUP:
-            case AMPLIFIER_P2P:
-                enableAmplifierVolume.call();
-        }
-    }
-
-    // TODO
-    private void updateSourceStation(SoundViewHolder holder, SoundModel sound) {
-        if (sound.getStatus() == null) {
-            log.warn("sound status is null: unable to show station");
             holder.imageButtonCardStationUp.setVisibility(View.GONE);
             holder.imageButtonCardStationDown.setVisibility(View.GONE);
             return;
         }
 
-        Action0 enableSourceStation = () -> {
-            holder.imageButtonCardStationUp.setVisibility(View.VISIBLE);
-            holder.imageButtonCardStationDown.setVisibility(View.VISIBLE);
-            // TODO onClick
-        };
-
         switch (sound.getSoundSystemType()) {
+            case AMPLIFIER_GENERAL:
+            case AMPLIFIER_GROUP:
+            case AMPLIFIER_P2P:
+                holder.imageButtonCardVolumeUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardVolumeDown.setVisibility(View.VISIBLE);
+                break;
             case SOURCE_GENERAL:
             case SOURCE_P2P:
-                enableSourceStation.call();
+                holder.imageButtonCardStationUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardStationDown.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
