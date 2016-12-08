@@ -982,12 +982,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateSoundSystemType(SoundViewHolder holder, SoundModel sound) {
+        holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
+        holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
+        holder.imageButtonCardStationUp.setVisibility(View.GONE);
+        holder.imageButtonCardStationDown.setVisibility(View.GONE);
         if (sound.getStatus() == null) {
             log.warn("sound status is null: unable to show volume/station");
-            holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
-            holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
-            holder.imageButtonCardStationUp.setVisibility(View.GONE);
-            holder.imageButtonCardStationDown.setVisibility(View.GONE);
             return;
         }
 
