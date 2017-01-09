@@ -20,6 +20,7 @@
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_debug">Debug</string>
+    <string name="menu_search">Search</string>
 
     <string name="drawer_menu_favourite">Favourites</string>
     <string name="drawer_menu_add">Add environment</string>

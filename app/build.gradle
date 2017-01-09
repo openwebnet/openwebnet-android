@@ -76,6 +76,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.0'
     compile 'com.android.support:support-annotations:24.2.0'
 
+    compile 'com.lapism:searchview:4.0'
     compile 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     compile 'com.scottyab:secure-preferences-lib:0.1.4'
 
