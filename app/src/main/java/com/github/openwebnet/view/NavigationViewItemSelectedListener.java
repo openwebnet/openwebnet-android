@@ -173,6 +173,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     private void showSettings() {
         disableScrollActionBar();
         mActivity.getSupportActionBar().setTitle(labelSettings);
+        EventBus.getDefault().post(new MainActivity.OnChangeSearchVisibilityEvent(false));
         floatingActionButtonMain.setVisibility(View.INVISIBLE);
         removeCompactFragment();
 

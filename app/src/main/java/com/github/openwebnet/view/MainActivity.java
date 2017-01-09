@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @BindString(R.string.app_link)
     String appLinkGitHub;
 
+    @BindString(R.string.menu_search)
+    String searchHint;
+
     @Inject
     CommonService commonService;
 
@@ -143,8 +146,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setVersion(SearchView.VERSION_MENU_ITEM);
         searchView.setVersionMargins(SearchView.VERSION_MARGINS_MENU_ITEM);
         searchView.setTheme(SearchView.THEME_LIGHT);
-        //searchView.setQuery()
-        //searchView.setTextOnly()
+        searchView.setTextOnly(searchHint);
     }
 
     @Override
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_search:
+            case R.id.action_search:
                 searchView.open(true, item);
                 return true;
             default:
@@ -315,6 +317,29 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnChangePreferenceDeviceDebugEvent event) {
         toolbar.getMenu().findItem(R.id.action_settings).setVisible(event.isDebug());
+    }
+
+    /**
+     *
+     */
+    public static class OnChangeSearchVisibilityEvent {
+
+        private final boolean visible;
+
+        public OnChangeSearchVisibilityEvent(boolean visible) {
+            this.visible = visible;
+        }
+
+        public boolean isVisible() {
+            return visible;
+        }
+    }
+
+    // fired from DeviceListFragment.showLoader
+    // fired from NavigationViewItemSelectedListener.showSettings
+    @Subscribe
+    public void onEvent(OnChangeSearchVisibilityEvent event) {
+        toolbar.getMenu().findItem(R.id.action_search).setVisible(event.isVisible());
     }
 
 }

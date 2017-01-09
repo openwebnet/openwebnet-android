@@ -224,6 +224,7 @@ public class DeviceListFragment extends Fragment {
                 // toggle visibility FloatingActionsMenu
                 EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(!refreshing));
             }
+            EventBus.getDefault().post(new MainActivity.OnChangeSearchVisibilityEvent(!refreshing));
         }
     }
 
