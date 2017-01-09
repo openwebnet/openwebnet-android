@@ -24,6 +24,7 @@ import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.PreferenceService;
+import com.lapism.searchview.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.nav_view)
     NavigationView navigationView;
 
+    @BindView(R.id.searchView)
+    SearchView searchView;
+
     @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
 
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         commonService.initApplication();
         initNavigationDrawer(savedInstanceState);
+        initSearchView();
     }
 
     @Override
@@ -133,12 +138,32 @@ public class MainActivity extends AppCompatActivity {
                 Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
     }
 
+    private void initSearchView() {
+        searchView.setArrowOnly(false);
+        searchView.setVersion(SearchView.VERSION_MENU_ITEM);
+        searchView.setVersionMargins(SearchView.VERSION_MARGINS_MENU_ITEM);
+        searchView.setTheme(SearchView.THEME_LIGHT);
+        //searchView.setQuery()
+        //searchView.setTextOnly()
+    }
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                searchView.open(true, item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

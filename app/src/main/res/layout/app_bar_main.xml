@@ -23,6 +23,12 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <com.lapism.searchview.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.lapism.searchview.SearchBehavior" />
+
     <include layout="@layout/content_main"/>
 
     <android.support.design.widget.FloatingActionButton
