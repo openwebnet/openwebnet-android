@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="September 30, 2017" versionName="2.12.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Add German language support]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Minor fixes]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="December 8, 2016" versionName="2.11.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Turn up/down Amplifier Volume]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Change Source Station]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Minor style changes]]>
-        </changelogtext>
+        <changelogtext>Turn up/down Amplifier Volume</changelogtext>
+        <changelogtext>Change Source Station</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="November 7, 2016" versionName="2.10.0">

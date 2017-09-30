@@ -1,3 +1,8 @@
+#### v2.12.0 (September 30, 2017)
+
+- Add German language support
+- Minor fixes
+
 #### v2.11.0 (December 8, 2016)
 
 - Turn up/down Amplifier Volume
