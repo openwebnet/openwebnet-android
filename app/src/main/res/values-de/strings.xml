@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_version">Version</string>
+    <string name="app_version">version</string>
 
     <string name="activity_device">Gerät</string>
     <string name="activity_light">Licht</string>

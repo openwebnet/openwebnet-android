@@ -54,6 +54,7 @@ All detailed [changelog](CHANGELOG.md).
 ### Other contributors
 - [Nicolas Moreau](https://github.com/moreau-nicolas)
 - [terranum](https://github.com/terranum)
+- [Denis Paris](https://github.com/parideis)
 
 Thanks to:
 
