@@ -7,7 +7,7 @@ jdk:
 
 env:
   global:
-    - ANDROID_TARGET=android-24
+    - ANDROID_TARGET=android-25
     - ANDROID_ABI=armeabi-v7a
     - MALLOC_ARENA_MAX=2
     - ADB_INSTALL_TIMEOUT=10
@@ -16,8 +16,9 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-24.0.3
-    - android-24
+    - tools
+    - build-tools-25.0.0
+    - android-25
     - extra-android-m2repository
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 
