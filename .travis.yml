@@ -7,7 +7,8 @@ jdk:
 
 env:
   global:
-    - ANDROID_TARGET=android-25
+    - ANDROID_API_LEVEL=25
+    - EMULATOR_API_LEVEL=24
     - ANDROID_ABI=armeabi-v7a
     - MALLOC_ARENA_MAX=2
     - ADB_INSTALL_TIMEOUT=10
@@ -16,11 +17,13 @@ android:
   components:
     - tools
     - platform-tools
+    - tools
     - build-tools-25.0.3
-    - android-25
+    - android-${ANDROID_API_LEVEL}
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+    - sys-img-${ANDROID_ABI}-android-${ANDROID_API_LEVEL}
+    - sys-img-${ANDROID_ABI}-android-${EMULATOR_API_LEVEL}
 
 before_install:
   - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
@@ -28,7 +31,7 @@ before_install:
   - export JAVA_HOME=$JAVA8_HOME
 
 before_script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-EMULATOR_API_LEVEL --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
