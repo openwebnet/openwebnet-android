@@ -49,6 +49,14 @@ If you find a bug or have any suggestions do not leave a negative rating but con
 
 All detailed [changelog](CHANGELOG.md).
 
+### Development
+
+```bash
+./gradlew clean build
+```
+
+How to run [tests](images/how-to-run-tests.png) in Android Studio 
+
 ### Other contributors
 - [Nicolas Moreau](https://github.com/moreau-nicolas)
 - [terranum](https://github.com/terranum)
