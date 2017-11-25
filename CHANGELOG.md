@@ -1,3 +1,7 @@
+#### v2.12.1 (November 25, 2017)
+
+- Fix crashes
+
 #### v2.12.0 (September 30, 2017)
 
 - Add German language support
