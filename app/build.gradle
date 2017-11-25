@@ -65,7 +65,7 @@ dependencies {
     testCompile 'org.powermock:powermock-module-junit4-rule:1.6.6'
     testCompile 'org.powermock:powermock-api-mockito:1.6.6'
     testCompile 'org.powermock:powermock-classloading-xstream:1.6.6'
-    testProvided 'com.google.dagger:dagger-compiler:2.11'
+    testProvided 'com.google.dagger:dagger-compiler:2.13'
     testProvided 'com.jakewharton:butterknife-compiler:8.8.1'
 
     compile 'com.android.support:support-v4:25.3.1'
@@ -83,22 +83,22 @@ dependencies {
 
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'com.noveogroup.android:android-logger:1.3.6'
-    compile 'com.google.guava:guava:20.0'
+    compile 'com.google.guava:guava:23.5-android'
 
     compile 'com.annimon:stream:1.1.9'
     compile 'org.threeten:threetenbp:1.3.6'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.greenrobot:eventbus:3.1.1'
 
-    compile 'io.reactivex:rxjava:1.3.2'
+    compile 'io.reactivex:rxjava:1.3.4'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava-computation-expressions:0.21.0'
 
     compile 'com.jakewharton:butterknife:8.8.1'
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    compile 'com.google.dagger:dagger:2.11'
+    compile 'com.google.dagger:dagger:2.13'
     provided 'javax.annotation:jsr250-api:1.0'
-    apt 'com.google.dagger:dagger-compiler:2.11'
+    apt 'com.google.dagger:dagger-compiler:2.13'
 }
 
 task hello(dependsOn: build) {
