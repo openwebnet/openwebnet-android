@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="November 25, 2017" versionName="2.12.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Fix crashes]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="September 30, 2017" versionName="2.12.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add German language support]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Minor fixes]]>
-        </changelogtext>
+        <changelogtext>Add German language support</changelogtext>
+        <changelogtext>Minor fixes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="December 8, 2016" versionName="2.11.0">
