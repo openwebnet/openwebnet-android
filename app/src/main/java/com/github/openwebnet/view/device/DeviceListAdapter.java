@@ -26,17 +26,23 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.DomoticModel;
+import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.RealmModel;
+import com.github.openwebnet.model.ScenarioModel;
+import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.DomoticService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.custom.TextViewCustom;
@@ -54,7 +60,9 @@ import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.functions.Action0;
+import rx.functions.Action2;
 import rx.functions.Func1;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -77,6 +85,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Inject
     TemperatureService temperatureService;
+
+    @Inject
+    ScenarioService scenarioService;
+
+    @Inject
+    EnergyService energyService;
+
+    @Inject
+    SoundService soundService;
 
     @Inject
     PreferenceService preferenceService;
@@ -155,7 +172,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public static final int VIEW_TYPE = 200;
 
-        @BindColor(R.color.yellow)
+        @BindColor(R.color.yellow_a400)
         int colorStatusOn;
         @BindColor(R.color.white)
         int colorStatusOff;
@@ -187,9 +204,9 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @BindColor(R.color.white)
         int colorStatusStop;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusUp;
-        @BindColor(R.color.lime)
+        @BindColor(R.color.lime_a400)
         int colorStatusDown;
 
         @BindView(R.id.cardViewAutomation)
@@ -251,7 +268,116 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.imageViewCardTemperatureScale)
         ImageView imageViewCardTemperatureScale;
 
+        @BindView(R.id.linearLayoutCardTemperatureValue)
+        LinearLayout linearLayoutCardTemperatureValue;
+
         public TemperatureViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
+    public static class ScenarioViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 600;
+
+        @BindColor(R.color.green_a400)
+        int colorStatusStart;
+        @BindColor(R.color.white)
+        int colorStatusStop;
+
+        @BindView(R.id.cardViewScenario)
+        CardView cardViewScenario;
+
+        @BindView(R.id.textViewCardScenarioTitle)
+        TextView textViewCardScenarioTitle;
+
+        @BindView(R.id.imageButtonCardScenarioStart)
+        ImageButton imageButtonCardScenarioStart;
+
+        @BindView(R.id.imageButtonCardScenarioStop)
+        ImageButton imageButtonCardScenarioStop;
+
+        @BindView(R.id.imageButtonCardScenarioDisabled)
+        ImageButton imageButtonCardScenarioDisabled;
+
+        public ScenarioViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
+    public static class EnergyViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 700;
+
+        @BindView(R.id.cardViewEnergy)
+        CardView cardViewEnergy;
+
+        @BindView(R.id.textViewCardEnergyTitle)
+        TextView textViewCardEnergyTitle;
+
+        @BindView(R.id.textViewEnergyInstantaneousPower)
+        TextView textViewEnergyInstantaneousPower;
+
+        @BindView(R.id.textViewEnergyDailyPower)
+        TextView textViewEnergyDailyPower;
+
+        @BindView(R.id.textViewEnergyMonthlyPower)
+        TextView textViewEnergyMonthlyPower;
+
+        @BindView(R.id.linearLayoutEnergyValues)
+        LinearLayout linearLayoutEnergyValues;
+
+        public EnergyViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    /**
+     *
+     */
+    public static class SoundViewHolder extends CommonViewHolder {
+
+        public static final int VIEW_TYPE = 800;
+
+        @BindColor(R.color.green_a200)
+        int colorStatusOn;
+        @BindColor(R.color.white)
+        int colorStatusOff;
+
+        @BindView(R.id.cardViewSound)
+        CardView cardViewSound;
+
+        @BindView(R.id.textViewCardSoundTitle)
+        TextView textViewCardSoundTitle;
+
+        @BindView(R.id.imageButtonCardSoundOn)
+        ImageButton imageButtonCardSoundOn;
+
+        @BindView(R.id.imageButtonCardSoundOff)
+        ImageButton imageButtonCardSoundOff;
+
+        @BindView(R.id.imageButtonCardVolumeUp)
+        ImageButton imageButtonCardVolumeUp;
+
+        @BindView(R.id.imageButtonCardVolumeDown)
+        ImageButton imageButtonCardVolumeDown;
+
+        @BindView(R.id.imageButtonCardStationUp)
+        ImageButton imageButtonCardStationUp;
+
+        @BindView(R.id.imageButtonCardStationDown)
+        ImageButton imageButtonCardStationDown;
+
+        public SoundViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -309,6 +435,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof TemperatureModel) {
             return TemperatureViewHolder.VIEW_TYPE;
         }
+        if (mItems.get(position) instanceof ScenarioModel) {
+            return ScenarioViewHolder.VIEW_TYPE;
+        }
+        if (mItems.get(position) instanceof EnergyModel) {
+            return EnergyViewHolder.VIEW_TYPE;
+        }
+        if (mItems.get(position) instanceof SoundModel) {
+            return SoundViewHolder.VIEW_TYPE;
+        }
         throw new IllegalStateException("invalid item position");
     }
 
@@ -330,6 +465,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case TemperatureViewHolder.VIEW_TYPE:
                 return new TemperatureViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.card_temperature, parent, false));
+            case ScenarioViewHolder.VIEW_TYPE:
+                return new ScenarioViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_scenario, parent, false));
+            case EnergyViewHolder.VIEW_TYPE:
+                return new EnergyViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_energy, parent, false));
+            case SoundViewHolder.VIEW_TYPE:
+                return new SoundViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.card_sound, parent, false));
             case EmptyViewHolder.VIEW_TYPE:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_empty, parent, false));
@@ -355,6 +499,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
             case TemperatureViewHolder.VIEW_TYPE:
                 initCardTemperature((TemperatureViewHolder) holder, (TemperatureModel) mItems.get(position));
+                break;
+            case ScenarioViewHolder.VIEW_TYPE:
+                initCardScenario((ScenarioViewHolder) holder, (ScenarioModel) mItems.get(position));
+                break;
+            case EnergyViewHolder.VIEW_TYPE:
+                initCardEnergy((EnergyViewHolder) holder, (EnergyModel) mItems.get(position));
+                break;
+            case SoundViewHolder.VIEW_TYPE:
+                initCardSound((SoundViewHolder) holder, (SoundModel) mItems.get(position));
                 break;
             case EmptyViewHolder.VIEW_TYPE:
                 break;
@@ -635,17 +788,17 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void updateTemperatureValue(TemperatureViewHolder holder, TemperatureModel temperature) {
-        String noTemperature = utilityService.getString(R.string.temperature_none);
-        holder.textViewCardTemperatureValue.setText(noTemperature);
+        holder.linearLayoutCardTemperatureValue.setVisibility(View.GONE);
         holder.imageViewCardTemperatureScale.setVisibility(View.INVISIBLE);
         holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
 
-        if (temperature.getValue() == null || temperature.getValue().equals(noTemperature)) {
+        if (temperature.getValue() == null) {
             log.warn("temperature value is null or invalid: unable to update");
             holder.imageViewCardAlert.setVisibility(View.VISIBLE);
             return;
         }
 
+        holder.linearLayoutCardTemperatureValue.setVisibility(View.VISIBLE);
         holder.textViewCardTemperatureValue.setText(temperature.getValue());
 
         Func1<Heating.TemperatureScale, Drawable> getImageTemperature = temperatureScale -> {
@@ -658,6 +811,199 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.imageViewCardTemperatureScale.setVisibility(View.VISIBLE);
         holder.imageViewCardTemperatureScale
             .setImageDrawable(getImageTemperature.call(preferenceService.getDefaultTemperatureScale()));
+    }
+
+    /* Scenario */
+
+    private void initCardScenario(ScenarioViewHolder holder, ScenarioModel scenario) {
+        holder.textViewCardScenarioTitle.setText(scenario.getName());
+
+        updateFavourite(holder, scenario.isFavourite());
+        onFavouriteChange(holder, scenario, scenarioService);
+        updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
+
+        holder.imageButtonCardScenarioStart.setOnClickListener(v -> sendScenarioRequestStart(holder, scenario));
+        holder.imageButtonCardScenarioStop.setOnClickListener(v -> sendScenarioRequestStop(holder, scenario));
+
+        onMenuClick(holder, scenarioService, scenario.getUuid(), ScenarioActivity.class);
+    }
+
+    private void updateScenarioStatus(ScenarioViewHolder holder, ScenarioModel.Status status, boolean enabled) {
+        holder.imageButtonCardScenarioStart.setVisibility(View.VISIBLE);
+        holder.imageButtonCardScenarioStop.setVisibility(View.VISIBLE);
+        holder.imageButtonCardScenarioDisabled.setVisibility(View.INVISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        if (status == null) {
+            log.warn("scenario status is null: unable to update");
+            holder.imageButtonCardScenarioStart.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioStop.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioDisabled.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        if (!enabled) {
+            log.warn("scenario status is disabled");
+            holder.imageButtonCardScenarioStart.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioStop.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardScenarioDisabled.setVisibility(View.VISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+            return;
+        }
+        switch (status) {
+            case START: holder.cardViewScenario.setCardBackgroundColor(holder.colorStatusStart); break;
+            case STOP: holder.cardViewScenario.setCardBackgroundColor(holder.colorStatusStop); break;
+        }
+    }
+
+    private void sendScenarioRequestStart(ScenarioViewHolder holder, ScenarioModel scenario) {
+        log.debug("start scenario {}", scenario.getUuid());
+        if (scenario.getStatus() == null) {
+            log.warn("scenario status is null: unable to start");
+            return;
+        }
+
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
+        scenarioService.start(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
+    }
+
+    private void sendScenarioRequestStop(ScenarioViewHolder holder, ScenarioModel scenario) {
+        log.debug("stop scenario {}", scenario.getUuid());
+        if (scenario.getStatus() == null) {
+            log.warn("scenario status is null: unable to stop");
+            return;
+        }
+
+        Action0 updateScenarioStatusAction = () -> updateScenarioStatus(holder, scenario.getStatus(), scenario.isEnable());
+        scenarioService.stop(scenario).doOnCompleted(updateScenarioStatusAction).subscribe();
+    }
+
+    /* Energy */
+
+    private void initCardEnergy(EnergyViewHolder holder, EnergyModel energy) {
+        holder.textViewCardEnergyTitle.setText(energy.getName());
+
+        updateFavourite(holder, energy.isFavourite());
+        onFavouriteChange(holder, energy, energyService);
+        onMenuClick(holder, energyService, energy.getUuid(), EnergyActivity.class);
+        updateEnergyValues(holder, energy);
+    }
+
+    private void updateEnergyValues(EnergyViewHolder holder, EnergyModel energy) {
+        holder.linearLayoutEnergyValues.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+
+        if (energy.getInstantaneousPower() == null &&
+                energy.getDailyPower() == null &&
+                energy.getMonthlyPower() == null) {
+            log.warn("energy values are null or invalid: unable to update");
+            holder.linearLayoutEnergyValues.setVisibility(View.GONE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        Action2<TextView, String> updateEnergy = (textView, value) ->
+            textView.setText(TextUtils.isEmpty(value) ? utilityService.getString(R.string.energy_none) :
+                value + " " + utilityService.getString(R.string.energy_power_unit));
+
+        updateEnergy.call(holder.textViewEnergyInstantaneousPower, energy.getInstantaneousPower());
+        updateEnergy.call(holder.textViewEnergyDailyPower, energy.getDailyPower());
+        updateEnergy.call(holder.textViewEnergyMonthlyPower, energy.getMonthlyPower());
+    }
+
+    /* Sound */
+
+    private void initCardSound(SoundViewHolder holder, SoundModel sound) {
+        holder.textViewCardSoundTitle.setText(sound.getName());
+
+        updateFavourite(holder, sound.isFavourite());
+        onFavouriteChange(holder, sound, soundService);
+        updateSoundStatus(holder, sound.getStatus());
+        updateSoundSystemType(holder, sound);
+
+        holder.imageButtonCardSoundOn.setOnClickListener(v -> turnSoundOn(holder, sound));
+        holder.imageButtonCardSoundOff.setOnClickListener(v -> turnSoundOff(holder, sound));
+        holder.imageButtonCardVolumeUp.setOnClickListener(v -> soundVolumeUp(holder, sound));
+        holder.imageButtonCardVolumeDown.setOnClickListener(v -> soundVolumeDown(holder, sound));
+        holder.imageButtonCardStationUp.setOnClickListener(v -> soundStationUp(holder, sound));
+        holder.imageButtonCardStationDown.setOnClickListener(v -> soundStationDown(holder, sound));
+
+        onMenuClick(holder, soundService, sound.getUuid(), SoundActivity.class);
+    }
+
+    private void updateSoundStatus(SoundViewHolder holder, SoundModel.Status status) {
+        holder.imageButtonCardSoundOn.setVisibility(View.VISIBLE);
+        holder.imageButtonCardSoundOff.setVisibility(View.VISIBLE);
+        holder.imageViewCardAlert.setVisibility(View.INVISIBLE);
+        if (status == null) {
+            log.warn("sound status is null: unable to update");
+            holder.imageButtonCardSoundOn.setVisibility(View.INVISIBLE);
+            holder.imageButtonCardSoundOff.setVisibility(View.INVISIBLE);
+            holder.imageViewCardAlert.setVisibility(View.VISIBLE);
+            return;
+        }
+        switch (status) {
+            case ON: holder.cardViewSound.setCardBackgroundColor(holder.colorStatusOn); break;
+            case OFF: holder.cardViewSound.setCardBackgroundColor(holder.colorStatusOff); break;
+        }
+    }
+
+    private void onUpdateSoundStatus(SoundViewHolder holder, SoundModel sound, Observable<SoundModel> observable) {
+        log.debug("update sound status {}", sound.getUuid());
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to update");
+            return;
+        }
+        Action0 updateSoundStatusAction = () -> updateSoundStatus(holder, sound.getStatus());
+        observable.doOnCompleted(updateSoundStatusAction).subscribe();
+    }
+
+    private void turnSoundOn(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.turnOn(sound));
+    }
+
+    private void turnSoundOff(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.turnOff(sound));
+    }
+
+    private void soundVolumeUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeUp(sound));
+    }
+
+    private void soundVolumeDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.volumeDown(sound));
+    }
+
+    private void soundStationUp(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationUp(sound));
+    }
+
+    private void soundStationDown(SoundViewHolder holder, SoundModel sound) {
+        onUpdateSoundStatus(holder, sound, soundService.stationDown(sound));
+    }
+
+    private void updateSoundSystemType(SoundViewHolder holder, SoundModel sound) {
+        holder.imageButtonCardVolumeUp.setVisibility(View.GONE);
+        holder.imageButtonCardVolumeDown.setVisibility(View.GONE);
+        holder.imageButtonCardStationUp.setVisibility(View.GONE);
+        holder.imageButtonCardStationDown.setVisibility(View.GONE);
+        if (sound.getStatus() == null) {
+            log.warn("sound status is null: unable to show volume/station");
+            return;
+        }
+
+        switch (sound.getSoundSystemType()) {
+            case AMPLIFIER_GENERAL:
+            case AMPLIFIER_GROUP:
+            case AMPLIFIER_P2P:
+                holder.imageButtonCardVolumeUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardVolumeDown.setVisibility(View.VISIBLE);
+                break;
+            case SOURCE_GENERAL:
+            case SOURCE_P2P:
+                holder.imageButtonCardStationUp.setVisibility(View.VISIBLE);
+                holder.imageButtonCardStationDown.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     /* commons */

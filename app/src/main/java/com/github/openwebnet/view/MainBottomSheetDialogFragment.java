@@ -13,8 +13,11 @@ import android.widget.GridView;
 import com.github.openwebnet.R;
 import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.ScenarioActivity;
+import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.slf4j.Logger;
@@ -56,6 +59,15 @@ public class MainBottomSheetDialogFragment extends BottomSheetDialogFragment {
                     break;
                 case R.id.bs_add_temperature:
                     actionNewIntent(TemperatureActivity.class);
+                    break;
+                case R.id.bs_add_sound:
+                    actionNewIntent(SoundActivity.class);
+                    break;
+                case R.id.bs_add_energy:
+                    actionNewIntent(EnergyActivity.class);
+                    break;
+                case R.id.bs_add_scenario:
+                    actionNewIntent(ScenarioActivity.class);
                     break;
                 case R.id.bs_add_device:
                     actionNewIntent(DeviceActivity.class);

@@ -4,13 +4,13 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
-        classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.5.0'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3'
-        classpath 'io.realm:realm-gradle-plugin:1.2.0'
+        classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.10.0'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
+        classpath 'io.realm:realm-gradle-plugin:4.2.0'
     }
 
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
@@ -32,8 +32,8 @@ allprojects {
 
     // CURRENT APP VERSION
     project.ext {
-        currentVersionCode = 21
-        currentVersionName = "2.6.2"
+        currentVersionCode = 31
+        currentVersionName = "2.12.1"
     }
 }
 

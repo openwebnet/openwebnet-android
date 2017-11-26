@@ -24,21 +24,27 @@ import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
+import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
+import com.github.openwebnet.service.impl.ScenarioServiceImpl;
+import com.github.openwebnet.service.impl.SoundServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
@@ -205,6 +211,24 @@ public class AutomationActivityTest {
             return new TemperatureServiceImpl();
         }
 
+        @Provides
+        @Singleton
+        ScenarioService provideScenarioService() {
+            return new ScenarioServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        EnergyService provideEnergyService() {
+            return new EnergyServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        SoundService provideSoundService() {
+            return new SoundServiceImpl();
+        }
+
     }
 
     @Before
@@ -228,7 +252,7 @@ public class AutomationActivityTest {
     private void createWithIntent(String uuidExtra) {
         controller = Robolectric.buildActivity(AutomationActivity.class);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, AutomationActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         activity = controller
             .withIntent(intent)
@@ -305,7 +329,7 @@ public class AutomationActivityTest {
 
         createWithIntent(null);
 
-        verify(mock(LightServiceImpl.class), never()).findById(anyString());
+        verify(mock(AutomationServiceImpl.class), never()).findById(anyString());
 
         assertEquals("invalid value", "", editTextAutomationName.getText().toString());
         assertEquals("invalid value", "", editTextAutomationWhere.getText().toString());

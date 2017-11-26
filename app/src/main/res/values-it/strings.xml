@@ -4,8 +4,11 @@
     <string name="activity_device">Dispositivo</string>
     <string name="activity_light">Luce</string>
     <string name="activity_automation">Automatismo</string>
-    <string name="activity_ipcam">Ip Camera</string>
+    <string name="activity_ipcam">IP Camera</string>
     <string name="activity_temperature">Temperatura</string>
+    <string name="activity_scenario">Scenario</string>
+    <string name="activity_energy">Consumo Energetico</string>
+    <string name="activity_sound">Diffusione Sonora</string>
     <string name="activity_settings">Impostazioni</string>
 
     <string name="menu_save">Salva</string>
@@ -26,6 +29,7 @@
     <string name="dialog_device_confirmation_title">Conferma</string>
     <string name="dialog_device_confirmation_message">Sei sicuro?</string>
     <string name="dialog_donation_title">Donazione</string>
+    <string name="dialog_donation_tax">Le donazioni sono iva esclusa e possono variare da paese a paese</string>
 
     <string name="error_load_navigation_drawer">Errore caricamento menu</string>
     <string name="validation_required">Campo obbligatorio</string>
@@ -67,7 +71,10 @@
     <string name="bs_light">Luce</string>
     <string name="bs_automation">Automatismo</string>
     <string name="bs_temperature">Temperatura</string>
-    <string name="bs_ipcam">Ip Camera</string>
+    <string name="bs_ipcam">IP Camera</string>
+    <string name="bs_scenario">Scenario</string>
+    <string name="bs_energy">Consumo\nEnergetico</string>
+    <string name="bs_sound">Diffusione\nSonora</string>
 
     <string name="list_empty">Nessun elemento trovato</string>
     <string name="device_where">dove</string>
@@ -83,6 +90,13 @@
     <string name="device_debug_label_invalid">Valore non valido</string>
     <string name="light_request">Richiesta</string>
     <string name="light_dimmer">Dimmer</string>
+    <string name="light_info_area">Valori consentiti: 00, 1&#8211;9, 100</string>
+    <string name="light_info_group">Valori consentiti: 1&#8211;255</string>
+    <string name="light_info_point_to_point">Dove = Area + Punto Luce</string>
+    <string name="light_label_general">Generale</string>
+    <string name="light_label_area">Area</string>
+    <string name="light_label_group">Gruppo</string>
+    <string name="light_label_point_to_point">Punto Luce</string>
     <string name="automation_request">Richiesta</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Esempio <i>http://192.168.1.100:2222/videostream.cgi</i>\nSe hai bisogno di aiuto per identificare l\'Url correttamente, leggi questa <a href='https://github.com/niqdev/ipcam-view/wiki'>guida</a></string>
@@ -92,6 +106,22 @@
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Errore di connessione</string>
     <string name="temperature_request">Richiesta</string>
+    <string name="scenario_request">Richiesta</string>
+    <string name="scenario_support">Supporta MH200N e MH202</string>
+    <string name="energy_request">Richiesta</string>
+    <string name="energy_instantaneous_power">Potenza Instantanea:</string>
+    <string name="energy_daily_power">Potenza Giornaliera:</string>
+    <string name="energy_monthly_power">Potenza Mensile:</string>
+    <string name="energy_info_best_effort">Il gateway saltuariamente non risponde correttamente e alcuni valori potrebbero essere parziali o errati.\nSi consiglia inoltre di tener questo componente separato dagli altri perché potrebbe rallentare al caricamento.</string>
+    <string name="sound_request">Richiesta</string>
+    <string name="sound_info_amplifier_group">Valori consentiti: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Valori consentiti: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Valori consentiti: 101&#8211;109</string>
+    <string name="sound_label_amplifier_general">Amplificatore: generale</string>
+    <string name="sound_label_amplifier_group">Amplificatore: gruppo</string>
+    <string name="sound_label_amplifier_point_to_point">Amplificatore: punto audio</string>
+    <string name="sound_label_source_general">Sorgente: generale</string>
+    <string name="sound_label_source_point_to_point">Sorgente: punto audio</string>
 
     <string name="card_device_debug_delay">Ritardo:</string>
     <string name="card_device_debug_timeunit">millisecondi</string>

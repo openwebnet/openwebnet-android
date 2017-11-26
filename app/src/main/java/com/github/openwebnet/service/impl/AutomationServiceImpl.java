@@ -23,9 +23,9 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
+import static com.github.openwebnet.model.AutomationModel.Status.DOWN;
 import static com.github.openwebnet.model.AutomationModel.Status.STOP;
 import static com.github.openwebnet.model.AutomationModel.Status.UP;
-import static com.github.openwebnet.model.AutomationModel.Status.DOWN;
 
 public class AutomationServiceImpl implements AutomationService {
 
@@ -81,7 +81,7 @@ public class AutomationServiceImpl implements AutomationService {
     @Override
     public Observable<List<AutomationModel>> requestByEnvironment(Integer id) {
         return findByEnvironment(id)
-            .flatMapIterable(lightModels -> lightModels)
+            .flatMapIterable(automationModels -> automationModels)
             .flatMap(requestAutomation(requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
@@ -89,7 +89,7 @@ public class AutomationServiceImpl implements AutomationService {
     @Override
     public Observable<List<AutomationModel>> requestFavourites() {
         return findFavourites()
-            .flatMapIterable(lightModels -> lightModels)
+            .flatMapIterable(automationModels -> automationModels)
             .flatMap(requestAutomation(requestStatus, handleStatus))
             .collect(ArrayList::new, List::add);
     }
@@ -125,7 +125,7 @@ public class AutomationServiceImpl implements AutomationService {
 
     private Func1<AutomationModel, Observable<AutomationModel>> requestAutomation(
         Func1<String, Automation> request, Func2<OpenSession, AutomationModel, AutomationModel> handler) {
-        // TODO improvement: group by gateway and for each gateway send all requests together
+
         return automation -> commonService.findClient(automation.getGatewayUuid())
             .send(request.call(automation.getWhere()))
             .subscribeOn(Schedulers.io())

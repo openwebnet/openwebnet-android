@@ -1,22 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="August 16, 2016" versionName="2.6.2">
+    <changelogversion changeDate="November 25, 2017" versionName="2.12.1">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Fix donation]]>
+            <![CDATA[<b><font color=red>New!</font></b> Fix crashes]]>
         </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="September 30, 2017" versionName="2.12.0">
+        <changelogtext>Add German language support</changelogtext>
+        <changelogtext>Minor fixes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="December 8, 2016" versionName="2.11.0">
+        <changelogtext>Turn up/down Amplifier Volume</changelogtext>
+        <changelogtext>Change Source Station</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="November 7, 2016" versionName="2.10.0">
+        <changelogtext>Add Sound System</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="October 8, 2016" versionName="2.9.0">
+        <changelogtext>Lighting: handle types</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="October 2, 2016" versionName="2.8.1">
+        <changelogtext>Fix Power Consumption</changelogtext>
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="October 2, 2016" versionName="2.8.0">
+        <changelogtext>Add Power Consumption feature</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="September 11, 2016" versionName="2.7.2">
+        <changelogtext>Minor style changes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="September 11, 2016" versionName="2.7.1">
+        <changelogtext>Fix scenario</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="September 11, 2016" versionName="2.7.0">
+        <changelogtext>Add scenario feature</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="August 16, 2016" versionName="2.6.2">
+        <changelogtext>Fix donation</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="August 16, 2016" versionName="2.6.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add donation feature]]>
-        </changelogtext>
+        <changelogtext>Add donation feature</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="August 11, 2016" versionName="2.6.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Add billing permission]]>
-        </changelogtext>
+        <changelogtext>Add billing permission</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="August 6, 2016" versionName="2.5.1">

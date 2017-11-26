@@ -1,0 +1,138 @@
+<resources>
+    <string name="app_version">version</string>
+
+    <string name="activity_device">Gerät</string>
+    <string name="activity_light">Licht</string>
+    <string name="activity_automation">Automation</string>
+    <string name="activity_ipcam">IP Kamera</string>
+    <string name="activity_temperature">Temperatur</string>
+    <string name="activity_scenario">Szenario</string>
+    <string name="activity_energy">Stromverbrauch</string>
+    <string name="activity_sound">Lautsprecheranlage</string>
+    <string name="activity_settings">Einstellungen</string>
+
+    <string name="menu_save">Speichern</string>
+    <string name="menu_edit">Bearbeiten</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="menu_debug">Debug</string>
+
+    <string name="drawer_menu_favourite">Favoriten</string>
+    <string name="drawer_menu_add">Umgebung hinzufügen</string>
+    <string name="drawer_menu_settings">Einstellungen</string>
+    <string name="drawer_menu_donation">Spenden</string>
+    <string name="drawer_menu_changelog">Änderungen</string>
+    <string name="drawer_menu_example">Beispiel Umgebung</string>
+
+    <string name="dialog_add_environment_title">Umgebung hinzufügen</string>
+    <string name="dialog_edit_environment_title">Umgebung bearbeiten</string>
+    <string name="dialog_environment_name">Name</string>
+    <string name="dialog_device_confirmation_title">Bestätigung</string>
+    <string name="dialog_device_confirmation_message">Sind Sie sicher?</string>
+    <string name="dialog_donation_title">Spenden</string>
+    <string name="dialog_donation_tax">Spenden sind steuerfrei und können von Land zu Land unterschiedlich sein.</string>
+
+    <string name="error_load_navigation_drawer">Fehler beim Laden der Navigationsleiste</string>
+    <string name="validation_required">Pflichtfeld</string>
+    <string name="validation_host">Ungültige IP-Adresse oder Domain</string>
+    <string name="validation_port">Ungültiger Portbereich</string>
+    <string name="validation_url">Ungültige URL</string>
+    <string name="validation_bad_value">Wert unzulässig</string>
+
+    <string name="settings_category_shortcuts">Tastenkürzel</string>
+    <string name="settings_title_wireless">Wireless &amp; Netzwerke</string>
+    <string name="settings_category_gateway">Gateway</string>
+    <string name="settings_gateway_add">Gateway hinzufügen</string>
+    <string name="settings_gateway_default">Standard Gateway</string>
+    <string name="settings_gateway_default_dialog">Standardgateway wählen</string>
+    <string name="dialog_gateway_host">Host*</string>
+    <string name="dialog_gateway_host_hint">IP-Adresse oder Domain</string>
+    <string name="dialog_gateway_port">Port*</string>
+    <string name="dialog_gateway_port_default">20000</string>
+    <string name="dialog_gateway_password">Passwort (optional)</string>
+    <string name="dialog_gateway_password_hint">Passwort</string>
+    <string name="dialog_gateway_password_default">Lassen Sie dieses Feld leer, falls es nicht benötigt wird. \nDas Standardpasswort ist 12345.</string>
+    <string name="settings_category_debug">Debug</string>
+    <string name="settings_debug_device_title">Debugger-Meldungen</string>
+    <string name="settings_debug_device_summary">Anzeige von Verzögerungs- und Ansprechwerte</string>
+    <string name="settings_category_temperature">Temperatur</string>
+    <string name="settings_temperature_default">Standard-Temperaturskala</string>
+    <string name="settings_temperature_default_dialog">Temperaturskala auswählen</string>
+
+    <string name="button_add">Hinzufügen</string>
+    <string name="button_edit">Bearbeiten</string>
+    <string name="button_delete">Löschen</string>
+    <string name="button_close">Schließen</string>
+    <string name="label_none">Keines</string>
+    <string name="label_name">Name</string>
+    <string name="label_missing_gateway">Fehlender Gateway</string>
+
+    <string name="bs_title">Hinzufügen</string>
+    <string name="bs_device">Gerät</string>
+    <string name="bs_light">Licht</string>
+    <string name="bs_automation">Automation</string>
+    <string name="bs_temperature">Temperatur</string>
+    <string name="bs_ipcam">IP Kamera</string>
+    <string name="bs_scenario">Szenario</string>
+    <string name="bs_energy">Stromverbrauch</string>
+    <string name="bs_sound">Lautsprecheranlage</string>
+
+    <string name="list_empty">Keine Einträge gefunden</string>
+    <string name="device_where">Wo</string>
+    <string name="device_favourite">Favoriten</string>
+    <string name="device_confirm">Bestätigungsmeldung anzeigen</string>
+    <string name="device_on_load">Anfragen senden beim On-Load-Ereignis</string>
+    <string name="device_accept">Ich weiß, was ich tue! (Haftungsausschluss)</string>
+    <string name="device_request">Anfrage</string>
+    <string name="device_response">Antwort</string>
+    <string name="device_response_paste">Einfügen</string>
+    <string name="device_value">Wert</string>
+    <string name="device_expected_value">erwarteter Wert</string>
+    <string name="device_debug_label_invalid">Ungültiger Wert</string>
+    <string name="light_request">Anforderung zum Einschalten</string>
+    <string name="light_dimmer">Dimmer</string>
+    <string name="light_info_area">Erlaubte Werte: 00, 1&#8211;9, 100</string>
+    <string name="light_info_group">Erlaubte Werte: 1&#8211;255</string>
+    <string name="light_info_point_to_point">Wo = Bereich + Licht Id</string>
+    <string name="light_label_general">Allgemein</string>
+    <string name="light_label_area">Bereich</string>
+    <string name="light_label_group">Gruppe</string>
+    <string name="light_label_point_to_point">Punkt zu Punkt</string>
+    <string name="automation_request">Stop anfordern</string>
+    <string name="ipcam_url">URL</string>
+    <string name="ipcam_url_help">Beispiel: <i>http://192.168.1.100:2222/videostream.cgi</i>\nWenn Sie Hilfe bei der Identifizierung der Url benötigen, lesen Sie bitte diese <a href='https://github.com/niqdev/ipcam-view/wiki'>Anleitung</a></string>
+    <string name="ipcam_authentication">Authentifizierung</string>
+    <string name="ipcam_username">Benutzername</string>
+    <string name="ipcam_password">Passwort</string>
+    <string name="ipcam_stream_mjpeg">MJPEG</string>
+    <string name="ipcam_stream_error">Verbindungsfehler</string>
+    <string name="temperature_request">Temperatur anfordern</string>
+    <string name="scenario_request">Start anfordern</string>
+    <string name="scenario_support">Unterstützt MH200N und MH202</string>
+    <string name="energy_request">Leistungsverbrauch anfordern</string>
+    <string name="energy_instantaneous_power">Momentanleistung:</string>
+    <string name="energy_daily_power">Täglicher Strom:</string>
+    <string name="energy_monthly_power">Monatlicher Strom:</string>
+    <string name="energy_info_best_effort">Das Gateway reagiert nicht immer korrekt und einige Werte können unvollständig oder fehlerhaft sein. \nAußerdem sollten Sie diese Komponente von der anderen Komponente getrennt halten, um Verzögerungen zu vermeiden.</string>
+    <string name="sound_request">Anforderung Einschalten</string>
+    <string name="sound_info_amplifier_group">Erlaubte Werte: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Erlaubte Werte: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Erlaubte Werte: 101&#8211;109</string>
+    <string name="sound_label_amplifier_general">Verstärker: allgemein</string>
+    <string name="sound_label_amplifier_group">Verstärker: Gruppe</string>
+    <string name="sound_label_amplifier_point_to_point">Verstärker: Punkt zu Punkt</string>
+    <string name="sound_label_source_general">Quelle: allgemein</string>
+    <string name="sound_label_source_point_to_point">Quelle: Punkt zu Punkt</string>
+
+    <string name="card_device_debug_delay">Verzögerung:</string>
+    <string name="card_device_debug_timeunit">Millisekunden</string>
+    <string name="card_device_debug_copy">Kopieren</string>
+    <string name="card_device_debug_none">keine Antwort</string>
+    <string name="card_device_debug_clipboard_copied">Antwort kopiert</string>
+
+    <string name="donation_coffee_name">Kaffee</string>
+    <string name="donation_coffee_description">Ein Kaffee, um mich wach zu halten, wenn ich nachts programmiere!</string>
+    <string name="donation_beer_name">Bier</string>
+    <string name="donation_beer_description">Ein kaltes Bier um meine Produktivität zu steigern!</string>
+    <string name="donation_pizza_name">Pizza</string>
+    <string name="donation_pizza_description">Eine Pizza, um mich glücklich zu machen!</string>
+</resources>

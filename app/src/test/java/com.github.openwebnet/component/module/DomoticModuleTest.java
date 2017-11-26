@@ -2,16 +2,22 @@ package com.github.openwebnet.component.module;
 
 import com.github.openwebnet.service.AutomationService;
 import com.github.openwebnet.service.DeviceService;
+import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
+import com.github.openwebnet.service.ScenarioService;
+import com.github.openwebnet.service.SoundService;
 import com.github.openwebnet.service.TemperatureService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
+import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
+import com.github.openwebnet.service.impl.ScenarioServiceImpl;
+import com.github.openwebnet.service.impl.SoundServiceImpl;
 import com.github.openwebnet.service.impl.TemperatureServiceImpl;
 
 import javax.inject.Singleton;
@@ -64,6 +70,24 @@ public class DomoticModuleTest {
     @Singleton
     TemperatureService provideTemperatureService() {
         return mock(TemperatureServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    ScenarioService provideScenarioService() {
+        return mock(ScenarioServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    EnergyService provideEnergyService() {
+        return mock(EnergyServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    SoundService provideSoundService() {
+        return mock(SoundServiceImpl.class);
     }
 
 }

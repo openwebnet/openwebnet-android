@@ -22,8 +22,11 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.view.device.AbstractDeviceActivity;
 import com.github.openwebnet.view.device.AutomationActivity;
 import com.github.openwebnet.view.device.DeviceActivity;
+import com.github.openwebnet.view.device.EnergyActivity;
 import com.github.openwebnet.view.device.IpcamActivity;
 import com.github.openwebnet.view.device.LightActivity;
+import com.github.openwebnet.view.device.ScenarioActivity;
+import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -120,7 +123,8 @@ public class MainBottomSheetDialogFragmentTest {
         assertTrue("invalid instance type", gridView.getAdapter() instanceof BottomSheetDialogAdapter);
         BottomSheetDialogAdapter adapter = (BottomSheetDialogAdapter) gridView.getAdapter();
         MenuItem item = (MenuItem) adapter.getItem(position);
-        assertEquals("invalid title", activity.getResources().getString(title), item.getTitle());
+        assertEquals("invalid title", activity.getResources().getString(title),
+            item.getTitle().toString().replace("\\n", " "));
 
         gridView.performItemClick(item.getActionView(), position, gridView.getAdapter().getItemId(position));
 
@@ -150,15 +154,33 @@ public class MainBottomSheetDialogFragmentTest {
     }
 
     @Test
+    public void onItemClick_shouldStartSoundActivity() {
+        setupFragment();
+        expectStartActivity(3, R.string.activity_sound, SoundActivity.class);
+    }
+
+    @Test
+    public void onItemClick_shouldStartEnergyActivity() {
+        setupFragment();
+        expectStartActivity(4, R.string.activity_energy, EnergyActivity.class);
+    }
+
+    @Test
+    public void onItemClick_shouldStartScenarioActivity() {
+        setupFragment();
+        expectStartActivity(5, R.string.activity_scenario, ScenarioActivity.class);
+    }
+
+    @Test
     public void onItemClick_shouldStartDeviceActivity() {
         setupFragment();
-        expectStartActivity(3, R.string.activity_device, DeviceActivity.class);
+        expectStartActivity(6, R.string.activity_device, DeviceActivity.class);
     }
 
     @Test
     public void onItemClick_shouldStartIpcamActivity() {
         setupFragment();
-        expectStartActivity(4, R.string.activity_ipcam, IpcamActivity.class);
+        expectStartActivity(7, R.string.activity_ipcam, IpcamActivity.class);
     }
 
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextScenarioName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/label_name"
+            android:inputType="text"
+            android:maxLength="50" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="@string/scenario_request"
+            android:textStyle="bold|italic" />
+
+        <LinearLayout style="@style/message.linearLayout">
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/scenario_prefix"
+                app:font="inconsolata" />
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextScenarioWhere"
+                style="@style/message.editText"
+                android:hint="@string/device_where"
+                app:font="inconsolata" />
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                style="@style/message.textViewFontCustom"
+                android:text="@string/scenario_suffix"
+                app:font="inconsolata" />
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/activity_common_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="@string/scenario_support"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+</ScrollView>

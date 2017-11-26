@@ -13,6 +13,18 @@
         android:icon="@drawable/thermometer"
         android:title="@string/bs_temperature"/>
     <item
+        android:id="@+id/bs_add_sound"
+        android:icon="@drawable/music_note"
+        android:title="@string/bs_sound"/>
+    <item
+        android:id="@+id/bs_add_energy"
+        android:icon="@drawable/counter"
+        android:title="@string/bs_energy"/>
+    <item
+        android:id="@+id/bs_add_scenario"
+        android:icon="@drawable/cube_outline"
+        android:title="@string/bs_scenario"/>
+    <item
         android:id="@+id/bs_add_device"
         android:icon="@drawable/remote"
         android:title="@string/bs_device"/>

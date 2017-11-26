@@ -28,7 +28,7 @@ public class DatabaseRealmConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseRealmConfig.class);
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "openwebnet.realm";
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
 
@@ -51,6 +51,7 @@ public class DatabaseRealmConfig {
      */
     public RealmConfiguration getConfig() {
         initRealmKey();
+        Realm.init(mContext);
 
         if (DEBUG_DATABASE) {
             writeKeyToFile();
@@ -72,7 +73,7 @@ public class DatabaseRealmConfig {
     }
 
     private RealmConfiguration getUnencryptedConfig() {
-        return new RealmConfiguration.Builder(mContext)
+        return new RealmConfiguration.Builder()
             .name(DATABASE_NAME)
             .schemaVersion(DATABASE_VERSION)
             .migration(new MigrationStrategy())
@@ -80,7 +81,7 @@ public class DatabaseRealmConfig {
     }
 
     private RealmConfiguration getEncryptedConfig() {
-        return new RealmConfiguration.Builder(mContext)
+        return new RealmConfiguration.Builder()
             .name(DATABASE_NAME_CRYPT)
             .encryptionKey(getRealmKey())
             .schemaVersion(DATABASE_VERSION)

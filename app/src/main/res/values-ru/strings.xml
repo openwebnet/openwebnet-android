@@ -4,8 +4,11 @@
     <string name="activity_device">Устройство</string>
     <string name="activity_light">Свет</string>
     <string name="activity_automation">Электропривод</string>
-    <string name="activity_ipcam">Ip-камера</string>
+    <string name="activity_ipcam">IP-камера</string>
     <string name="activity_temperature">Температура</string>
+    <string name="activity_scenario">Сценарий</string>
+    <string name="activity_energy">Потребление энергии</string>
+    <string name="activity_sound">Аудиосистема</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -26,6 +29,7 @@
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">Вы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
+    <string name="dialog_donation_tax">Пожертвования исключены налог и может варьироваться от одной страны в другую</string>
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="validation_required">Обязательно поле</string>
@@ -67,7 +71,10 @@
     <string name="bs_light">Освещение</string>
     <string name="bs_automation">Электропривод</string>
     <string name="bs_temperature">Температура</string>
-    <string name="bs_ipcam">Ip-камера</string>
+    <string name="bs_ipcam">IP-камера</string>
+    <string name="bs_scenario">Сценарий</string>
+    <string name="bs_energy">Потребление\nэнергии</string>
+    <string name="bs_sound">Аудиосистема</string>
 
     <string name="list_empty">Не найдено ни одного элемента</string>
     <string name="device_where">где</string>
@@ -83,6 +90,13 @@
     <string name="device_debug_label_invalid">Значение некорректно</string>
     <string name="light_request">Запрос</string>
     <string name="light_dimmer">Диммер</string>
+    <string name="light_info_area">Допустимые значения: 00, 1&#8211;9, 100</string>
+    <string name="light_info_group">Допустимые значения: 1&#8211;255</string>
+    <string name="light_info_point_to_point">где: Область + свет Id</string>
+    <string name="light_label_general">Генеральная</string>
+    <string name="light_label_area">Область</string>
+    <string name="light_label_group">группа</string>
+    <string name="light_label_point_to_point">свет Id</string>
     <string name="automation_request">Запрос</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Пример <i>http://192.168.1.100:2222/videostream.cgi</i>\nЕсли вам необходима помощь для определения Url, воспользуйтесь данной<a href='https://github.com/niqdev/ipcam-view/wiki'>инструкцией</a></string>
@@ -92,6 +106,22 @@
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Ошибка соединения</string>
     <string name="temperature_request">Запрос</string>
+    <string name="scenario_request">Запрос</string>
+    <string name="scenario_support">Поддержка MH200N и MH202</string>
+    <string name="energy_request">Запрос</string>
+    <string name="energy_instantaneous_power">мгновенная мощность:</string>
+    <string name="energy_daily_power">Ежедневная мощность:</string>
+    <string name="energy_monthly_power">Ежемесячная мощность:</string>
+    <string name="energy_info_best_effort">Шлюз не всегда реагирует должным образом а некоторые значения могут быть частичным или неправильным.\nКроме того, вы должны держать этот компонент отделен от другого, чтобы избежать замедлений.</string>
+    <string name="sound_request">Запрос</string>
+    <string name="sound_info_amplifier_group">Допустимые значения: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Допустимые значения: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Допустимые значения: 101&#8211;109</string>
+    <string name="sound_label_amplifier_general">Усилитель: Генеральная</string>
+    <string name="sound_label_amplifier_group">Усилитель: группа</string>
+    <string name="sound_label_amplifier_point_to_point">Усилитель: точка аудио</string>
+    <string name="sound_label_source_general">Источник: Генеральная</string>
+    <string name="sound_label_source_point_to_point">Источник: точка аудио</string>
 
     <string name="card_device_debug_delay">Задержка:</string>
     <string name="card_device_debug_timeunit">миллисекунды</string>

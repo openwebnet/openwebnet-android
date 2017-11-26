@@ -13,8 +13,11 @@ Gestisce:
 - Illuminazione
 - Automatismi
 - Temperatura
+- Diffusione sonora / Radio
+- Consumo Energetico
+- Scenari
 - qualsiasi frame/messaggio OpenWebNet
-- Ip Camera (MJPEG)
+- IP Camera (MJPEG)
 
 Gestisce gateway multipli contemporaneamente con IP o Dominio e Password.
 
@@ -27,10 +30,9 @@ Quest'applicazione Android é un client Open Source non ufficiale completamente 
 Tutto il codice sorgente é disponibile online https://github.com/openwebnet/openwebnet-android
 
 Se ti piace quest'app e la trovi utile puoi fare una donazione. Alcuni possibili futuri sviluppi:
-- Diffusione sonora / Radio
-- Controllo energia
 - Ricerca rapida e ordinamento
 - Backup / Importazione / Esportazione delle configurazioni
+- Traduzione in altre lingue
 
 Puoi tener traccia di tutte le issue aperte https://github.com/openwebnet/openwebnet-android/issues
 

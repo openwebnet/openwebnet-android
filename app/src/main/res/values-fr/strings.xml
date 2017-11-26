@@ -6,6 +6,9 @@
     <string name="activity_automation">Automatisme</string>
     <string name="activity_ipcam">Caméra IP</string>
     <string name="activity_temperature">Température</string>
+    <string name="activity_scenario">Scénario</string>
+    <string name="activity_energy">Consommation d\'énergie</string>
+    <string name="activity_sound">Systeme Audio</string>
     <string name="activity_settings">Paramètres</string>
 
     <string name="menu_save">Enregistrer</string>
@@ -26,6 +29,7 @@
     <string name="dialog_device_confirmation_title">Confirmer</string>
     <string name="dialog_device_confirmation_message">Êtes-vous sûr ?</string>
     <string name="dialog_donation_title">Don</string>
+    <string name="dialog_donation_tax">Les dons sont HT et peuvent varier d\'un pays à l\'autre</string>
 
     <string name="error_load_navigation_drawer">Erreur de chargement du menu</string>
     <string name="validation_required">Champ obbligatoire</string>
@@ -68,6 +72,9 @@
     <string name="bs_automation">Automatisme</string>
     <string name="bs_temperature">Température</string>
     <string name="bs_ipcam">Caméra IP</string>
+    <string name="bs_scenario">Scénario</string>
+    <string name="bs_energy">Consommation\nd\'énergie</string>
+    <string name="bs_sound">Systeme\nAudio</string>
 
     <string name="list_empty">Aucun élément trouvé</string>
     <string name="device_where">Où</string>
@@ -83,6 +90,13 @@
     <string name="device_debug_label_invalid">Valeur invalide</string>
     <string name="light_request">Requête</string>
     <string name="light_dimmer">Variateur</string>
+    <string name="light_info_area">Les valeurs autorisées: 00, 1&#8211;9, 100</string>
+    <string name="light_info_group">Les valeurs autorisées: 1&#8211;255</string>
+    <string name="light_info_point_to_point">Où = Zone + Id lumière</string>
+    <string name="light_label_general">Général</string>
+    <string name="light_label_area">Zone</string>
+    <string name="light_label_group">Groupe</string>
+    <string name="light_label_point_to_point">Id lumière</string>
     <string name="automation_request">Requête</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Exemple <i>http://192.168.1.100:2222/videostream.cgi</i>\nSi vous avez besoin d\'aide pour identifier l\'Url correctement, lisez ce <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>
@@ -92,6 +106,22 @@
     <string name="ipcam_stream_mjpeg">MJPEG</string>
     <string name="ipcam_stream_error">Erreur de connexion</string>
     <string name="temperature_request">Requête</string>
+    <string name="scenario_request">Requête</string>
+    <string name="scenario_support">Supporte MH200N et MH202</string>
+    <string name="energy_request">Requête</string>
+    <string name="energy_instantaneous_power">Puissance Instantanée:</string>
+    <string name="energy_daily_power">Puissance Quotidienne:</string>
+    <string name="energy_monthly_power">Puissance Mensuelle:</string>
+    <string name="energy_info_best_effort">La passerelle ne répond pas toujours correctement et certaines valeurs peut être partielle ou incorrecte.\nEn outre, vous devez garder ce composant séparé de l\'autre pour éviter les ralentissements.</string>
+    <string name="sound_request">Requête</string>
+    <string name="sound_info_amplifier_group">Les valeurs autorisées: 0&#8211;9</string>
+    <string name="sound_info_amplifier_point_to_point">Les valeurs autorisées: 01&#8211;99</string>
+    <string name="sound_info_source_point_to_point">Les valeurs autorisées: 101&#8211;109</string>
+    <string name="sound_label_amplifier_general">Amplificateur: général</string>
+    <string name="sound_label_amplifier_group">Amplificateur: groupe</string>
+    <string name="sound_label_amplifier_point_to_point">Amplificateur: point audio</string>
+    <string name="sound_label_source_general">Source: général</string>
+    <string name="sound_label_source_point_to_point">Source: point audio</string>
 
     <string name="card_device_debug_delay">Délai:</string>
     <string name="card_device_debug_timeunit">ms</string>
