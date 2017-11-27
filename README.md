@@ -53,6 +53,7 @@ All detailed [changelog](CHANGELOG.md).
 
 ```bash
 ./gradlew clean build
+./gradlew app:dependencies
 ```
 
 How to run [tests](images/how-to-run-tests.png) in Android Studio 
