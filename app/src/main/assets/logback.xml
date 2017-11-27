@@ -1,6 +1,8 @@
 <configuration>
 
+    <!-- internal files cannot be exported directly, use provider -->
     <property name="PATH_FILES" value="/data/data/com.github.openwebnet/files/log/debug.log" />
+    <!-- need to have an external sd card mounted -->
     <property name="PATH_SDCARD" value="/mnt/sdcard/openwebnet.log" />
 
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
