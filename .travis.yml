@@ -1,3 +1,6 @@
+# https://docs.travis-ci.com/user/languages/android/
+# https://gist.github.com/anonymous/a7029ed98a7fc52cc2bc08fd2e21a53c
+
 language: android
 sudo: required
 
@@ -6,7 +9,7 @@ jdk:
 
 env:
   global:
-    - ANDROID_TARGET=android-24
+    - ANDROID_TARGET=android-25
     - ANDROID_ABI=armeabi-v7a
     - MALLOC_ARENA_MAX=2
     - ADB_INSTALL_TIMEOUT=10
@@ -15,19 +18,25 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-24.0.3
-    - android-24
+    - tools
+    - build-tools-25.0.3
+    - ${ANDROID_TARGET}
     - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
 
 before_install:
   - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
-before_script:
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
 
 script:
   - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls
