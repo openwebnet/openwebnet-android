@@ -7,24 +7,17 @@ sudo: required
 jdk:
   - oraclejdk8
 
-env:
-  global:
-    - ANDROID_TARGET=android-25
-    - ANDROID_ABI=armeabi-v7a
-    - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=10
-
 android:
   components:
     - tools
     - platform-tools
     - tools
     - build-tools-25.0.3
-    - ${ANDROID_TARGET}
+    - android-25
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+    - sys-img-armeabi-v7a-android-25
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -34,9 +27,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-
-before_install:
-  - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 script:
   - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls
