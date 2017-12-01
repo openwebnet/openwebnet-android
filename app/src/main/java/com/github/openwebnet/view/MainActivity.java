@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.annimon.stream.Stream;
+import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.iabutil.IabUtil;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Injector.initializeApplicationComponent((OpenWebNetApplication) getApplication());
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
         IabUtil.newInstance(this).init();
