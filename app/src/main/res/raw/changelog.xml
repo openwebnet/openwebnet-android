@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="November 27, 2017" versionName="2.12.2">
+    <changelogversion changeDate="December 3, 2017" versionName="2.12.5">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Fix crashes]]>
         </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="December 1, 2017" versionName="2.12.4">
+        <changelogtext>Fix crashes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="December 1, 2017" versionName="2.12.3">
+        <changelogtext>Fix crashes</changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="November 27, 2017" versionName="2.12.2">
+        <changelogtext>Fix crashes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="November 25, 2017" versionName="2.12.1">
