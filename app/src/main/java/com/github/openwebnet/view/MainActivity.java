@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (Injector.getApplicationComponent() == null) {
+            // https://github.com/openwebnet/openwebnet-android/issues/76
             log.error("applicationComponent is null: force initialize");
             Injector.initializeApplicationComponent((OpenWebNetApplication) getApplication());
         }

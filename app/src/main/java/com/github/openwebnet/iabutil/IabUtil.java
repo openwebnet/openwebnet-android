@@ -126,7 +126,8 @@ public class IabUtil {
             log.debug("in-app billing setup successful: querying inventory");
             try {
                 mHelper.queryInventoryAsync(true, skus, null, mGotInventoryListener);
-            } catch (IabAsyncInProgressException e) {
+            } catch (Throwable e) {
+                // https://github.com/openwebnet/openwebnet-android/issues/77
                 log.error("Error querying inventory. Another async operation in progress.");
             }
         });
