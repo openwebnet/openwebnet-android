@@ -1,16 +1,16 @@
 buildscript {
     repositories {
+        google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.10.0'
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
-        classpath 'io.realm:realm-gradle-plugin:4.2.0'
+        classpath 'io.realm:realm-gradle-plugin:4.3.1'
     }
 
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
@@ -28,6 +28,7 @@ allprojects {
 
     repositories {
         jcenter()
+        google()
     }
 
     // CURRENT APP VERSION

@@ -36,19 +36,19 @@
                 android:id="@+id/textViewSoundPrefix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/sound_prefix_stereo"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextSoundWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 android:id="@+id/textViewSoundSuffix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/sound_suffix"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
         </LinearLayout>
 

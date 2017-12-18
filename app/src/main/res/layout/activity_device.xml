@@ -37,7 +37,7 @@
                 android:id="@+id/editTextDeviceRequest"
                 style="@style/device.editText"
                 android:hint="@string/device_value"
-                app:font="inconsolata"/>
+                app:fontCustom="inconsolata"/>
         </LinearLayout>
 
         <RelativeLayout
@@ -84,7 +84,7 @@
                 android:id="@+id/editTextDeviceResponse"
                 style="@style/device.editText"
                 android:hint="@string/device_expected_value"
-                app:font="inconsolata"/>
+                app:fontCustom="inconsolata"/>
         </LinearLayout>
 
         <include
