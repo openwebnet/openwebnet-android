@@ -33,6 +33,10 @@ If you like this app and find it useful please consider making a donation. Some 
 
 If you find a bug or have any suggestions do not leave a negative rating but contact me via email, I will try to help you.
 
+Additional links
+* Tutorial in French [Contrôler votre système domotique MyHome de Legrand](https://www.myopen-legrandgroup.com/solution-gallery/openwebnet) by Jérémy Paris
+* My Open Gallery [OpenWebNet](https://devotics.fr/controler-domotique-myhome-legrand)
+
 *OpenWebNet is a BTicino registered trademark*
 
 ### Screenshots
