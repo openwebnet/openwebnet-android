@@ -33,18 +33,18 @@
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/scenario_prefix"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextScenarioWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/scenario_suffix"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
         </LinearLayout>
 

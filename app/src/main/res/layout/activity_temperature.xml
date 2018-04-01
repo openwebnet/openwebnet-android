@@ -34,19 +34,19 @@
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/temperature_prefix"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextTemperatureWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
                 android:maxLength="3"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/temperature_suffix"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
         </LinearLayout>
 

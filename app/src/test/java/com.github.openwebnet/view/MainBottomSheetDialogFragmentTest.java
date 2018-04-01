@@ -39,7 +39,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.util.List;
@@ -60,7 +60,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.when;
 import static org.robolectric.Shadows.shadowOf;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(application = OpenWebNetApplicationTest.class, constants = BuildConfig.class, sdk = 21)
 @PowerMockIgnore({"org.robolectric.*", "android.*"})
 @PrepareForTest({Injector.class})
@@ -124,7 +124,7 @@ public class MainBottomSheetDialogFragmentTest {
         BottomSheetDialogAdapter adapter = (BottomSheetDialogAdapter) gridView.getAdapter();
         MenuItem item = (MenuItem) adapter.getItem(position);
         assertEquals("invalid title", activity.getResources().getString(title),
-            item.getTitle().toString().replace("\\n", " "));
+            item.getTitle().toString().replace("\n", " "));
 
         gridView.performItemClick(item.getActionView(), position, gridView.getAdapter().getItemId(position));
 
@@ -132,7 +132,12 @@ public class MainBottomSheetDialogFragmentTest {
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
             .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
 
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+        Intent nextStartedActivity = shadowOf(activity).getNextStartedActivity();
+
+        assertThat(nextStartedActivity.getComponent(), equalTo(expectedIntent.getComponent()));
+        assertThat(nextStartedActivity.getExtras().size(), equalTo(expectedIntent.getExtras().size()));
+        assertThat(nextStartedActivity.getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1), equalTo(DEFAULT_ENVIRONMENT));
+        assertThat(nextStartedActivity.getStringExtra(EXTRA_DEFAULT_GATEWAY), equalTo(DEFAULT_GATEWAY));
     }
 
     @Test

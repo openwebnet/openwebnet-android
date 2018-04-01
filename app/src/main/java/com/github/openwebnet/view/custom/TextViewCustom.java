@@ -12,6 +12,6 @@ public class TextViewCustom extends AppCompatTextView {
     public TextViewCustom(Context context, AttributeSet attrs) {
         super(context, attrs);
         FontViewHelper.initCustomFont(this, attrs,
-            R.styleable.TextViewCustom, R.styleable.TextViewCustom_font);
+            R.styleable.TextViewCustom, R.styleable.TextViewCustom_fontCustom);
     }
 }
