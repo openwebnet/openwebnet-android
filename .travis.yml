@@ -9,8 +9,8 @@ jdk:
 
 env:
  global:
- - ANDROID_API=27
- - ANDROID_BUILD_TOOLS=27.0.3
+   - ANDROID_API=27
+   - ANDROID_BUILD_TOOLS=27.0.3
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
