@@ -203,9 +203,6 @@ public class NavigationViewItemSelectedListenerTest {
         return environment;
     }
 
-    // android.view.InflateException: XML file build/intermediates/res/merged/debug/layout/fragment_list_device.xml
-    // line #-1 (sorry, not yet implemented): Error inflating class <unknown>
-    @Ignore
     @Test
     public void onNavigationItemSelected_shouldSelectDefault() {
         int MENU_ENVIRONMENT_POSITION = 102;

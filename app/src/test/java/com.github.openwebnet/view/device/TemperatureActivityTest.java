@@ -239,12 +239,12 @@ public class TemperatureActivityTest {
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(TemperatureActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, TemperatureActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
+
+        controller = Robolectric.buildActivity(TemperatureActivity.class, intent);
+
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()

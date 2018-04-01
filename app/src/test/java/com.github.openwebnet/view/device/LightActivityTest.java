@@ -258,12 +258,12 @@ public class LightActivityTest {
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(LightActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, LightActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
+
+        controller = Robolectric.buildActivity(LightActivity.class, intent);
+
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()

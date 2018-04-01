@@ -258,12 +258,12 @@ public class SoundActivityTest {
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(SoundActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, SoundActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
+
+        controller = Robolectric.buildActivity(SoundActivity.class, intent);
+
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()

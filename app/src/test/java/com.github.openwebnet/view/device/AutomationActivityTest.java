@@ -250,12 +250,12 @@ public class AutomationActivityTest {
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(AutomationActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, AutomationActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
+
+        controller = Robolectric.buildActivity(AutomationActivity.class, intent);
+
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()

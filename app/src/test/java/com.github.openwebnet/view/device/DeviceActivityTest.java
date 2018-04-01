@@ -278,8 +278,6 @@ public class DeviceActivityTest {
     }
 
     private void createActivityWithIntent(String uuidExtra, Integer defaultEnvironment, String defaultGateway) {
-        controller = Robolectric.buildActivity(DeviceActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, DeviceActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
         if (defaultEnvironment != null) {
@@ -288,8 +286,9 @@ public class DeviceActivityTest {
         if (defaultGateway != null) {
             intent.putExtra(EXTRA_DEFAULT_GATEWAY, defaultGateway);
         }
+
+        controller = Robolectric.buildActivity(DeviceActivity.class, intent);
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()

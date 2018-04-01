@@ -124,7 +124,7 @@ public class MainBottomSheetDialogFragmentTest {
         BottomSheetDialogAdapter adapter = (BottomSheetDialogAdapter) gridView.getAdapter();
         MenuItem item = (MenuItem) adapter.getItem(position);
         assertEquals("invalid title", activity.getResources().getString(title),
-            item.getTitle().toString().replace("\\n", " "));
+            item.getTitle().toString().replace("\n", " "));
 
         gridView.performItemClick(item.getActionView(), position, gridView.getAdapter().getItemId(position));
 
@@ -132,7 +132,12 @@ public class MainBottomSheetDialogFragmentTest {
             .putExtra(EXTRA_DEFAULT_ENVIRONMENT, DEFAULT_ENVIRONMENT)
             .putExtra(EXTRA_DEFAULT_GATEWAY, DEFAULT_GATEWAY);
 
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+        Intent nextStartedActivity = shadowOf(activity).getNextStartedActivity();
+
+        assertThat(nextStartedActivity.getComponent(), equalTo(expectedIntent.getComponent()));
+        assertThat(nextStartedActivity.getExtras().size(), equalTo(expectedIntent.getExtras().size()));
+        assertThat(nextStartedActivity.getIntExtra(EXTRA_DEFAULT_ENVIRONMENT, -1), equalTo(DEFAULT_ENVIRONMENT));
+        assertThat(nextStartedActivity.getStringExtra(EXTRA_DEFAULT_GATEWAY), equalTo(DEFAULT_GATEWAY));
     }
 
     @Test

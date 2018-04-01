@@ -270,12 +270,12 @@ public class IpcamActivityTest {
     }
 
     private void createWithIntent(String uuidExtra) {
-        controller = Robolectric.buildActivity(IpcamActivity.class);
-
         Intent intent = new Intent(RuntimeEnvironment.application, IpcamActivity.class);
         intent.putExtra(RealmModel.FIELD_UUID, uuidExtra);
+
+        controller = Robolectric.buildActivity(IpcamActivity.class, intent);
+
         activity = controller
-            .newIntent(intent)
             .create()
             .start()
             .resume()
