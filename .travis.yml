@@ -1,35 +1,42 @@
 # https://docs.travis-ci.com/user/languages/android/
 # https://gist.github.com/anonymous/a7029ed98a7fc52cc2bc08fd2e21a53c
+# https://stackoverflow.com/questions/48097228/travis-ci-android-sdk-license-problems
 
-language: android
 sudo: required
 
+language: android
 jdk:
   - oraclejdk8
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+before_install:
+  - yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-27"
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
+env:
+ global:
+ - ANDROID_API=27
+ - ANDROID_BUILD_TOOLS=27.0.3
 
 android:
   components:
     - tools
     - platform-tools
     - tools
-    - build-tools-27.0.3
-    - android-27
+    - build-tools-${ANDROID_BUILD_TOOLS}
+    - android-${ANDROID_API}
     - extra-android-m2repository
     - extra-google-m2repository
     - extra-android-support
     - sys-img-armeabi-v7a-android-27
-
-before_install:
-  - yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
-
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-cache:
-  directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
 
 script:
   - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls
