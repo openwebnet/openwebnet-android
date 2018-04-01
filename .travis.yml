@@ -20,8 +20,7 @@ android:
     - sys-img-armeabi-v7a-android-27
 
 before_install:
-  - mkdir "$ANDROID_HOME/licenses" || true
-  - cp ./licenses/* "$ANDROID_HOME/licenses/"
+  - yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
