@@ -75,3 +75,34 @@ Caused by: java.lang.IllegalStateException:
   at com.github.openwebnet.view.device.AbstractDeviceActivity$$Lambda$1.call (Unknown Source)
   at rx.internal.util.ActionSubscriber.onNext (ActionSubscriber.java:39)
   at rx.observers.SafeSubscriber.onNext (SafeSubscriber.java:134)
+
+# emulator API 16
+I/dalvikvm: Could not find method com.google.common.base.Preconditions.checkNotNull, referenced from method com.github.openwebnet.component.Injector.getApplicationComponent
+W/dalvikvm: VFY: unable to resolve static method 1043: Lcom/google/common/base/Preconditions;.checkNotNull (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+D/dalvikvm: VFY: replacing opcode 0x71 at 0x0008
+I/dalvikvm: Could not find method com.github.openwebnet.component.DaggerApplicationComponent.builder, referenced from method com.github.openwebnet.component.Injector.initializeApplicationComponent
+W/dalvikvm: VFY: unable to resolve static method 914: Lcom/github/openwebnet/component/DaggerApplicationComponent;.builder ()Lcom/github/openwebnet/component/DaggerApplicationComponent$Builder;
+D/dalvikvm: VFY: replacing opcode 0x71 at 0x0004
+            DexOpt: unable to opt direct call 0x0397 at 0x0a in Lcom/github/openwebnet/component/Injector;.initializeApplicationComponent
+            DexOpt: unable to opt direct call 0x0398 at 0x16 in Lcom/github/openwebnet/component/Injector;.initializeApplicationComponent
+            DexOpt: unable to opt direct call 0x039a at 0x22 in Lcom/github/openwebnet/component/Injector;.initializeApplicationComponent
+            DexOpt: unable to opt direct call 0x0399 at 0x2e in Lcom/github/openwebnet/component/Injector;.initializeApplicationComponent
+D/AndroidRuntime: Shutting down VM
+W/dalvikvm: threadid=1: thread exiting with uncaught exception (group=0xae642228)
+E/AndroidRuntime: FATAL EXCEPTION: main
+                  java.lang.NoClassDefFoundError: com.github.openwebnet.component.DaggerApplicationComponent
+                      at com.github.openwebnet.component.Injector.initializeApplicationComponent(Injector.java:18)
+                      at com.github.openwebnet.OpenWebNetApplication.initDagger(OpenWebNetApplication.java:26)
+                      at com.github.openwebnet.OpenWebNetApplication.onCreate(OpenWebNetApplication.java:21)
+                      at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:999)
+                      at android.app.ActivityThread.handleBindApplication(ActivityThread.java:4151)
+                      at android.app.ActivityThread.access$1300(ActivityThread.java:130)
+                      at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1255)
+                      at android.os.Handler.dispatchMessage(Handler.java:99)
+                      at android.os.Looper.loop(Looper.java:137)
+                      at android.app.ActivityThread.main(ActivityThread.java:4745)
+                      at java.lang.reflect.Method.invokeNative(Native Method)
+                      at java.lang.reflect.Method.invoke(Method.java:511)
+                      at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:786)
+                      at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:553)
+                      at dalvik.system.NativeStart.main(Native Method)
