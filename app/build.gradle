@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 apply from: '../coverage.gradle'
 
@@ -14,7 +13,6 @@ android {
         versionCode currentVersionCode
         versionName currentVersionName
         multiDexEnabled true
-        //vectorDrawables.useSupportLibrary = true
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
 
@@ -85,7 +83,7 @@ dependencies {
     implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     implementation 'com.scottyab:secure-preferences-lib:0.1.4'
 
-    implementation ('com.github.openwebnet:rx-openwebnet:1.6.0') {
+    implementation ('com.github.openwebnet:rx-openwebnet:1.6.1') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     implementation 'com.github.niqdev:mjpeg-view:1.3.2'
@@ -106,14 +104,14 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
     }
     annotationProcessor ('com.jakewharton:butterknife-compiler:8.8.1') {
-        //exclude group: 'com.google.guava', module: 'guava'
+        exclude group: 'com.google.guava', module: 'guava'
     }
 
     implementation ('com.google.dagger:dagger:2.15') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     annotationProcessor ('com.google.dagger:dagger-compiler:2.15') {
-        //exclude group: 'com.google.guava', module: 'guava'
+        exclude group: 'com.google.guava', module: 'guava'
     }
     compileOnly 'javax.annotation:jsr250-api:1.0'
 }
@@ -135,6 +133,4 @@ task hello(dependsOn: build) {
 
     println 'current directory is: ' + projectDir
     println 'JAVA_HOME: ' + System.getenv('JAVA_HOME')
-    println 'JAVA7_HOME: ' + System.getenv('JAVA7_HOME')
-    println 'JAVA8_HOME: ' + System.getenv('JAVA8_HOME')
 }
