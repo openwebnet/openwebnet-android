@@ -1,0 +1,77 @@
+# test before release
+* test minSdk 16 crash dagger
+* regression test on all api/emulator (removed retrolambda + android studio 3)
+* tests with vpn
+* clean branches: master only
+
+# upgrade ipcam-view
+* android studio 3
+* remove retrolambda
+
+# upgrade realm
+https://realm.io
+
+# firebase
+https://firebase.google.com/docs/android/setup
+
+# error tracking (?)
+https://sentry.io/for/android
+
+# verify crash reports - app version 35
+
+* android 8.1
+* android 7.1
+* android 6.0
+Caused by: java.lang.NullPointerException:
+  at com.google.common.base.CharMatcher$None.trimTrailingFrom (CharMatcher.java:1290)
+  at com.google.common.io.BaseEncoding.decodeChecked (BaseEncoding.java:226)
+  at com.google.common.io.BaseEncoding.decode (BaseEncoding.java:212)
+  at com.github.openwebnet.database.DatabaseRealmConfig.getRealmKey (DatabaseRealmConfig.java:117)
+  at com.github.openwebnet.database.DatabaseRealmConfig.getEncryptedConfig (DatabaseRealmConfig.java:86)
+  at com.github.openwebnet.database.DatabaseRealmConfig.getConfig (DatabaseRealmConfig.java:72)
+  at com.github.openwebnet.database.DatabaseRealm.setup (DatabaseRealm.java:29)
+  at com.github.openwebnet.OpenWebNetApplication.initRealm (OpenWebNetApplication.java:31)
+  at com.github.openwebnet.OpenWebNetApplication.onCreate (OpenWebNetApplication.java:22)
+  at android.app.Instrumentation.callApplicationOnCreate (Instrumentation.java:1120)
+  at android.app.ActivityThread.handleBindApplication (ActivityThread.java:5747)
+
+* android 6.0
+Caused by: java.lang.NullPointerException:
+  at com.google.common.base.Preconditions.checkNotNull (Preconditions.java:787)
+  at com.github.openwebnet.component.Injector.getApplicationComponent (Injector.java:27)
+  at com.github.openwebnet.view.MainActivity.onCreate (MainActivity.java:88)
+  at android.app.Activity.performCreate (Activity.java:6251)
+  at android.app.Instrumentation.callActivityOnCreate (Instrumentation.java:1108)
+  at android.app.ActivityThread.performLaunchActivity (ActivityThread.java:2403)
+
+* android 7.0
+java.lang.NullPointerException:
+  at com.github.niqdev.mjpeg.MjpegViewDefault$MjpegViewThread.run (MjpegViewDefault.java:144)
+
+* android 7.0
+Caused by: rx.exceptions.OnErrorNotImplementedException:
+  at rx.internal.util.InternalObservableUtils$ErrorNotImplementedAction.call (InternalObservableUtils.java:386)
+  at rx.internal.util.InternalObservableUtils$ErrorNotImplementedAction.call (InternalObservableUtils.java:383)
+  at rx.internal.util.ActionSubscriber.onError (ActionSubscriber.java:44)
+  at rx.observers.SafeSubscriber._onError (SafeSubscriber.java:153)
+  at rx.observers.SafeSubscriber.onError (SafeSubscriber.java:115)
+  at rx.exceptions.Exceptions.throwOrReport (Exceptions.java:212)
+  at rx.observers.SafeSubscriber.onNext (SafeSubscriber.java:139)
+  at com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl.lambda$findAll$4 (EnvironmentRepositoryImpl.java:104)
+  at com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl$$Lambda$5.call (Unknown Source)
+  at rx.Observable.subscribe (Observable.java:10352)
+  at rx.Observable.subscribe (Observable.java:10319)
+  at rx.Observable.subscribe (Observable.java:10124)
+  at com.github.openwebnet.view.device.AbstractDeviceActivity.initSpinnerEnvironment (AbstractDeviceActivity.java:78)
+  at com.github.openwebnet.view.device.ScenarioActivity.onCreate (ScenarioActivity.java:45)
+  at android.app.Activity.performCreate (Activity.java:6955)
+  at android.app.Instrumentation.callActivityOnCreate (Instrumentation.java:1126)
+  at android.app.ActivityThread.performLaunchActivity (ActivityThread.java:2927)
+Caused by: java.lang.IllegalStateException:
+  at com.github.openwebnet.view.device.AbstractDeviceActivity.lambda$selectEnvironment$4 (AbstractDeviceActivity.java:152)
+  at com.github.openwebnet.view.device.AbstractDeviceActivity$$Lambda$3.apply (Unknown Source)
+  at com.github.openwebnet.view.device.AbstractDeviceActivity.selectEnvironment (AbstractDeviceActivity.java:154)
+  at com.github.openwebnet.view.device.AbstractDeviceActivity.lambda$initSpinnerEnvironment$1 (AbstractDeviceActivity.java:90)
+  at com.github.openwebnet.view.device.AbstractDeviceActivity$$Lambda$1.call (Unknown Source)
+  at rx.internal.util.ActionSubscriber.onNext (ActionSubscriber.java:39)
+  at rx.observers.SafeSubscriber.onNext (SafeSubscriber.java:134)
