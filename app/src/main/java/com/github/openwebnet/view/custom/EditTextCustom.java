@@ -12,6 +12,6 @@ public class EditTextCustom extends AppCompatEditText {
     public EditTextCustom(Context context, AttributeSet attrs) {
         super(context, attrs);
         FontViewHelper.initCustomFont(this, attrs,
-            R.styleable.EditTextCustom, R.styleable.EditTextCustom_font);
+            R.styleable.EditTextCustom, R.styleable.EditTextCustom_fontCustom);
     }
 }

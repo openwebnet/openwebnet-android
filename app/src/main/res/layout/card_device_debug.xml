@@ -79,7 +79,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:text="@string/card_device_debug_none"
-            app:font="inconsolata"/>
+            app:fontCustom="inconsolata"/>
 
     </LinearLayout>
 

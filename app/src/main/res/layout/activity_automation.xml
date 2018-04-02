@@ -34,18 +34,18 @@
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/automation_prefix"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextAutomationWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 style="@style/message.textViewFontCustom"
                 android:text="@string/automation_suffix"
-                typeface:font="inconsolata"/>
+                typeface:fontCustom="inconsolata"/>
 
         </LinearLayout>
 

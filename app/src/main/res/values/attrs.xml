@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TextViewCustom">
-        <attr name="font"/>
+        <attr name="fontCustom"/>
     </declare-styleable>
     <declare-styleable name="EditTextCustom">
-        <attr name="font"/>
+        <attr name="fontCustom"/>
     </declare-styleable>
 
-    <attr name="font" format="enum">
+    <attr name="fontCustom" format="enum">
         <enum name="awesome" value="0"/>
         <enum name="inconsolata" value="1"/>
     </attr>

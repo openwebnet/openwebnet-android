@@ -36,19 +36,19 @@
                 android:id="@+id/textViewLightPrefix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_prefix_default"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextLightWhere"
                 style="@style/message.editText"
                 android:hint="@string/device_where"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
                 android:id="@+id/textViewLightSuffix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/light_suffix"
-                app:font="inconsolata" />
+                app:fontCustom="inconsolata" />
 
         </LinearLayout>
 
