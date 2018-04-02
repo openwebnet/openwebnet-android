@@ -1,15 +1,6 @@
-# test before release
-* test minSdk 16 crash dagger
-* regression test on all api/emulator (removed retrolambda + android studio 3)
-* tests with vpn
-* clean branches: master only
-
 # upgrade ipcam-view
 * android studio 3
 * remove retrolambda
-
-# upgrade realm
-https://realm.io
 
 # firebase
 https://firebase.google.com/docs/android/setup
