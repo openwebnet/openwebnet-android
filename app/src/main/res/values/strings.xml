@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">2.12.6</string>
+    <string name="app_version_number" translatable="false">2.12.7</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
 
     <string name="activity_device">Device</string>
