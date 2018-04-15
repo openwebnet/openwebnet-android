@@ -73,12 +73,12 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
     }
 
-    implementation 'com.android.support:support-v4:27.1.0'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.android.support:support-annotations:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
 
     implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     implementation 'com.github.scottyab:secure-preferences:v0.1.6'
