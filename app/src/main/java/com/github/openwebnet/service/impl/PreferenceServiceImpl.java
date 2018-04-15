@@ -62,7 +62,10 @@ public class PreferenceServiceImpl implements PreferenceService {
     @Override
     public SharedPreferences getSecurePreferences() {
         if (securePreferences == null) {
-            this.securePreferences = new SecurePreferences(mContext, PREFERENCE_SECURE_PWD, PREFERENCE_SECURE);
+            // https://github.com/scottyab/secure-preferences/commit/f7a6e8b1a0961d1b96d848ef996c92ed732a0324
+            // ISSUE breaking change from v0.1.4 to v0.1.6
+            // revert order for retro-compatibility from [salt, sharedPrefFilename] (correct) to [sharedPrefFilename, salt] (wrong)
+            this.securePreferences = new SecurePreferences(mContext, PREFERENCE_SECURE_PWD, PREFERENCE_SECURE, null, 10000);
         }
         return securePreferences;
     }
