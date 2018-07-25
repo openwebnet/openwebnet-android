@@ -1,3 +1,7 @@
+#### v2.12.8 (July 25, 2018)
+
+- Minor fixes
+
 #### v2.12.7 (April 15, 2018)
 
 - Fix crashes
