@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="April 15, 2018" versionName="2.12.7">
+    <changelogversion changeDate="July 25, 2018" versionName="2.12.8">
         <changelogtext>
-            <![CDATA[<b><font color=red>New!</font></b> Fix crashes]]>
+            <![CDATA[<b><font color=red>New!</font></b> Minor fixes]]>
         </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="April 15, 2018" versionName="2.12.7">
+        <changelogtext>Fix crashes</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="April 2, 2018" versionName="2.12.6">

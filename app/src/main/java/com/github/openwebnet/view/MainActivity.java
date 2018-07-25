@@ -85,12 +85,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (Injector.getApplicationComponent() == null) {
+        try {
+            Injector.getApplicationComponent().inject(this);
+        } catch (NullPointerException npe) {
             // https://github.com/openwebnet/openwebnet-android/issues/76
             log.error("applicationComponent is null: force initialize");
             Injector.initializeApplicationComponent((OpenWebNetApplication) getApplication());
+            Injector.getApplicationComponent().inject(this);
         }
-        Injector.getApplicationComponent().inject(this);
+
         ButterKnife.bind(this);
         IabUtil.newInstance(this).init();
 
