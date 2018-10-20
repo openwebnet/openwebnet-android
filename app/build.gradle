@@ -8,7 +8,8 @@ android {
 
     defaultConfig {
         applicationId "com.github.openwebnet"
-        minSdkVersion 18
+        // SDK Tools, Revision 21 (November 2012) - Android 5.0
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode currentVersionCode
         versionName currentVersionName
