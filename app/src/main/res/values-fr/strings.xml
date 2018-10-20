@@ -18,6 +18,7 @@
 
     <string name="drawer_menu_favourite">Favoris</string>
     <string name="drawer_menu_add">Ajouter environnement</string>
+    <string name="drawer_menu_backup">Sauvegarde</string>
     <string name="drawer_menu_settings">Paramètres</string>
     <string name="drawer_menu_donation">Don</string>
     <string name="drawer_menu_changelog">Changelog</string>

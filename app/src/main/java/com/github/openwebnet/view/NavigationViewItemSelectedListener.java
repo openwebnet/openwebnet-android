@@ -95,6 +95,10 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
+            case R.id.nav_backup:
+                // TODO
+                // https://firebase.google.com/docs/auth/android/firebaseui
+                break;
             case R.id.nav_settings:
                 showSettings();
                 break;

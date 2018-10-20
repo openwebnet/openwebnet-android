@@ -18,6 +18,7 @@
 
     <string name="drawer_menu_favourite">Favoriten</string>
     <string name="drawer_menu_add">Umgebung hinzufügen</string>
+    <string name="drawer_menu_backup">Sicherung</string>
     <string name="drawer_menu_settings">Einstellungen</string>
     <string name="drawer_menu_donation">Spenden</string>
     <string name="drawer_menu_changelog">Änderungen</string>

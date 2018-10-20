@@ -2,9 +2,9 @@
 
 .idea/
 *.iml
-projectFilesBackup/
 
 gradle.properties
 /local.properties
 /build
 /release
+app/google-services.json

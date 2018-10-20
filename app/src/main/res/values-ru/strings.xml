@@ -18,6 +18,7 @@
 
     <string name="drawer_menu_favourite">Избранное</string>
     <string name="drawer_menu_add">Добавить окружение</string>
+    <string name="drawer_menu_backup">Резервный</string>
     <string name="drawer_menu_settings">Настройки</string>
     <string name="drawer_menu_donation">Пожертвование</string>
     <string name="drawer_menu_changelog">Список изменений</string>
