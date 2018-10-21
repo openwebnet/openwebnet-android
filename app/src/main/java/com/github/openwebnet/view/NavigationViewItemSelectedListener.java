@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.firebase.ui.auth.AuthUI;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.iabutil.DonationDialogFragment;
@@ -26,6 +27,8 @@ import com.github.openwebnet.view.settings.SettingsFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -96,8 +99,14 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 showDialogAddEnvironment();
                 break;
             case R.id.nav_backup:
-                // TODO
-                // https://firebase.google.com/docs/auth/android/firebaseui
+                // TODO method: if it's already signed show backups else login
+                mActivity.startActivityForResult(
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
+                        .build(),
+                    MainActivity.REQUEST_CODE_SIGN_IN);
+                // TODO JSON with: backups [] of { info: id(uuid), database-version, backup-name, date | schema: light, automation,  ... }
                 break;
             case R.id.nav_settings:
                 showSettings();

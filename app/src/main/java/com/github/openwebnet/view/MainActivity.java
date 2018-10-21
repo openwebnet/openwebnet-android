@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.annimon.stream.Stream;
+import com.firebase.ui.auth.IdpResponse;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -25,6 +26,8 @@ import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.PreferenceService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
     static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
+    static final int REQUEST_CODE_SIGN_IN = 101;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -230,6 +234,18 @@ public class MainActivity extends AppCompatActivity {
             // perform any handling of activity results not related to in-app
             // billing...
             super.onActivityResult(requestCode, resultCode, data);
+        }
+
+        // TODO
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                log.info("onActivityResult: Firebase login success");
+            } else {
+                log.error("onActivityResult: firebase login error");
+            }
         }
     }
 
