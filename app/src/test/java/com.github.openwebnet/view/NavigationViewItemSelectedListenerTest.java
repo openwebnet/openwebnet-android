@@ -25,6 +25,7 @@ import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
 import com.google.common.collect.Lists;
+import com.google.firebase.FirebaseApp;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -105,6 +106,7 @@ public class NavigationViewItemSelectedListenerTest {
 
         activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);
+        FirebaseApp.initializeApp(activity);
     }
 
     private MenuItem clickMenuItem(int menuId) {

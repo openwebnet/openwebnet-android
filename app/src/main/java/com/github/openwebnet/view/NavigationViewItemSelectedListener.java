@@ -1,6 +1,5 @@
 package com.github.openwebnet.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -22,18 +21,17 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.iabutil.DonationDialogFragment;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.profile.ProfileActivity;
 import com.github.openwebnet.view.settings.SettingsFragment;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -58,6 +56,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
     @Inject
     UtilityService utilityService;
+
+    @Inject
+    FirebaseService firebaseService;
 
     @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
@@ -103,6 +104,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
+            // TODO test
             case R.id.nav_profile:
                 showProfile();
                 break;
@@ -181,22 +183,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             });
     }
 
-    // Java 8 Optional not supported
-    public static Intent getProfileIntent(Context context) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            Intent profileIntent = new Intent(context, ProfileActivity.class);
-            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, auth.getCurrentUser().getEmail());
-            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, auth.getCurrentUser().getDisplayName());
-            return profileIntent;
-        }
-        return null;
-    }
-
     private void showProfile() {
-        Intent profileIntent = getProfileIntent(mActivity);
-        if (profileIntent != null) {
-            log.info("showProfile: valid profile");
+        if (firebaseService.isAuthenticated()) {
+            log.debug("showProfile: valid profile");
+            Intent profileIntent = new Intent(mActivity, ProfileActivity.class);
+            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, firebaseService.getEmail());
+            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, firebaseService.getDisplayName());
             mActivity.startActivity(profileIntent);
         } else {
             log.info("showProfile: init login");

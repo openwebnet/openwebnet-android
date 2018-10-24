@@ -17,11 +17,13 @@ import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
 import com.github.openwebnet.repository.impl.SoundRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
@@ -84,6 +86,7 @@ public interface ApplicationComponent {
     void inject(PreferenceServiceImpl preferenceService);
     void inject(CommonServiceImpl commonService);
     void inject(UtilityServiceImpl utilityService);
+    void inject(FirebaseServiceImpl firebaseService);
 
     // domotic service
     void inject(GatewayServiceImpl gatewayService);

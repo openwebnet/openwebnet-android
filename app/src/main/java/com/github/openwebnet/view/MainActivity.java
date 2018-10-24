@@ -26,7 +26,9 @@ import com.github.openwebnet.iabutil.IabUtil;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.view.profile.ProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    FirebaseService firebaseService;
 
     int drawerMenuItemSelected;
 
@@ -147,14 +152,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // TODO test
     private void initHeader() {
         ImageView headerImageView = navHeaderMain.findViewById(R.id.imageViewHeader);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
+        if (firebaseService.isAuthenticated()) {
             log.debug("initHeader: valid firebase session");
             // update profile image
-            Picasso.get().load(auth.getCurrentUser().getPhotoUrl()).into(headerImageView);
+            Picasso.get().load(firebaseService.getPhotoUrl()).into(headerImageView);
             headerImageView.setOnClickListener(null);
         } else {
             log.debug("initHeader: invalid firebase session");
@@ -162,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void initOnClickLinkToGitHub(ImageView headerImageView) {
+    private void initOnClickLinkToGitHub(ImageView headerImageView) {
         headerImageView.setImageResource(R.drawable.github_circle);
         headerImageView.setOnClickListener(v -> startActivity(
             new Intent(Intent.ACTION_VIEW, Uri.parse(appLinkGitHub))
@@ -259,14 +264,17 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
+        // TODO test
         // https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme.md
         if (requestCode == REQUEST_CODE_SIGN_IN) {
             //IdpResponse response = IdpResponse.fromResultIntent(data);
-            Intent profileIntent = NavigationViewItemSelectedListener.getProfileIntent(this);
 
-            if (resultCode == RESULT_OK && profileIntent != null) {
+            if (resultCode == RESULT_OK && firebaseService.isAuthenticated()) {
                 log.debug("onActivityResult: firebase login succeeded");
                 initHeader();
+                Intent profileIntent = new Intent(getBaseContext(), ProfileActivity.class);
+                profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, firebaseService.getEmail());
+                profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, firebaseService.getDisplayName());
                 startActivity(profileIntent);
             } else {
                 log.error("onActivityResult: firebase login failed");
