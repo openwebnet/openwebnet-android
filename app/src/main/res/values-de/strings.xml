@@ -9,6 +9,7 @@
     <string name="activity_scenario">Szenario</string>
     <string name="activity_energy">Stromverbrauch</string>
     <string name="activity_sound">Lautsprecheranlage</string>
+    <string name="activity_profile">Profil</string>
     <string name="activity_settings">Einstellungen</string>
 
     <string name="menu_save">Speichern</string>
@@ -18,7 +19,7 @@
 
     <string name="drawer_menu_favourite">Favoriten</string>
     <string name="drawer_menu_add">Umgebung hinzufügen</string>
-    <string name="drawer_menu_backup">Sicherung</string>
+    <string name="drawer_menu_profile">Profil</string>
     <string name="drawer_menu_settings">Einstellungen</string>
     <string name="drawer_menu_donation">Spenden</string>
     <string name="drawer_menu_changelog">Änderungen</string>

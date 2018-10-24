@@ -26,9 +26,9 @@
             android:icon="@drawable/plus_box"
             android:title="@string/drawer_menu_add"/>
         <item
-            android:id="@+id/nav_backup"
-            android:icon="@drawable/cloud_upload"
-            android:title="@string/drawer_menu_backup"/>
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/account"
+            android:title="@string/drawer_menu_profile"/>
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/settings"

@@ -98,6 +98,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.github.openwebnet.view.MainActivity" />
         </activity>
+        <activity
+            android:name=".view.profile.ProfileActivity"
+            android:label="@string/activity_profile"
+            android:parentActivityName=".view.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.github.openwebnet.view.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

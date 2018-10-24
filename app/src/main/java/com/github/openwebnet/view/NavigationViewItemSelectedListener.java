@@ -1,5 +1,6 @@
 package com.github.openwebnet.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -22,7 +23,9 @@ import com.github.openwebnet.iabutil.DonationDialogFragment;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.profile.ProfileActivity;
 import com.github.openwebnet.view.settings.SettingsFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
@@ -98,15 +101,8 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
-            case R.id.nav_backup:
-                // TODO method: if it's already signed show backups else login
-                mActivity.startActivityForResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
-                        .build(),
-                    MainActivity.REQUEST_CODE_SIGN_IN);
-                // TODO JSON with: backups [] of { info: id(uuid), database-version, backup-name, date | schema: light, automation,  ... }
+            case R.id.nav_profile:
+                showProfile();
                 break;
             case R.id.nav_settings:
                 showSettings();
@@ -181,6 +177,32 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
             });
+    }
+
+    private void showProfile() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            log.info("showProfile: valid session");
+            Intent profileIntent = new Intent(mActivity, ProfileActivity.class);
+            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, auth.getCurrentUser().getEmail());
+            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, auth.getCurrentUser().getDisplayName());
+            mActivity.startActivity(profileIntent);
+        } else {
+            log.info("showProfile: login");
+        }
+
+        /*
+        // TODO method: if it's already signed show backups else login
+        mActivity.startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
+                .build(),
+            MainActivity.REQUEST_CODE_SIGN_IN);
+        // TODO JSON with: backups [] of { info: id(uuid), database-version, backup-name, date, share [user-id] | schema: light, automation,  ... }
+        // https://firebase.google.com/docs/firestore/quickstart
+        // https://firebaseopensource.com/projects/firebase/firebaseui-android/firestore/readme.md/
+        */
     }
 
     private void showSettings() {
