@@ -34,6 +34,7 @@
     <string name="dialog_donation_tax">Spenden sind steuerfrei und können von Land zu Land unterschiedlich sein.</string>
 
     <string name="error_load_navigation_drawer">Fehler beim Laden der Navigationsleiste</string>
+    <string name="error_authentication">Authentifizierung fehlgeschlagen</string>
     <string name="validation_required">Pflichtfeld</string>
     <string name="validation_host">Ungültige IP-Adresse oder Domain</string>
     <string name="validation_port">Ungültiger Portbereich</string>

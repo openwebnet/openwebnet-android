@@ -91,6 +91,9 @@ dependencies {
     implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     implementation 'com.github.scottyab:secure-preferences:v0.1.6'
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     implementation('com.github.openwebnet:rx-openwebnet:1.6.1') {
         exclude group: 'com.google.guava', module: 'guava'
     }

@@ -34,6 +34,7 @@
     <string name="dialog_donation_tax">Пожертвования исключены налог и может варьироваться от одной страны в другую</string>
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
+    <string name="error_authentication">Ошибка аутентификации</string>
     <string name="validation_required">Обязательно поле</string>
     <string name="validation_host">Неверный адрес IP или домен</string>
     <string name="validation_port">Некорректный порт</string>

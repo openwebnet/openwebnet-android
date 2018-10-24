@@ -1,5 +1,6 @@
 package com.github.openwebnet.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -32,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -179,30 +181,32 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             });
     }
 
-    private void showProfile() {
+    // Java 8 Optional not supported
+    public static Intent getProfileIntent(Context context) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            log.info("showProfile: valid session");
-            Intent profileIntent = new Intent(mActivity, ProfileActivity.class);
+            Intent profileIntent = new Intent(context, ProfileActivity.class);
             profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, auth.getCurrentUser().getEmail());
             profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, auth.getCurrentUser().getDisplayName());
+            return profileIntent;
+        }
+        return null;
+    }
+
+    private void showProfile() {
+        Intent profileIntent = getProfileIntent(mActivity);
+        if (profileIntent != null) {
+            log.info("showProfile: valid profile");
             mActivity.startActivity(profileIntent);
         } else {
-            log.info("showProfile: login");
+            log.info("showProfile: init login");
+            mActivity.startActivityForResult(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
+                    .build(),
+                MainActivity.REQUEST_CODE_SIGN_IN);
         }
-
-        /*
-        // TODO method: if it's already signed show backups else login
-        mActivity.startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
-                .build(),
-            MainActivity.REQUEST_CODE_SIGN_IN);
-        // TODO JSON with: backups [] of { info: id(uuid), database-version, backup-name, date, share [user-id] | schema: light, automation,  ... }
-        // https://firebase.google.com/docs/firestore/quickstart
-        // https://firebaseopensource.com/projects/firebase/firebaseui-android/firestore/readme.md/
-        */
     }
 
     private void showSettings() {

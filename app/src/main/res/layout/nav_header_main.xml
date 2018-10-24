@@ -53,14 +53,15 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageViewAppLink"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageViewHeader"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="right|bottom"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:srcCompat="@drawable/github_circle"
-            tools:ignore="MissingPrefix"/>
+            tools:ignore="MissingPrefix" />
 
     </LinearLayout>
 

@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.annimon.stream.Stream;
 import com.firebase.ui.auth.IdpResponse;
@@ -28,6 +29,7 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.PreferenceService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -70,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
     @BindString(R.string.error_load_navigation_drawer)
     String errorLoadNavigationDrawer;
 
+    @BindString(R.string.error_authentication)
+    String errorAuthentication;
+
     @BindString(R.string.app_link)
     String appLinkGitHub;
 
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     EnvironmentService environmentService;
 
     int drawerMenuItemSelected;
+
+    View navHeaderMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        initOnClickLinkToGitHub();
+        // issue with @OnClick(R.id.imageViewAppLink)
+        // inflate manually in activity_main > NavigationView:headerLayout
+        // https://code.google.com/p/android/issues/detail?id=190226
+        navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        initHeader();
 
         navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
 
@@ -136,14 +147,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void initOnClickLinkToGitHub() {
-        // issue with @OnClick(R.id.imageViewAppLink)
-        // inflate manually in activity_main > NavigationView:headerLayout
-        // https://code.google.com/p/android/issues/detail?id=190226
-        View navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        navHeaderMain.findViewById(R.id.imageViewAppLink)
-            .setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,
-                Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
+    private void initHeader() {
+        ImageView headerImageView = navHeaderMain.findViewById(R.id.imageViewHeader);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            log.debug("initHeader: valid firebase session");
+            // update profile image
+            Picasso.get().load(auth.getCurrentUser().getPhotoUrl()).into(headerImageView);
+            headerImageView.setOnClickListener(null);
+        } else {
+            log.debug("initHeader: invalid firebase session");
+            initOnClickLinkToGitHub(headerImageView);
+        }
+    }
+
+    public void initOnClickLinkToGitHub(ImageView headerImageView) {
+        headerImageView.setImageResource(R.drawable.github_circle);
+        headerImageView.setOnClickListener(v -> startActivity(
+            new Intent(Intent.ACTION_VIEW, Uri.parse(appLinkGitHub))
+                .addCategory(Intent.CATEGORY_BROWSABLE)));
     }
 
     @Override
@@ -236,15 +259,18 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // TODO
+        // https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme.md
         if (requestCode == REQUEST_CODE_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+            //IdpResponse response = IdpResponse.fromResultIntent(data);
+            Intent profileIntent = NavigationViewItemSelectedListener.getProfileIntent(this);
 
-            if (resultCode == RESULT_OK) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                log.info("onActivityResult: Firebase login success");
+            if (resultCode == RESULT_OK && profileIntent != null) {
+                log.debug("onActivityResult: firebase login succeeded");
+                initHeader();
+                startActivity(profileIntent);
             } else {
-                log.error("onActivityResult: firebase login error");
+                log.error("onActivityResult: firebase login failed");
+                showSnackbar(errorAuthentication);
             }
         }
     }
