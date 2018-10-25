@@ -20,6 +20,7 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.google.common.collect.Lists;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,6 +69,9 @@ public class MainActivityTest {
     @Inject
     EnvironmentService environmentService;
 
+    @Inject
+    FirebaseService firebaseService;
+
     @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
 
@@ -97,6 +101,7 @@ public class MainActivityTest {
     private void setupActivity() {
         // mock reloadMenu
         when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+        when(firebaseService.isAuthenticated()).thenReturn(false);
 
         activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);

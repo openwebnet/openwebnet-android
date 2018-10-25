@@ -27,6 +27,7 @@ import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
@@ -40,6 +41,7 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
@@ -179,6 +181,12 @@ public class LightActivityTest {
 
         @Provides
         @Singleton
+        public FirebaseService provideFirebaseService() {
+            return new FirebaseServiceImpl();
+        }
+
+        @Provides
+        @Singleton
         DeviceService provideDeviceService() {
             return new DeviceServiceImpl();
         }
@@ -242,9 +250,9 @@ public class LightActivityTest {
     @Before
     public void setupDagger() {
         LightActivityComponentTest applicationComponentTest = DaggerLightActivityTest_LightActivityComponentTest.builder()
-            .lightActivityModuleTest(new LightActivityModuleTest())
-            .repositoryModuleTest(new RepositoryModuleTest(true))
-            .build();
+                .lightActivityModuleTest(new LightActivityModuleTest())
+                .repositoryModuleTest(new RepositoryModuleTest(true))
+                .build();
 
         PowerMockito.mockStatic(Injector.class);
         PowerMockito.when(Injector.getApplicationComponent()).thenReturn(applicationComponentTest);
@@ -264,11 +272,11 @@ public class LightActivityTest {
         controller = Robolectric.buildActivity(LightActivity.class, intent);
 
         activity = controller
-            .create()
-            .start()
-            .resume()
-            .visible()
-            .get();
+                .create()
+                .start()
+                .resume()
+                .visible()
+                .get();
 
         ButterKnife.bind(this, activity);
     }
@@ -309,10 +317,10 @@ public class LightActivityTest {
     @Test
     public void shouldVerifyOnCreate_initSpinner() {
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(101, "env2"));
+                asList(newEnvironment(100, "env1"), newEnvironment(101, "env2"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway("uuid2", "2.2.2.2", 2));
+                asList(newGateway("uuid1", "1.1.1.1", 1), newGateway("uuid2", "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
@@ -376,23 +384,23 @@ public class LightActivityTest {
         boolean LIGHT_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
-            asList(newEnvironment(100, "env1"), newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env8"));
+                asList(newEnvironment(100, "env1"), newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env8"));
 
         List<GatewayModel> gateways = Arrays.
-            asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2));
+                asList(newGateway("uuid1", "1.1.1.1", 1), newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2));
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
         when(gatewayService.findAll()).thenReturn(Observable.just(gateways));
 
         LightModel lightModel = LightModel.updateBuilder(LIGHT_UUID)
-            .name(LIGHT_NAME)
-            .where(LIGHT_WHERE)
-            .type(LIGHT_TYPE)
-            .dimmer(LIGHT_DIMMER)
-            .environment(LIGHT_ENVIRONMENT_SELECTED)
-            .gateway(LIGHT_GATEWAY_SELECTED)
-            .favourite(LIGHT_FAVOURITE)
-            .build();
+                .name(LIGHT_NAME)
+                .where(LIGHT_WHERE)
+                .type(LIGHT_TYPE)
+                .dimmer(LIGHT_DIMMER)
+                .environment(LIGHT_ENVIRONMENT_SELECTED)
+                .gateway(LIGHT_GATEWAY_SELECTED)
+                .favourite(LIGHT_FAVOURITE)
+                .build();
 
         when(lightService.findById(LIGHT_UUID)).thenReturn(Observable.just(lightModel));
 
@@ -431,12 +439,12 @@ public class LightActivityTest {
 
         expectRequired((TextView) spinnerDeviceEnvironment.getSelectedView());
         ArrayAdapter<String> adapterEnvironment = new ArrayAdapter<>(activity,
-            android.R.layout.simple_spinner_dropdown_item, Arrays.asList("ENVIRONMENT"));
+                android.R.layout.simple_spinner_dropdown_item, Arrays.asList("ENVIRONMENT"));
         spinnerDeviceEnvironment.setAdapter(adapterEnvironment);
 
         expectRequired((TextView) spinnerDeviceGateway.getSelectedView());
         ArrayAdapter<String> adapterGateway = new ArrayAdapter<>(activity,
-            android.R.layout.simple_spinner_dropdown_item, Arrays.asList("GATEWAY"));
+                android.R.layout.simple_spinner_dropdown_item, Arrays.asList("GATEWAY"));
         spinnerDeviceGateway.setAdapter(adapterGateway);
 
         // now is valid
@@ -460,9 +468,9 @@ public class LightActivityTest {
         boolean LIGHT_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
+                just(Arrays.asList(newEnvironment(LIGHT_ENVIRONMENT_SELECTED, "env1"))));
         when(gatewayService.findAll()).thenReturn(Observable.
-            just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
+                just(Arrays.asList(newGateway(LIGHT_GATEWAY_SELECTED, "2.2.2.2", 2))));
 
         String LIGHT_UUID = uuidExtra != null ? uuidExtra : "myNewUuid";
         when(lightService.add(any(LightModel.class))).thenReturn(Observable.just(LIGHT_UUID));

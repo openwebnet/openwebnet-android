@@ -3,9 +3,11 @@ package com.github.openwebnet.component.module;
 import android.content.Context;
 
 import com.github.openwebnet.service.CommonService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
@@ -43,6 +45,12 @@ public class ApplicationContextModuleTest {
     @Singleton
     public UtilityService provideUtilityService() {
         return mock(UtilityServiceImpl.class);
+    }
+
+    @Provides
+    @Singleton
+    FirebaseService provideFirebaseService() {
+        return mock(FirebaseServiceImpl.class);
     }
 
 }

@@ -17,7 +17,6 @@ import com.github.openwebnet.repository.impl.LightRepositoryImpl;
 import com.github.openwebnet.repository.impl.ScenarioRepositoryImpl;
 import com.github.openwebnet.repository.impl.SoundRepositoryImpl;
 import com.github.openwebnet.repository.impl.TemperatureRepositoryImpl;
-import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.impl.AutomationServiceImpl;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;

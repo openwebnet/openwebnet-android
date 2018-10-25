@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.service.CommonService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
@@ -52,6 +54,12 @@ public class ApplicationContextModule {
     @Singleton
     public UtilityService provideUtilityService() {
         return new UtilityServiceImpl();
+    }
+
+    @Provides
+    @Singleton
+    FirebaseService provideFirebaseService() {
+        return new FirebaseServiceImpl();
     }
 
 }

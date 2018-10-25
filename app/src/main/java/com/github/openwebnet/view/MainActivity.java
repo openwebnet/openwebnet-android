@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.annimon.stream.Stream;
-import com.firebase.ui.auth.IdpResponse;
 import com.github.openwebnet.OpenWebNetApplication;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -29,8 +28,6 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.view.profile.ProfileActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
