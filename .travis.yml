@@ -9,8 +9,8 @@ jdk:
 
 env:
  global:
-   - ANDROID_API=27
-   - ANDROID_BUILD_TOOLS=27.0.3
+   - ANDROID_API=28
+   - ANDROID_BUILD_TOOLS=28.0.3
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -18,7 +18,7 @@ before_cache:
 
 # https://stackoverflow.com/questions/48097228/travis-ci-android-sdk-license-problems
 before_install:
-  - yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-27"
+  - yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28"
 
 cache:
   directories:
