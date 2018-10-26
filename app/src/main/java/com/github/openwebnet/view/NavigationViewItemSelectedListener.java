@@ -104,7 +104,6 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             case R.id.nav_add:
                 showDialogAddEnvironment();
                 break;
-            // TODO test
             case R.id.nav_profile:
                 showProfile();
                 break;

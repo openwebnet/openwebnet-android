@@ -149,14 +149,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // TODO test
     private void initHeader() {
         ImageView headerImageView = navHeaderMain.findViewById(R.id.imageViewHeader);
 
         if (firebaseService.isAuthenticated()) {
             log.debug("initHeader: valid firebase session");
             // update profile image
-            Picasso.get().load(firebaseService.getPhotoUrl()).into(headerImageView);
+            Uri photoUrl = firebaseService.getPhotoUrl();
+            if (photoUrl != null) {
+                Picasso.get()
+                    .load(photoUrl)
+                    .placeholder(R.drawable.github_circle)
+                    .into(headerImageView);
+            }
             headerImageView.setOnClickListener(null);
         } else {
             log.debug("initHeader: invalid firebase session");
@@ -261,7 +266,6 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
 
-        // TODO test
         // https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme.md
         if (requestCode == REQUEST_CODE_SIGN_IN) {
             //IdpResponse response = IdpResponse.fromResultIntent(data);
