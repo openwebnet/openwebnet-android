@@ -43,20 +43,20 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     buildTypes {
+        // store
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
         }
+        // local
         debug {
             minifyEnabled false
-            it.buildConfigField 'String', 'IAB_KEY', '\"\"'
-            testCoverageEnabled true
-        }
-        // Travis Firebase issue
-        dev {
-            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
+        }
+        // travis
+        dev {
             it.buildConfigField 'String', 'IAB_KEY', '\"\"'
             testCoverageEnabled true
         }
