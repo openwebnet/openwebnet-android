@@ -50,6 +50,12 @@ android {
         }
         debug {
             minifyEnabled false
+            it.buildConfigField 'String', 'IAB_KEY', '\"\"'
+            testCoverageEnabled true
+        }
+        // Travis Firebase issue
+        dev {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField 'String', 'IAB_KEY', '\"\"'
             testCoverageEnabled true

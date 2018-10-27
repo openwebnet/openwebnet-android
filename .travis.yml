@@ -39,4 +39,4 @@ android:
     - sys-img-armeabi-v7a-android-${ANDROID_API}
 
 script:
-  - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls -Pbuild=debug
+  - ./gradlew clean build connectedCheck jacocoTestReportDebug coveralls -Pbuild=dev
