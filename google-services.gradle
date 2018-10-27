@@ -3,15 +3,7 @@
 
 def buildParameter = "${build}"
 
-if (buildParameter != "debug") {
-    //exclude production build
-    android.variantFilter { variant ->
-        if (variant.buildType.name.equals('debug')) {
-            variant.setIgnore(true)
-        }
-    }
-} else {
-    //exclude all except production build
+if (buildParameter == "debug") {
     android.variantFilter { variant ->
         if (!variant.buildType.name.equals('debug')) {
             variant.setIgnore(true)
