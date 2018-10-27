@@ -130,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        // set new badge
+        ImageView navProfileImageView = (ImageView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_profile));
+        navProfileImageView.setImageResource(R.drawable.new_box);
+
         // issue with @OnClick(R.id.imageViewAppLink)
         // inflate manually in activity_main > NavigationView:headerLayout
         // https://code.google.com/p/android/issues/detail?id=190226
