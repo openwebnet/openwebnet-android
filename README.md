@@ -57,6 +57,7 @@ All detailed [changelog](CHANGELOG.md).
 
 ```bash
 ./gradlew clean build
+./gradlew clean test -Pbuild=debug
 ./gradlew app:dependencies
 ```
 

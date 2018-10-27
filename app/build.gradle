@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 apply from: '../coverage.gradle'
+apply from: '../google-services.gradle'
 
 android {
     compileSdkVersion 28
@@ -43,13 +44,15 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
         }
         debug {
-            testCoverageEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             it.buildConfigField 'String', 'IAB_KEY', '\"\"'
+            testCoverageEnabled true
         }
     }
 }

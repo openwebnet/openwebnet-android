@@ -1,0 +1,20 @@
+// https://stackoverflow.com/questions/34251441/commiting-google-services-json-to-github
+// ./gradlew clean test -Pbuild=debug
+
+def buildParameter = "${build}"
+
+if (buildParameter != "debug") {
+    //exclude production build
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('debug')) {
+            variant.setIgnore(true)
+        }
+    }
+} else {
+    //exclude all except production build
+    android.variantFilter { variant ->
+        if (!variant.buildType.name.equals('debug')) {
+            variant.setIgnore(true)
+        }
+    }
+}
