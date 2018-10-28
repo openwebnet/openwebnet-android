@@ -16,6 +16,9 @@
     <string name="menu_edit">Modifica</string>
     <string name="menu_delete">Cancella</string>
     <string name="menu_debug">Debug</string>
+    <string name="menu_profile_create">Crea</string>
+    <string name="menu_profile_reset">Reset</string>
+    <string name="menu_profile_logout">Disconneti</string>
 
     <string name="drawer_menu_favourite">Preferiti</string>
     <string name="drawer_menu_add">Aggiungi ambiente</string>

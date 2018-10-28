@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        // set new badge
+        // profile new badge
         ImageView navProfileImageView = (ImageView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_profile));
         navProfileImageView.setImageResource(R.drawable.new_box);
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         // inflate manually in activity_main > NavigationView:headerLayout
         // https://code.google.com/p/android/issues/detail?id=190226
         navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        initHeader();
+        initDrawerHeader();
 
         navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initHeader() {
+    private void initDrawerHeader() {
         ImageView headerImageView = navHeaderMain.findViewById(R.id.imageViewHeader);
 
         if (firebaseService.isAuthenticated()) {
@@ -250,6 +250,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        // refresh after logout
+        initDrawerHeader();
+    }
+
+    @Override
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
@@ -276,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK && firebaseService.isAuthenticated()) {
                 log.debug("onActivityResult: firebase login succeeded");
-                initHeader();
+                initDrawerHeader();
                 Intent profileIntent = new Intent(getBaseContext(), ProfileActivity.class);
                 profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, firebaseService.getEmail());
                 profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, firebaseService.getDisplayName());
