@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.firebase.ui.auth.AuthUI;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.iabutil.DonationDialogFragment;
@@ -30,8 +29,6 @@ import com.github.openwebnet.view.settings.SettingsFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -163,7 +160,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {
-                EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
+                EditText name = layout.findViewById(R.id.editTextDialogEnvironmentName);
                 if (utilityService.isBlankText(name)) {
                     name.setError(labelValidationRequired);
                 } else {
@@ -192,10 +189,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         } else {
             log.info("showProfile: init login");
             mActivity.startActivityForResult(
-                AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
-                    .build(),
+                firebaseService.signIn(),
                 MainActivity.REQUEST_CODE_SIGN_IN);
         }
     }

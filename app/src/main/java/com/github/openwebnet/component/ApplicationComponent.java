@@ -45,6 +45,8 @@ import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.device.ScenarioActivity;
 import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
+import com.github.openwebnet.view.profile.ProfileActivity;
+import com.github.openwebnet.view.profile.ProfileAdapter;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
 
@@ -74,12 +76,14 @@ public interface ApplicationComponent {
     void inject(ScenarioActivity activity);
     void inject(EnergyActivity activity);
     void inject(SoundActivity activity);
+    void inject(ProfileActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);
     void inject(GatewayEditTextPreference editTextPreference);
     void inject(GatewayListPreference listPreference);
     void inject(DeviceListAdapter deviceListAdapter);
+    void inject(ProfileAdapter profileAdapter);
 
     // service
     void inject(PreferenceServiceImpl preferenceService);

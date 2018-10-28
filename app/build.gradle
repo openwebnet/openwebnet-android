@@ -53,7 +53,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            it.buildConfigField 'String', 'IAB_KEY', project.hasProperty('IAB_KEY') ? project.getProperty('IAB_KEY') : '\"\"'
+            it.buildConfigField 'String', 'IAB_KEY', '\"\"'
         }
         // travis
         dev {
@@ -93,7 +93,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
-    implementation 'com.google.firebase:firebase-firestore:17.1.1'
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
     implementation 'com.firebaseui:firebase-ui-firestore:4.2.0'
 
