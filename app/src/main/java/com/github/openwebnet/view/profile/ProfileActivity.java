@@ -93,9 +93,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     // TODO snackbar
+    // TODO dialog to ask name
     private void createProfile() {
         boolean updateUserResult = firebaseService.updateUser();
-        boolean addProfileResult = firebaseService.addProfile();
+        boolean addProfileResult = firebaseService.addProfile("TODO name");
         if (!updateUserResult || !addProfileResult) {
             Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
         }

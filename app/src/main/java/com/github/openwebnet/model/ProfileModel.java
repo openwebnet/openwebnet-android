@@ -2,6 +2,7 @@ package com.github.openwebnet.model;
 
 import android.text.TextUtils;
 
+import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.google.firebase.firestore.ServerTimestamp;
 
@@ -22,41 +23,53 @@ public class ProfileModel {
     @ServerTimestamp
     private Date timestampUpdated;
 
-    private String ownerUserId;
+    private String userId;
 
-    private List<String> shareUserIds;
+    private List<String> sharedUserIds;
 
     private boolean softDelete;
 
     private int databaseVersion;
+
+    private int appVersionCode;
+
+    private String appVersionName;
 
     // required by Firestore
     public ProfileModel() {}
 
     private ProfileModel(Builder builder) {
         this.name = builder.name;
-        this.ownerUserId = builder.ownerUserId;
-        this.shareUserIds = builder.shareUserIds;
+        this.userId = builder.userId;
+        this.sharedUserIds = builder.sharedUserIds;
         this.timestampCreated = builder.timestampCreated;
         this.timestampUpdated = builder.timestampUpdated;
+        this.softDelete = builder.softDelete;
+        this.databaseVersion = builder.databaseVersion;
+        this.appVersionCode = builder.appVersionCode;
+        this.appVersionName = builder.appVersionName;
     }
 
     public static class Builder {
 
         private String name;
-        private String ownerUserId;
-        private List<String> shareUserIds;
+        private String userId;
+        private List<String> sharedUserIds;
         private Date timestampCreated;
         private Date timestampUpdated;
         private boolean softDelete;
         private int databaseVersion;
+        private int appVersionCode;
+        private String appVersionName;
 
         public Builder() {
-            this.shareUserIds = new ArrayList<>();
+            this.sharedUserIds = new ArrayList<>();
             this.timestampCreated = new Date();
             this.timestampUpdated = new Date();
             this.softDelete = false;
             this.databaseVersion = DatabaseRealmConfig.DATABASE_VERSION;
+            this.appVersionCode = BuildConfig.VERSION_CODE;
+            this.appVersionName = BuildConfig.VERSION_NAME;
         }
 
         public Builder name(String name) {
@@ -64,14 +77,14 @@ public class ProfileModel {
             return this;
         }
 
-        public Builder ownerUserId(String ownerUserId) {
-            this.ownerUserId = ownerUserId;
+        public Builder userId(String userId) {
+            this.userId = userId;
             return this;
         }
 
-        public Builder shareUserId(String shareUserId) {
-            checkArgument(!TextUtils.isEmpty(shareUserId), "shareUserId is empty");
-            this.shareUserIds.add(shareUserId);
+        public Builder shareUserId(String sharedUserId) {
+            checkArgument(!TextUtils.isEmpty(sharedUserId), "sharedUserId is empty");
+            this.sharedUserIds.add(sharedUserId);
             return this;
         }
 
@@ -95,14 +108,26 @@ public class ProfileModel {
             return this;
         }
 
+        public Builder appVersionCode(int appVersionCode) {
+            this.appVersionCode = appVersionCode;
+            return this;
+        }
+
+        public Builder databaseVersion(String appVersionName) {
+            this.appVersionName = appVersionName;
+            return this;
+        }
+
         public ProfileModel build() {
             checkArgument(!TextUtils.isEmpty(name), "name is empty");
-            checkArgument(!TextUtils.isEmpty(ownerUserId), "ownerUserId is empty");
+            checkArgument(!TextUtils.isEmpty(userId), "userId is empty");
 
             checkNotNull(timestampCreated, "timestampCreated is null");
             checkNotNull(timestampUpdated, "timestampUpdated is null");
 
             checkArgument(databaseVersion > 0, "databaseVersion is invalid");
+            checkArgument(appVersionCode > 0, "appVersionCode is invalid");
+            checkArgument(!TextUtils.isEmpty(appVersionName), "appVersionName is empty");
 
             return new ProfileModel(this);
         }
@@ -132,20 +157,20 @@ public class ProfileModel {
         this.timestampUpdated = timestampUpdated;
     }
 
-    public String getOwnerUserId() {
-        return ownerUserId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setOwnerUserId(String ownerUserId) {
-        this.ownerUserId = ownerUserId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public List<String> getShareUserIds() {
-        return shareUserIds;
+    public List<String> getSharedUserIds() {
+        return sharedUserIds;
     }
 
-    public void setShareUserIds(List<String> shareUserIds) {
-        this.shareUserIds = shareUserIds;
+    public void setSharedUserIds(List<String> sharedUserIds) {
+        this.sharedUserIds = sharedUserIds;
     }
 
     public boolean isSoftDelete() {
@@ -162,6 +187,22 @@ public class ProfileModel {
 
     public void setDatabaseVersion(int databaseVersion) {
         this.databaseVersion = databaseVersion;
+    }
+
+    public int getAppVersionCode() {
+        return appVersionCode;
+    }
+
+    public void setAppVersionCode(int appVersionCode) {
+        this.appVersionCode = appVersionCode;
+    }
+
+    public String getAppVersionName() {
+        return appVersionName;
+    }
+
+    public void setAppVersionName(String appVersionName) {
+        this.appVersionName = appVersionName;
     }
 
 }

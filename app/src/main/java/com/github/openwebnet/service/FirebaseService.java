@@ -28,7 +28,7 @@ public interface FirebaseService {
 
     boolean updateUser();
 
-    boolean addProfile();
+    boolean addProfile(String name);
 
     boolean shareProfile(String email);
 
