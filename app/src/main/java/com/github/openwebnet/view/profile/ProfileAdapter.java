@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.ProfileModel;
+import com.github.openwebnet.model.firestore.ProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 
 import org.slf4j.Logger;

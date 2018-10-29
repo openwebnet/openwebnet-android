@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         if (firebaseService.isAuthenticated()) {
             log.debug("initHeader: valid firebase session");
             // update profile image
-            Uri photoUrl = firebaseService.getPhotoUrl();
+            String photoUrl = firebaseService.getUserPhotoUrl();
             if (photoUrl != null) {
                 Picasso.get()
                     .load(photoUrl)
@@ -284,10 +284,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK && firebaseService.isAuthenticated()) {
                 log.debug("onActivityResult: firebase login succeeded");
                 initDrawerHeader();
-                Intent profileIntent = new Intent(getBaseContext(), ProfileActivity.class);
-                profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, firebaseService.getEmail());
-                profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, firebaseService.getDisplayName());
-                startActivity(profileIntent);
+                startActivity(new Intent(getBaseContext(), ProfileActivity.class));
             } else {
                 log.error("onActivityResult: firebase login failed");
                 showSnackbar(errorAuthentication);

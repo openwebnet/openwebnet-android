@@ -2,77 +2,36 @@ package com.github.openwebnet.service.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
 import com.firebase.ui.auth.AuthUI;
-import com.github.openwebnet.model.ProfileModel;
+import com.github.openwebnet.component.Injector;
+import com.github.openwebnet.model.firestore.UserModel;
+import com.github.openwebnet.repository.FirestoreRepository;
 import com.github.openwebnet.service.FirebaseService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.WriteBatch;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.inject.Inject;
+
+import rx.Observable;
 import rx.functions.Action0;
 
-/*
- * TODO
- *
- * backups
- * security restrictions
- *
- */
+import static com.google.common.base.Preconditions.checkArgument;
+
 public class FirebaseServiceImpl implements FirebaseService {
 
-    private static final Logger log = LoggerFactory.getLogger(FirebaseServiceImpl.class);
+    @Inject
+    FirestoreRepository firestoreRepository;
 
-    private static final String COLLECTION_USERS = "users";
-    private static final String COLLECTION_PROFILES = "profiles";
+    public FirebaseServiceImpl() {
+        Injector.getApplicationComponent().inject(this);
+    }
 
     @Override
     public Boolean isAuthenticated() {
         return getCurrentUser() != null;
-    }
-
-    @Override
-    public String getUserId() {
-        return getCurrentUser().getUid();
-    }
-
-    @Override
-    public String getEmail() {
-        return getCurrentUser().getEmail();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return getCurrentUser().getDisplayName();
-    }
-
-    @Override
-    public Uri getPhotoUrl() {
-        return getCurrentUser().getPhotoUrl();
-    }
-
-    @Override
-    public Map<String, Object> getUser() {
-        Map<String, Object> user = new HashMap<>();
-        user.put("email", getEmail());
-        user.put("name", getDisplayName());
-        user.put("phoneNumber", getCurrentUser().getPhoneNumber());
-        user.put("photoUrl", getPhotoUrl().toString());
-        user.put("timestamp", FieldValue.serverTimestamp());
-        return user;
     }
 
     @Override
@@ -91,70 +50,35 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public boolean updateUser() {
-        try {
-            getDb()
-                .collection(COLLECTION_USERS)
-                .document(getUserId())
-                .set(getUser(), SetOptions.merge())
-                .addOnSuccessListener(aVoid -> log.info("user updated with success"))
-                .addOnFailureListener(e -> log.error("failed to update user", e));
-            return true;
-        } catch (Exception e) {
-            log.error("updateUser error", e);
-            return false;
-        }
-    }
-
-    // TODO test exception rollback transaction
-    @Override
-    public boolean addProfile(String name) {
-        try {
-            FirebaseFirestore db = getDb();
-            WriteBatch batch = db.batch();
-
-            ProfileModel profileModel = new ProfileModel.Builder()
-                .name(name)
-                .userId(getUserId())
-                .build();
-
-            DocumentReference profileRef = db.collection(COLLECTION_PROFILES).document();
-            batch.set(profileRef, profileModel, SetOptions.merge());
-
-            DocumentReference userRef = db.collection(COLLECTION_USERS).document(getUserId());
-            batch.update(userRef, COLLECTION_PROFILES, FieldValue.arrayUnion(profileRef));
-
-            batch.commit()
-                .addOnSuccessListener(aVoid -> log.info("profile added with success"))
-                .addOnFailureListener(e -> log.error("failed to add profile", e));
-            return true;
-        } catch (Exception e) {
-            log.error("updateUser error", e);
-            return false;
-        }
+    public String getUserPhotoUrl() {
+        return getUser().getPhotoUrl();
     }
 
     @Override
-    public boolean shareProfile(String email) {
-        return false;
+    public Observable<Void> updateUser() {
+        return firestoreRepository.updateUser(getUser());
     }
 
     @Override
-    public boolean softDeleteProfile() {
-        return false;
+    public Observable<Void> addProfile(String name) {
+        return firestoreRepository.addProfile(getUser(), name);
     }
 
     private FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    private FirebaseFirestore getDb() {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-            .setTimestampsInSnapshotsEnabled(true)
+    private UserModel getUser() {
+        checkArgument(isAuthenticated(), "user not authenticated");
+        FirebaseUser firebaseUser = getCurrentUser();
+
+        return new UserModel.Builder()
+            .userId(firebaseUser.getUid())
+            .email(firebaseUser.getEmail())
+            .name(firebaseUser.getDisplayName())
+            .phoneNumber(firebaseUser.getPhoneNumber())
+            .photoUrl(firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString())
             .build();
-        firestore.setFirestoreSettings(settings);
-        return firestore;
     }
 
 }

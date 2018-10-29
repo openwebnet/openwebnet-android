@@ -182,10 +182,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     private void showProfile() {
         if (firebaseService.isAuthenticated()) {
             log.debug("showProfile: valid profile");
-            Intent profileIntent = new Intent(mActivity, ProfileActivity.class);
-            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_EMAIL, firebaseService.getEmail());
-            profileIntent.putExtra(ProfileActivity.EXTRA_PROFILE_NAME, firebaseService.getDisplayName());
-            mActivity.startActivity(profileIntent);
+            mActivity.startActivity(new Intent(mActivity, ProfileActivity.class));
         } else {
             log.info("showProfile: init login");
             mActivity.startActivityForResult(

@@ -1,4 +1,4 @@
-package com.github.openwebnet.model;
+package com.github.openwebnet.model.firestore;
 
 import android.text.TextUtils;
 
@@ -6,9 +6,7 @@ import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.google.firebase.firestore.ServerTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -25,10 +23,6 @@ public class ProfileModel {
 
     private String userId;
 
-    private List<String> sharedUserIds;
-
-    private boolean softDelete;
-
     private int databaseVersion;
 
     private int appVersionCode;
@@ -41,10 +35,8 @@ public class ProfileModel {
     private ProfileModel(Builder builder) {
         this.name = builder.name;
         this.userId = builder.userId;
-        this.sharedUserIds = builder.sharedUserIds;
         this.timestampCreated = builder.timestampCreated;
         this.timestampUpdated = builder.timestampUpdated;
-        this.softDelete = builder.softDelete;
         this.databaseVersion = builder.databaseVersion;
         this.appVersionCode = builder.appVersionCode;
         this.appVersionName = builder.appVersionName;
@@ -54,19 +46,15 @@ public class ProfileModel {
 
         private String name;
         private String userId;
-        private List<String> sharedUserIds;
         private Date timestampCreated;
         private Date timestampUpdated;
-        private boolean softDelete;
         private int databaseVersion;
         private int appVersionCode;
         private String appVersionName;
 
         public Builder() {
-            this.sharedUserIds = new ArrayList<>();
             this.timestampCreated = new Date();
             this.timestampUpdated = new Date();
-            this.softDelete = false;
             this.databaseVersion = DatabaseRealmConfig.DATABASE_VERSION;
             this.appVersionCode = BuildConfig.VERSION_CODE;
             this.appVersionName = BuildConfig.VERSION_NAME;
@@ -82,12 +70,6 @@ public class ProfileModel {
             return this;
         }
 
-        public Builder shareUserId(String sharedUserId) {
-            checkArgument(!TextUtils.isEmpty(sharedUserId), "sharedUserId is empty");
-            this.sharedUserIds.add(sharedUserId);
-            return this;
-        }
-
         public Builder timestampCreated(Date timestampCreated) {
             this.timestampCreated = timestampCreated;
             return this;
@@ -95,11 +77,6 @@ public class ProfileModel {
 
         public Builder timestampUpdated(Date timestampUpdated) {
             this.timestampUpdated = timestampUpdated;
-            return this;
-        }
-
-        public Builder softDelete(boolean softDelete) {
-            this.softDelete = softDelete;
             return this;
         }
 
@@ -163,22 +140,6 @@ public class ProfileModel {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public List<String> getSharedUserIds() {
-        return sharedUserIds;
-    }
-
-    public void setSharedUserIds(List<String> sharedUserIds) {
-        this.sharedUserIds = sharedUserIds;
-    }
-
-    public boolean isSoftDelete() {
-        return softDelete;
-    }
-
-    public void setSoftDelete(boolean softDelete) {
-        this.softDelete = softDelete;
     }
 
     public int getDatabaseVersion() {

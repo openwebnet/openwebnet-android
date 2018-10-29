@@ -11,6 +11,7 @@ import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnergyRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.impl.FirestoreRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
@@ -118,5 +119,6 @@ public interface ApplicationComponent {
     void inject(ScenarioRepositoryImpl repository);
     void inject(EnergyRepositoryImpl repository);
     void inject(SoundRepositoryImpl repository);
+    void inject(FirestoreRepositoryImpl repository);
 
 }

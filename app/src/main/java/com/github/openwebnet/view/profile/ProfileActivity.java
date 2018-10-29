@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.ProfileModel;
+import com.github.openwebnet.model.firestore.ProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 
 import org.slf4j.Logger;
@@ -23,15 +23,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.google.common.base.Preconditions.checkArgument;
+import rx.Observable;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileActivity.class);
-
-    public static final String EXTRA_PROFILE_EMAIL = "com.github.openwebnet.view.profile.EXTRA_PROFILE_EMAIL";
-    public static final String EXTRA_PROFILE_NAME = "com.github.openwebnet.view.profile.EXTRA_PROFILE_NAME";
 
     @BindView(R.id.recyclerViewProfile)
     RecyclerView mRecyclerView;
@@ -49,9 +45,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
-
-        // dummy check
-        checkArgument(getIntent().getStringExtra(EXTRA_PROFILE_EMAIL).equals(firebaseService.getEmail()), "invalid email");
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -95,10 +88,12 @@ public class ProfileActivity extends AppCompatActivity {
     // TODO snackbar
     // TODO dialog to ask name
     private void createProfile() {
-        boolean updateUserResult = firebaseService.updateUser();
-        boolean addProfileResult = firebaseService.addProfile("TODO name");
-        if (!updateUserResult || !addProfileResult) {
+        Observable.zip(
+            firebaseService.updateUser(), firebaseService.addProfile("TODO"), (aVoid1, aVoid2) -> null)
+        .doOnError(throwable -> {
+            log.error("ERROR createProfile", throwable);
             Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
-        }
+        })
+        .subscribe();
     }
 }
