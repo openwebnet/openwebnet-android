@@ -28,7 +28,7 @@ public class DatabaseRealmConfig {
 
     private static final Logger log = LoggerFactory.getLogger(DatabaseRealmConfig.class);
 
-    private static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "openwebnet.realm";
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
 

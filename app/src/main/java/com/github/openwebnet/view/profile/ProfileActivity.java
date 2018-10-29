@@ -1,6 +1,7 @@
 package com.github.openwebnet.view.profile;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import com.github.openwebnet.service.FirebaseService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.threeten.bp.ZonedDateTime;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +23,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -48,19 +50,14 @@ public class ProfileActivity extends AppCompatActivity {
         Injector.getApplicationComponent().inject(this);
         ButterKnife.bind(this);
 
-        String email = getIntent().getStringExtra(EXTRA_PROFILE_EMAIL);
-        String name = getIntent().getStringExtra(EXTRA_PROFILE_NAME);
-        log.info("ProfileActivity: email={} name={}", email, name);
+        // dummy check
+        checkArgument(getIntent().getStringExtra(EXTRA_PROFILE_EMAIL).equals(firebaseService.getEmail()), "invalid email");
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new ProfileAdapter(fakeProfiles());
         mRecyclerView.setAdapter(mAdapter);
-
-        // TODO
-        // https://firebaseopensource.com/projects/firebase/firebaseui-android/firestore/readme.md
-        // { info: id(uuid), database-version, backup-name, date, share [user-id] | schema: light, automation,  ... }
     }
 
     @Override
@@ -68,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_profile_create:
                 log.info("onOptionsItemSelected: create");
+                createProfile();
                 return true;
             case R.id.action_profile_reset:
                 log.info("onOptionsItemSelected: reset");
@@ -91,11 +89,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private List<ProfileModel> fakeProfiles() {
-        return Arrays.asList(
-            new ProfileModel.Builder().name("Profile1").dateTime(ZonedDateTime.now()).build(),
-            new ProfileModel.Builder().name("Profile2").dateTime(ZonedDateTime.now()).build(),
-            new ProfileModel.Builder().name("Profile3").dateTime(ZonedDateTime.now()).build()
-        );
+        return Arrays.asList();
     }
 
+    // TODO snackbar
+    private void createProfile() {
+        boolean updateUserResult = firebaseService.updateUser();
+        boolean addProfileResult = firebaseService.addProfile();
+        if (!updateUserResult || !addProfileResult) {
+            Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
+        }
+    }
 }
