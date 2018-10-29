@@ -22,7 +22,10 @@ public class UserModel {
     private String photoUrl;
 
     @ServerTimestamp
-    private Date timestampUpdated;
+    private Date createdAt;
+
+    @ServerTimestamp
+    private Date modifiedAt;
 
     public UserModel() {}
 
@@ -32,7 +35,8 @@ public class UserModel {
         this.name = builder.name;
         this.phoneNumber = builder.phoneNumber;
         this.photoUrl = builder.photoUrl;
-        this.timestampUpdated = builder.timestampUpdated;
+        this.createdAt = builder.createdAt;
+        this.modifiedAt = builder.modifiedAt;
     }
 
     public static class Builder {
@@ -42,10 +46,11 @@ public class UserModel {
         private String name;
         private String phoneNumber;
         private String photoUrl;
-        private Date timestampUpdated;
+        private Date createdAt;
+        private Date modifiedAt;
 
         public Builder() {
-            this.timestampUpdated = new Date();
+            this.modifiedAt = new Date();
         }
 
         public Builder userId(String userId) {
@@ -73,15 +78,22 @@ public class UserModel {
             return this;
         }
 
-        public Builder timestampUpdated(Date timestampUpdated) {
-            this.timestampUpdated = timestampUpdated;
+        public Builder createdAt(Date createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder modifiedAt(Date modifiedAt) {
+            this.modifiedAt = modifiedAt;
             return this;
         }
 
         public UserModel build() {
             checkArgument(!TextUtils.isEmpty(userId), "userId is empty");
             checkArgument(!TextUtils.isEmpty(email), "email is empty");
-            checkNotNull(timestampUpdated, "timestampUpdated is null");
+
+            checkNotNull(createdAt, "modifiedAt is null");
+            checkNotNull(modifiedAt, "modifiedAt is null");
 
             return new UserModel(this);
         }
@@ -127,12 +139,20 @@ public class UserModel {
         this.photoUrl = photoUrl;
     }
 
-    public Date getTimestampUpdated() {
-        return timestampUpdated;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTimestampUpdated(Date timestampUpdated) {
-        this.timestampUpdated = timestampUpdated;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 
 }

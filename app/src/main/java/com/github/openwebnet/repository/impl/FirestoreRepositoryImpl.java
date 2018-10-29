@@ -48,6 +48,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .set(user, SetOptions.merge())
                     .addOnSuccessListener(aVoid -> log.info("user updated with success"))
                     .addOnFailureListener(e -> log.error("failed to update user", e));
+
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("Firestore#updateUser", e);

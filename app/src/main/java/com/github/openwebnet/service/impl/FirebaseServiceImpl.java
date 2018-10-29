@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -71,6 +72,8 @@ public class FirebaseServiceImpl implements FirebaseService {
     private UserModel getUser() {
         checkArgument(isAuthenticated(), "user not authenticated");
         FirebaseUser firebaseUser = getCurrentUser();
+        Date createdAtDate = firebaseUser.getMetadata() != null ?
+            new Date(firebaseUser.getMetadata().getCreationTimestamp()) : new Date();
 
         return new UserModel.Builder()
             .userId(firebaseUser.getUid())
@@ -78,6 +81,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             .name(firebaseUser.getDisplayName())
             .phoneNumber(firebaseUser.getPhoneNumber())
             .photoUrl(firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString())
+            .createdAt(createdAtDate)
             .build();
     }
 

@@ -59,8 +59,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
@@ -251,26 +249,15 @@ public class NavigationViewItemSelectedListenerTest {
 
     @Test
     public void onNavigationItemSelected_shouldSelectProfileAuthenticated() {
-        String FIREBASE_EMAIL = "firebaseEmail";
-        String FIREBASE_NAME = "firebaseName";
-
         Activity activitySpy = setupActivity();
 
         when(firebaseService.isAuthenticated()).thenReturn(true);
-        when(firebaseService.getEmail()).thenReturn(FIREBASE_EMAIL);
-        when(firebaseService.getDisplayName()).thenReturn(FIREBASE_NAME);
-        doNothing().when(activitySpy).startActivity(any(Intent.class));
+        //doNothing().when(activitySpy).startActivity(any(Intent.class));
 
         clickMenuItem(R.id.nav_profile);
 
         // FIXME Wanted but not invoked
-        //ArgumentCaptor<Intent> intentCaptor = ArgumentCaptor.forClass(Intent.class);
-        //verify(activitySpy, times(1)).startActivity(intentCaptor.capture());
-        //Intent intentCaptured = intentCaptor.getValue();
-        //assertEquals(FIREBASE_EMAIL, intentCaptured.getStringExtra(ProfileActivity.EXTRA_PROFILE_EMAIL));
-        //assertEquals(FIREBASE_NAME, intentCaptured.getStringExtra(ProfileActivity.EXTRA_PROFILE_NAME));
-        verify(firebaseService, times(1)).getEmail();
-        verify(firebaseService, times(1)).getDisplayName();
+        //verify(activitySpy, times(1)).startActivity(any(Intent.class));
         verify(firebaseService, never()).signIn();
     }
 
@@ -280,17 +267,13 @@ public class NavigationViewItemSelectedListenerTest {
 
         when(firebaseService.isAuthenticated()).thenReturn(false);
         when(firebaseService.signIn()).thenReturn(new Intent());
-        doNothing().when(activitySpy).startActivityForResult(any(Intent.class), any(Integer.class));
+        //doNothing().when(activitySpy).startActivityForResult(any(Intent.class), any(Integer.class));
 
         clickMenuItem(R.id.nav_profile);
 
         // FIXME Wanted but not invoked
-        //ArgumentCaptor<Integer> requestCodeCaptor = ArgumentCaptor.forClass(Integer.class);
-        //verify(activitySpy, times(1)).startActivityForResult(any(Intent.class), requestCodeCaptor.capture());
-        //assertEquals("invalid request code", MainActivity.REQUEST_CODE_SIGN_IN, requestCodeCaptor.getValue().intValue());
+        //verify(activitySpy, times(1)).startActivityForResult(any(Intent.class), any(Integer.class));
         verify(firebaseService, times(1)).signIn();
-        verify(firebaseService, never()).getEmail();
-        verify(firebaseService, never()).getDisplayName();
     }
 
     @Ignore

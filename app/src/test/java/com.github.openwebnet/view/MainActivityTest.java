@@ -192,7 +192,7 @@ public class MainActivityTest {
     public void shouldVerifyInstance_initHeaderAuthenticated() {
         when(environmentService.findAll()).thenReturn(Observable.empty());
         when(firebaseService.isAuthenticated()).thenReturn(true);
-        when(firebaseService.getPhotoUrl()).thenReturn(null);
+        when(firebaseService.getUserPhotoUrl()).thenReturn(null);
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
         activity = controller
@@ -203,7 +203,7 @@ public class MainActivityTest {
             .get();
         ButterKnife.bind(this, activity);
 
-        verify(firebaseService, times(1)).getPhotoUrl();
+        verify(firebaseService, times(1)).getUserPhotoUrl();
         ImageView headerImageView = navigationView.findViewById(R.id.imageViewHeader);
         assertFalse("OnClickListeners should be null", headerImageView.hasOnClickListeners());
     }
@@ -215,14 +215,14 @@ public class MainActivityTest {
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
         activity = controller
-                .create()
-                .start()
-                .resume()
-                .visible()
-                .get();
+            .create()
+            .start()
+            .resume()
+            .visible()
+            .get();
         ButterKnife.bind(this, activity);
 
-        verify(firebaseService, never()).getPhotoUrl();
+        verify(firebaseService, never()).getUserPhotoUrl();
         ImageView headerImageView = navigationView.findViewById(R.id.imageViewHeader);
         assertTrue("OnClickListeners should not be null", headerImageView.hasOnClickListeners());
     }

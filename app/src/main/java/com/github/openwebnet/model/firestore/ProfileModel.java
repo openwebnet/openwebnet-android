@@ -16,10 +16,7 @@ public class ProfileModel {
     private String name;
 
     @ServerTimestamp
-    private Date timestampCreated;
-
-    @ServerTimestamp
-    private Date timestampUpdated;
+    private Date createdAt;
 
     private String userId;
 
@@ -35,8 +32,7 @@ public class ProfileModel {
     private ProfileModel(Builder builder) {
         this.name = builder.name;
         this.userId = builder.userId;
-        this.timestampCreated = builder.timestampCreated;
-        this.timestampUpdated = builder.timestampUpdated;
+        this.createdAt = builder.createdAt;
         this.databaseVersion = builder.databaseVersion;
         this.appVersionCode = builder.appVersionCode;
         this.appVersionName = builder.appVersionName;
@@ -46,15 +42,13 @@ public class ProfileModel {
 
         private String name;
         private String userId;
-        private Date timestampCreated;
-        private Date timestampUpdated;
+        private Date createdAt;
         private int databaseVersion;
         private int appVersionCode;
         private String appVersionName;
 
         public Builder() {
-            this.timestampCreated = new Date();
-            this.timestampUpdated = new Date();
+            this.createdAt = new Date();
             this.databaseVersion = DatabaseRealmConfig.DATABASE_VERSION;
             this.appVersionCode = BuildConfig.VERSION_CODE;
             this.appVersionName = BuildConfig.VERSION_NAME;
@@ -70,13 +64,8 @@ public class ProfileModel {
             return this;
         }
 
-        public Builder timestampCreated(Date timestampCreated) {
-            this.timestampCreated = timestampCreated;
-            return this;
-        }
-
-        public Builder timestampUpdated(Date timestampUpdated) {
-            this.timestampUpdated = timestampUpdated;
+        public Builder createdAt(Date createdAt) {
+            this.createdAt = createdAt;
             return this;
         }
 
@@ -99,8 +88,7 @@ public class ProfileModel {
             checkArgument(!TextUtils.isEmpty(name), "name is empty");
             checkArgument(!TextUtils.isEmpty(userId), "userId is empty");
 
-            checkNotNull(timestampCreated, "timestampCreated is null");
-            checkNotNull(timestampUpdated, "timestampUpdated is null");
+            checkNotNull(createdAt, "createdAt is null");
 
             checkArgument(databaseVersion > 0, "databaseVersion is invalid");
             checkArgument(appVersionCode > 0, "appVersionCode is invalid");
@@ -118,20 +106,12 @@ public class ProfileModel {
         this.name = name;
     }
 
-    public Date getTimestampCreated() {
-        return timestampCreated;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTimestampCreated(Date timestampCreated) {
-        this.timestampCreated = timestampCreated;
-    }
-
-    public Date getTimestampUpdated() {
-        return timestampUpdated;
-    }
-
-    public void setTimestampUpdated(Date timestampUpdated) {
-        this.timestampUpdated = timestampUpdated;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getUserId() {
