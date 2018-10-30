@@ -8,7 +8,7 @@ public interface FirestoreRepository {
 
     Observable<Void> updateUser(UserModel user);
 
-    Observable<Void> addProfile(UserModel user, String name);
+    Observable<String> addProfile(UserModel user, String name);
 
     Observable<Void> shareProfile(String email);
 

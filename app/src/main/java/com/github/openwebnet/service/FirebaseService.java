@@ -18,6 +18,6 @@ public interface FirebaseService {
 
     Observable<Void> updateUser();
 
-    Observable<Void> addProfile(String name);
+    Observable<String> addProfile(String name);
 
 }

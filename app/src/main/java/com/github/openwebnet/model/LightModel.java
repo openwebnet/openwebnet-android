@@ -2,6 +2,8 @@ package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.Lighting;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -38,6 +40,8 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     @Required
     private String type;
 
+    // TODO remove
+    @Deprecated
     private boolean dimmer;
 
     private boolean favourite;
@@ -48,8 +52,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     // NOT USED: realm error otherwise
     @Ignore
     private Lighting.Type lightingType;
-
-    // TODO @Ignore dimmerValue
 
     public LightModel() {}
 
@@ -185,10 +187,12 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         throw new UnsupportedOperationException("method not implemented: use LightModel#setLightingType()");
     }
 
+    @Deprecated
     public boolean isDimmer() {
         return dimmer;
     }
 
+    @Deprecated
     public void setDimmer(boolean dimmer) {
         this.dimmer = dimmer;
     }
@@ -217,6 +221,18 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
 
     public void setLightingType(Lighting.Type lightingType) {
         this.type = lightingType.name();
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_TYPE, getLightingType());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
     }
 
 }

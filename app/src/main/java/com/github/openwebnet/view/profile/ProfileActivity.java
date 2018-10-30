@@ -23,7 +23,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -85,15 +84,15 @@ public class ProfileActivity extends AppCompatActivity {
         return Arrays.asList();
     }
 
-    // TODO snackbar
+    // TODO snackbar message
     // TODO dialog to ask name
     private void createProfile() {
-        Observable.zip(
-            firebaseService.updateUser(), firebaseService.addProfile("TODO"), (aVoid1, aVoid2) -> null)
-        .doOnError(throwable -> {
-            log.error("ERROR createProfile", throwable);
-            Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
-        })
-        .subscribe();
+        firebaseService.updateUser()
+            .flatMap(aVoid -> firebaseService.addProfile("TODO"))
+            .doOnError(error -> {
+                log.error("createProfile failed", error);
+                Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
+            })
+            .subscribe(profileId -> log.info("createProfile succeeded: profileId={}", profileId));
     }
 }

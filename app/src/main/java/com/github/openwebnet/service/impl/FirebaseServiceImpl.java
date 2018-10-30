@@ -61,7 +61,7 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Observable<Void> addProfile(String name) {
+    public Observable<String> addProfile(String name) {
         return firestoreRepository.addProfile(getUser(), name);
     }
 
