@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.firestore.FirestoreModel;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -16,7 +17,7 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class IpcamModel extends RealmObject implements RealmModel, DomoticModel {
+public class IpcamModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
 
     public static final String FIELD_URL = "url";
     public static final String FIELD_STREAM_TYPE = "type";
@@ -167,6 +168,20 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
 
     public static Builder updateBuilder(String uuid) {
         return new Builder(uuid);
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_URL, getUrl());
+        map.put(FIELD_STREAM_TYPE, getType());
+        map.put(FIELD_USERNAME, getUsername());
+        map.put(FIELD_PASSWORD, getPassword());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.github.openwebnet.model;
 
+import com.github.openwebnet.model.firestore.FirestoreModel;
+
 import org.threeten.bp.Instant;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -11,7 +15,12 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DeviceModel extends RealmObject implements RealmModel, DomoticModel {
+public class DeviceModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
+
+    public static final String FIELD_REQUEST = "request";
+    public static final String FIELD_RESPONSE = "response";
+    public static final String FIELD_RUN_ON_LOAD = "runOnLoad";
+    public static final String FIELD_SHOW_CONFIRMATION = "showConfirmation";
 
     public enum Status {
         SUCCESS, FAIL
@@ -144,6 +153,21 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
     }
 
     @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_REQUEST, getRequest());
+        map.put(FIELD_RESPONSE, getResponse());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        map.put(FIELD_RUN_ON_LOAD, isRunOnLoad());
+        map.put(FIELD_SHOW_CONFIRMATION, isShowConfirmation());
+        return map;
+    }
+
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -251,4 +275,5 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
     public void setInstantResponseDebug(Instant instantResponseDebug) {
         this.instantResponseDebug = instantResponseDebug;
     }
+
 }

@@ -1,5 +1,9 @@
 package com.github.openwebnet.model;
 
+import com.github.openwebnet.model.firestore.FirestoreModel;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -9,7 +13,7 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class AutomationModel extends RealmObject implements RealmModel, DomoticModel {
+public class AutomationModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
 
     public enum Status {
         STOP, UP, DOWN
@@ -36,9 +40,7 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
     @Ignore
     private Status status;
 
-    public AutomationModel() {
-
-    }
+    public AutomationModel() {}
 
     private AutomationModel(Builder builder) {
         this.uuid = builder.uuid;
@@ -106,6 +108,18 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
     }
 
     @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
+    }
+
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -165,4 +179,5 @@ public class AutomationModel extends RealmObject implements RealmModel, DomoticM
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }

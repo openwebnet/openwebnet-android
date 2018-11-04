@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.Lighting;
+import com.github.openwebnet.model.firestore.FirestoreModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +14,7 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LightModel extends RealmObject implements RealmModel, DomoticModel {
+public class LightModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
 
     public static final String FIELD_TYPE = "type";
 
@@ -136,6 +137,19 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     }
 
     @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_TYPE, getLightingType());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
+    }
+
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -221,18 +235,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
 
     public void setLightingType(Lighting.Type lightingType) {
         this.type = lightingType.name();
-    }
-
-    public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
-        map.put(FIELD_UUID, getUuid());
-        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
-        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
-        map.put(FIELD_NAME, getName());
-        map.put(FIELD_WHERE, getWhere());
-        map.put(FIELD_TYPE, getLightingType());
-        map.put(FIELD_FAVOURITE, isFavourite());
-        return map;
     }
 
 }

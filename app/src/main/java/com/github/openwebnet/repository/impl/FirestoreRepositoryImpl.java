@@ -2,12 +2,29 @@ package com.github.openwebnet.repository.impl;
 
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
+import com.github.openwebnet.model.DeviceModel;
+import com.github.openwebnet.model.EnergyModel;
+import com.github.openwebnet.model.EnvironmentModel;
+import com.github.openwebnet.model.GatewayModel;
+import com.github.openwebnet.model.IpcamModel;
 import com.github.openwebnet.model.LightModel;
+import com.github.openwebnet.model.ScenarioModel;
+import com.github.openwebnet.model.SoundModel;
+import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.model.firestore.ProfileModel;
 import com.github.openwebnet.model.firestore.UserModel;
 import com.github.openwebnet.repository.AutomationRepository;
+import com.github.openwebnet.repository.DeviceRepository;
+import com.github.openwebnet.repository.EnergyRepository;
+import com.github.openwebnet.repository.EnvironmentRepository;
 import com.github.openwebnet.repository.FirestoreRepository;
+import com.github.openwebnet.repository.GatewayRepository;
+import com.github.openwebnet.repository.IpcamRepository;
 import com.github.openwebnet.repository.LightRepository;
+import com.github.openwebnet.repository.ScenarioRepository;
+import com.github.openwebnet.repository.SoundRepository;
+import com.github.openwebnet.repository.TemperatureRepository;
+import com.google.common.collect.Lists;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +47,6 @@ import rx.Observable;
  * backups
  * security restrictions
  * add createdAt/modifiedAt to each model
- * replace Date with Timestamp in firestore model
  *
  */
 public class FirestoreRepositoryImpl implements FirestoreRepository {
@@ -41,10 +57,34 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private static final String COLLECTION_PROFILES = "profiles";
 
     @Inject
+    AutomationRepository automationRepository;
+
+    @Inject
+    DeviceRepository deviceRepository;
+
+    @Inject
+    EnergyRepository energyRepository;
+
+    @Inject
+    EnvironmentRepository environmentRepository;
+
+    @Inject
+    GatewayRepository gatewayRepository;
+
+    @Inject
+    IpcamRepository ipcamRepository;
+
+    @Inject
     LightRepository lightRepository;
 
     @Inject
-    AutomationRepository automationRepository;
+    ScenarioRepository scenarioRepository;
+
+    @Inject
+    SoundRepository soundRepository;
+
+    @Inject
+    TemperatureRepository temperatureRepository;
 
     public FirestoreRepositoryImpl() {
         Injector.getApplicationComponent().inject(this);
@@ -82,19 +122,38 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     @Override
     public Observable<String> addProfile(UserModel user, String name) {
 
-        // TODO ipcams, temperatures, energies, lights, automations, scenarios, sounds, devices
-        Observable<List<LightModel>> findAllLight = lightRepository.findAll();
         Observable<List<AutomationModel>> findAllAutomation = automationRepository.findAll();
+        Observable<List<DeviceModel>> findAllDevice = deviceRepository.findAll();
+        Observable<List<EnergyModel>> findAllEnergy = energyRepository.findAll();
+        Observable<List<EnvironmentModel>> findAllEnvironment = environmentRepository.findAll();
+        Observable<List<GatewayModel>> findAllGateway = gatewayRepository.findAll();
+        Observable<List<IpcamModel>> findAllIpcam = ipcamRepository.findAll();
+        Observable<List<LightModel>> findAllLight = lightRepository.findAll();
+        Observable<List<ScenarioModel>> findAllScenario = scenarioRepository.findAll();
+        Observable<List<SoundModel>> findAllSound = soundRepository.findAll();
+        Observable<List<TemperatureModel>> findAllTemperature = temperatureRepository.findAll();
 
-        return Observable.zip(findAllLight, findAllAutomation,
-            (lights, automations) ->
-                new ProfileModel.Builder()
-                    .name(name)
-                    .userId(user.getUserId())
-                    .lights(lights)
-                    //.automations(Lists.newArrayList(automations))
-                    .build())
-            .flatMap(this::addProfile);
+        // TODO max 9
+        return Observable.zip(findAllAutomation, findAllDevice,
+                (automations, devices) ->
+                        new ProfileModel.Builder()
+                                .name(name)
+                                .userId(user.getUserId())
+                                .automations(automations)
+                                //.automations(Lists.newArrayList(automations))
+                                .build())
+                .flatMap(this::addProfile);
+
+//        return Observable.zip(findAllAutomation, findAllDevice, findAllEnergy, findAllEnvironment, findAllGateway,
+//                findAllIpcam, findAllLight, findAllScenario, findAllSound, findAllTemperature,
+//            (automations, devices, energies, environments, gateways, ipcams, lights, scenarios, sounds, v) ->
+//                new ProfileModel.Builder()
+//                    .name(name)
+//                    .userId(user.getUserId())
+//                    .lights(lights)
+//                    //.automations(Lists.newArrayList(automations))
+//                    .build())
+//            .flatMap(this::addProfile);
     }
 
     private Observable<String> addProfile(ProfileModel profile) {
