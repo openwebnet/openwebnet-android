@@ -136,7 +136,7 @@ public class EnergyModel extends RealmObject implements RealmModel, DomoticModel
         map.put(FIELD_NAME, getName());
         map.put(FIELD_WHERE, getWhere());
         map.put(FIELD_FAVOURITE, isFavourite());
-        map.put(FIELD_VERSION, getVersion());
+        map.put(FIELD_VERSION, getEnergyManagementVersion());
         return map;
     }
 

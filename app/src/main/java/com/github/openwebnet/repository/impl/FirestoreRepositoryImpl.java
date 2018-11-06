@@ -47,6 +47,7 @@ import rx.Observable;
  * backups
  * security restrictions
  * add createdAt/modifiedAt to each model
+ * remove dimmer
  *
  */
 public class FirestoreRepositoryImpl implements FirestoreRepository {
@@ -122,38 +123,36 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     @Override
     public Observable<String> addProfile(UserModel user, String name) {
 
-        Observable<List<AutomationModel>> findAllAutomation = automationRepository.findAll();
-        Observable<List<DeviceModel>> findAllDevice = deviceRepository.findAll();
-        Observable<List<EnergyModel>> findAllEnergy = energyRepository.findAll();
-        Observable<List<EnvironmentModel>> findAllEnvironment = environmentRepository.findAll();
-        Observable<List<GatewayModel>> findAllGateway = gatewayRepository.findAll();
-        Observable<List<IpcamModel>> findAllIpcam = ipcamRepository.findAll();
-        Observable<List<LightModel>> findAllLight = lightRepository.findAll();
-        Observable<List<ScenarioModel>> findAllScenario = scenarioRepository.findAll();
-        Observable<List<SoundModel>> findAllSound = soundRepository.findAll();
-        Observable<List<TemperatureModel>> findAllTemperature = temperatureRepository.findAll();
+        List<Observable<?>> findAll = Lists.newArrayList(
+            automationRepository.findAll(),
+            deviceRepository.findAll(),
+            energyRepository.findAll(),
+            environmentRepository.findAll(),
+            gatewayRepository.findAll(),
+            ipcamRepository.findAll(),
+            lightRepository.findAll(),
+            scenarioRepository.findAll(),
+            soundRepository.findAll(),
+            temperatureRepository.findAll()
+        );
 
-        // TODO max 9
-        return Observable.zip(findAllAutomation, findAllDevice,
-                (automations, devices) ->
-                        new ProfileModel.Builder()
-                                .name(name)
-                                .userId(user.getUserId())
-                                .automations(automations)
-                                //.automations(Lists.newArrayList(automations))
-                                .build())
-                .flatMap(this::addProfile);
-
-//        return Observable.zip(findAllAutomation, findAllDevice, findAllEnergy, findAllEnvironment, findAllGateway,
-//                findAllIpcam, findAllLight, findAllScenario, findAllSound, findAllTemperature,
-//            (automations, devices, energies, environments, gateways, ipcams, lights, scenarios, sounds, v) ->
-//                new ProfileModel.Builder()
-//                    .name(name)
-//                    .userId(user.getUserId())
-//                    .lights(lights)
-//                    //.automations(Lists.newArrayList(automations))
-//                    .build())
-//            .flatMap(this::addProfile);
+        // Observable.zip support only up to 9 parameters, use Iterable
+        return Observable.zip(findAll, results ->
+            new ProfileModel.Builder()
+                .name(name)
+                .userId(user.getUserId())
+                .automations((List<AutomationModel>) results[0])
+                .devices((List<DeviceModel>) results[1])
+                .energies((List<EnergyModel>) results[2])
+                .environments((List<EnvironmentModel>) results[3])
+                .gateways((List<GatewayModel>) results[4])
+                .ipcams((List<IpcamModel>) results[5])
+                .lights((List<LightModel>) results[6])
+                .scenarios((List<ScenarioModel>) results[7])
+                .sounds((List<SoundModel>) results[8])
+                .temperatures((List<TemperatureModel>) results[9])
+                .build())
+            .flatMap(this::addProfile);
     }
 
     private Observable<String> addProfile(ProfileModel profile) {

@@ -147,8 +147,8 @@ public class SoundModel extends RealmObject implements RealmModel, DomoticModel,
         map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
         map.put(FIELD_NAME, getName());
         map.put(FIELD_WHERE, getWhere());
-        map.put(FIELD_SOURCE, getSource());
-        map.put(FIELD_TYPE, getType());
+        map.put(FIELD_SOURCE, getSoundSystemSource());
+        map.put(FIELD_TYPE, getSoundSystemType());
         map.put(FIELD_FAVOURITE, isFavourite());
         return map;
     }
