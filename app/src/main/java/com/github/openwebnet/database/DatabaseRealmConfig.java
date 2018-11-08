@@ -32,7 +32,7 @@ public class DatabaseRealmConfig {
     private static final String DATABASE_NAME = "openwebnet.realm";
     private static final String DATABASE_NAME_CRYPT = "openwebnet.crypt.realm";
 
-    private static final boolean DEBUG_DATABASE = false;
+    private static final boolean DEBUG_DATABASE = true;
     private static final String DEBUG_REALM_KEY = "database.key";
     private static final String PREFERENCE_DATABASE_KEY = "com.github.openwebnet.database.DatabaseRealmConfig.PREFERENCE_DATABASE_KEY";
 

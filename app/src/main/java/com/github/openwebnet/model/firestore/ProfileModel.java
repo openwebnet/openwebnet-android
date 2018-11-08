@@ -1,10 +1,6 @@
 package com.github.openwebnet.model.firestore;
 
-import android.text.TextUtils;
-
 import com.annimon.stream.Stream;
-import com.github.openwebnet.BuildConfig;
-import com.github.openwebnet.database.DatabaseRealmConfig;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
 import com.github.openwebnet.model.EnergyModel;
@@ -15,32 +11,20 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
-import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ProfileModel {
 
-    private String name;
+    public static final int PROFILE_VERSION = 1;
 
-    @ServerTimestamp
-    private Date createdAt;
+    private ProfileDetailModel details;
 
-    private String userId;
-
-    private int databaseVersion;
-
-    private int appVersionCode;
-
-    private String appVersionName;
-
-    // FIXME use maps ;-( due to serialization and inheritance issues
+    // FIXME used maps ;-( due to serialization and inheritance issues
     // https://realm.io/docs/java/latest/#other-libraries
     // https://github.com/realm/realm-java/issues/761
     // https://firebase.google.com/docs/firestore/manage-data/add-data
@@ -59,13 +43,7 @@ public class ProfileModel {
     public ProfileModel() {}
 
     private ProfileModel(Builder builder) {
-        this.name = builder.name;
-        this.userId = builder.userId;
-        this.createdAt = builder.createdAt;
-        this.databaseVersion = builder.databaseVersion;
-        this.appVersionCode = builder.appVersionCode;
-        this.appVersionName = builder.appVersionName;
-
+        this.details = builder.details;
         this.automations = builder.automations;
         this.devices = builder.devices;
         this.energies = builder.energies;
@@ -79,14 +57,7 @@ public class ProfileModel {
     }
 
     public static class Builder {
-
-        private String name;
-        private String userId;
-        private Date createdAt;
-        private int databaseVersion;
-        private int appVersionCode;
-        private String appVersionName;
-
+        private ProfileDetailModel details;
         private List<Map<String, Object>> automations;
         private List<Map<String, Object>> devices;
         private List<Map<String, Object>> energies;
@@ -99,11 +70,6 @@ public class ProfileModel {
         private List<Map<String, Object>> temperatures;
 
         public Builder() {
-            this.createdAt = new Date();
-            this.databaseVersion = DatabaseRealmConfig.DATABASE_VERSION;
-            this.appVersionCode = BuildConfig.VERSION_CODE;
-            this.appVersionName = BuildConfig.VERSION_NAME;
-
             this.automations = new ArrayList<>();
             this.devices = new ArrayList<>();
             this.energies = new ArrayList<>();
@@ -116,33 +82,8 @@ public class ProfileModel {
             this.temperatures = new ArrayList<>();
         }
 
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder userId(String userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Builder createdAt(Date createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder databaseVersion(int databaseVersion) {
-            this.databaseVersion = databaseVersion;
-            return this;
-        }
-
-        public Builder appVersionCode(int appVersionCode) {
-            this.appVersionCode = appVersionCode;
-            return this;
-        }
-
-        public Builder databaseVersion(String appVersionName) {
-            this.appVersionName = appVersionName;
+        public Builder details(ProfileDetailModel details) {
+            this.details = details;
             return this;
         }
 
@@ -197,14 +138,7 @@ public class ProfileModel {
         }
 
         public ProfileModel build() {
-            checkArgument(!TextUtils.isEmpty(name), "name is empty");
-            checkArgument(!TextUtils.isEmpty(userId), "userId is empty");
-
-            checkNotNull(createdAt, "createdAt is null");
-
-            checkArgument(databaseVersion > 0, "databaseVersion is invalid");
-            checkArgument(appVersionCode > 0, "appVersionCode is invalid");
-            checkArgument(!TextUtils.isEmpty(appVersionName), "appVersionName is empty");
+            checkNotNull(details, "details is null");
 
             checkNotNull(automations, "automations is null");
             checkNotNull(devices, "devices is null");
@@ -221,52 +155,12 @@ public class ProfileModel {
         }
     }
 
-    public String getName() {
-        return name;
+    public ProfileDetailModel getDetails() {
+        return details;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public int getDatabaseVersion() {
-        return databaseVersion;
-    }
-
-    public void setDatabaseVersion(int databaseVersion) {
-        this.databaseVersion = databaseVersion;
-    }
-
-    public int getAppVersionCode() {
-        return appVersionCode;
-    }
-
-    public void setAppVersionCode(int appVersionCode) {
-        this.appVersionCode = appVersionCode;
-    }
-
-    public String getAppVersionName() {
-        return appVersionName;
-    }
-
-    public void setAppVersionName(String appVersionName) {
-        this.appVersionName = appVersionName;
+    public void setDetails(ProfileDetailModel details) {
+        this.details = details;
     }
 
     public List<Map<String, Object>> getAutomations() {

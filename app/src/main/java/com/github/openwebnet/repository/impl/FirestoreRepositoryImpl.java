@@ -11,8 +11,10 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
+import com.github.openwebnet.model.firestore.ProfileDetailModel;
 import com.github.openwebnet.model.firestore.ProfileModel;
 import com.github.openwebnet.model.firestore.UserModel;
+import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.AutomationRepository;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnergyRepository;
@@ -139,8 +141,10 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         // Observable.zip support only up to 9 parameters, use Iterable
         return Observable.zip(findAll, results ->
             new ProfileModel.Builder()
-                .name(name)
-                .userId(user.getUserId())
+                .details(new ProfileDetailModel.Builder()
+                    .userId(user.getUserId())
+                    .name(name)
+                    .build())
                 .automations((List<AutomationModel>) results[0])
                 .devices((List<DeviceModel>) results[1])
                 .energies((List<EnergyModel>) results[2])
@@ -164,8 +168,11 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 DocumentReference profileRef = db.collection(COLLECTION_PROFILES).document();
                 batch.set(profileRef, profile, SetOptions.merge());
 
-                DocumentReference userRef = db.collection(COLLECTION_USERS).document(profile.getUserId());
-                batch.update(userRef, COLLECTION_PROFILES, FieldValue.arrayUnion(profileRef));
+                UserProfileModel userProfile = new UserProfileModel.Builder(profile)
+                    .profileRef(profileRef).build();
+
+                DocumentReference userRef = db.collection(COLLECTION_USERS).document(profile.getDetails().getUserId());
+                batch.update(userRef, COLLECTION_PROFILES, FieldValue.arrayUnion(userProfile.toMap()));
 
                 batch.commit()
                     .addOnSuccessListener(aVoid -> {

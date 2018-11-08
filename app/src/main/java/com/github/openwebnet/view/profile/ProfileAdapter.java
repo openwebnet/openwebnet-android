@@ -77,7 +77,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder profileViewHolder, int i) {
         // TODO
-        profileViewHolder.textViewProfileName.setText(mProfiles.get(i).getName());
+        profileViewHolder.textViewProfileName.setText(mProfiles.get(i).getDetails().getName());
         profileViewHolder.textViewProfileDate.setText("TODO date");
 
         profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v ->
