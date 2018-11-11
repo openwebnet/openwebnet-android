@@ -10,13 +10,13 @@ import android.view.MenuItem;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.firestore.ProfileModel;
+import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -36,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private List<UserProfileModel> profileItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,16 @@ public class ProfileActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ProfileAdapter(fakeProfiles());
+        mAdapter = new ProfileAdapter(profileItems);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // TODO check internet connection
+        refreshProfiles();
     }
 
     @Override
@@ -80,19 +89,33 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    private List<ProfileModel> fakeProfiles() {
-        return Arrays.asList();
+    // TODO toggle loader
+    private void refreshProfiles() {
+        firebaseService.getUserProfiles()
+            .doOnError(error -> showError(error, "refreshProfiles failed"))
+            .subscribe(results -> {
+                log.info("refreshProfiles: size={}", results.size());
+                profileItems.clear();
+                profileItems.addAll(results);
+                mAdapter.notifyDataSetChanged();
+            });
     }
 
-    // TODO snackbar message
     // TODO dialog to ask name
     private void createProfile() {
         firebaseService.updateUser()
             .flatMap(aVoid -> firebaseService.addProfile("TODO"))
-            .doOnError(error -> {
-                log.error("createProfile failed", error);
-                Snackbar.make(findViewById(android.R.id.content), "TODO error", Snackbar.LENGTH_LONG).show();
-            })
-            .subscribe(profileId -> log.info("createProfile succeeded: profileId={}", profileId));
+            // TODO message
+            .doOnError(error -> showError(error, "createProfile failed"))
+            .subscribe(profileId -> {
+                log.info("createProfile succeeded: profileId={}", profileId);
+                refreshProfiles();
+            });
+    }
+
+    // TODO string id
+    private void showError(Throwable error, String message) {
+        log.error("showError: {}", message, error);
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 }

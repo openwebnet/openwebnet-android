@@ -3,6 +3,10 @@ package com.github.openwebnet.service;
 import android.content.Context;
 import android.content.Intent;
 
+import com.github.openwebnet.model.firestore.UserProfileModel;
+
+import java.util.List;
+
 import rx.Observable;
 import rx.functions.Action0;
 
@@ -19,5 +23,7 @@ public interface FirebaseService {
     Observable<Void> updateUser();
 
     Observable<String> addProfile(String name);
+
+    Observable<List<UserProfileModel>> getUserProfiles();
 
 }

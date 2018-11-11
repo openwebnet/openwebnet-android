@@ -1,5 +1,6 @@
 package com.github.openwebnet.model.firestore;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.ServerTimestamp;
 
@@ -46,6 +47,13 @@ public class UserProfileModel implements FirestoreModel {
             this.userId = details.getUserId();
             this.name = details.getName();
             this.createdAt = details.getCreatedAt();
+        }
+
+        public Builder(Map<String, Object> map) {
+            this.profileRef = (DocumentReference) map.get(FIELD_PROFILE_REF);
+            this.userId = (String) map.get(FIELD_PROFILE_USER_ID);
+            this.name = (String) map.get(FIELD_PROFILE_NAME);
+            this.createdAt = ((Timestamp) map.get(FIELD_PROFILE_CREATED_AT)).toDate();
         }
 
         public Builder profileRef(DocumentReference profileRef) {

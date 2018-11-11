@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.firebase.ui.auth.AuthUI;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserModel;
+import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.FirestoreRepository;
 import com.github.openwebnet.service.FirebaseService;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,6 +65,11 @@ public class FirebaseServiceImpl implements FirebaseService {
     @Override
     public Observable<String> addProfile(String name) {
         return firestoreRepository.addProfile(getUser(), name);
+    }
+
+    @Override
+    public Observable<List<UserProfileModel>> getUserProfiles() {
+        return firestoreRepository.getUserProfiles(getUser().getUserId());
     }
 
     private FirebaseUser getCurrentUser() {

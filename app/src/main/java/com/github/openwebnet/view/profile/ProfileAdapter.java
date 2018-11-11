@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
-import com.github.openwebnet.model.firestore.ProfileModel;
+import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 
 import org.slf4j.Logger;
@@ -33,9 +33,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     @Inject
     FirebaseService firebaseService;
 
-    private List<ProfileModel> mProfiles;
+    private List<UserProfileModel> mProfiles;
 
-    public ProfileAdapter(List<ProfileModel> profiles) {
+    public ProfileAdapter(List<UserProfileModel> profiles) {
         Injector.getApplicationComponent().inject(this);
 
         mProfiles = profiles;
@@ -77,7 +77,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder profileViewHolder, int i) {
         // TODO
-        profileViewHolder.textViewProfileName.setText(mProfiles.get(i).getDetails().getName());
+        profileViewHolder.textViewProfileName.setText(mProfiles.get(i).getName());
+        // TODO format mProfiles.get(i).getCreatedAt()
         profileViewHolder.textViewProfileDate.setText("TODO date");
 
         profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v ->

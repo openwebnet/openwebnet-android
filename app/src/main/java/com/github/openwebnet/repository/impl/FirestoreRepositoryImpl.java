@@ -1,5 +1,6 @@
 package com.github.openwebnet.repository.impl;
 
+import com.annimon.stream.Stream;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.DeviceModel;
@@ -28,16 +29,20 @@ import com.github.openwebnet.repository.SoundRepository;
 import com.github.openwebnet.repository.TemperatureRepository;
 import com.google.common.collect.Lists;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.firestore.WriteBatch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -70,6 +75,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private static final Logger log = LoggerFactory.getLogger(FirestoreRepositoryImpl.class);
 
     private static final String COLLECTION_USERS = "users";
+    private static final String COLLECTION_USER_PROFILES = "profiles";
     private static final String COLLECTION_PROFILES = "profiles";
 
     @Inject
@@ -123,11 +129,15 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .collection(COLLECTION_USERS)
                     .document(user.getUserId())
                     .set(user, SetOptions.merge())
-                    .addOnSuccessListener(aVoid -> log.info("user updated with success"))
-                    .addOnFailureListener(e -> log.error("failed to update user", e));
-
-                subscriber.onNext(null);
-                subscriber.onCompleted();
+                    .addOnSuccessListener(aVoid -> {
+                        log.info("user updated with success");
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
+                    })
+                    .addOnFailureListener(e -> {
+                        log.error("failed to update user", e);
+                        subscriber.onError(e);
+                    });
             } catch (Exception e) {
                 log.error("Firestore#updateUser", e);
                 subscriber.onError(e);
@@ -172,6 +182,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             .flatMap(this::addProfile);
     }
 
+
     private Observable<String> addProfile(ProfileModel profile) {
         return Observable.create(subscriber -> {
             try {
@@ -202,6 +213,53 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 subscriber.onError(e);
             }
         });
+    }
+
+    @Override
+    public Observable<List<UserProfileModel>> getUserProfiles(String userId) {
+        return Observable.create(subscriber -> {
+            try {
+                getDb()
+                    .collection(COLLECTION_USERS)
+                    .document(userId)
+                    .get(Source.DEFAULT)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null &&
+                                document.exists() &&
+                                document.getData() != null &&
+                                document.getData().containsKey(COLLECTION_USER_PROFILES)) {
+
+                                List<UserProfileModel> userProfileModels =
+                                    Stream.of((List<Map<String, Object>>) document.getData().get(COLLECTION_USER_PROFILES))
+                                        .map(userProfileMap -> new UserProfileModel.Builder(userProfileMap).build())
+                                        .toList();
+
+                                log.info("user profiles: size={}", userProfileModels.size());
+
+                                subscriber.onNext(userProfileModels);
+                                subscriber.onCompleted();
+                            } else {
+                                log.error("user profiles not found");
+                                subscriber.onNext(new ArrayList<>());
+                                subscriber.onCompleted();
+                            }
+                        } else {
+                            log.error("failed to get user profiles", task.getException());
+                            subscriber.onError(task.getException());
+                        }
+                    });
+            } catch (Exception e) {
+                log.error("Firestore#getUserProfiles", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<ProfileModel> getProfile(DocumentReference profileRef) {
+        return null;
     }
 
     @Override
