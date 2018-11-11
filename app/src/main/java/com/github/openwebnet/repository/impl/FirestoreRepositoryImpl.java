@@ -58,6 +58,8 @@ import rx.Observable;
  *
  * >>> security restrictions
  *
+ * TODO add disclaimer / privacy
+ *
  * if userId is different (already shared) you can't share it again
  *
  * INSERT profiles if auth
@@ -263,13 +265,54 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<Void> shareProfile(String email) {
-        return null;
+    public Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef) {
+        return getUserProfiles(userId)
+            .flatMap(userProfiles -> {
+                log.info("soft delete profile: userId={} profileRef={}", userId, profileRef.getPath());
+
+                // remove element from array
+                List<UserProfileModel> updatedUserProfiles = Stream
+                    .of(userProfiles)
+                    .filterNot(userProfile ->
+                        userProfile.getProfileRef().getPath().equals(profileRef.getPath()))
+                    .toList();
+
+                return updateUserProfile(userId, updatedUserProfiles);
+            });
     }
 
     @Override
-    public Observable<Void> softDeleteProfile() {
+    public Observable<Void> shareProfile(String email) {
+        // TODO don't expose mapping userId/email
         return null;
+    }
+
+    private Observable<Void> updateUserProfile(String userId, List<UserProfileModel> userProfiles) {
+        return Observable.create(subscriber -> {
+            try {
+                log.info("updating user profile: new size={}", userProfiles.size());
+
+                List<Map<String, Object>> userProfilesMap =
+                    Stream.of(userProfiles).map(UserProfileModel::toMap).toList();
+
+                getDb()
+                    .collection(COLLECTION_USERS)
+                    .document(userId)
+                    .update(COLLECTION_USER_PROFILES, userProfilesMap)
+                    .addOnSuccessListener(aVoid -> {
+                        log.info("user profile updated with success");
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
+                    })
+                    .addOnFailureListener(e -> {
+                        log.error("failed to update user profile", e);
+                        subscriber.onError(e);
+                    });
+            } catch (Exception e) {
+                log.error("Firestore#updateUserProfile", e);
+                subscriber.onError(e);
+            }
+        });
     }
 
 }

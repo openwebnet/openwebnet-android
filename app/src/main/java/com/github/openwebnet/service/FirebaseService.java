@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.github.openwebnet.model.firestore.UserProfileModel;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.List;
 
@@ -25,5 +26,7 @@ public interface FirebaseService {
     Observable<String> addProfile(String name);
 
     Observable<List<UserProfileModel>> getUserProfiles();
+
+    Observable<Void> softDeleteProfile(DocumentReference profileRef);
 
 }

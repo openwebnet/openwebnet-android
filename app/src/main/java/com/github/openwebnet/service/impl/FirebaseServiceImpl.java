@@ -11,6 +11,7 @@ import com.github.openwebnet.repository.FirestoreRepository;
 import com.github.openwebnet.service.FirebaseService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -70,6 +71,11 @@ public class FirebaseServiceImpl implements FirebaseService {
     @Override
     public Observable<List<UserProfileModel>> getUserProfiles() {
         return firestoreRepository.getUserProfiles(getUser().getUserId());
+    }
+
+    @Override
+    public Observable<Void> softDeleteProfile(DocumentReference profileRef) {
+        return firestoreRepository.softDeleteProfile(getUser().getUserId(), profileRef);
     }
 
     private FirebaseUser getCurrentUser() {

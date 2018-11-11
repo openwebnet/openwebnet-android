@@ -19,8 +19,8 @@ public interface FirestoreRepository {
 
     Observable<ProfileModel> getProfile(DocumentReference profileRef);
 
-    Observable<Void> shareProfile(String email);
+    Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef);
 
-    Observable<Void> softDeleteProfile();
+    Observable<Void> shareProfile(String email);
 
 }

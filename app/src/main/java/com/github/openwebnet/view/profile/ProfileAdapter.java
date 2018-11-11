@@ -87,9 +87,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         profileViewHolder.imageButtonProfileShare.setOnClickListener(v ->
             log.info("TODO onClick: imageButtonProfileShare")
         );
-        profileViewHolder.imageButtonProfileDelete.setOnClickListener(v ->
-            log.info("TODO onClick: imageButtonProfileDelete")
-        );
+        profileViewHolder.imageButtonProfileDelete.setOnClickListener(v -> {
+            log.info("TODO onClick: imageButtonProfileDelete");
+            // TODO show dialog
+            // TODO fire event to refresh
+            firebaseService.softDeleteProfile(mProfiles.get(i).getProfileRef()).subscribe();
+        });
     }
 
     @Override
