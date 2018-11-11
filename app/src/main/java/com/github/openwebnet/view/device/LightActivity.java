@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,9 +50,6 @@ public class LightActivity extends AbstractDeviceActivity {
     @BindView(R.id.textViewLightInfo)
     TextView textViewLightInfo;
 
-    @BindView(R.id.checkBoxLightDimmer)
-    CheckBox checkBoxLightDimmer;
-
     @BindView(R.id.spinnerLightType)
     Spinner spinnerLightType;
 
@@ -84,9 +80,6 @@ public class LightActivity extends AbstractDeviceActivity {
         initSpinnerGateway();
         initSpinnerLightType();
         initEditLight();
-
-        // TODO not implemented
-        checkBoxLightDimmer.setVisibility(View.GONE);
     }
 
     private void initSpinnerLightType() {
@@ -108,7 +101,8 @@ public class LightActivity extends AbstractDeviceActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
     }
 
@@ -171,7 +165,6 @@ public class LightActivity extends AbstractDeviceActivity {
                 editTextLightName.setText(String.valueOf(light.getName()));
                 editTextLightWhere.setText(String.valueOf(light.getWhere()));
 
-                checkBoxLightDimmer.setChecked(light.isDimmer());
                 selectEnvironment(light.getEnvironmentId());
                 selectGateway(light.getGatewayUuid());
                 setFavourite(light.isFavourite());
@@ -190,7 +183,6 @@ public class LightActivity extends AbstractDeviceActivity {
     protected void onMenuSave() {
         log.debug("name: {}", editTextLightName.getText());
         log.debug("where: {}", editTextLightWhere.getText());
-        log.debug("dimmer: {}", checkBoxLightDimmer.isChecked());
         log.debug("type: {}", getSelectedLightType());
         log.debug("environment: {}", getSelectedEnvironment());
         log.debug("gateway: {}", getSelectedGateway());
@@ -236,7 +228,6 @@ public class LightActivity extends AbstractDeviceActivity {
         return (lightUuid == null ? LightModel.addBuilder() : LightModel.updateBuilder(lightUuid))
             .name(utilityService.sanitizedText(editTextLightName))
             .where(editTextLightWhere.getText().toString())
-            .dimmer(checkBoxLightDimmer.isChecked())
             .type(getSelectedLightType())
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())

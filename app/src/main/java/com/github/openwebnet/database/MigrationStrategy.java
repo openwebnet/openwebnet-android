@@ -127,5 +127,13 @@ public class MigrationStrategy implements RealmMigration {
             ++oldVersion;
         }
 
+        // migrate to version 10
+        if (oldVersion == 9) {
+            schema.get("LightModel")
+                .removeField(LightModel.FIELD_DIMMER);
+
+            ++oldVersion;
+        }
+
     }
 }

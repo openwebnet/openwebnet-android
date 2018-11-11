@@ -15,7 +15,6 @@ public class LightModelTest {
     private final String LIGHT_NAME = "name";
     private final String LIGHT_WHERE = "08";
     private final Lighting.Type LIGHT_TYPE = Lighting.Type.POINT_TO_POINT;
-    private final boolean LIGHT_DIMMER = true;
     private final boolean LIGHT_FAVOURITE = true;
 
     @Test(expected = NullPointerException.class)
@@ -58,7 +57,6 @@ public class LightModelTest {
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .type(LIGHT_TYPE)
-            .dimmer(LIGHT_DIMMER)
             .favourite(LIGHT_FAVOURITE)
             .build();
 
@@ -75,7 +73,6 @@ public class LightModelTest {
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .type(LIGHT_TYPE)
-            .dimmer(LIGHT_DIMMER)
             .favourite(LIGHT_FAVOURITE)
             .build();
 
@@ -89,7 +86,6 @@ public class LightModelTest {
         assertEquals("invalid name", LIGHT_NAME, light.getName());
         assertEquals("invalid where", LIGHT_WHERE, light.getWhere());
         assertEquals("invalid type", LIGHT_TYPE, light.getLightingType());
-        assertEquals("invalid dimmer", LIGHT_DIMMER, light.isDimmer());
         assertEquals("invalid favourite", LIGHT_FAVOURITE, light.isFavourite());
         assertNull("invalid status", light.getStatus());
     }

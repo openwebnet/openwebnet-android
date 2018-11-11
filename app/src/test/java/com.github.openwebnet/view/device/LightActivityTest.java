@@ -117,9 +117,6 @@ public class LightActivityTest {
     @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
-    @BindView(R.id.checkBoxLightDimmer)
-    CheckBox checkBoxLightDimmer;
-
     @BindView(R.id.spinnerLightType)
     Spinner spinnerLightType;
 
@@ -364,7 +361,6 @@ public class LightActivityTest {
         assertEquals("invalid value", "", editTextLightName.getText().toString());
         assertEquals("invalid value", "", editTextLightWhere.getText().toString());
 
-        assertEquals("invalid value", false, checkBoxLightDimmer.isChecked());
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
 
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
@@ -380,7 +376,6 @@ public class LightActivityTest {
         String LIGHT_WHERE = "08";
         Lighting.Type LIGHT_TYPE = Lighting.Type.POINT_TO_POINT;
         Integer LIGHT_ENVIRONMENT_SELECTED = 108;
-        boolean LIGHT_DIMMER = true;
         boolean LIGHT_FAVOURITE = true;
 
         List<EnvironmentModel> environments = Arrays.
@@ -396,7 +391,6 @@ public class LightActivityTest {
                 .name(LIGHT_NAME)
                 .where(LIGHT_WHERE)
                 .type(LIGHT_TYPE)
-                .dimmer(LIGHT_DIMMER)
                 .environment(LIGHT_ENVIRONMENT_SELECTED)
                 .gateway(LIGHT_GATEWAY_SELECTED)
                 .favourite(LIGHT_FAVOURITE)
@@ -412,7 +406,6 @@ public class LightActivityTest {
 
         assertEquals("invalid value", LIGHT_NAME, editTextLightName.getText().toString());
 
-        assertEquals("invalid value", LIGHT_DIMMER, checkBoxLightDimmer.isChecked());
         assertEquals("invalid value", LIGHT_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
@@ -478,7 +471,6 @@ public class LightActivityTest {
 
         createWithIntent(uuidExtra);
 
-        checkBoxLightDimmer.setChecked(LIGHT_DIMMER);
         checkBoxDeviceFavourite.setChecked(LIGHT_FAVOURITE);
 
         // for simplicity only 1 items
@@ -496,7 +488,6 @@ public class LightActivityTest {
         lightMock.setName(LIGHT_NAME);
         lightMock.setWhere(LIGHT_WHERE);
         lightMock.setLightingType(LIGHT_TYPE);
-        lightMock.setDimmer(LIGHT_DIMMER);
         lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
         lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
         lightMock.setFavourite(LIGHT_FAVOURITE);

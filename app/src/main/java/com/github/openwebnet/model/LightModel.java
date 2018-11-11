@@ -22,6 +22,9 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
         ON, OFF
     }
 
+    @Deprecated
+    public static final String FIELD_DIMMER = "dimmer";
+
     @Required
     @PrimaryKey
     private String uuid;
@@ -41,10 +44,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
     @Required
     private String type;
 
-    // TODO remove
-    @Deprecated
-    private boolean dimmer;
-
     private boolean favourite;
 
     @Ignore
@@ -63,7 +62,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
         this.name = builder.name;
         this.where = builder.where;
         this.type = builder.type;
-        this.dimmer = builder.dimmer;
         this.favourite = builder.favourite;
     }
 
@@ -75,7 +73,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
         private String name;
         private String where;
         private String type;
-        private boolean dimmer;
         private boolean favourite;
 
         public Builder(String uuid) {
@@ -104,11 +101,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
 
         public Builder type(Lighting.Type type) {
             this.type = type.name();
-            return this;
-        }
-
-        public Builder dimmer(boolean dimmer) {
-            this.dimmer = dimmer;
             return this;
         }
 
@@ -199,16 +191,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel,
 
     public void setType(String type) {
         throw new UnsupportedOperationException("method not implemented: use LightModel#setLightingType()");
-    }
-
-    @Deprecated
-    public boolean isDimmer() {
-        return dimmer;
-    }
-
-    @Deprecated
-    public void setDimmer(boolean dimmer) {
-        this.dimmer = dimmer;
     }
 
     @Override

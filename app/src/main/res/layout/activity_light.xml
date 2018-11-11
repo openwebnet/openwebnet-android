@@ -61,14 +61,6 @@
             android:textStyle="italic"
             android:visibility="gone" />
 
-        <CheckBox
-            android:id="@+id/checkBoxLightDimmer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:enabled="false"
-            android:text="@string/light_dimmer" />
-
         <Spinner
             android:id="@+id/spinnerLightType"
             style="@style/common.focusable"

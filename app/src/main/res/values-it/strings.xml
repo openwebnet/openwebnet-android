@@ -95,7 +95,6 @@
     <string name="device_expected_value">valore previsto</string>
     <string name="device_debug_label_invalid">Valore non valido</string>
     <string name="light_request">Richiesta</string>
-    <string name="light_dimmer">Dimmer</string>
     <string name="light_info_area">Valori consentiti: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Valori consentiti: 1&#8211;255</string>
     <string name="light_info_point_to_point">Dove = Area + Punto Luce</string>

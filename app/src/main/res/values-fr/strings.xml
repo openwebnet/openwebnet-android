@@ -95,7 +95,6 @@
     <string name="device_expected_value">valeur attendue</string>
     <string name="device_debug_label_invalid">Valeur invalide</string>
     <string name="light_request">Requête</string>
-    <string name="light_dimmer">Variateur</string>
     <string name="light_info_area">Les valeurs autorisées: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Les valeurs autorisées: 1&#8211;255</string>
     <string name="light_info_point_to_point">Où = Zone + Id lumière</string>

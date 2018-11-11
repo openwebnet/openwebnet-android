@@ -45,11 +45,24 @@ import rx.Observable;
 
 /*
  * TODO
+ * >>> crash reports
+ * >>> analytics
+ * >>> firestore export backups
  *
- * backups
- * security restrictions
  * add createdAt/modifiedAt to each model
- * remove dimmer
+ *
+ * >>> security restrictions
+ *
+ * if userId is different (already shared) you can't share it again
+ *
+ * INSERT profiles if auth
+ * READ profiles if auth and same userId
+ * NO UPDATE/DELETE profiles
+ *
+ * INSERT users if auth
+ * READ users if auth and same userId
+ * UPDATE/DELETE users.profiles if auth and same or different userId
+ * NO UPDATE/DELETE users
  *
  */
 public class FirestoreRepositoryImpl implements FirestoreRepository {

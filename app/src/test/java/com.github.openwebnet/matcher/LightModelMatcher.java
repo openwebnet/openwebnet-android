@@ -29,7 +29,6 @@ public class LightModelMatcher extends ArgumentMatcher<LightModel> {
             actual.getLightingType().equals(expected.getLightingType()) &&
             actual.getEnvironmentId().equals(expected.getEnvironmentId()) &&
             actual.getGatewayUuid().equals(expected.getGatewayUuid()) &&
-            (actual.isDimmer() == expected.isDimmer()) &&
             (actual.isFavourite() == expected.isFavourite());
     }
 
@@ -42,7 +41,7 @@ public class LightModelMatcher extends ArgumentMatcher<LightModel> {
         Joiner joiner = Joiner.on("; ").skipNulls();
         return joiner.join(light.getName(), light.getWhere(),
             light.getEnvironmentId(), light.getGatewayUuid(),
-            light.isDimmer(), light.isFavourite());
+            light.isFavourite());
     }
 
     public static LightModel lightModelEq(LightModel expected) {
