@@ -29,4 +29,6 @@ public interface FirebaseService {
 
     Observable<Void> softDeleteProfile(DocumentReference profileRef);
 
+    Observable<Void> resetLocalProfile();
+
 }

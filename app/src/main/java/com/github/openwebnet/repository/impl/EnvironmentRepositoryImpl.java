@@ -73,6 +73,7 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
         return Observable.create(subscriber -> {
             try {
                 databaseRealm.update(environment);
+                subscriber.onNext(null);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-UPDATE", e);
@@ -126,11 +127,19 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
                 databaseRealm.delete(SoundModel.class, DomoticModel.FIELD_ENVIRONMENT_ID, id);
 
                 databaseRealm.delete(EnvironmentModel.class, EnvironmentModel.FIELD_ID, id);
+                subscriber.onNext(null);
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-DELETE", e);
                 subscriber.onError(e);
             }
         });
+    }
+
+    @Override
+    public Observable<Void> deleteAll() {
+        return findAll()
+            .flatMap(environmentModels -> Observable.from(environmentModels)
+                .flatMap(environmentModel -> delete(environmentModel.getId())));
     }
 }

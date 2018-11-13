@@ -12,7 +12,9 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.view.NavigationViewClickListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,18 +67,13 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile_create:
-                log.info("onOptionsItemSelected: create");
                 createProfile();
                 return true;
             case R.id.action_profile_reset:
-                log.info("onOptionsItemSelected: reset");
+                resetProfile();
                 return true;
             case R.id.action_profile_logout:
-                log.info("onOptionsItemSelected: logout");
-                firebaseService.signOut(this, () -> {
-                    log.info("terminating ProfileActivity after logout");
-                    finish();
-                });
+                logoutProfile();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -92,6 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
     // TODO toggle loader
     private void refreshProfiles() {
         firebaseService.getUserProfiles()
+            // TODO message
             .doOnError(error -> showError(error, "refreshProfiles failed"))
             .subscribe(results -> {
                 log.info("refreshProfiles: size={}", results.size());
@@ -111,6 +109,27 @@ public class ProfileActivity extends AppCompatActivity {
                 log.info("createProfile succeeded: profileId={}", profileId);
                 refreshProfiles();
             });
+    }
+
+    // TODO dialog
+    private void resetProfile() {
+        firebaseService.resetLocalProfile()
+            // TODO message
+            .doOnError(error -> showError(error, "resetProfile failed"))
+            .subscribe(profileId -> {
+                log.info("terminating ProfileActivity after reset");
+                // TODO finish and test if empty already doesn't exit
+                EventBus.getDefault().post(new NavigationViewClickListener.OnReloadDrawerEvent());
+                finish();
+            });
+    }
+
+    // TODO hide
+    private void logoutProfile() {
+        firebaseService.signOut(this, () -> {
+            log.info("terminating ProfileActivity after logout");
+            finish();
+        });
     }
 
     // TODO string id

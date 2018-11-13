@@ -23,4 +23,6 @@ public interface FirestoreRepository {
 
     Observable<Void> shareProfile(String email);
 
+    Observable<Void> deleteLocalProfile();
+
 }

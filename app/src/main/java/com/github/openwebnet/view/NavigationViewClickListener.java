@@ -17,6 +17,7 @@ import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,15 +124,31 @@ public class NavigationViewClickListener implements OnClickListener {
 
     private void deleteEnvironment() {
         environmentService.delete(environmentId)
-            .doOnCompleted(() -> {
-                // calls onPrepareOptionsMenu(): reload menu
-                mActivity.invalidateOptionsMenu();
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                // Switch to the only environment that is always there : the "favourite" environment.
-                mActivity.getSupportActionBar().setTitle(R.string.app_name);
-                EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
-                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
-            })
+            .doOnCompleted(this::reloadDrawer)
             .subscribe(aVoid -> {}, throwable -> log.error("deleteEnvironment", throwable));
+    }
+
+    private void reloadDrawer() {
+        // calls onPrepareOptionsMenu(): reload menu
+        mActivity.invalidateOptionsMenu();
+        mDrawerLayout.openDrawer(GravityCompat.START);
+        // Switch to the only environment that is always there : the "favourite" environment.
+        mActivity.getSupportActionBar().setTitle(R.string.app_name);
+        EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
+        EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
+    }
+
+    /**
+     *
+     */
+    public static class OnReloadDrawerEvent {
+
+        public OnReloadDrawerEvent() {}
+    }
+
+    // fired from ProfileActivity.resetProfile
+    @Subscribe
+    public void onEvent(OnReloadDrawerEvent event) {
+        reloadDrawer();
     }
 }

@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.firebase.ui.auth.AuthUI;
+import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserModel;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.FirestoreRepository;
+import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.service.UtilityService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,6 +31,12 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     @Inject
     FirestoreRepository firestoreRepository;
+
+    @Inject
+    EnvironmentService environmentService;
+
+    @Inject
+    UtilityService utilityService;
 
     public FirebaseServiceImpl() {
         Injector.getApplicationComponent().inject(this);
@@ -76,6 +85,14 @@ public class FirebaseServiceImpl implements FirebaseService {
     @Override
     public Observable<Void> softDeleteProfile(DocumentReference profileRef) {
         return firestoreRepository.softDeleteProfile(getUser().getUserId(), profileRef);
+    }
+
+    @Override
+    public Observable<Void> resetLocalProfile() {
+        return firestoreRepository.deleteLocalProfile()
+            .flatMap(aVoid -> environmentService
+                .add("hello")
+                .map(environmentId -> aVoid));
     }
 
     private FirebaseUser getCurrentUser() {

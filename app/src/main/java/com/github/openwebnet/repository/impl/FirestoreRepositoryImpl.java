@@ -217,6 +217,13 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         });
     }
 
+    private boolean documentHasProfiles(DocumentSnapshot document) {
+        return document != null &&
+            document.exists() &&
+            document.getData() != null &&
+            document.getData().containsKey(COLLECTION_USER_PROFILES);
+    }
+
     @Override
     public Observable<List<UserProfileModel>> getUserProfiles(String userId) {
         return Observable.create(subscriber -> {
@@ -228,10 +235,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (document != null &&
-                                document.exists() &&
-                                document.getData() != null &&
-                                document.getData().containsKey(COLLECTION_USER_PROFILES)) {
+                            if (documentHasProfiles(document)) {
 
                                 List<UserProfileModel> userProfileModels =
                                     Stream.of((List<Map<String, Object>>) document.getData().get(COLLECTION_USER_PROFILES))
@@ -313,6 +317,12 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 subscriber.onError(e);
             }
         });
+    }
+
+    @Override
+    public Observable<Void> deleteLocalProfile() {
+        return environmentRepository.deleteAll()
+            .flatMap(aVoid -> gatewayRepository.deleteAll());
     }
 
 }

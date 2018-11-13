@@ -33,7 +33,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
                 subscriber.onNext(databaseRealm.add(model).getUuid());
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("ADD", e);
+                log.error("common-ADD", e);
                 subscriber.onError(e);
             }
         });
@@ -44,9 +44,10 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
         return Observable.create(subscriber -> {
             try {
                 databaseRealm.update(model);
+                subscriber.onNext(null);
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("UPDATE", e);
+                log.error("common-UPDATE", e);
                 subscriber.onError(e);
             }
         });
@@ -57,9 +58,24 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
         return Observable.create(subscriber -> {
             try {
                 databaseRealm.delete(getRealmModelClass(), RealmModel.FIELD_UUID, uuid);
+                subscriber.onNext(null);
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("DELETE", e);
+                log.error("common-DELETE", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<Void> deleteAll() {
+        return Observable.create(subscriber -> {
+            try {
+                databaseRealm.deleteAll(getRealmModelClass());
+                subscriber.onNext(null);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("common-DELETE_ALL", e);
                 subscriber.onError(e);
             }
         });
@@ -74,7 +90,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
                 subscriber.onNext(models.get(0));
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("FIND_BY_ID", e);
+                log.error("common-FIND_BY_ID", e);
                 subscriber.onError(e);
             }
         });
@@ -87,7 +103,7 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
                 subscriber.onNext(databaseRealm.find(getRealmModelClass()));
                 subscriber.onCompleted();
             } catch (Exception e) {
-                log.error("FIND_ALL", e);
+                log.error("common-FIND_ALL", e);
                 subscriber.onError(e);
             }
         });

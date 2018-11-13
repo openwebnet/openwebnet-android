@@ -69,6 +69,14 @@ public class DatabaseRealm {
         realm.commitTransaction();
     }
 
+    public <T extends RealmObject> void deleteAll(Class<T> clazz) {
+        Realm realm = getRealmInstance();
+        RealmResults<T> models = realm.where(clazz).findAll();
+        realm.beginTransaction();
+        models.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
     private <T extends RealmObject> RealmQuery<T> query(Class<T> clazz) {
         return getRealmInstance().where(clazz);
     }
