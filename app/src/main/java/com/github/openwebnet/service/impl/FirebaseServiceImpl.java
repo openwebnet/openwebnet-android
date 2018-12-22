@@ -90,8 +90,10 @@ public class FirebaseServiceImpl implements FirebaseService {
     @Override
     public Observable<Void> resetLocalProfile() {
         return firestoreRepository.deleteLocalProfile()
+            // remove duplicate
+            .last()
             .flatMap(aVoid -> environmentService
-                .add("hello")
+                .add(utilityService.getString(R.string.drawer_menu_example))
                 .map(environmentId -> aVoid));
     }
 

@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
     static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
     static final int REQUEST_CODE_SIGN_IN = 101;
+    static final int REQUEST_CODE_PROFILE = 102;
+    public static final int RESULT_CODE_PROFILE_RESET = 1001;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -284,10 +286,18 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK && firebaseService.isAuthenticated()) {
                 log.debug("onActivityResult: firebase login succeeded");
                 initDrawerHeader();
-                startActivity(new Intent(getBaseContext(), ProfileActivity.class));
+                startActivityForResult(
+                    new Intent(getBaseContext(), ProfileActivity.class),
+                    REQUEST_CODE_PROFILE);
             } else {
                 log.error("onActivityResult: firebase login failed");
                 showSnackbar(errorAuthentication);
+            }
+        }
+
+        if (requestCode == REQUEST_CODE_PROFILE) {
+            if (resultCode == RESULT_CODE_PROFILE_RESET) {
+                EventBus.getDefault().post(new NavigationViewClickListener.OnReloadDrawerEvent());
             }
         }
     }

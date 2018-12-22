@@ -14,7 +14,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.UtilityService;
-import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
+import com.github.openwebnet.view.device.DeviceListFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,6 +56,10 @@ public class NavigationViewClickListener implements OnClickListener {
 
         mActivity = activity;
         this.environmentId = environmentId;
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -132,9 +136,9 @@ public class NavigationViewClickListener implements OnClickListener {
         // calls onPrepareOptionsMenu(): reload menu
         mActivity.invalidateOptionsMenu();
         mDrawerLayout.openDrawer(GravityCompat.START);
-        // Switch to the only environment that is always there : the "favourite" environment.
+        // switch to the only environment that is always there: "favourite"
         mActivity.getSupportActionBar().setTitle(R.string.app_name);
-        EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
+        EventBus.getDefault().post(new DeviceListFragment.UpdateDeviceListEvent(MENU_FAVOURITE));
         EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
     }
 
@@ -149,6 +153,7 @@ public class NavigationViewClickListener implements OnClickListener {
     // fired from ProfileActivity.resetProfile
     @Subscribe
     public void onEvent(OnReloadDrawerEvent event) {
+        // TODO bug: fab is always visible in favourite
         reloadDrawer();
     }
 }

@@ -36,6 +36,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.github.openwebnet.view.MainActivity.REQUEST_CODE_PROFILE;
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -182,7 +183,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
     private void showProfile() {
         if (firebaseService.isAuthenticated()) {
             log.debug("showProfile: valid profile");
-            mActivity.startActivity(new Intent(mActivity, ProfileActivity.class));
+            mActivity.startActivityForResult(
+                new Intent(mActivity, ProfileActivity.class),
+                REQUEST_CODE_PROFILE);
         } else {
             log.info("showProfile: init login");
             mActivity.startActivityForResult(

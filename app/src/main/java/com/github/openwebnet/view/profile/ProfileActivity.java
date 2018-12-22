@@ -12,9 +12,8 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
-import com.github.openwebnet.view.NavigationViewClickListener;
+import com.github.openwebnet.view.MainActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,8 +117,8 @@ public class ProfileActivity extends AppCompatActivity {
             .doOnError(error -> showError(error, "resetProfile failed"))
             .subscribe(profileId -> {
                 log.info("terminating ProfileActivity after reset");
-                // TODO finish and test if empty already doesn't exit
-                EventBus.getDefault().post(new NavigationViewClickListener.OnReloadDrawerEvent());
+                // TODO show snackbar success
+                setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
                 finish();
             });
     }
