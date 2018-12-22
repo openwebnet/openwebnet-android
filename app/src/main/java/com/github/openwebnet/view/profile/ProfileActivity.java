@@ -14,6 +14,8 @@ import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.view.MainActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,11 +57,21 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-
-        // TODO check internet connection
         refreshProfiles();
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -85,6 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
+    // TODO check internet connection
     // TODO toggle loader
     private void refreshProfiles() {
         firebaseService.getUserProfiles()
@@ -135,5 +148,18 @@ public class ProfileActivity extends AppCompatActivity {
     private void showError(Throwable error, String message) {
         log.error("showError: {}", message, error);
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    /**
+     *
+     */
+    public static class OnRefreshProfilesEvent {
+
+        public OnRefreshProfilesEvent() {}
+    }
+
+    @Subscribe
+    public void onEvent(OnRefreshProfilesEvent event) {
+        refreshProfiles();
     }
 }

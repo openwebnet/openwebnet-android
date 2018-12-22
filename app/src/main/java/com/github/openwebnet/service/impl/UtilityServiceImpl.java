@@ -13,18 +13,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 
 public class UtilityServiceImpl implements UtilityService {
 
     private static final Logger log = LoggerFactory.getLogger(UtilityService.class);
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Inject
     Context mContext;
 
+    private SimpleDateFormat dateFormat;
+
     public UtilityServiceImpl() {
         Injector.getApplicationComponent().inject(this);
+        this.dateFormat = new SimpleDateFormat(DATE_FORMAT);
     }
 
     @Override
@@ -63,6 +69,11 @@ public class UtilityServiceImpl implements UtilityService {
     public <T extends TextView> String sanitizedText(T view) {
         Preconditions.checkNotNull(view, "text is null");
         return view.getText().toString().trim().replaceAll("\\s+", " ");
+    }
+
+    @Override
+    public String formatDate(Date date) {
+        return dateFormat.format(date);
     }
 
 }

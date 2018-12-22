@@ -12,7 +12,9 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.service.UtilityService;
 
+import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
 
     @Inject
     FirebaseService firebaseService;
+
+    @Inject
+    UtilityService utilityService;
 
     private List<UserProfileModel> mProfiles;
 
@@ -74,12 +79,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
             .inflate(R.layout.profile_item, viewGroup, false));
     }
 
+    // TODO
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder profileViewHolder, int i) {
-        // TODO
-        profileViewHolder.textViewProfileName.setText(mProfiles.get(i).getName());
-        // TODO format mProfiles.get(i).getCreatedAt()
-        profileViewHolder.textViewProfileDate.setText("TODO date");
+
+        profileViewHolder.textViewProfileName.setText(
+            mProfiles.get(i).getName());
+
+        profileViewHolder.textViewProfileDate.setText(
+            utilityService.formatDate(mProfiles.get(i).getCreatedAt()));
 
         profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v ->
             log.info("TODO onClick: imageButtonProfileSwitch")
@@ -90,8 +98,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         profileViewHolder.imageButtonProfileDelete.setOnClickListener(v -> {
             log.info("TODO onClick: imageButtonProfileDelete");
             // TODO show dialog
-            // TODO fire event to refresh
-            firebaseService.softDeleteProfile(mProfiles.get(i).getProfileRef()).subscribe();
+            firebaseService
+                .softDeleteProfile(mProfiles.get(i).getProfileRef())
+                .subscribe(aVoid -> EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent()));
         });
     }
 
