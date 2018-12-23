@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class UserProfileModel implements FirestoreModel {
+public class UserProfileModel implements FirestoreModel<UserProfileModel> {
 
     private static final String FIELD_PROFILE_REF = "profileRef";
     private static final String FIELD_PROFILE_USER_ID = "userId";
@@ -79,6 +79,11 @@ public class UserProfileModel implements FirestoreModel {
         map.put(FIELD_PROFILE_NAME, getName());
         map.put(FIELD_PROFILE_CREATED_AT, getCreatedAt());
         return map;
+    }
+
+    @Override
+    public UserProfileModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     public DocumentReference getProfileRef() {

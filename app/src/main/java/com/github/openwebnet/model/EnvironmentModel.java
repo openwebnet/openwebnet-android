@@ -9,7 +9,10 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class EnvironmentModel extends RealmObject implements FirestoreModel {
+import static com.google.common.base.Preconditions.checkNotNull;
+
+public class EnvironmentModel extends RealmObject
+        implements FirestoreModel<EnvironmentModel> {
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
@@ -27,6 +30,17 @@ public class EnvironmentModel extends RealmObject implements FirestoreModel {
         map.put(FIELD_ID, getId());
         map.put(FIELD_NAME, getName());
         return map;
+    }
+
+    @Override
+    public EnvironmentModel fromMap(Map<String, Object> map) {
+        checkNotNull(map.get(FIELD_ID), "id is null");
+        checkNotNull(map.get(FIELD_NAME), "name is null");
+
+        EnvironmentModel model = new EnvironmentModel();
+        model.setId((Integer) map.get(FIELD_ID));
+        model.setName((String) map.get(FIELD_NAME));
+        return model;
     }
 
     public Integer getId() {

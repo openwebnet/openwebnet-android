@@ -15,7 +15,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DeviceModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
+public class DeviceModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<DeviceModel> {
 
     public static final String FIELD_REQUEST = "request";
     public static final String FIELD_RESPONSE = "response";
@@ -93,6 +94,18 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
             this.uuid = uuid;
         }
 
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = (Integer) map.get(FIELD_ENVIRONMENT_ID);
+            this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
+            this.name = (String) map.get(FIELD_NAME);
+            this.request = (String) map.get(FIELD_REQUEST);
+            this.response = (String) map.get(FIELD_RESPONSE);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
+            this.runOnLoad = (Boolean) map.get(FIELD_RUN_ON_LOAD);
+            this.showConfirmation = (Boolean) map.get(FIELD_SHOW_CONFIRMATION);
+        }
+
         public Builder environment(Integer environmentId) {
             this.environmentId = environmentId;
             return this;
@@ -165,6 +178,11 @@ public class DeviceModel extends RealmObject implements RealmModel, DomoticModel
         map.put(FIELD_RUN_ON_LOAD, isRunOnLoad());
         map.put(FIELD_SHOW_CONFIRMATION, isShowConfirmation());
         return map;
+    }
+
+    @Override
+    public DeviceModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override

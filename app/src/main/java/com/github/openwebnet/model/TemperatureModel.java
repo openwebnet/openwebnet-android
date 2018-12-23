@@ -13,7 +13,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class TemperatureModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
+public class TemperatureModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<TemperatureModel> {
 
     @Required
     @PrimaryKey
@@ -58,6 +59,15 @@ public class TemperatureModel extends RealmObject implements RealmModel, Domotic
 
         public Builder(String uuid) {
             this.uuid = uuid;
+        }
+
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = (Integer) map.get(FIELD_ENVIRONMENT_ID);
+            this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
+            this.name = (String) map.get(FIELD_NAME);
+            this.where = (String) map.get(FIELD_WHERE);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
         }
 
         public Builder environment(Integer environmentId) {
@@ -113,6 +123,11 @@ public class TemperatureModel extends RealmObject implements RealmModel, Domotic
         map.put(FIELD_WHERE, getWhere());
         map.put(FIELD_FAVOURITE, isFavourite());
         return map;
+    }
+
+    @Override
+    public TemperatureModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override

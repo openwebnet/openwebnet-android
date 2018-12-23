@@ -17,7 +17,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class IpcamModel extends RealmObject implements RealmModel, DomoticModel, FirestoreModel {
+public class IpcamModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<IpcamModel> {
 
     public static final String FIELD_URL = "url";
     public static final String FIELD_STREAM_TYPE = "type";
@@ -117,6 +118,17 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel,
             this.uuid = uuid;
         }
 
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = (Integer) map.get(FIELD_ENVIRONMENT_ID);
+            this.name = (String) map.get(FIELD_NAME);
+            this.url = (String) map.get(FIELD_URL);
+            this.type =(String) map.get(FIELD_STREAM_TYPE);
+            this.username = (String) map.get(FIELD_USERNAME);
+            this.password = (String) map.get(FIELD_PASSWORD);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
+        }
+
         public Builder environment(Integer environmentId) {
             this.environmentId = environmentId;
             return this;
@@ -182,6 +194,11 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel,
         map.put(FIELD_PASSWORD, getPassword());
         map.put(FIELD_FAVOURITE, isFavourite());
         return map;
+    }
+
+    @Override
+    public IpcamModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override

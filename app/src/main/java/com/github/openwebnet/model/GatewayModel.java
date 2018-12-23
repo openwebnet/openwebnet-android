@@ -13,7 +13,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GatewayModel extends RealmObject implements RealmModel, FirestoreModel {
+public class GatewayModel extends RealmObject
+        implements RealmModel, FirestoreModel<GatewayModel> {
 
     public static final String FIELD_HOST = "host";
     public static final String FIELD_PORT = "port";
@@ -51,6 +52,21 @@ public class GatewayModel extends RealmObject implements RealmModel, FirestoreMo
         map.put(FIELD_PORT, getPort());
         map.put(FIELD_PASSWORD, getPassword());
         return map;
+    }
+
+    @Override
+    public GatewayModel fromMap(Map<String, Object> map) {
+        checkNotNull(map.get(FIELD_UUID), "uuid is null");
+        checkNotNull(map.get(FIELD_HOST), "host is null");
+        checkNotNull(map.get(FIELD_PORT), "port is null");
+        checkNotNull(map.get(FIELD_PASSWORD), "password is null");
+
+        GatewayModel gateway = new GatewayModel();
+        gateway.setUuid((String) map.get(FIELD_UUID));
+        gateway.setHost((String) map.get(FIELD_HOST));
+        gateway.setPort((Integer) map.get(FIELD_PORT));
+        gateway.setPassword((String) map.get(FIELD_PASSWORD));
+        return gateway;
     }
 
     @Override
