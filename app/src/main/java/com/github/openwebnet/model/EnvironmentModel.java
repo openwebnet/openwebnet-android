@@ -38,7 +38,7 @@ public class EnvironmentModel extends RealmObject
         checkNotNull(map.get(FIELD_NAME), "name is null");
 
         EnvironmentModel model = new EnvironmentModel();
-        model.setId((Integer) map.get(FIELD_ID));
+        model.setId(((Long) map.get(FIELD_ID)).intValue());
         model.setName((String) map.get(FIELD_NAME));
         return model;
     }

@@ -59,12 +59,11 @@ public class GatewayModel extends RealmObject
         checkNotNull(map.get(FIELD_UUID), "uuid is null");
         checkNotNull(map.get(FIELD_HOST), "host is null");
         checkNotNull(map.get(FIELD_PORT), "port is null");
-        checkNotNull(map.get(FIELD_PASSWORD), "password is null");
 
         GatewayModel gateway = new GatewayModel();
         gateway.setUuid((String) map.get(FIELD_UUID));
         gateway.setHost((String) map.get(FIELD_HOST));
-        gateway.setPort((Integer) map.get(FIELD_PORT));
+        gateway.setPort(((Long) map.get(FIELD_PORT)).intValue());
         gateway.setPassword((String) map.get(FIELD_PASSWORD));
         return gateway;
     }

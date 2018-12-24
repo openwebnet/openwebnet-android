@@ -70,7 +70,7 @@ public class ScenarioModel extends RealmObject
 
         public Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
-            this.environmentId = (Integer) map.get(FIELD_ENVIRONMENT_ID);
+            this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
             this.name = (String) map.get(FIELD_NAME);
             this.where = (String) map.get(FIELD_WHERE);
