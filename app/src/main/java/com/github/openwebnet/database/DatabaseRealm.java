@@ -40,9 +40,17 @@ public class DatabaseRealm {
     public <T extends RealmObject> T add(T model) {
         Realm realm = getRealmInstance();
         realm.beginTransaction();
-        realm.copyToRealm(model);
+        T result = realm.copyToRealm(model);
         realm.commitTransaction();
-        return model;
+        return result;
+    }
+
+    public <T extends RealmObject> List<T> addAll(Iterable<T> models) {
+        Realm realm = getRealmInstance();
+        realm.beginTransaction();
+        List<T> result = realm.copyToRealm(models);
+        realm.commitTransaction();
+        return result;
     }
 
     public <T extends RealmObject> T update(T model) {

@@ -58,6 +58,12 @@ import rx.Observable;
  *
  * >>> security restrictions
  *
+ * >>> remove firebase cache and show error message
+ *
+ * max 10 profiles
+ *
+ * share using functions
+ *
  * TODO add disclaimer / privacy
  *
  * if userId is different (already shared) you can't share it again
@@ -117,7 +123,10 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private FirebaseFirestore getDb() {
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+            // warning
             .setTimestampsInSnapshotsEnabled(true)
+            // no cache
+            //.setPersistenceEnabled(false)
             .build();
         firestore.setFirestoreSettings(settings);
         return firestore;
@@ -141,7 +150,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                         subscriber.onError(e);
                     });
             } catch (Exception e) {
-                log.error("Firestore#updateUser", e);
+                log.error("FirestoreRepository#updateUser", e);
                 subscriber.onError(e);
             }
         });
@@ -211,7 +220,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                         subscriber.onError(e);
                     });
             } catch (Exception e) {
-                log.error("Firestore#addProfile", e);
+                log.error("FirestoreRepository#addProfile", e);
                 subscriber.onError(e);
             }
         });
@@ -257,7 +266,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                         }
                     });
             } catch (Exception e) {
-                log.error("Firestore#getUserProfiles", e);
+                log.error("FirestoreRepository#getUserProfiles", e);
                 subscriber.onError(e);
             }
         });
@@ -265,7 +274,59 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     @Override
     public Observable<ProfileModel> getProfile(DocumentReference profileRef) {
-        return null;
+        return Observable.create(subscriber -> {
+            try {
+                getDb()
+                    .collection(COLLECTION_PROFILES)
+                    .document(profileRef.getId())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        log.info("profile model retrieved with success");
+                        ProfileModel profileModel = documentSnapshot.toObject(ProfileModel.class);
+                        subscriber.onNext(profileModel);
+                        subscriber.onCompleted();
+                    })
+                    .addOnFailureListener(e -> {
+                        log.error("failed to retrieve profile model", e);
+                        subscriber.onError(e);
+                    });
+
+            } catch (Exception e) {
+                log.error("FirestoreRepository#getProfile", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Integer>> applyProfile(ProfileModel profile) {
+
+        List<Observable<?>> addAll = Lists.newArrayList(
+            automationRepository.addAll(Stream.of(profile.getAutomations())
+                .map(automationMap -> new AutomationModel.Builder(automationMap).build()).toList()),
+            deviceRepository.addAll(Stream.of(profile.getDevices())
+                .map(deviceMap -> new DeviceModel.Builder(deviceMap).build()).toList()),
+            energyRepository.addAll(Stream.of(profile.getEnergies())
+                .map(energyMap -> new EnergyModel.Builder(energyMap).build()).toList()),
+            environmentRepository.addAll(Stream.of(profile.getEnvironments())
+                .map(environmentMap -> new EnvironmentModel().fromMap(environmentMap)).toList()),
+            gatewayRepository.addAll(Stream.of(profile.getGateways())
+                .map(gatewayMap -> new GatewayModel().fromMap(gatewayMap)).toList()),
+            ipcamRepository.addAll(Stream.of(profile.getIpcams())
+                .map(ipcamMap -> new IpcamModel.Builder(ipcamMap).build()).toList()),
+            lightRepository.addAll(Stream.of(profile.getLights())
+                .map(lightMap -> new LightModel.Builder(lightMap).build()).toList()),
+            scenarioRepository.addAll(Stream.of(profile.getScenarios())
+                .map(scenarioMap -> new ScenarioModel.Builder(scenarioMap).build()).toList()),
+            soundRepository.addAll(Stream.of(profile.getSounds())
+                .map(soundMap -> new SoundModel.Builder(soundMap).build()).toList()),
+            temperatureRepository.addAll(Stream.of(profile.getTemperatures())
+                .map(temperatureMap -> new TemperatureModel.Builder(temperatureMap).build()).toList())
+        );
+
+        // count of each model
+        return Observable.zip(addAll, results -> Stream.of(results)
+            .map(object -> ((List<?>) object).size()).toList());
     }
 
     @Override
@@ -313,7 +374,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                         subscriber.onError(e);
                     });
             } catch (Exception e) {
-                log.error("Firestore#updateUserProfile", e);
+                log.error("FirestoreRepository#updateUserProfile", e);
                 subscriber.onError(e);
             }
         });

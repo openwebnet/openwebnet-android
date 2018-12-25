@@ -1,5 +1,6 @@
 package com.github.openwebnet.repository.impl;
 
+import com.annimon.stream.Stream;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.AutomationModel;
@@ -63,6 +64,24 @@ public class EnvironmentRepositoryImpl implements EnvironmentRepository {
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("environment-ADD", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<Integer>> addAll(List<EnvironmentModel> environments) {
+        return Observable.create(subscriber -> {
+            try {
+                List<Integer> results = Stream
+                    .of(databaseRealm.addAll(environments))
+                    .map(EnvironmentModel::getId)
+                    .toList();
+
+                subscriber.onNext(results);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("environment-ADD_ALL", e);
                 subscriber.onError(e);
             }
         });

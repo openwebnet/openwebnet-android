@@ -89,18 +89,46 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         profileViewHolder.textViewProfileDate.setText(
             utilityService.formatDate(mProfiles.get(i).getCreatedAt()));
 
-        profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v ->
-            log.info("TODO onClick: imageButtonProfileSwitch")
-        );
+        profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v -> {
+            // TODO show confirmation dialog
+            firebaseService
+                .switchProfile(mProfiles.get(i).getProfileRef())
+                .doOnError(error -> {
+                    // TODO stringId
+                    String message = "TODO profile switch error";
+                    log.error("imageButtonProfileSwitch#onClick: {}", message, error);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                })
+                .subscribe(aVoid -> {
+                    // TODO stringId
+                    String message = "TODO profile switch success";
+                    log.info("imageButtonProfileSwitch#onClick: {}", message);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                    // TODO exit + reload like reset?
+                });
+        });
+
         profileViewHolder.imageButtonProfileShare.setOnClickListener(v ->
             log.info("TODO onClick: imageButtonProfileShare")
         );
+
         profileViewHolder.imageButtonProfileDelete.setOnClickListener(v -> {
-            log.info("TODO onClick: imageButtonProfileDelete");
-            // TODO show dialog
+            // TODO show confirmation dialog
             firebaseService
                 .softDeleteProfile(mProfiles.get(i).getProfileRef())
-                .subscribe(aVoid -> EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent()));
+                .doOnError(error -> {
+                    // TODO stringId
+                    String message = "TODO profile delete error";
+                    log.error("imageButtonProfileDelete#onClick: {}", message, error);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                })
+                .subscribe(aVoid -> {
+                    // TODO stringId
+                    String message = "TODO profile delete success";
+                    log.info("imageButtonProfileDelete#onClick: {}", message);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                    EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
+                });
         });
     }
 

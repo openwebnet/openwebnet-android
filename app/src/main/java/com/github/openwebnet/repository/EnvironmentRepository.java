@@ -12,6 +12,8 @@ public interface EnvironmentRepository {
 
     Observable<Integer> add(EnvironmentModel environment);
 
+    Observable<List<Integer>> addAll(List<EnvironmentModel> environments);
+
     Observable<Void> update(EnvironmentModel environment);
 
     Observable<EnvironmentModel> findById(Integer id);

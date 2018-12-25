@@ -83,6 +83,18 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
+    public Observable<Void> switchProfile(DocumentReference profileRef) {
+
+        // TODO bug it doesn't work if environment size is 0 on delete
+        // TODO refresh navbar
+        // TODO check restore of each element and if it correctly delete old one
+        return firestoreRepository.deleteLocalProfile()
+            .flatMap(aVoid -> firestoreRepository.getProfile(profileRef))
+            .flatMap(profileModel -> firestoreRepository.applyProfile(profileModel))
+            .map(counts -> null);
+    }
+
+    @Override
     public Observable<Void> softDeleteProfile(DocumentReference profileRef) {
         return firestoreRepository.softDeleteProfile(getUser().getUserId(), profileRef);
     }

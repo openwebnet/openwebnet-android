@@ -27,6 +27,8 @@ public interface FirebaseService {
 
     Observable<List<UserProfileModel>> getUserProfiles();
 
+    Observable<Void> switchProfile(DocumentReference profileRef);
+
     Observable<Void> softDeleteProfile(DocumentReference profileRef);
 
     Observable<Void> resetLocalProfile();

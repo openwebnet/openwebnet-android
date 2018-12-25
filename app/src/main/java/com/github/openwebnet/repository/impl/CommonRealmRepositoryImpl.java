@@ -1,5 +1,6 @@
 package com.github.openwebnet.repository.impl;
 
+import com.annimon.stream.Stream;
 import com.github.openwebnet.database.DatabaseRealm;
 import com.github.openwebnet.model.RealmModel;
 import com.github.openwebnet.repository.CommonRealmRepository;
@@ -34,6 +35,24 @@ public abstract class CommonRealmRepositoryImpl<M extends RealmObject & RealmMod
                 subscriber.onCompleted();
             } catch (Exception e) {
                 log.error("common-ADD", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<List<String>> addAll(List<M> models) {
+        return Observable.create(subscriber -> {
+            try {
+                List<String> results = Stream
+                    .of(databaseRealm.addAll(models))
+                    .map(RealmModel::getUuid)
+                    .toList();
+
+                subscriber.onNext(results);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("common-ADD_ALL", e);
                 subscriber.onError(e);
             }
         });

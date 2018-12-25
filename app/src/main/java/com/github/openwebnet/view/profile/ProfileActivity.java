@@ -12,6 +12,7 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,6 +28,16 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/*
+ * - add swipe to refresh
+ * - menu item for each card
+ * - FAB create/reset/logout
+ * >>> https://github.com/leinardi/FloatingActionButtonSpeedDial
+ * https://github.com/Clans/FloatingActionButton
+ * https://github.com/futuresimple/android-floating-action-button
+ * https://github.com/makovkastar/FloatingActionButton
+ * https://github.com/wangjiegulu/RapidFloatingActionButton
+ */
 public class ProfileActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileActivity.class);
@@ -36,6 +47,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Inject
     FirebaseService firebaseService;
+
+    @Inject
+    UtilityService utilityService;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -144,9 +158,14 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    // TODO string id
     private void showError(Throwable error, String message) {
         log.error("showError: {}", message, error);
+        showSnackbar(message);
+    }
+
+    // TODO int stringId
+    // TODO toast ???
+    private void showSnackbar(String message) {
         Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
     }
 
@@ -161,5 +180,22 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnRefreshProfilesEvent event) {
         refreshProfiles();
+    }
+
+    /**
+     *
+     */
+    public static class OnShowSnackbarProfileEvent {
+
+        private final String message;
+
+        public OnShowSnackbarProfileEvent(String message) {
+            this.message = message;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(OnShowSnackbarProfileEvent event) {
+        showSnackbar(event.message);
     }
 }
