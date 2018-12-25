@@ -84,11 +84,9 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     @Override
     public Observable<Void> switchProfile(DocumentReference profileRef) {
-
-        // TODO bug it doesn't work if environment size is 0 on delete
-        // TODO refresh navbar
-        // TODO check restore of each element and if it correctly delete old one
-        return firestoreRepository.deleteLocalProfile()
+        // create default environment beforehand, otherwise if empty delete stop the flow
+        return addDefaultEnvironment()
+            .flatMap(aVoid -> firestoreRepository.deleteLocalProfile())
             .flatMap(aVoid -> firestoreRepository.getProfile(profileRef))
             .flatMap(profileModel -> firestoreRepository.applyProfile(profileModel))
             .map(counts -> null);
@@ -102,11 +100,9 @@ public class FirebaseServiceImpl implements FirebaseService {
     @Override
     public Observable<Void> resetLocalProfile() {
         return firestoreRepository.deleteLocalProfile()
-            // remove duplicate
+            // make sure add only one environment
             .last()
-            .flatMap(aVoid -> environmentService
-                .add(utilityService.getString(R.string.drawer_menu_example))
-                .map(environmentId -> aVoid));
+            .flatMap(aVoid -> addDefaultEnvironment());
     }
 
     private FirebaseUser getCurrentUser() {
@@ -115,6 +111,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     private UserModel getUser() {
         checkArgument(isAuthenticated(), "user not authenticated");
+
         FirebaseUser firebaseUser = getCurrentUser();
         Date createdAtDate = firebaseUser.getMetadata() != null ?
             new Date(firebaseUser.getMetadata().getCreationTimestamp()) : new Date();
@@ -127,6 +124,12 @@ public class FirebaseServiceImpl implements FirebaseService {
             .photoUrl(firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString())
             .createdAt(createdAtDate)
             .build();
+    }
+
+    private Observable<Void> addDefaultEnvironment() {
+        return environmentService
+            .add(utilityService.getString(R.string.drawer_menu_example))
+            .map(id -> null);
     }
 
 }

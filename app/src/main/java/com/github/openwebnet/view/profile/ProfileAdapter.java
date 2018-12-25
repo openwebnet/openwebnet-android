@@ -89,6 +89,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         profileViewHolder.textViewProfileDate.setText(
             utilityService.formatDate(mProfiles.get(i).getCreatedAt()));
 
+        // TODO check restore of each element and if it correctly delete old one
+        // TODO refresh navbar
         profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v -> {
             // TODO show confirmation dialog
             firebaseService
