@@ -39,7 +39,7 @@
     <string name="dialog_edit_environment_title">Edit environment</string>
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Confirmation request</string>
-    <string name="dialog_device_confirmation_message">Are you sure?</string>
+    <string name="dialog_device_confirmation_message">\nAre you sure?</string>
     <string name="dialog_donation_title">Donation</string>
     <string name="dialog_donation_tax">Donations are tax excluded and may vary from one country to another</string>
 

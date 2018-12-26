@@ -34,7 +34,7 @@
     <string name="dialog_edit_environment_title">Umgebung bearbeiten</string>
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Bestätigung</string>
-    <string name="dialog_device_confirmation_message">Sind Sie sicher?</string>
+    <string name="dialog_device_confirmation_message">\nSind Sie sicher?</string>
     <string name="dialog_donation_title">Spenden</string>
     <string name="dialog_donation_tax">Spenden sind steuerfrei und können von Land zu Land unterschiedlich sein.</string>
 

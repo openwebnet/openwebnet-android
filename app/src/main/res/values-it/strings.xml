@@ -34,7 +34,7 @@
     <string name="dialog_edit_environment_title">Modifica ambiente</string>
     <string name="dialog_environment_name">Nome</string>
     <string name="dialog_device_confirmation_title">Conferma</string>
-    <string name="dialog_device_confirmation_message">Sei sicuro?</string>
+    <string name="dialog_device_confirmation_message">\nSei sicuro?</string>
     <string name="dialog_donation_title">Donazione</string>
     <string name="dialog_donation_tax">Le donazioni sono iva esclusa e possono variare da paese a paese</string>
 
