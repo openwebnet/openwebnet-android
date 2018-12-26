@@ -16,6 +16,8 @@
     <string name="menu_edit">Modifica</string>
     <string name="menu_delete">Cancella</string>
     <string name="menu_debug">Debug</string>
+    <string name="menu_apply">Applica</string>
+    <string name="menu_share">Condividi</string>
     <string name="menu_profile_create">Crea</string>
     <string name="menu_profile_reset">Reset</string>
     <string name="menu_profile_logout">Disconneti</string>

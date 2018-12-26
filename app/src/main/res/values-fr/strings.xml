@@ -16,6 +16,8 @@
     <string name="menu_edit">Modifier</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_debug">Débogage</string>
+    <string name="menu_apply">Appliquer</string>
+    <string name="menu_share">Partager</string>
     <string name="menu_profile_create">Créer</string>
     <string name="menu_profile_reset">Réinitialiser</string>
     <string name="menu_profile_logout">Déconnexion</string>

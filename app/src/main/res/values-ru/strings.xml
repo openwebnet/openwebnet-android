@@ -16,6 +16,8 @@
     <string name="menu_edit">Изменить</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_debug">Отладка</string>
+    <string name="menu_apply">Применять</string>
+    <string name="menu_share">Поделиться</string>
     <string name="menu_profile_create">Создайте</string>
     <string name="menu_profile_reset">Сброс</string>
     <string name="menu_profile_logout">Выход</string>

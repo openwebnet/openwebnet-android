@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.openwebnet.R;
@@ -61,14 +62,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         @BindView(R.id.textViewProfileDate)
         TextView textViewProfileDate;
 
-        @BindView(R.id.imageButtonProfileSwitch)
-        ImageButton imageButtonProfileSwitch;
-
-        @BindView(R.id.imageButtonProfileShare)
-        ImageButton imageButtonProfileShare;
-
-        @BindView(R.id.imageButtonProfileDelete)
-        ImageButton imageButtonProfileDelete;
+        @BindView(R.id.imageButtonProfileCardMenu)
+        ImageButton imageButtonProfileCardMenu;
 
         public ProfileViewHolder(View view) {
             super(view);
@@ -93,51 +88,70 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         profileViewHolder.textViewProfileDate.setText(
             utilityService.formatDate(mProfiles.get(i).getCreatedAt()));
 
-        // TODO check restore of each element and if it correctly delete old one
-        // TODO refresh navbar
-        profileViewHolder.imageButtonProfileSwitch.setOnClickListener(v -> {
-            // TODO show confirmation dialog
-            firebaseService
-                .switchProfile(mProfiles.get(i).getProfileRef())
-                .doOnError(error -> {
-                    // TODO stringId
-                    String message = "TODO profile switch error";
-                    log.error("imageButtonProfileSwitch#onClick: {}", message, error);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-                })
-                .subscribe(aVoid -> {
-                    mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
-                    mActivity.finish();
-                });
-        });
-
-        profileViewHolder.imageButtonProfileShare.setOnClickListener(v ->
-            log.info("TODO onClick: imageButtonProfileShare")
-        );
-
-        profileViewHolder.imageButtonProfileDelete.setOnClickListener(v -> {
-            // TODO show confirmation dialog
-            firebaseService
-                .softDeleteProfile(mProfiles.get(i).getProfileRef())
-                .doOnError(error -> {
-                    // TODO stringId
-                    String message = "TODO profile delete error";
-                    log.error("imageButtonProfileDelete#onClick: {}", message, error);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-                })
-                .subscribe(aVoid -> {
-                    // TODO stringId
-                    String message = "TODO profile delete success";
-                    log.info("imageButtonProfileDelete#onClick: {}", message);
-                    EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-                });
-        });
+        profileViewHolder.imageButtonProfileCardMenu.setOnClickListener(v ->
+            showProfileCardMenu(v, mProfiles.get(i)));
     }
 
     @Override
     public int getItemCount() {
         return mProfiles.size();
+    }
+
+    private void showProfileCardMenu(View view, UserProfileModel profile) {
+        PopupMenu popupMenu = new PopupMenu(mActivity, view);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_profile_card, popupMenu.getMenu());
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            log.debug("PROFILE CARD MENU selected [id={}]", id);
+            switch (id) {
+                case R.id.action_card_switch: switchProfile(profile); break;
+                case R.id.action_card_share: shareProfile(profile); break;
+                case R.id.action_card_delete: deleteProfile(profile); break;
+            }
+            return true;
+        });
+    }
+
+    private void switchProfile(UserProfileModel profile) {
+        // TODO show confirmation dialog
+        // TODO check restore of each element and if it correctly delete old one
+        // TODO refresh navbar
+        firebaseService
+            .switchProfile(profile.getProfileRef())
+            .doOnError(error -> {
+                // TODO stringId
+                String message = "TODO profile switch error";
+                log.error("imageButtonProfileSwitch#onClick: {}", message, error);
+                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
+            })
+            .subscribe(aVoid -> {
+                mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
+                mActivity.finish();
+            });
+    }
+
+    private void shareProfile(UserProfileModel profile) {
+        log.info("TODO onClick: imageButtonProfileShare");
+    }
+
+    private void deleteProfile(UserProfileModel profile) {
+        // TODO show confirmation dialog
+        firebaseService
+            .softDeleteProfile(profile.getProfileRef())
+            .doOnError(error -> {
+                // TODO stringId
+                String message = "TODO profile delete error";
+                log.error("imageButtonProfileDelete#onClick: {}", message, error);
+                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
+            })
+            .subscribe(aVoid -> {
+                // TODO stringId
+                String message = "TODO profile delete success";
+                log.info("imageButtonProfileDelete#onClick: {}", message);
+                EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
+                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
+            });
     }
 
 }

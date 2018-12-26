@@ -21,6 +21,8 @@
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_debug">Debug</string>
+    <string name="menu_apply">Apply</string>
+    <string name="menu_share">Share</string>
     <string name="menu_profile_create">Create</string>
     <string name="menu_profile_reset">Reset</string>
     <string name="menu_profile_logout">Logout</string>
