@@ -40,6 +40,16 @@
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Confirmation request</string>
     <string name="dialog_device_confirmation_message">\nAre you sure?</string>
+    <string name="dialog_profile_create_title">Create profile</string>
+    <string name="dialog_profile_create_name">Name</string>
+    <string name="dialog_profile_reset_title">Reset profile</string>
+    <string name="dialog_profile_reset_message">Your current profile and all unsaved changes will be permanently deleted from the phone.\n\nAre you sure?</string>
+    <string name="dialog_profile_logout_title">Logout</string>
+    <string name="dialog_profile_logout_message">\nAre you sure?</string>
+    <string name="dialog_profile_switch_title">Apply profile</string>
+    <string name="dialog_profile_switch_message">All unsaved changes to the current profile will be deleted and overwritten.\n\nAre you sure?</string>
+    <string name="dialog_profile_delete_title">Delete profile</string>
+    <string name="dialog_profile_delete_message">You won\'t be able to access and apply this profile anymore.\n\nAre you sure?</string>
     <string name="dialog_donation_title">Donation</string>
     <string name="dialog_donation_tax">Donations are tax excluded and may vary from one country to another</string>
 

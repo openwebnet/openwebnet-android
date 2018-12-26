@@ -35,6 +35,16 @@
     <string name="dialog_environment_name">Имя</string>
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">\nВы уверены?</string>
+    <string name="dialog_profile_create_title">Создать профиль</string>
+    <string name="dialog_profile_create_name">Имя</string>
+    <string name="dialog_profile_reset_title">Сбросить профиль</string>
+    <string name="dialog_profile_reset_message">Ваш текущий профиль и все несохраненные изменения будут навсегда удалены с телефона.\n\nВы уверены?</string>
+    <string name="dialog_profile_logout_title">Выйти</string>
+    <string name="dialog_profile_logout_message">\nВы уверены?</string>
+    <string name="dialog_profile_switch_title">Применить профиль</string>
+    <string name="dialog_profile_switch_message">Все несохраненные изменения в текущем профиле будут удалены и перезаписаны.\n\nВы уверены?</string>
+    <string name="dialog_profile_delete_title">Удалить профиль</string>
+    <string name="dialog_profile_delete_message">Вы больше не сможете получить доступ и применять этот профиль.\n\nВы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
     <string name="dialog_donation_tax">Пожертвования исключены налог и может варьироваться от одной страны в другую</string>
 

@@ -105,24 +105,35 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
             int id = item.getItemId();
             log.debug("PROFILE CARD MENU selected [id={}]", id);
             switch (id) {
-                case R.id.action_card_switch: switchProfile(profile); break;
-                case R.id.action_card_share: shareProfile(profile); break;
-                case R.id.action_card_delete: deleteProfile(profile); break;
+                case R.id.action_card_switch:
+                    EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
+                        R.string.dialog_profile_switch_title,
+                        R.string.dialog_profile_switch_message,
+                        () -> switchProfile(profile)));
+                    break;
+                case R.id.action_card_share: shareProfile(profile);
+                    // TODO
+                    break;
+                case R.id.action_card_delete:
+                    EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
+                        R.string.dialog_profile_delete_title,
+                        R.string.dialog_profile_delete_message,
+                        () -> deleteProfile(profile)));
+                    break;
             }
             return true;
         });
     }
 
     private void switchProfile(UserProfileModel profile) {
-        // TODO show confirmation dialog
         // TODO check restore of each element and if it correctly delete old one
-        // TODO refresh navbar
         firebaseService
             .switchProfile(profile.getProfileRef())
             .doOnError(error -> {
                 // TODO stringId
                 String message = "TODO profile switch error";
                 log.error("imageButtonProfileSwitch#onClick: {}", message, error);
+                // TODO remove and show reload
                 EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
             })
             .subscribe(aVoid -> {
@@ -136,7 +147,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     }
 
     private void deleteProfile(UserProfileModel profile) {
-        // TODO show confirmation dialog
         firebaseService
             .softDeleteProfile(profile.getProfileRef())
             .doOnError(error -> {
@@ -150,6 +160,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
                 String message = "TODO profile delete success";
                 log.info("imageButtonProfileDelete#onClick: {}", message);
                 EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
+                // TODO remove and show reload
                 EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
             });
     }

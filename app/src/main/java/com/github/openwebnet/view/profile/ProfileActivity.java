@@ -2,6 +2,7 @@ package com.github.openwebnet.view.profile;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action0;
 
 /*
  * - add swipe to refresh
@@ -95,10 +97,16 @@ public class ProfileActivity extends AppCompatActivity {
                 createProfile();
                 return true;
             case R.id.action_profile_reset:
-                resetProfile();
+                showConfirmationDialog(
+                    R.string.dialog_profile_reset_title,
+                    R.string.dialog_profile_reset_message,
+                    this::resetProfile);
                 return true;
             case R.id.action_profile_logout:
-                logoutProfile();
+                showConfirmationDialog(
+                    R.string.dialog_profile_logout_title,
+                    R.string.dialog_profile_logout_message,
+                    this::logoutProfile);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -109,6 +117,22 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
+    }
+
+    private void showConfirmationDialog(int titleStringId, int messageStringId, Action0 actionOk) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setTitle(titleStringId)
+            .setMessage(messageStringId)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                actionOk.call();
+                dialog.dismiss();
+            });
     }
 
     // TODO check internet connection
@@ -138,14 +162,12 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO dialog
     private void resetProfile() {
         firebaseService.resetLocalProfile()
             // TODO message
             .doOnError(error -> showError(error, "resetProfile failed"))
             .subscribe(profileId -> {
                 log.info("terminating ProfileActivity after reset");
-                // TODO show snackbar success
                 setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
                 finish();
             });
@@ -200,6 +222,29 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnShowSnackbarEvent event) {
         showSnackbar(event.message);
+    }
+
+    /**
+     *
+     */
+    public static class OnShowConfirmationDialogEvent {
+
+
+        private final int titleStringId;
+        private final int messageStringId;
+        private final Action0 actionOk;
+
+        public OnShowConfirmationDialogEvent(int titleStringId, int messageStringId, Action0 actionOk) {
+            this.titleStringId = titleStringId;
+            this.messageStringId = messageStringId;
+            this.actionOk = actionOk;
+        }
+    }
+
+    // fired by ProfileAdapter
+    @Subscribe
+    public void onEvent(OnShowConfirmationDialogEvent event) {
+        showConfirmationDialog(event.titleStringId, event.messageStringId, event.actionOk);
     }
 
 }
