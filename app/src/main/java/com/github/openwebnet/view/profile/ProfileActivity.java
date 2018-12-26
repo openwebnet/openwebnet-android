@@ -6,8 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -26,6 +29,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action0;
@@ -46,6 +50,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerViewProfile)
     RecyclerView mRecyclerView;
+
+    @BindString(R.string.validation_required)
+    String labelValidationRequired;
 
     @Inject
     FirebaseService firebaseService;
@@ -94,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile_create:
-                createProfile();
+                showCreateDialog();
                 return true;
             case R.id.action_profile_reset:
                 showConfirmationDialog(
@@ -135,6 +142,30 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
+    // TODO check client side max limit of 10
+    private void showCreateDialog() {
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_create, null);
+        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileCreateName);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setView(layout)
+            .setTitle(R.string.dialog_profile_create_title)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                if (utilityService.isBlankText(editTextName)) {
+                    editTextName.setError(labelValidationRequired);
+                } else {
+                    createProfile(utilityService.sanitizedText(editTextName));
+                    dialog.dismiss();
+                }
+            });
+    }
+
     // TODO check internet connection
     // TODO toggle loader
     private void refreshProfiles() {
@@ -149,10 +180,9 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO dialog to ask name
-    private void createProfile() {
+    private void createProfile(String name) {
         firebaseService.updateUser()
-            .flatMap(aVoid -> firebaseService.addProfile("TODO"))
+            .flatMap(aVoid -> firebaseService.addProfile(name))
             // TODO message
             .doOnError(error -> showError(error, "createProfile failed"))
             .subscribe(profileId -> {

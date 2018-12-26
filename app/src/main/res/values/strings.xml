@@ -196,5 +196,4 @@
     <string name="donation_beer_description">A cold beer to increase my productivity!</string>
     <string name="donation_pizza_name">Pizza</string>
     <string name="donation_pizza_description">A pizza to make me happy!</string>
-    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
