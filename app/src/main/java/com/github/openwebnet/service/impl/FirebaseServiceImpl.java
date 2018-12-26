@@ -84,9 +84,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     @Override
     public Observable<Void> switchProfile(DocumentReference profileRef) {
-        // create default environment beforehand, otherwise if empty delete stop the flow
-        return addDefaultEnvironment()
-            .flatMap(aVoid -> firestoreRepository.deleteLocalProfile())
+        return safeDeleteLocalProfile()
             .flatMap(aVoid -> firestoreRepository.getProfile(profileRef))
             .flatMap(profileModel -> firestoreRepository.applyProfile(profileModel))
             .map(counts -> null);
@@ -99,9 +97,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     @Override
     public Observable<Void> resetLocalProfile() {
-        return firestoreRepository.deleteLocalProfile()
-            // make sure add only one environment
-            .last()
+        return safeDeleteLocalProfile()
             .flatMap(aVoid -> addDefaultEnvironment());
     }
 
@@ -130,6 +126,15 @@ public class FirebaseServiceImpl implements FirebaseService {
         return environmentService
             .add(utilityService.getString(R.string.drawer_menu_example))
             .map(id -> null);
+    }
+
+    private Observable<Void> safeDeleteLocalProfile() {
+        // make sure at least one environment exists
+        // otherwise if empty it will stop the flow
+        return addDefaultEnvironment()
+            .flatMap(aVoid -> firestoreRepository.deleteLocalProfile())
+            // make sure to consume only once
+            .last();
     }
 
 }
