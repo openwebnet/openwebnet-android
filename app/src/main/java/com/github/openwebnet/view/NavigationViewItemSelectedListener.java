@@ -27,6 +27,7 @@ import com.github.openwebnet.view.profile.ProfileActivity;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +84,10 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         ButterKnife.bind(this, activity);
 
         this.mActivity = activity;
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -94,10 +99,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         switch (id) {
             case R.id.nav_favourite:
                 checkArgument(item.getOrder() == MENU_FAVOURITE, "invalid favourite menu id");
-
-                mActivity.getSupportActionBar().setTitle(labelApplicationName);
-                floatingActionButtonMain.setVisibility(View.INVISIBLE);
-                showDeviceList(MENU_FAVOURITE);
+                showFavourite();
                 break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
@@ -146,6 +148,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             .beginTransaction()
             .replace(R.id.content_frame, fragment)
             .commit();
+    }
+
+    private void showFavourite() {
+        mActivity.getSupportActionBar().setTitle(labelApplicationName);
+        floatingActionButtonMain.setVisibility(View.INVISIBLE);
+        showDeviceList(MENU_FAVOURITE);
     }
 
     private void showDialogAddEnvironment() {
@@ -237,4 +245,19 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
     }
+
+    /**
+     *
+     */
+    public static class OnShowFavouriteEvent {
+
+        public OnShowFavouriteEvent() {}
+    }
+
+    // fired by NavigationViewClickListener.reloadDrawer
+    @Subscribe
+    public void onEvent(OnShowFavouriteEvent event) {
+        showFavourite();
+    }
+
 }

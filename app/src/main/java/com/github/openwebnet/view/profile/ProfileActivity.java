@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ProfileAdapter(profileItems);
+        mAdapter = new ProfileAdapter(this, profileItems);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -134,6 +134,7 @@ public class ProfileActivity extends AppCompatActivity {
             .subscribe(profileId -> {
                 log.info("createProfile succeeded: profileId={}", profileId);
                 refreshProfiles();
+                showSnackbar("TODO profile create success");
             });
     }
 
@@ -177,6 +178,7 @@ public class ProfileActivity extends AppCompatActivity {
         public OnRefreshProfilesEvent() {}
     }
 
+    // fired by ProfileAdapter
     @Subscribe
     public void onEvent(OnRefreshProfilesEvent event) {
         refreshProfiles();
@@ -185,17 +187,19 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      *
      */
-    public static class OnShowSnackbarProfileEvent {
+    public static class OnShowSnackbarEvent {
 
         private final String message;
 
-        public OnShowSnackbarProfileEvent(String message) {
+        public OnShowSnackbarEvent(String message) {
             this.message = message;
         }
     }
 
+    // fired by ProfileAdapter
     @Subscribe
-    public void onEvent(OnShowSnackbarProfileEvent event) {
+    public void onEvent(OnShowSnackbarEvent event) {
         showSnackbar(event.message);
     }
+
 }

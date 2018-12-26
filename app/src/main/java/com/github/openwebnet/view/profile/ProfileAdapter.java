@@ -1,5 +1,6 @@
 package com.github.openwebnet.view.profile;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
+import com.github.openwebnet.view.MainActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
@@ -38,11 +40,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     @Inject
     UtilityService utilityService;
 
+    private final Activity mActivity;
     private List<UserProfileModel> mProfiles;
 
-    public ProfileAdapter(List<UserProfileModel> profiles) {
+    public ProfileAdapter(Activity activity, List<UserProfileModel> profiles) {
         Injector.getApplicationComponent().inject(this);
 
+        mActivity = activity;
         mProfiles = profiles;
     }
 
@@ -99,14 +103,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
                     // TODO stringId
                     String message = "TODO profile switch error";
                     log.error("imageButtonProfileSwitch#onClick: {}", message, error);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
                 })
                 .subscribe(aVoid -> {
-                    // TODO stringId
-                    String message = "TODO profile switch success";
-                    log.info("imageButtonProfileSwitch#onClick: {}", message);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
-                    // TODO exit + reload like reset?
+                    mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
+                    mActivity.finish();
                 });
         });
 
@@ -122,14 +123,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
                     // TODO stringId
                     String message = "TODO profile delete error";
                     log.error("imageButtonProfileDelete#onClick: {}", message, error);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
                 })
                 .subscribe(aVoid -> {
                     // TODO stringId
                     String message = "TODO profile delete success";
                     log.info("imageButtonProfileDelete#onClick: {}", message);
-                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarProfileEvent(message));
                     EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
+                    EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
                 });
         });
     }
