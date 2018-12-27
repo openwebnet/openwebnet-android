@@ -125,8 +125,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
             // warning
             .setTimestampsInSnapshotsEnabled(true)
-            // no cache
-            //.setPersistenceEnabled(false)
+            // cache
+            .setPersistenceEnabled(false)
             .build();
         firestore.setFirestoreSettings(settings);
         return firestore;
