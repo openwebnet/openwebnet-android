@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_card_switch"
+        android:id="@+id/action_profile_card_switch"
         android:title="@string/menu_apply" />
     <item
-        android:id="@+id/action_card_share"
+        android:id="@+id/action_profile_card_share"
         android:title="@string/menu_share"
         android:visible="false"/>
     <item
-        android:id="@+id/action_card_delete"
+        android:id="@+id/action_profile_card_delete"
         android:title="@string/menu_delete" />
 
 </menu>

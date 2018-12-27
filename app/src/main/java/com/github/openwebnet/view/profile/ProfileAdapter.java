@@ -105,16 +105,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
             int id = item.getItemId();
             log.debug("PROFILE CARD MENU selected [id={}]", id);
             switch (id) {
-                case R.id.action_card_switch:
+                case R.id.action_profile_card_switch:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
                         R.string.dialog_profile_switch_title,
                         R.string.dialog_profile_switch_message,
                         () -> switchProfile(profile)));
                     break;
-                case R.id.action_card_share: shareProfile(profile);
+                case R.id.action_profile_card_share: shareProfile(profile);
                     // TODO
                     break;
-                case R.id.action_card_delete:
+                case R.id.action_profile_card_delete:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
                         R.string.dialog_profile_delete_title,
                         R.string.dialog_profile_delete_message,

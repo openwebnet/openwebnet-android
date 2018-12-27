@@ -2,6 +2,7 @@ package com.github.openwebnet.view.profile;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
+import com.google.common.collect.Lists;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,30 +28,26 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
-/*
- * - add swipe to refresh
- * - menu item for each card
- * - FAB create/reset/logout
- * >>> https://github.com/leinardi/FloatingActionButtonSpeedDial
- * https://github.com/Clans/FloatingActionButton
- * https://github.com/futuresimple/android-floating-action-button
- * https://github.com/makovkastar/FloatingActionButton
- * https://github.com/wangjiegulu/RapidFloatingActionButton
- */
 public class ProfileActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileActivity.class);
 
     @BindView(R.id.recyclerViewProfile)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.swipeRefreshLayoutProfile)
+    SwipeRefreshLayout swipeRefreshLayoutProfile;
 
     @BindString(R.string.validation_required)
     String labelValidationRequired;
@@ -63,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<UserProfileModel> profileItems = new ArrayList<>();
+    private boolean mToggleOptionsMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         mAdapter = new ProfileAdapter(this, profileItems);
         mRecyclerView.setAdapter(mAdapter);
+
+        swipeRefreshLayoutProfile.setColorSchemeResources(R.color.primary, R.color.yellow_a400, R.color.accent);
+        swipeRefreshLayoutProfile.setOnRefreshListener(this::refreshProfiles);
     }
 
     @Override
@@ -121,9 +123,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.setGroupVisible(R.id.action_profile_group, mToggleOptionsMenu);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void showConfirmationDialog(int titleStringId, int messageStringId, Action0 actionOk) {
@@ -166,21 +174,56 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO check internet connection
-    // TODO toggle loader
+    // TODO verify toggle hide
     private void refreshProfiles() {
-        firebaseService.getUserProfiles()
+        hideActions();
+
+        if (utilityService.hasInternetAccess()) {
+            firebaseService.getUserProfiles()
+                .timeout(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                // TODO message
+                .subscribe(results -> {
+                    log.info("refreshProfiles: size={}", results.size());
+                    updateProfiles(results);
+                }, error -> {
+                    swipeRefreshLayoutProfile.setRefreshing(false);
+                    showError(error, "refreshProfiles failed");
+                });
+        } else {
             // TODO message
-            .doOnError(error -> showError(error, "refreshProfiles failed"))
-            .subscribe(results -> {
-                log.info("refreshProfiles: size={}", results.size());
-                profileItems.clear();
-                profileItems.addAll(results);
-                mAdapter.notifyDataSetChanged();
-            });
+            updateProfiles(Lists.newArrayList());
+            showSnackbar("TODO Connection unavailable");
+            toggleOptionsMenu(false);
+        }
     }
 
+    private void hideActions() {
+        // hide everything
+        mRecyclerView.setVisibility(View.INVISIBLE);
+        toggleOptionsMenu(false);
+        swipeRefreshLayoutProfile.setRefreshing(true);
+    }
+
+    private void updateProfiles(List<UserProfileModel> profiles) {
+        profileItems.clear();
+        profileItems.addAll(profiles);
+        mAdapter.notifyDataSetChanged();
+        swipeRefreshLayoutProfile.setRefreshing(false);
+        toggleOptionsMenu(true);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void toggleOptionsMenu(boolean visibility) {
+        mToggleOptionsMenu = visibility;
+        invalidateOptionsMenu();
+    }
+
+    // TODO verify toggle hide
     private void createProfile(String name) {
+        hideActions();
+
         firebaseService.updateUser()
             .flatMap(aVoid -> firebaseService.addProfile(name))
             // TODO message
@@ -192,7 +235,10 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
+    // TODO verify toggle hide
     private void resetProfile() {
+        hideActions();
+
         firebaseService.resetLocalProfile()
             // TODO message
             .doOnError(error -> showError(error, "resetProfile failed"))
@@ -258,7 +304,6 @@ public class ProfileActivity extends AppCompatActivity {
      *
      */
     public static class OnShowConfirmationDialogEvent {
-
 
         private final int titleStringId;
         private final int messageStringId;

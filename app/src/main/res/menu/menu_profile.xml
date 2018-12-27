@@ -2,22 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_profile_create"
-        android:icon="@drawable/account_plus"
-        android:title="@string/menu_profile_create"
-        app:showAsAction="ifRoom|withText" />
+    <group
+        android:id="@+id/action_profile_group"
+        android:checkableBehavior="none">
 
-    <item
-        android:id="@+id/action_profile_reset"
-        android:title="@string/menu_profile_reset"
-        android:visible="true"
-        app:showAsAction="never|withText" />
+        <item
+            android:id="@+id/action_profile_create"
+            android:icon="@drawable/account_plus"
+            android:title="@string/menu_profile_create"
+            app:showAsAction="ifRoom|withText" />
 
-    <item
-        android:id="@+id/action_profile_logout"
-        android:title="@string/menu_profile_logout"
-        android:visible="true"
-        app:showAsAction="never|withText" />
+        <item
+            android:id="@+id/action_profile_reset"
+            android:title="@string/menu_profile_reset"
+            app:showAsAction="never|withText" />
+
+        <item
+            android:id="@+id/action_profile_logout"
+            android:title="@string/menu_profile_logout"
+            android:visible="true"
+            app:showAsAction="never|withText" />
+    </group>
 
 </menu>
