@@ -82,6 +82,7 @@ public class FirebaseServiceImpl implements FirebaseService {
     public Observable<Void> switchProfile(DocumentReference profileRef) {
         return safeDeleteLocalProfile()
             .flatMap(aVoid -> firestoreRepository.getProfile(profileRef))
+            .single()
             .flatMap(profileModel -> firestoreRepository.applyProfile(profileModel))
             .map(counts -> null);
     }

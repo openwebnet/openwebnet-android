@@ -100,7 +100,11 @@ public class DatabaseRealm {
     }
 
     public <T extends RealmObject> Number findMax(Class<T> clazz, String field) {
-        return query(clazz).max(field);
+        Realm realm = getRealmInstance();
+        realm.beginTransaction();
+        Number max = realm.where(clazz).max(field);
+        realm.commitTransaction();
+        return max;
     }
 
     public <T extends RealmObject> List<T> findWhere(Class<T> clazz, String field, String value) {

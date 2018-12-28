@@ -127,8 +127,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
 
     // TODO check restore of each element and if it correctly delete old one
     private void switchProfile(UserProfileModel profile) {
-        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent(
+        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent<>(
             () -> firebaseService.switchProfile(profile.getProfileRef()), aVoid -> {
+            log.info("switchProfile succeeded: terminating");
             mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
             mActivity.finish();
         }));
@@ -139,10 +140,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     }
 
     private void deleteProfile(UserProfileModel profile) {
-        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent(
-            () -> firebaseService.softDeleteProfile(profile.getProfileRef()), aVoid ->
-            EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent())
-        ));
+        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent<>(
+            () -> firebaseService.softDeleteProfile(profile.getProfileRef())
+                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+            log.info("deleteProfile succeeded: refreshing");
+            EventBus.getDefault().post(new ProfileActivity.OnUpdateProfilesEvent(profiles));
+        }));
     }
 
 }

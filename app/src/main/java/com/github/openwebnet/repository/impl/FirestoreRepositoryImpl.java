@@ -58,8 +58,6 @@ import rx.Observable;
  *
  * >>> security restrictions
  *
- * >>> remove firebase cache and show error message
- *
  * max 10 profiles
  *
  * share using functions

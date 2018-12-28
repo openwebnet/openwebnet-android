@@ -198,12 +198,13 @@ public class ProfileActivity extends AppCompatActivity {
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    // TODO event from adapter
     private <T> void requestAction(Func0<Observable<T>> observableAction, Action1<T> onSuccess) {
         hideActions();
 
         if (utilityService.hasInternetAccess()) {
             observableAction.call()
+                // better UX
+                .delay(1 , TimeUnit.SECONDS)
                 // max http timeout
                 .timeout(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
@@ -231,9 +232,10 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void createProfile(String name) {
-        requestAction(() -> firebaseService.addProfile(name), profileId -> {
-            log.info("createProfile succeeded: profileId={}", profileId);
-            refreshProfiles();
+        requestAction(() -> firebaseService.addProfile(name)
+                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+            log.info("createProfile succeeded: refreshing");
+            updateProfiles(profiles);
         });
     }
 
@@ -260,15 +262,19 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      *
      */
-    public static class OnRefreshProfilesEvent {
+    public static class OnUpdateProfilesEvent {
 
-        public OnRefreshProfilesEvent() {}
+        private final List<UserProfileModel> profiles;
+
+        public OnUpdateProfilesEvent(List<UserProfileModel> profiles) {
+            this.profiles = profiles;
+        }
     }
 
     // fired by ProfileAdapter
     @Subscribe
-    public void onEvent(OnRefreshProfilesEvent event) {
-        refreshProfiles();
+    public void onEvent(OnUpdateProfilesEvent event) {
+        updateProfiles(event.profiles);
     }
 
     /**
