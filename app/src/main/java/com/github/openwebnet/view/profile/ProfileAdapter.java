@@ -125,21 +125,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         });
     }
 
+    // TODO check restore of each element and if it correctly delete old one
     private void switchProfile(UserProfileModel profile) {
-        // TODO check restore of each element and if it correctly delete old one
-        firebaseService
-            .switchProfile(profile.getProfileRef())
-            .doOnError(error -> {
-                // TODO stringId
-                String message = "TODO profile switch error";
-                log.error("imageButtonProfileSwitch#onClick: {}", message, error);
-                // TODO remove and show reload
-                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-            })
-            .subscribe(aVoid -> {
-                mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
-                mActivity.finish();
-            });
+        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent(
+            () -> firebaseService.switchProfile(profile.getProfileRef()), aVoid -> {
+            mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
+            mActivity.finish();
+        }));
     }
 
     private void shareProfile(UserProfileModel profile) {
@@ -147,22 +139,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     }
 
     private void deleteProfile(UserProfileModel profile) {
-        firebaseService
-            .softDeleteProfile(profile.getProfileRef())
-            .doOnError(error -> {
-                // TODO stringId
-                String message = "TODO profile delete error";
-                log.error("imageButtonProfileDelete#onClick: {}", message, error);
-                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-            })
-            .subscribe(aVoid -> {
-                // TODO stringId
-                String message = "TODO profile delete success";
-                log.info("imageButtonProfileDelete#onClick: {}", message);
-                EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent());
-                // TODO remove and show reload
-                EventBus.getDefault().post(new ProfileActivity.OnShowSnackbarEvent(message));
-            });
+        EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent(
+            () -> firebaseService.softDeleteProfile(profile.getProfileRef()), aVoid ->
+            EventBus.getDefault().post(new ProfileActivity.OnRefreshProfilesEvent())
+        ));
     }
 
 }

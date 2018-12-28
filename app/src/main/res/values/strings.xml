@@ -55,6 +55,9 @@
 
     <string name="error_load_navigation_drawer">Error loading navigation drawer</string>
     <string name="error_authentication">Authentication failed</string>
+    <string name="error_connection">Connection unavailable</string>
+    <string name="error_timeout">Request timed out</string>
+
     <string name="validation_required">Required field</string>
     <string name="validation_host">Invalid ip address or domain</string>
     <string name="validation_port">Invalid port range</string>

@@ -35,8 +35,11 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func0;
 import rx.schedulers.Schedulers;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -61,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<UserProfileModel> profileItems = new ArrayList<>();
-    private boolean mToggleOptionsMenu = false;
+    private boolean actionBarMenuVisibility = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.setGroupVisible(R.id.action_profile_group, mToggleOptionsMenu);
+        menu.setGroupVisible(R.id.action_profile_group, actionBarMenuVisibility);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -174,35 +177,15 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO verify toggle hide
-    private void refreshProfiles() {
-        hideActions();
-
-        if (utilityService.hasInternetAccess()) {
-            firebaseService.getUserProfiles()
-                .timeout(3, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                // TODO message
-                .subscribe(results -> {
-                    log.info("refreshProfiles: size={}", results.size());
-                    updateProfiles(results);
-                }, error -> {
-                    swipeRefreshLayoutProfile.setRefreshing(false);
-                    showError(error, "refreshProfiles failed");
-                });
-        } else {
-            // TODO message
-            updateProfiles(Lists.newArrayList());
-            showSnackbar("TODO Connection unavailable");
-            toggleOptionsMenu(false);
-        }
+    private void toggleActionBarMenu(boolean visibility) {
+        actionBarMenuVisibility = visibility;
+        invalidateOptionsMenu();
     }
 
     private void hideActions() {
         // hide everything
         mRecyclerView.setVisibility(View.INVISIBLE);
-        toggleOptionsMenu(false);
+        toggleActionBarMenu(false);
         swipeRefreshLayoutProfile.setRefreshing(true);
     }
 
@@ -211,61 +194,67 @@ public class ProfileActivity extends AppCompatActivity {
         profileItems.addAll(profiles);
         mAdapter.notifyDataSetChanged();
         swipeRefreshLayoutProfile.setRefreshing(false);
-        toggleOptionsMenu(true);
+        toggleActionBarMenu(true);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    private void toggleOptionsMenu(boolean visibility) {
-        mToggleOptionsMenu = visibility;
-        invalidateOptionsMenu();
+    // TODO event from adapter
+    private <T> void requestAction(Func0<Observable<T>> observableAction, Action1<T> onSuccess) {
+        hideActions();
+
+        if (utilityService.hasInternetAccess()) {
+            observableAction.call()
+                // max http timeout
+                .timeout(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(onSuccess, error -> {
+                    swipeRefreshLayoutProfile.setRefreshing(false);
+                    log.error("requestAction: timeout", error);
+                    showSnackbar(R.string.error_timeout);
+                });
+        } else {
+            // show empty list
+            updateProfiles(Lists.newArrayList());
+            // hide
+            toggleActionBarMenu(false);
+            log.warn("requestAction: connection unavailable");
+            showSnackbar(R.string.error_connection);
+        }
     }
 
-    // TODO verify toggle hide
+    private void refreshProfiles() {
+        requestAction(() -> firebaseService.getUserProfiles(), profiles -> {
+            log.info("refreshProfiles: size={}", profiles.size());
+            updateProfiles(profiles);
+        });
+    }
+
     private void createProfile(String name) {
-        hideActions();
-
-        firebaseService.updateUser()
-            .flatMap(aVoid -> firebaseService.addProfile(name))
-            // TODO message
-            .doOnError(error -> showError(error, "createProfile failed"))
-            .subscribe(profileId -> {
-                log.info("createProfile succeeded: profileId={}", profileId);
-                refreshProfiles();
-                showSnackbar("TODO profile create success");
-            });
+        requestAction(() -> firebaseService.addProfile(name), profileId -> {
+            log.info("createProfile succeeded: profileId={}", profileId);
+            refreshProfiles();
+        });
     }
 
-    // TODO verify toggle hide
     private void resetProfile() {
-        hideActions();
-
-        firebaseService.resetLocalProfile()
-            // TODO message
-            .doOnError(error -> showError(error, "resetProfile failed"))
-            .subscribe(profileId -> {
-                log.info("terminating ProfileActivity after reset");
-                setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
-                finish();
-            });
+        requestAction(() -> firebaseService.resetLocalProfile(), profileId -> {
+            log.info("resetProfile succeeded: terminating");
+            setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
+            finish();
+        });
     }
 
     // TODO hide
     private void logoutProfile() {
         firebaseService.signOut(this, () -> {
-            log.info("terminating ProfileActivity after logout");
+            log.info("logoutProfile succeeded: terminating");
             finish();
         });
     }
 
-    private void showError(Throwable error, String message) {
-        log.error("showError: {}", message, error);
-        showSnackbar(message);
-    }
-
-    // TODO int stringId
-    // TODO toast ???
-    private void showSnackbar(String message) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();
+    private void showSnackbar(int stringId) {
+        Snackbar.make(findViewById(android.R.id.content), utilityService.getString(stringId), Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -280,24 +269,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnRefreshProfilesEvent event) {
         refreshProfiles();
-    }
-
-    /**
-     *
-     */
-    public static class OnShowSnackbarEvent {
-
-        private final String message;
-
-        public OnShowSnackbarEvent(String message) {
-            this.message = message;
-        }
-    }
-
-    // fired by ProfileAdapter
-    @Subscribe
-    public void onEvent(OnShowSnackbarEvent event) {
-        showSnackbar(event.message);
     }
 
     /**
@@ -320,6 +291,27 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnShowConfirmationDialogEvent event) {
         showConfirmationDialog(event.titleStringId, event.messageStringId, event.actionOk);
+    }
+
+    /**
+     *
+     */
+    public static class OnRequestActionEvent<T> {
+
+
+        private final Func0<Observable<T>> observableAction;
+        private final Action1<T> onSuccess;
+
+        public OnRequestActionEvent(Func0<Observable<T>> observableAction, Action1<T> onSuccess) {
+            this.observableAction = observableAction;
+            this.onSuccess = onSuccess;
+        }
+    }
+
+    // fired by ProfileAdapter
+    @Subscribe
+    public void onEvent(OnRequestActionEvent event) {
+        requestAction(event.observableAction, event.onSuccess);
     }
 
 }

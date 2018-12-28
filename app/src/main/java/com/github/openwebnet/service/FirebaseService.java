@@ -21,8 +21,6 @@ public interface FirebaseService {
 
     String getUserPhotoUrl();
 
-    Observable<Void> updateUser();
-
     Observable<String> addProfile(String name);
 
     Observable<List<UserProfileModel>> getUserProfiles();
