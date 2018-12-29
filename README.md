@@ -2,7 +2,9 @@
 
 [![Gitter chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwebnet)
 [![Build Status](https://travis-ci.org/openwebnet/openwebnet-android.svg)](https://travis-ci.org/openwebnet/openwebnet-android)
+<!--
 [![Coverage Status](https://coveralls.io/repos/github/openwebnet/openwebnet-android/badge.svg?branch=master)](https://coveralls.io/github/openwebnet/openwebnet-android?branch=master)
+-->
 
 OpenWebNet Android client for My Home [BTicino](http://www.bticino.it/domotica-casa-connessa) and [Legrand](http://www.myopen-legrandgroup.com/) home automation system
 
