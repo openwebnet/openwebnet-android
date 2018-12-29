@@ -9,7 +9,7 @@
     <string name="activity_scenario">Сценарий</string>
     <string name="activity_energy">Потребление энергии</string>
     <string name="activity_sound">Аудиосистема</string>
-    <string name="activity_profile">Профиль</string>
+    <string name="activity_profiles">Профили</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -24,7 +24,7 @@
 
     <string name="drawer_menu_favourite">Избранное</string>
     <string name="drawer_menu_add">Добавить окружение</string>
-    <string name="drawer_menu_profile">Профиль</string>
+    <string name="drawer_menu_profile">Профили</string>
     <string name="drawer_menu_settings">Настройки</string>
     <string name="drawer_menu_donation">Пожертвование</string>
     <string name="drawer_menu_changelog">Список изменений</string>
