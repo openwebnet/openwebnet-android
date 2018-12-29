@@ -45,6 +45,7 @@ import rx.schedulers.Schedulers;
 public class ProfileActivity extends AppCompatActivity {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileActivity.class);
+    private static final int MAX_PROFILE = 10;
 
     @BindView(R.id.recyclerViewProfile)
     RecyclerView mRecyclerView;
@@ -106,7 +107,15 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile_create:
-                showCreateDialog();
+                int profileSize = mRecyclerView.getAdapter().getItemCount();
+                log.info("profileSize: {}", mRecyclerView.getAdapter().getItemCount());
+
+                // client side check
+                if (profileSize < MAX_PROFILE) {
+                    showCreateDialog();
+                } else {
+                    showSnackbar(R.string.error_profile_max);
+                }
                 return true;
             case R.id.action_profile_reset:
                 showConfirmationDialog(
@@ -153,7 +162,6 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO check client side max limit of 10
     private void showCreateDialog() {
         View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_create, null);
         EditText editTextName = layout.findViewById(R.id.editTextDialogProfileCreateName);
@@ -247,7 +255,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    // TODO hide
     private void logoutProfile() {
         firebaseService.signOut(this, () -> {
             log.info("logoutProfile succeeded: terminating");

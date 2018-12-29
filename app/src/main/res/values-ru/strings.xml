@@ -52,6 +52,7 @@
     <string name="error_authentication">Ошибка аутентификации</string>
     <string name="error_connection">Соединение недоступно</string>
     <string name="error_timeout">Истекло время запроса</string>
+    <string name="error_profile_max">Превышено максимально допустимое количество профилей</string>
 
     <string name="validation_required">Обязательно поле</string>
     <string name="validation_host">Неверный адрес IP или домен</string>

@@ -52,6 +52,7 @@
     <string name="error_authentication">Autenticazione fallita</string>
     <string name="error_connection">Connessione non disponibile</string>
     <string name="error_timeout">Errore timeout</string>
+    <string name="error_profile_max">Superato il numero massimo di profili consentiti</string>
 
     <string name="validation_required">Campo obbligatorio</string>
     <string name="validation_host">Indirizzo ip o dominio non valido</string>

@@ -78,7 +78,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
             .inflate(R.layout.profile_item, viewGroup, false));
     }
 
-    // TODO
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder profileViewHolder, int i) {
 
@@ -125,7 +124,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         });
     }
 
-    // TODO check restore of each element and if it correctly delete old one
     private void switchProfile(UserProfileModel profile) {
         EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent<>(
             () -> firebaseService.switchProfile(profile.getProfileRef()), aVoid -> {

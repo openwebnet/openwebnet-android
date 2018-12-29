@@ -52,6 +52,7 @@
     <string name="error_authentication">Authentification échouée</string>
     <string name="error_connection">Connexion indisponible</string>
     <string name="error_timeout">Demande expirée</string>
+    <string name="error_profile_max">Nombre maximal de profils autorisés dépassé</string>
 
     <string name="validation_required">Champ obbligatoire</string>
     <string name="validation_host">Adresse IP ou le domaine invalide</string>

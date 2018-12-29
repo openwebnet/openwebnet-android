@@ -52,17 +52,12 @@ import rx.Observable;
  * TODO
  * >>> crash reports
  * >>> analytics
- * >>> firestore export backups
+ * >>> add createdAt/modifiedAt to each model
+ * >>> share using functions
  *
- * add createdAt/modifiedAt to each model
- *
- * >>> security restrictions
- *
- * max 10 profiles
- *
- * share using functions
- *
- * TODO add disclaimer / privacy
+ * TODO add disclaimer privacy when login first time
+ * TODO export firestore backups
+ * TODO security restrictions
  *
  * if userId is different (already shared) you can't share it again
  *
@@ -74,6 +69,8 @@ import rx.Observable;
  * READ users if auth and same userId
  * UPDATE/DELETE users.profiles if auth and same or different userId
  * NO UPDATE/DELETE users
+ *
+ * limit to 10 max profiles (created + shared with me)
  *
  */
 public class FirestoreRepositoryImpl implements FirestoreRepository {
