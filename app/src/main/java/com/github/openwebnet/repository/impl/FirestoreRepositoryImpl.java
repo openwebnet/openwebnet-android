@@ -48,32 +48,6 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-/*
- * TODO
- * >>> crash reports
- * >>> analytics
- * >>> add createdAt/modifiedAt to each model
- * >>> share using functions
- *
- * TODO add disclaimer privacy when login first time
- * TODO export firestore backups
- * TODO security restrictions
- * TODO query/test for security rules
- *
- * if userId is different (already shared) you can't share it again
- *
- * INSERT profiles if auth
- * READ profiles if auth and same userId
- * NO UPDATE/DELETE profiles
- *
- * INSERT users if auth
- * READ users if auth and same userId
- * UPDATE/DELETE users.profiles if auth and same or different userId
- * NO UPDATE/DELETE users
- *
- * limit to 10 max profiles (created + shared with me)
- *
- */
 public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     private static final Logger log = LoggerFactory.getLogger(FirestoreRepositoryImpl.class);

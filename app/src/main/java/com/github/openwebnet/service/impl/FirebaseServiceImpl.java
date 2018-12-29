@@ -51,6 +51,9 @@ public class FirebaseServiceImpl implements FirebaseService {
     public Intent signIn() {
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
+            .setTosAndPrivacyPolicyUrls(
+                utilityService.getString(R.string.url_terms_conditions),
+                utilityService.getString(R.string.url_privacy_policy))
             .setAvailableProviders(Arrays.asList(new AuthUI.IdpConfig.GoogleBuilder().build()))
             .build();
     }
