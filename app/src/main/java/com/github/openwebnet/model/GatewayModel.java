@@ -1,7 +1,10 @@
 package com.github.openwebnet.model;
 
+import com.github.openwebnet.model.firestore.FirestoreModel;
 import com.google.common.base.Strings;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -10,8 +13,11 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class GatewayModel extends RealmObject implements RealmModel {
+public class GatewayModel extends RealmObject
+        implements RealmModel, FirestoreModel<GatewayModel> {
 
+    public static final String FIELD_HOST = "host";
+    public static final String FIELD_PORT = "port";
     public static final String FIELD_PASSWORD = "password";
 
     @Required
@@ -35,6 +41,30 @@ public class GatewayModel extends RealmObject implements RealmModel {
         gateway.setHost(host);
         gateway.setPort(port);
         gateway.setPassword(password);
+        return gateway;
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_HOST, getHost());
+        map.put(FIELD_PORT, getPort());
+        map.put(FIELD_PASSWORD, getPassword());
+        return map;
+    }
+
+    @Override
+    public GatewayModel fromMap(Map<String, Object> map) {
+        checkNotNull(map.get(FIELD_UUID), "uuid is null");
+        checkNotNull(map.get(FIELD_HOST), "host is null");
+        checkNotNull(map.get(FIELD_PORT), "port is null");
+
+        GatewayModel gateway = new GatewayModel();
+        gateway.setUuid((String) map.get(FIELD_UUID));
+        gateway.setHost((String) map.get(FIELD_HOST));
+        gateway.setPort(((Long) map.get(FIELD_PORT)).intValue());
+        gateway.setPassword((String) map.get(FIELD_PASSWORD));
         return gateway;
     }
 

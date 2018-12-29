@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.R;
+import com.github.openwebnet.model.firestore.FirestoreModel;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -16,7 +17,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class IpcamModel extends RealmObject implements RealmModel, DomoticModel {
+public class IpcamModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<IpcamModel> {
 
     public static final String FIELD_URL = "url";
     public static final String FIELD_STREAM_TYPE = "type";
@@ -116,6 +118,17 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
             this.uuid = uuid;
         }
 
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
+            this.name = (String) map.get(FIELD_NAME);
+            this.url = (String) map.get(FIELD_URL);
+            this.type =(String) map.get(FIELD_STREAM_TYPE);
+            this.username = (String) map.get(FIELD_USERNAME);
+            this.password = (String) map.get(FIELD_PASSWORD);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
+        }
+
         public Builder environment(Integer environmentId) {
             this.environmentId = environmentId;
             return this;
@@ -167,6 +180,25 @@ public class IpcamModel extends RealmObject implements RealmModel, DomoticModel 
 
     public static Builder updateBuilder(String uuid) {
         return new Builder(uuid);
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_URL, getUrl());
+        map.put(FIELD_STREAM_TYPE, getType());
+        map.put(FIELD_USERNAME, getUsername());
+        map.put(FIELD_PASSWORD, getPassword());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
+    }
+
+    @Override
+    public IpcamModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override

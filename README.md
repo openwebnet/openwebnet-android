@@ -18,7 +18,9 @@ Manages:
 - any OpenWebNet frame/message
 - IP Camera (MJPEG)
 
-Handle multiple gateway simultaneously with IP or Domain and password.
+Handle multiple gateways simultaneously with IP or Domain and password.
+
+Backup of multiple profiles.
 
 It isn't mandatory, but it's highly recommended that you access your domotic system using a VPN connection.
 
@@ -26,12 +28,9 @@ Database encrypted to increase security.
 
 This Android application is an unofficial free and Open Source client under MIT license.
 
-If you like this app and find it useful please consider making a donation. Some possible future improvements:
-- Quick search and sorting
-- Backup / Import / Export configuration
-- More translations
+If you find a bug or have any suggestions feel free to open an issue.
 
-If you find a bug or have any suggestions do not leave a negative rating but contact me via email, I will try to help you.
+If you like this app and find it useful please consider making a donation.
 
 Additional links
 * Tutorial in French [Contrôler votre système domotique MyHome de Legrand](https://devotics.fr/controler-domotique-myhome-legrand) by Jérémy Paris
@@ -57,6 +56,7 @@ All detailed [changelog](CHANGELOG.md).
 
 ```bash
 ./gradlew clean build
+./gradlew clean test -Pbuild=dev
 ./gradlew app:dependencies
 ```
 

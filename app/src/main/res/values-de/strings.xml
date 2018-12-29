@@ -9,15 +9,22 @@
     <string name="activity_scenario">Szenario</string>
     <string name="activity_energy">Stromverbrauch</string>
     <string name="activity_sound">Lautsprecheranlage</string>
+    <string name="activity_profiles">Profile</string>
     <string name="activity_settings">Einstellungen</string>
 
     <string name="menu_save">Speichern</string>
     <string name="menu_edit">Bearbeiten</string>
     <string name="menu_delete">Löschen</string>
     <string name="menu_debug">Debug</string>
+    <string name="menu_apply">Anwenden</string>
+    <string name="menu_share">Aktie</string>
+    <string name="menu_profile_create">Erstellen</string>
+    <string name="menu_profile_reset">Zurücksetzen</string>
+    <string name="menu_profile_logout">Ausloggen</string>
 
     <string name="drawer_menu_favourite">Favoriten</string>
     <string name="drawer_menu_add">Umgebung hinzufügen</string>
+    <string name="drawer_menu_profile">Profile</string>
     <string name="drawer_menu_settings">Einstellungen</string>
     <string name="drawer_menu_donation">Spenden</string>
     <string name="drawer_menu_changelog">Änderungen</string>
@@ -27,11 +34,26 @@
     <string name="dialog_edit_environment_title">Umgebung bearbeiten</string>
     <string name="dialog_environment_name">Name</string>
     <string name="dialog_device_confirmation_title">Bestätigung</string>
-    <string name="dialog_device_confirmation_message">Sind Sie sicher?</string>
+    <string name="dialog_device_confirmation_message">\nSind Sie sicher?</string>
+    <string name="dialog_profile_create_title">Profil erstellen</string>
+    <string name="dialog_profile_create_name">Name</string>
+    <string name="dialog_profile_reset_title">Profil zurücksetzen</string>
+    <string name="dialog_profile_reset_message">Ihr aktuelles Profil und alle nicht gespeicherten Änderungen werden dauerhaft vom Telefon gelöscht.\n\nSind Sie sicher?</string>
+    <string name="dialog_profile_logout_title">Ausloggen</string>
+    <string name="dialog_profile_logout_message">\nSind Sie sicher?</string>
+    <string name="dialog_profile_switch_title">Profil anwenden</string>
+    <string name="dialog_profile_switch_message">Alle nicht gespeicherten Änderungen am aktuellen Profil werden gelöscht und überschrieben.\n\nSind Sie sicher?</string>
+    <string name="dialog_profile_delete_title">Profil löschen</string>
+    <string name="dialog_profile_delete_message">Sie können dieses Profil nicht mehr aufrufen und anwenden.\n\nSind Sie sicher?</string>
     <string name="dialog_donation_title">Spenden</string>
     <string name="dialog_donation_tax">Spenden sind steuerfrei und können von Land zu Land unterschiedlich sein.</string>
 
     <string name="error_load_navigation_drawer">Fehler beim Laden der Navigationsleiste</string>
+    <string name="error_authentication">Authentifizierung fehlgeschlagen</string>
+    <string name="error_connection">Verbindung nicht verfügbar</string>
+    <string name="error_request">Anfrage fehlgeschlagen</string>
+    <string name="error_profile_max">Maximale Anzahl zulässiger Profile überschritten</string>
+
     <string name="validation_required">Pflichtfeld</string>
     <string name="validation_host">Ungültige IP-Adresse oder Domain</string>
     <string name="validation_port">Ungültiger Portbereich</string>
@@ -57,6 +79,9 @@
     <string name="settings_category_temperature">Temperatur</string>
     <string name="settings_temperature_default">Standard-Temperaturskala</string>
     <string name="settings_temperature_default_dialog">Temperaturskala auswählen</string>
+    <string name="settings_category_info">Information</string>
+    <string name="settings_info_terms_conditions">Geschäftsbedingungen</string>
+    <string name="settings_info_privacy_policy">Datenschutz-Bestimmungen</string>
 
     <string name="button_add">Hinzufügen</string>
     <string name="button_edit">Bearbeiten</string>
@@ -89,7 +114,6 @@
     <string name="device_expected_value">erwarteter Wert</string>
     <string name="device_debug_label_invalid">Ungültiger Wert</string>
     <string name="light_request">Anforderung zum Einschalten</string>
-    <string name="light_dimmer">Dimmer</string>
     <string name="light_info_area">Erlaubte Werte: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Erlaubte Werte: 1&#8211;255</string>
     <string name="light_info_point_to_point">Wo = Bereich + Licht Id</string>

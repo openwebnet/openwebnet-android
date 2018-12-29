@@ -11,9 +11,13 @@ public interface CommonRealmRepository<M extends RealmObject & RealmModel> {
 
     Observable<String> add(M model);
 
+    Observable<List<String>> addAll(List<M> models);
+
     Observable<Void> update(M model);
 
     Observable<Void> delete(String uuid);
+
+    Observable<Void> deleteAll();
 
     Observable<M> findById(String uuid);
 

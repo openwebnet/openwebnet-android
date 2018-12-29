@@ -1,5 +1,7 @@
 package com.github.openwebnet.view.settings;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -21,8 +23,10 @@ import static com.github.openwebnet.view.settings.GatewayListPreference.PREF_DEF
 
 public class SettingsFragment extends PreferenceFragment {
 
-    public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
     public static final String PREF_KEY_TEMPERATURE = "com.github.openwebnet_preferences.PREF_KEY_TEMPERATURE";
+    public static final String PREF_KEY_DEBUG_DEVICE = "com.github.openwebnet_preferences.PREF_KEY_DEBUG_DEVICE";
+    public static final String PREF_KEY_TERMS_CONDITIONS = "com.github.openwebnet_preferences.PREF_KEY_TERMS_CONDITIONS";
+    public static final String PREF_KEY_PRIVACY_POLICY = "com.github.openwebnet_preferences.PREF_KEY_PRIVACY_POLICY";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class SettingsFragment extends PreferenceFragment {
         updatePreferenceSummary(getPreferenceScreen());
         initTemperatureChange();
         initDebug();
+        initInfoUrl();
     }
 
     private void updatePreferenceSummary(Preference preference) {
@@ -76,6 +81,20 @@ public class SettingsFragment extends PreferenceFragment {
             .setOnPreferenceChangeListener((preference, newValue) -> {
                 EventBus.getDefault().post(new MainActivity
                     .OnChangePreferenceDeviceDebugEvent((Boolean) newValue));
+                return true;
+            });
+    }
+
+    private void initInfoUrl() {
+        getPreferenceScreen().findPreference(PREF_KEY_TERMS_CONDITIONS)
+            .setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_terms_conditions))));
+                return true;
+            });
+
+        getPreferenceScreen().findPreference(PREF_KEY_PRIVACY_POLICY)
+            .setOnPreferenceClickListener(preference -> {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_privacy_policy))));
                 return true;
             });
     }

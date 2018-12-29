@@ -4,6 +4,7 @@ import com.github.openwebnet.repository.AutomationRepository;
 import com.github.openwebnet.repository.DeviceRepository;
 import com.github.openwebnet.repository.EnergyRepository;
 import com.github.openwebnet.repository.EnvironmentRepository;
+import com.github.openwebnet.repository.FirestoreRepository;
 import com.github.openwebnet.repository.GatewayRepository;
 import com.github.openwebnet.repository.IpcamRepository;
 import com.github.openwebnet.repository.LightRepository;
@@ -15,6 +16,7 @@ import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnergyRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.impl.FirestoreRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
@@ -102,6 +104,12 @@ public class RepositoryModuleTest {
     @Singleton
     SoundRepository provideSound() {
         return isMocked ? mock(SoundRepositoryImpl.class) : new SoundRepositoryImpl();
+    }
+
+    @Provides
+    @Singleton
+    FirestoreRepository provideFirestore() {
+        return isMocked ? mock(FirestoreRepositoryImpl.class) : new FirestoreRepositoryImpl();
     }
 
 }

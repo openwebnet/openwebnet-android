@@ -1,7 +1,10 @@
 package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.Lighting;
+import com.github.openwebnet.model.firestore.FirestoreModel;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -11,13 +14,17 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LightModel extends RealmObject implements RealmModel, DomoticModel {
+public class LightModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<LightModel> {
 
     public static final String FIELD_TYPE = "type";
 
     public enum Status {
         ON, OFF
     }
+
+    @Deprecated
+    public static final String FIELD_DIMMER = "dimmer";
 
     @Required
     @PrimaryKey
@@ -38,8 +45,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     @Required
     private String type;
 
-    private boolean dimmer;
-
     private boolean favourite;
 
     @Ignore
@@ -48,8 +53,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
     // NOT USED: realm error otherwise
     @Ignore
     private Lighting.Type lightingType;
-
-    // TODO @Ignore dimmerValue
 
     public LightModel() {}
 
@@ -60,7 +63,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         this.name = builder.name;
         this.where = builder.where;
         this.type = builder.type;
-        this.dimmer = builder.dimmer;
         this.favourite = builder.favourite;
     }
 
@@ -72,11 +74,20 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
         private String name;
         private String where;
         private String type;
-        private boolean dimmer;
         private boolean favourite;
 
         public Builder(String uuid) {
             this.uuid = uuid;
+        }
+
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
+            this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
+            this.name = (String) map.get(FIELD_NAME);
+            this.where = (String) map.get(FIELD_WHERE);
+            this.type = (String) map.get(FIELD_TYPE);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
         }
 
         public Builder environment(Integer environmentId) {
@@ -104,11 +115,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
             return this;
         }
 
-        public Builder dimmer(boolean dimmer) {
-            this.dimmer = dimmer;
-            return this;
-        }
-
         public Builder favourite(boolean favourite) {
             this.favourite = favourite;
             return this;
@@ -131,6 +137,24 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
 
     public static Builder updateBuilder(String uuid) {
         return new Builder(uuid);
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_TYPE, getLightingType());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
+    }
+
+    @Override
+    public LightModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override
@@ -183,14 +207,6 @@ public class LightModel extends RealmObject implements RealmModel, DomoticModel 
 
     public void setType(String type) {
         throw new UnsupportedOperationException("method not implemented: use LightModel#setLightingType()");
-    }
-
-    public boolean isDimmer() {
-        return dimmer;
-    }
-
-    public void setDimmer(boolean dimmer) {
-        this.dimmer = dimmer;
     }
 
     @Override

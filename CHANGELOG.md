@@ -1,3 +1,7 @@
+#### v3.0.0 (December 29, 2018)
+
+- Backup profiles
+
 #### v2.12.8 (July 25, 2018)
 
 - Minor fixes

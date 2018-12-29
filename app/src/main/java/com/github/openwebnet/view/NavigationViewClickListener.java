@@ -14,9 +14,9 @@ import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.UtilityService;
-import com.github.openwebnet.view.device.DeviceListFragment.UpdateDeviceListEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +26,6 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
-
-import static com.github.openwebnet.view.NavigationViewItemSelectedListener.MENU_FAVOURITE;
 
 public class NavigationViewClickListener implements OnClickListener {
 
@@ -55,6 +53,10 @@ public class NavigationViewClickListener implements OnClickListener {
 
         mActivity = activity;
         this.environmentId = environmentId;
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -123,15 +125,30 @@ public class NavigationViewClickListener implements OnClickListener {
 
     private void deleteEnvironment() {
         environmentService.delete(environmentId)
-            .doOnCompleted(() -> {
-                // calls onPrepareOptionsMenu(): reload menu
-                mActivity.invalidateOptionsMenu();
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                // Switch to the only environment that is always there : the "favourite" environment.
-                mActivity.getSupportActionBar().setTitle(R.string.app_name);
-                EventBus.getDefault().post(new UpdateDeviceListEvent(MENU_FAVOURITE));
-                EventBus.getDefault().post(new MainActivity.OnChangeFabVisibilityEvent(false));
-            })
+            .doOnCompleted(this::reloadDrawer)
             .subscribe(aVoid -> {}, throwable -> log.error("deleteEnvironment", throwable));
     }
+
+    private void reloadDrawer() {
+        // calls onPrepareOptionsMenu(): reload menu
+        mActivity.invalidateOptionsMenu();
+        mDrawerLayout.openDrawer(GravityCompat.START);
+        // switch to the only environment that is always there i.e. "favourite"
+        EventBus.getDefault().post(new NavigationViewItemSelectedListener.OnShowFavouriteEvent());
+    }
+
+    /**
+     *
+     */
+    public static class OnReloadDrawerEvent {
+
+        public OnReloadDrawerEvent() {}
+    }
+
+    // fired from MainActivity.onActivityResult
+    @Subscribe
+    public void onEvent(OnReloadDrawerEvent event) {
+        reloadDrawer();
+    }
+
 }

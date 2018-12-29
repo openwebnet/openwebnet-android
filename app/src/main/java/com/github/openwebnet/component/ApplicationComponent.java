@@ -11,6 +11,7 @@ import com.github.openwebnet.repository.impl.AutomationRepositoryImpl;
 import com.github.openwebnet.repository.impl.DeviceRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnergyRepositoryImpl;
 import com.github.openwebnet.repository.impl.EnvironmentRepositoryImpl;
+import com.github.openwebnet.repository.impl.FirestoreRepositoryImpl;
 import com.github.openwebnet.repository.impl.GatewayRepositoryImpl;
 import com.github.openwebnet.repository.impl.IpcamRepositoryImpl;
 import com.github.openwebnet.repository.impl.LightRepositoryImpl;
@@ -22,6 +23,7 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
@@ -44,6 +46,8 @@ import com.github.openwebnet.view.device.LightActivity;
 import com.github.openwebnet.view.device.ScenarioActivity;
 import com.github.openwebnet.view.device.SoundActivity;
 import com.github.openwebnet.view.device.TemperatureActivity;
+import com.github.openwebnet.view.profile.ProfileActivity;
+import com.github.openwebnet.view.profile.ProfileAdapter;
 import com.github.openwebnet.view.settings.GatewayEditTextPreference;
 import com.github.openwebnet.view.settings.GatewayListPreference;
 
@@ -73,17 +77,20 @@ public interface ApplicationComponent {
     void inject(ScenarioActivity activity);
     void inject(EnergyActivity activity);
     void inject(SoundActivity activity);
+    void inject(ProfileActivity activity);
 
     void inject(NavigationViewItemSelectedListener listener);
     void inject(NavigationViewClickListener listener);
     void inject(GatewayEditTextPreference editTextPreference);
     void inject(GatewayListPreference listPreference);
     void inject(DeviceListAdapter deviceListAdapter);
+    void inject(ProfileAdapter profileAdapter);
 
     // service
     void inject(PreferenceServiceImpl preferenceService);
     void inject(CommonServiceImpl commonService);
     void inject(UtilityServiceImpl utilityService);
+    void inject(FirebaseServiceImpl firebaseService);
 
     // domotic service
     void inject(GatewayServiceImpl gatewayService);
@@ -112,5 +119,6 @@ public interface ApplicationComponent {
     void inject(ScenarioRepositoryImpl repository);
     void inject(EnergyRepositoryImpl repository);
     void inject(SoundRepositoryImpl repository);
+    void inject(FirestoreRepositoryImpl repository);
 
 }

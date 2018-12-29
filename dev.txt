@@ -1,12 +1,73 @@
-# upgrade ipcam-view
-* android studio 3
-* remove retrolambda
+>>> cleanup all issue on GitHub
+  - bug
+  - new feature by priority
 
-# firebase
-https://firebase.google.com/docs/android/setup
+* TODO update store listing (en) and images on play store
+* TODO test firestore collection not-defined in security roles
 
-# error tracking (?)
-https://sentry.io/for/android
+--- priority
+
+* security restrictions
+  - add firestore rules
+  - query/test for security rule with admin sdk
+
+* link tos and privacy in navbar + padding bottom
+
+* firestore backups
+  - import/export
+  - (?) cron
+
+* profile
+  - show empty list
+  - use FAB instead of actionbar
+  - (?) show with color if profile was modified
+  - (?) use context actionbar + onClick instead of menu on each element
+
+* share profiles
+  - dialog with "@gmail.com"
+  - color + hide share again
+  - add security rule to block if userId is different (already shared/non owner) you can't share it again
+
+* automation
+  - general / group / area
+
+* add BUS support
+
+--- nice to have
+
+* improve coverage on profile and firebase
+
+* list of testers by feature
+
+* crash reports and error tracking
+  - firebase
+  - https://sentry.io/for/android
+
+* analytics
+  - (?) custom events
+
+* (?) add createdAt/modifiedAt to each model
+  - ordering by last modified
+
+* search in all environments
+  - no need ordering
+
+* light
+  - blink
+  - dimmer
+
+* delete gateway
+
+* ip camera
+  - verify how many use it
+  - remove activity and show in list
+  - snapshot
+
+* translate changelog
+
+* rate directly from the app
+
+---------- OLD
 
 # verify crash reports - app version 35
 

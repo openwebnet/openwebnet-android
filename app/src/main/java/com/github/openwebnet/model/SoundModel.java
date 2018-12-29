@@ -1,7 +1,10 @@
 package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.SoundSystem;
+import com.github.openwebnet.model.firestore.FirestoreModel;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -11,7 +14,8 @@ import io.realm.annotations.Required;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class SoundModel extends RealmObject implements RealmModel, DomoticModel {
+public class SoundModel extends RealmObject
+        implements RealmModel, DomoticModel, FirestoreModel<SoundModel> {
 
     public static final String FIELD_SOURCE = "source";
     public static final String FIELD_TYPE = "type";
@@ -81,6 +85,17 @@ public class SoundModel extends RealmObject implements RealmModel, DomoticModel 
             this.uuid = uuid;
         }
 
+        public Builder(Map<String, Object> map) {
+            this.uuid = (String) map.get(FIELD_UUID);
+            this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
+            this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
+            this.name = (String) map.get(FIELD_NAME);
+            this.where = (String) map.get(FIELD_WHERE);
+            this.source = (String) map.get(FIELD_SOURCE);
+            this.type = (String) map.get(FIELD_TYPE);
+            this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
+        }
+
         public Builder environment(Integer environmentId) {
             this.environmentId = environmentId;
             return this;
@@ -134,6 +149,25 @@ public class SoundModel extends RealmObject implements RealmModel, DomoticModel 
 
     public static Builder updateBuilder(String uuid) {
         return new Builder(uuid);
+    }
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put(FIELD_UUID, getUuid());
+        map.put(FIELD_ENVIRONMENT_ID, getEnvironmentId());
+        map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
+        map.put(FIELD_NAME, getName());
+        map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_SOURCE, getSoundSystemSource());
+        map.put(FIELD_TYPE, getSoundSystemType());
+        map.put(FIELD_FAVOURITE, isFavourite());
+        return map;
+    }
+
+    @Override
+    public SoundModel fromMap(Map<String, Object> map) {
+        return new Builder(map).build();
     }
 
     @Override
@@ -229,4 +263,5 @@ public class SoundModel extends RealmObject implements RealmModel, DomoticModel 
     public void setSoundSystemType(SoundSystem.Type soundSystemType) {
         this.type = soundSystemType.name();
     }
+
 }

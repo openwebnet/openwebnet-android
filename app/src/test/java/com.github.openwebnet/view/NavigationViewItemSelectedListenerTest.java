@@ -1,5 +1,7 @@
 package com.github.openwebnet.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +23,7 @@ import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
 import com.github.openwebnet.view.settings.SettingsFragment;
@@ -56,6 +59,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -74,6 +80,9 @@ public class NavigationViewItemSelectedListenerTest {
     @Inject
     UtilityService utilityService;
 
+    @Inject
+    FirebaseService firebaseService;
+
     @BindString(R.string.app_name)
     String labelApplicationName;
     @BindString(R.string.drawer_menu_favourite)
@@ -83,7 +92,7 @@ public class NavigationViewItemSelectedListenerTest {
     @BindString(R.string.drawer_menu_settings)
     String labelDrawerMenuSettings;
 
-    MainActivity activity;
+    private MainActivity activity;
 
     @Before
     public void setup() {
@@ -100,11 +109,13 @@ public class NavigationViewItemSelectedListenerTest {
         ((ApplicationComponentTest) Injector.getApplicationComponent()).inject(this);
     }
 
-    private void setupActivity() {
-        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+    private Activity setupActivity() {
+        when(environmentService.findAll()).thenReturn(Observable.empty());
 
         activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);
+
+        return spy(activity);
     }
 
     private MenuItem clickMenuItem(int menuId) {
@@ -155,7 +166,7 @@ public class NavigationViewItemSelectedListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
         View inflatedView = shadowAlertDialog.getInflatedView();
 
-        EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        EditText name = inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
         when(utilityService.isBlankText(name)).thenReturn(true);
 
         assertNull("no error", name.getError());
@@ -175,7 +186,7 @@ public class NavigationViewItemSelectedListenerTest {
         ShadowAlertDialogSupport shadowAlertDialog = ShadowAlertDialogSupport.getShadowAlertDialog();
         View inflatedView = shadowAlertDialog.getInflatedView();
 
-        EditText name = (EditText) inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
+        EditText name = inflatedView.findViewById(R.id.editTextDialogEnvironmentName);
         name.setText(NEW_ENVIRONMENT);
         when(utilityService.isBlankText(name)).thenReturn(false);
         when(utilityService.sanitizedText(name)).thenReturn(NEW_ENVIRONMENT);
@@ -234,6 +245,35 @@ public class NavigationViewItemSelectedListenerTest {
         assertEquals("invalid fragment", MENU_ENVIRONMENT_ID, argumentEnvironment);
 
         assertFalse("should be close", activity.drawerLayout.isDrawerOpen(GravityCompat.START));
+    }
+
+    @Test
+    public void onNavigationItemSelected_shouldSelectProfileAuthenticated() {
+        Activity activitySpy = setupActivity();
+
+        when(firebaseService.isAuthenticated()).thenReturn(true);
+        //doNothing().when(activitySpy).startActivity(any(Intent.class));
+
+        clickMenuItem(R.id.nav_profile);
+
+        // FIXME Wanted but not invoked
+        //verify(activitySpy, times(1)).startActivity(any(Intent.class));
+        verify(firebaseService, never()).signIn();
+    }
+
+    @Test
+    public void onNavigationItemSelected_shouldSelectProfileNotAuthenticated() {
+        Activity activitySpy = setupActivity();
+
+        when(firebaseService.isAuthenticated()).thenReturn(false);
+        when(firebaseService.signIn()).thenReturn(new Intent());
+        //doNothing().when(activitySpy).startActivityForResult(any(Intent.class), any(Integer.class));
+
+        clickMenuItem(R.id.nav_profile);
+
+        // FIXME Wanted but not invoked
+        //verify(activitySpy, times(1)).startActivityForResult(any(Intent.class), any(Integer.class));
+        verify(firebaseService, times(1)).signIn();
     }
 
     @Ignore

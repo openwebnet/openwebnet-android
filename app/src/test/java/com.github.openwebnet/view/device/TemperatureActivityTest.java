@@ -25,6 +25,7 @@ import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.DeviceService;
 import com.github.openwebnet.service.EnergyService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.IpcamService;
 import com.github.openwebnet.service.LightService;
@@ -38,6 +39,7 @@ import com.github.openwebnet.service.impl.CommonServiceImpl;
 import com.github.openwebnet.service.impl.DeviceServiceImpl;
 import com.github.openwebnet.service.impl.EnergyServiceImpl;
 import com.github.openwebnet.service.impl.EnvironmentServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.GatewayServiceImpl;
 import com.github.openwebnet.service.impl.IpcamServiceImpl;
 import com.github.openwebnet.service.impl.LightServiceImpl;
@@ -161,6 +163,12 @@ public class TemperatureActivityTest {
         @Singleton
         public UtilityService provideUtilityService() {
             return new UtilityServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        public FirebaseService provideFirebaseService() {
+            return new FirebaseServiceImpl();
         }
 
         @Provides

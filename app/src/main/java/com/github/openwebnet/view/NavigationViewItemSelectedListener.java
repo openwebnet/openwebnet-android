@@ -1,5 +1,6 @@
 package com.github.openwebnet.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,11 +20,14 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.iabutil.DonationDialogFragment;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.device.DeviceListFragment;
+import com.github.openwebnet.view.profile.ProfileActivity;
 import com.github.openwebnet.view.settings.SettingsFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +37,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.github.openwebnet.view.MainActivity.REQUEST_CODE_PROFILE;
 import static com.github.openwebnet.view.device.DeviceListFragment.ARG_ENVIRONMENT;
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -50,6 +55,9 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
 
     @Inject
     UtilityService utilityService;
+
+    @Inject
+    FirebaseService firebaseService;
 
     @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
@@ -76,6 +84,10 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         ButterKnife.bind(this, activity);
 
         this.mActivity = activity;
+
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -87,13 +99,13 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         switch (id) {
             case R.id.nav_favourite:
                 checkArgument(item.getOrder() == MENU_FAVOURITE, "invalid favourite menu id");
-
-                mActivity.getSupportActionBar().setTitle(labelApplicationName);
-                floatingActionButtonMain.setVisibility(View.INVISIBLE);
-                showDeviceList(MENU_FAVOURITE);
+                showFavourite();
                 break;
             case R.id.nav_add:
                 showDialogAddEnvironment();
+                break;
+            case R.id.nav_profile:
+                showProfile();
                 break;
             case R.id.nav_settings:
                 showSettings();
@@ -138,6 +150,12 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
             .commit();
     }
 
+    private void showFavourite() {
+        mActivity.getSupportActionBar().setTitle(labelApplicationName);
+        floatingActionButtonMain.setVisibility(View.INVISIBLE);
+        showDeviceList(MENU_FAVOURITE);
+    }
+
     private void showDialogAddEnvironment() {
         View layout = LayoutInflater.from(mActivity).inflate(R.layout.dialog_environment, null);
 
@@ -151,7 +169,7 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {
-                EditText name = (EditText) layout.findViewById(R.id.editTextDialogEnvironmentName);
+                EditText name = layout.findViewById(R.id.editTextDialogEnvironmentName);
                 if (utilityService.isBlankText(name)) {
                     name.setError(labelValidationRequired);
                 } else {
@@ -168,6 +186,20 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
                 mActivity.invalidateOptionsMenu();
                 mDrawerLayout.openDrawer(GravityCompat.START);
             });
+    }
+
+    private void showProfile() {
+        if (firebaseService.isAuthenticated()) {
+            log.debug("showProfile: valid profile");
+            mActivity.startActivityForResult(
+                new Intent(mActivity, ProfileActivity.class),
+                REQUEST_CODE_PROFILE);
+        } else {
+            log.info("showProfile: init login");
+            mActivity.startActivityForResult(
+                firebaseService.signIn(),
+                MainActivity.REQUEST_CODE_SIGN_IN);
+        }
     }
 
     private void showSettings() {
@@ -213,4 +245,19 @@ public class NavigationViewItemSelectedListener implements NavigationView.OnNavi
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
     }
+
+    /**
+     *
+     */
+    public static class OnShowFavouriteEvent {
+
+        public OnShowFavouriteEvent() {}
+    }
+
+    // fired by NavigationViewClickListener.reloadDrawer
+    @Subscribe
+    public void onEvent(OnShowFavouriteEvent event) {
+        showFavourite();
+    }
+
 }

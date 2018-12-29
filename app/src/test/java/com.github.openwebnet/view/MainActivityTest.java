@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.OpenWebNetApplicationTest;
@@ -20,6 +21,7 @@ import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.google.common.collect.Lists;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,6 +52,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -67,6 +71,9 @@ public class MainActivityTest {
 
     @Inject
     EnvironmentService environmentService;
+
+    @Inject
+    FirebaseService firebaseService;
 
     @BindView(R.id.floatingActionButtonMain)
     FloatingActionButton floatingActionButtonMain;
@@ -96,7 +103,8 @@ public class MainActivityTest {
 
     private void setupActivity() {
         // mock reloadMenu
-        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+        when(environmentService.findAll()).thenReturn(Observable.empty());
+        when(firebaseService.isAuthenticated()).thenReturn(false);
 
         activity = Robolectric.setupActivity(MainActivity.class);
         ButterKnife.bind(this, activity);
@@ -136,8 +144,14 @@ public class MainActivityTest {
 
         assertEquals("invalid menu title", "Add environment", menu.getItem(6).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(6).getOrder());
-        assertEquals("invalid menu title", "Settings", menu.getItem(7).getTitle());
+        assertEquals("invalid menu title", "Profiles", menu.getItem(7).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(7).getOrder());
+        assertEquals("invalid menu title", "Settings", menu.getItem(8).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(8).getOrder());
+        assertEquals("invalid menu title", "Donation", menu.getItem(9).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(9).getOrder());
+        assertEquals("invalid menu title", "Changelogs", menu.getItem(10).getTitle());
+        assertEquals("invalid menu order", 900, menu.getItem(10).getOrder());
     }
 
     private EnvironmentModel newEnvironmentModel(Integer id, String name) {
@@ -149,7 +163,7 @@ public class MainActivityTest {
 
     @Test
     public void shouldVerifyInstance_stateTitle() {
-        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+        when(environmentService.findAll()).thenReturn(Observable.empty());
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
         activity = controller
@@ -175,8 +189,47 @@ public class MainActivityTest {
     }
 
     @Test
+    public void shouldVerifyInstance_initHeaderAuthenticated() {
+        when(environmentService.findAll()).thenReturn(Observable.empty());
+        when(firebaseService.isAuthenticated()).thenReturn(true);
+        when(firebaseService.getUserPhotoUrl()).thenReturn(null);
+
+        ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
+        activity = controller
+            .create()
+            .start()
+            .resume()
+            .visible()
+            .get();
+        ButterKnife.bind(this, activity);
+
+        verify(firebaseService, times(1)).getUserPhotoUrl();
+        ImageView headerImageView = navigationView.findViewById(R.id.imageViewHeader);
+        assertFalse("OnClickListeners should be null", headerImageView.hasOnClickListeners());
+    }
+
+    @Test
+    public void shouldVerifyInstance_initHeaderNotAuthenticated() {
+        when(environmentService.findAll()).thenReturn(Observable.empty());
+        when(firebaseService.isAuthenticated()).thenReturn(false);
+
+        ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
+        activity = controller
+            .create()
+            .start()
+            .resume()
+            .visible()
+            .get();
+        ButterKnife.bind(this, activity);
+
+        verify(firebaseService, never()).getUserPhotoUrl();
+        ImageView headerImageView = navigationView.findViewById(R.id.imageViewHeader);
+        assertTrue("OnClickListeners should not be null", headerImageView.hasOnClickListeners());
+    }
+
+    @Test
     public void shouldVerifyInstance_stateFab() {
-        when(environmentService.findAll()).thenReturn(Observable.<List<EnvironmentModel>>empty());
+        when(environmentService.findAll()).thenReturn(Observable.empty());
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
         activity = controller

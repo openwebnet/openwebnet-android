@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.annimon.stream.Stream;
 import com.github.openwebnet.OpenWebNetApplication;
@@ -24,7 +25,10 @@ import com.github.openwebnet.iabutil.IabUtil;
 import com.github.openwebnet.model.EnvironmentModel;
 import com.github.openwebnet.service.CommonService;
 import com.github.openwebnet.service.EnvironmentService;
+import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.PreferenceService;
+import com.github.openwebnet.view.profile.ProfileActivity;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private static final Logger log = LoggerFactory.getLogger(MainActivity.class);
     static final String STATE_TITLE = "com.github.openwebnet.view.MainActivity.STATE_TITLE";
     static final String STATE_FAB_MENU = "com.github.openwebnet.view.MainActivity.STATE_FAB_MENU";
+    static final int REQUEST_CODE_SIGN_IN = 101;
+    static final int REQUEST_CODE_PROFILE = 102;
+    public static final int RESULT_CODE_PROFILE_RESET = 1001;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -66,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
     @BindString(R.string.error_load_navigation_drawer)
     String errorLoadNavigationDrawer;
 
+    @BindString(R.string.error_authentication)
+    String errorAuthentication;
+
     @BindString(R.string.app_link)
     String appLinkGitHub;
 
@@ -78,7 +88,12 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     EnvironmentService environmentService;
 
+    @Inject
+    FirebaseService firebaseService;
+
     int drawerMenuItemSelected;
+
+    View navHeaderMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +132,15 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
-        initOnClickLinkToGitHub();
+        // profile new badge
+        ImageView navProfileImageView = (ImageView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_profile));
+        navProfileImageView.setImageResource(R.drawable.new_box);
+
+        // issue with @OnClick(R.id.imageViewAppLink)
+        // inflate manually in activity_main > NavigationView:headerLayout
+        // https://code.google.com/p/android/issues/detail?id=190226
+        navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        initDrawerHeader();
 
         navigationView.setNavigationItemSelectedListener(new NavigationViewItemSelectedListener(this));
 
@@ -132,14 +155,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void initOnClickLinkToGitHub() {
-        // issue with @OnClick(R.id.imageViewAppLink)
-        // inflate manually in activity_main > NavigationView:headerLayout
-        // https://code.google.com/p/android/issues/detail?id=190226
-        View navHeaderMain = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        navHeaderMain.findViewById(R.id.imageViewAppLink)
-            .setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW,
-                Uri.parse(appLinkGitHub)).addCategory(Intent.CATEGORY_BROWSABLE)));
+    private void initDrawerHeader() {
+        ImageView headerImageView = navHeaderMain.findViewById(R.id.imageViewHeader);
+
+        if (firebaseService.isAuthenticated()) {
+            log.debug("initHeader: valid firebase session");
+            // update profile image
+            String photoUrl = firebaseService.getUserPhotoUrl();
+            if (photoUrl != null) {
+                Picasso.get()
+                    .load(photoUrl)
+                    .placeholder(R.drawable.github_circle)
+                    .into(headerImageView);
+            }
+            headerImageView.setOnClickListener(null);
+        } else {
+            log.debug("initHeader: invalid firebase session");
+            initOnClickLinkToGitHub(headerImageView);
+        }
+    }
+
+    private void initOnClickLinkToGitHub(ImageView headerImageView) {
+        headerImageView.setImageResource(R.drawable.github_circle);
+        headerImageView.setOnClickListener(v -> startActivity(
+            new Intent(Intent.ACTION_VIEW, Uri.parse(appLinkGitHub))
+                .addCategory(Intent.CATEGORY_BROWSABLE)));
     }
 
     @Override
@@ -212,6 +252,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        // refresh after logout
+        initDrawerHeader();
+    }
+
+    @Override
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
@@ -230,6 +277,28 @@ public class MainActivity extends AppCompatActivity {
             // perform any handling of activity results not related to in-app
             // billing...
             super.onActivityResult(requestCode, resultCode, data);
+        }
+
+        // https://firebaseopensource.com/projects/firebase/firebaseui-android/auth/readme.md
+        if (requestCode == REQUEST_CODE_SIGN_IN) {
+            //IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK && firebaseService.isAuthenticated()) {
+                log.debug("onActivityResult: firebase login succeeded");
+                initDrawerHeader();
+                startActivityForResult(
+                    new Intent(getBaseContext(), ProfileActivity.class),
+                    REQUEST_CODE_PROFILE);
+            } else {
+                log.error("onActivityResult: firebase login failed");
+                showSnackbar(errorAuthentication);
+            }
+        }
+
+        if (requestCode == REQUEST_CODE_PROFILE) {
+            if (resultCode == RESULT_CODE_PROFILE_RESET) {
+                EventBus.getDefault().post(new NavigationViewClickListener.OnReloadDrawerEvent());
+            }
         }
     }
 

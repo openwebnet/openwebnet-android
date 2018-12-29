@@ -14,6 +14,7 @@ import com.github.openwebnet.component.module.DatabaseModuleTest;
 import com.github.openwebnet.component.module.DomoticModuleTest;
 import com.github.openwebnet.component.module.RepositoryModuleTest;
 import com.github.openwebnet.service.impl.CommonServiceImpl;
+import com.github.openwebnet.service.impl.FirebaseServiceImpl;
 import com.github.openwebnet.service.impl.PreferenceServiceImpl;
 import com.github.openwebnet.service.impl.UtilityServiceImpl;
 
@@ -98,6 +99,12 @@ public class UtilityServiceTest {
         @Singleton
         public UtilityService provideUtilityService() {
             return new UtilityServiceImpl();
+        }
+
+        @Provides
+        @Singleton
+        public FirebaseService provideFirebaseService() {
+            return mock(FirebaseServiceImpl.class);
         }
 
     }

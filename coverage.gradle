@@ -1,4 +1,4 @@
-// ./gradlew jacocoTestReportDebug
+// ./gradlew jacocoTestReportDev
 
 apply plugin: 'com.vanniktech.android.junit.jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
@@ -8,7 +8,7 @@ junitJacoco {
 }
 
 coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/debug/jacoco.xml"
+    jacocoReportPath = "${buildDir}/reports/jacoco/dev/jacoco.xml"
 }
 
 tasks.coveralls {

@@ -45,6 +45,14 @@ public class DatabaseRealm {
         return model;
     }
 
+    public <T extends RealmObject> Iterable<T> addAll(Iterable<T> models) {
+        Realm realm = getRealmInstance();
+        realm.beginTransaction();
+        realm.copyToRealm(models);
+        realm.commitTransaction();
+        return models;
+    }
+
     public <T extends RealmObject> T update(T model) {
         Realm realm = getRealmInstance();
         realm.beginTransaction();
@@ -69,6 +77,14 @@ public class DatabaseRealm {
         realm.commitTransaction();
     }
 
+    public <T extends RealmObject> void deleteAll(Class<T> clazz) {
+        Realm realm = getRealmInstance();
+        RealmResults<T> models = realm.where(clazz).findAll();
+        realm.beginTransaction();
+        models.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
     private <T extends RealmObject> RealmQuery<T> query(Class<T> clazz) {
         return getRealmInstance().where(clazz);
     }
@@ -84,7 +100,11 @@ public class DatabaseRealm {
     }
 
     public <T extends RealmObject> Number findMax(Class<T> clazz, String field) {
-        return query(clazz).max(field);
+        Realm realm = getRealmInstance();
+        realm.beginTransaction();
+        Number max = realm.where(clazz).max(field);
+        realm.commitTransaction();
+        return max;
     }
 
     public <T extends RealmObject> List<T> findWhere(Class<T> clazz, String field, String value) {
