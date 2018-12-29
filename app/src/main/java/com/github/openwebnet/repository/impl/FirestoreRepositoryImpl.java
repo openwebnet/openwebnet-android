@@ -58,6 +58,7 @@ import rx.Observable;
  * TODO add disclaimer privacy when login first time
  * TODO export firestore backups
  * TODO security restrictions
+ * TODO query/test for security rules
  *
  * if userId is different (already shared) you can't share it again
  *
@@ -77,9 +78,12 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     private static final Logger log = LoggerFactory.getLogger(FirestoreRepositoryImpl.class);
 
-    private static final String COLLECTION_USERS = "users";
+    private static boolean DEVELOPMENT = true;
+
+    private static final String ENVIRONMENT = DEVELOPMENT ? "dev_" : "";
+    private static final String COLLECTION_USERS = ENVIRONMENT + "users";
     private static final String COLLECTION_USER_PROFILES = "profiles";
-    private static final String COLLECTION_PROFILES = "profiles";
+    private static final String COLLECTION_PROFILES = ENVIRONMENT + "profiles";
 
     @Inject
     AutomationRepository automationRepository;
@@ -202,7 +206,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .profileRef(profileRef).build();
 
                 DocumentReference userRef = db.collection(COLLECTION_USERS).document(profile.getDetails().getUserId());
-                batch.update(userRef, COLLECTION_PROFILES, FieldValue.arrayUnion(userProfile.toMap()));
+                batch.update(userRef, COLLECTION_USER_PROFILES, FieldValue.arrayUnion(userProfile.toMap()));
 
                 batch.commit()
                     .addOnSuccessListener(aVoid -> {
@@ -221,7 +225,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         });
     }
 
-    private boolean documentHasProfiles(DocumentSnapshot document) {
+    private boolean userHasProfiles(DocumentSnapshot document) {
         return document != null &&
             document.exists() &&
             document.getData() != null &&
@@ -239,7 +243,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            if (documentHasProfiles(document)) {
+                            if (userHasProfiles(document)) {
 
                                 List<UserProfileModel> userProfileModels =
                                     Stream.of((List<Map<String, Object>>) document.getData().get(COLLECTION_USER_PROFILES))
