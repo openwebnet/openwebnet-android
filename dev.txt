@@ -1,12 +1,52 @@
-# upgrade ipcam-view
-* android studio 3
-* remove retrolambda
+--- priority
 
-# firebase
-https://firebase.google.com/docs/android/setup
+* security restrictions
+  - add firestore rules
+  - query/test for security rule with admin sdk
 
-# error tracking (?)
-https://sentry.io/for/android
+---
+if userId is different (already shared) you can't share it again
+limit to 10 max profiles (created + shared with me)
+
+INSERT profiles if auth
+READ profiles if auth and same userId
+NO UPDATE/DELETE profiles
+
+INSERT users if auth
+READ users if auth and same userId
+UPDATE/DELETE users.profiles if auth and same or different userId
+NO UPDATE/DELETE users
+---
+
+* firestore backups
+  - import/export
+  - (?) cron
+
+* share profiles
+
+* automation
+  - general / group / area
+
+* add BUS support
+
+--- nice to have
+
+* list of testers by feature
+
+* crash reports and error tracking
+  - firebase
+  - https://sentry.io/for/android
+
+* analytics
+  - (?) custom events
+
+* (?) add createdAt/modifiedAt to each model
+  - ordering by last modified
+
+* search in all environments
+  - no need ordering
+
+---------- OLD
 
 # verify crash reports - app version 35
 
