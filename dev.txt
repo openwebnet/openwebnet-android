@@ -32,6 +32,8 @@
 
 --- nice to have
 
+* improve coverage on profile and firebase
+
 * list of testers by feature
 
 * crash reports and error tracking

@@ -144,7 +144,7 @@ public class MainActivityTest {
 
         assertEquals("invalid menu title", "Add environment", menu.getItem(6).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(6).getOrder());
-        assertEquals("invalid menu title", "Profile", menu.getItem(7).getTitle());
+        assertEquals("invalid menu title", "Profiles", menu.getItem(7).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(7).getOrder());
         assertEquals("invalid menu title", "Settings", menu.getItem(8).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(8).getOrder());

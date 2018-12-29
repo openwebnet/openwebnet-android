@@ -79,6 +79,9 @@
     <string name="settings_category_temperature">Температура</string>
     <string name="settings_temperature_default">Температурная шкала по умолчанию</string>
     <string name="settings_temperature_default_dialog">Выберите шкалу температуры по умолчанию</string>
+    <string name="settings_category_info">Информация</string>
+    <string name="settings_info_terms_conditions">Условия и положения</string>
+    <string name="settings_info_privacy_policy">Политика конфиденциальности</string>
 
     <string name="button_add">Добавить</string>
     <string name="button_edit">Изменить</string>

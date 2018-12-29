@@ -86,6 +86,9 @@
     <string name="settings_category_temperature">Temperature</string>
     <string name="settings_temperature_default">Default temperature scale</string>
     <string name="settings_temperature_default_dialog">Choose temperature scale</string>
+    <string name="settings_category_info">Information</string>
+    <string name="settings_info_terms_conditions">Terms and Conditions</string>
+    <string name="settings_info_privacy_policy">Privacy Policy</string>
     <string name="changelog_title" translatable="false">What\'s new</string>
 
     <string name="button_add">Add</string>

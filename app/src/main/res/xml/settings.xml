@@ -41,4 +41,15 @@
             android:title="@string/settings_debug_device_title"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_category_info">
+        <Preference
+            android:key="com.github.openwebnet_preferences.PREF_KEY_TERMS_CONDITIONS"
+            android:persistent="false"
+            android:title="@string/settings_info_terms_conditions"/>
+        <Preference
+            android:key="com.github.openwebnet_preferences.PREF_KEY_PRIVACY_POLICY"
+            android:persistent="false"
+            android:title="@string/settings_info_privacy_policy"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>

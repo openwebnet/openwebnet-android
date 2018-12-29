@@ -79,6 +79,9 @@
     <string name="settings_category_temperature">Temperatur</string>
     <string name="settings_temperature_default">Standard-Temperaturskala</string>
     <string name="settings_temperature_default_dialog">Temperaturskala auswählen</string>
+    <string name="settings_category_info">Information</string>
+    <string name="settings_info_terms_conditions">Geschäftsbedingungen</string>
+    <string name="settings_info_privacy_policy">Datenschutz-Bestimmungen</string>
 
     <string name="button_add">Hinzufügen</string>
     <string name="button_edit">Bearbeiten</string>
