@@ -1,3 +1,7 @@
+>>> cleanup all issue on GitHub
+  - bug
+  - new feature by priority
+
 --- priority
 
 * security restrictions
@@ -18,11 +22,22 @@ UPDATE/DELETE users.profiles if auth and same or different userId
 NO UPDATE/DELETE users
 ---
 
+* link tos and privacy in navbar + padding bottom
+
 * firestore backups
   - import/export
   - (?) cron
 
+* profile
+  - show empty list
+  - use FAB instead of actionbar
+  - (?) show with color if profile was modified
+  - (?) use context actionbar + onClick instead of menu on each element
+
 * share profiles
+  - dialog with "@gmail.com"
+  - color + hide share again
+  - add security rule to block sharing non-owner
 
 * automation
   - general / group / area
@@ -45,6 +60,21 @@ NO UPDATE/DELETE users
 
 * search in all environments
   - no need ordering
+
+* light
+  - blink
+  - dimmer
+
+* delete gateway
+
+* ip camera
+  - verify how many use it
+  - remove activity and show in list
+  - snapshot
+
+* translate changelog
+
+* rate directly from the app
 
 ---------- OLD
 
