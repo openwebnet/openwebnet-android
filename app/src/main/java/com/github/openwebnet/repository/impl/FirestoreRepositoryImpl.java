@@ -52,7 +52,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     private static final Logger log = LoggerFactory.getLogger(FirestoreRepositoryImpl.class);
 
-    private static boolean DEVELOPMENT = true;
+    private static boolean DEVELOPMENT = false;
 
     private static final String ENVIRONMENT = DEVELOPMENT ? "dev_" : "";
     private static final String COLLECTION_USERS = ENVIRONMENT + "users";

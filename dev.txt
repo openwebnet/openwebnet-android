@@ -2,6 +2,9 @@
   - bug
   - new feature by priority
 
+* TODO update store listing (en) and images on play store
+* TODO test firestore collection not-defined in security roles
+
 --- priority
 
 * security restrictions
