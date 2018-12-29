@@ -219,8 +219,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(onSuccess, error -> {
                     swipeRefreshLayoutProfile.setRefreshing(false);
-                    log.error("requestAction: timeout", error);
-                    showSnackbar(R.string.error_timeout);
+                    log.error("requestAction: request failed", error);
+                    showSnackbar(R.string.error_request);
                 });
         } else {
             // show empty list

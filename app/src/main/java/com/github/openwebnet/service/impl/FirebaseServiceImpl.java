@@ -113,6 +113,7 @@ public class FirebaseServiceImpl implements FirebaseService {
             new Date(firebaseUser.getMetadata().getCreationTimestamp()) : new Date();
 
         return new UserModel.Builder()
+            // FIRESTORE_SECURITY_RULE: only owner
             .userId(firebaseUser.getUid())
             .email(firebaseUser.getEmail())
             .name(firebaseUser.getDisplayName())

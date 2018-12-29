@@ -51,7 +51,7 @@
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="error_authentication">Ошибка аутентификации</string>
     <string name="error_connection">Соединение недоступно</string>
-    <string name="error_timeout">Истекло время запроса</string>
+    <string name="error_request">Запрос не выполнен</string>
     <string name="error_profile_max">Превышено максимально допустимое количество профилей</string>
 
     <string name="validation_required">Обязательно поле</string>

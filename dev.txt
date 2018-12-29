@@ -8,20 +8,6 @@
   - add firestore rules
   - query/test for security rule with admin sdk
 
----
-if userId is different (already shared) you can't share it again
-limit to 10 max profiles (created + shared with me)
-
-INSERT profiles if auth
-READ profiles if auth and same userId
-NO UPDATE/DELETE profiles
-
-INSERT users if auth
-READ users if auth and same userId
-UPDATE/DELETE users.profiles if auth and same or different userId
-NO UPDATE/DELETE users
----
-
 * link tos and privacy in navbar + padding bottom
 
 * firestore backups
@@ -37,7 +23,7 @@ NO UPDATE/DELETE users
 * share profiles
   - dialog with "@gmail.com"
   - color + hide share again
-  - add security rule to block sharing non-owner
+  - add security rule to block if userId is different (already shared/non owner) you can't share it again
 
 * automation
   - general / group / area

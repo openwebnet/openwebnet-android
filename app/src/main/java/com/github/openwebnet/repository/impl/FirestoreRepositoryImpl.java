@@ -173,6 +173,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 FirebaseFirestore db = getDb();
                 WriteBatch batch = db.batch();
 
+                // FIRESTORE_SECURITY_RULE: max size
                 DocumentReference profileRef = db.collection(COLLECTION_PROFILES).document();
                 batch.set(profileRef, profile, SetOptions.merge());
 
@@ -251,6 +252,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             try {
                 getDb()
                     .collection(COLLECTION_PROFILES)
+                    // FIRESTORE_SECURITY_RULE: only owner
                     .document(profileRef.getId())
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {

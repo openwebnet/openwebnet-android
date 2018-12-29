@@ -51,7 +51,7 @@
     <string name="error_load_navigation_drawer">Fehler beim Laden der Navigationsleiste</string>
     <string name="error_authentication">Authentifizierung fehlgeschlagen</string>
     <string name="error_connection">Verbindung nicht verfügbar</string>
-    <string name="error_timeout">Zeitüberschreitung der Anforderung</string>
+    <string name="error_request">Anfrage fehlgeschlagen</string>
     <string name="error_profile_max">Maximale Anzahl zulässiger Profile überschritten</string>
 
     <string name="validation_required">Pflichtfeld</string>

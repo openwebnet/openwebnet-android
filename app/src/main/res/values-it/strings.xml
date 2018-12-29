@@ -51,7 +51,7 @@
     <string name="error_load_navigation_drawer">Errore caricamento menu</string>
     <string name="error_authentication">Autenticazione fallita</string>
     <string name="error_connection">Connessione non disponibile</string>
-    <string name="error_timeout">Errore timeout</string>
+    <string name="error_request">Richiesta fallita</string>
     <string name="error_profile_max">Superato il numero massimo di profili consentiti</string>
 
     <string name="validation_required">Campo obbligatorio</string>
