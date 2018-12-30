@@ -10,8 +10,6 @@
   - (?) cron
 
 * profile
-  - show empty list
-  - use FAB instead of actionbar
   - (?) use context actionbar + onClick instead of menu on each element
 
 * share profiles
