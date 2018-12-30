@@ -444,7 +444,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (mItems.get(position) instanceof SoundModel) {
             return SoundViewHolder.VIEW_TYPE;
         }
-        throw new IllegalStateException("invalid item position");
+        throw new IllegalStateException("invalid item type");
     }
 
     @Override

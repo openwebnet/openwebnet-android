@@ -18,9 +18,9 @@
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Anwenden</string>
     <string name="menu_share">Aktie</string>
-    <string name="menu_profile_create">Erstellen</string>
-    <string name="menu_profile_reset">Zurücksetzen</string>
     <string name="menu_profile_logout">Ausloggen</string>
+    <string name="fab_profile_label_create">Erstellen</string>
+    <string name="fab_profile_label_reset">Zurücksetzen</string>
 
     <string name="drawer_menu_favourite">Favoriten</string>
     <string name="drawer_menu_add">Umgebung hinzufügen</string>

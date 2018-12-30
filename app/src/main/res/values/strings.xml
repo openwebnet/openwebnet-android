@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">3.0.0</string>
+    <string name="app_version_number" translatable="false">3.1.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
     <string name="url_terms_conditions" translatable="false">https://termsfeed.com/terms-conditions/f21f31b35e4569354fe47c11345ede48</string>
     <string name="url_privacy_policy" translatable="false">https://termsfeed.com/privacy-policy/774d76cf112e2cfe571eafc89f70de15</string>
@@ -25,9 +25,9 @@
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Apply</string>
     <string name="menu_share">Share</string>
-    <string name="menu_profile_create">Create</string>
-    <string name="menu_profile_reset">Reset</string>
     <string name="menu_profile_logout">Logout</string>
+    <string name="fab_profile_label_create">Create</string>
+    <string name="fab_profile_label_reset">Reset</string>
 
     <string name="drawer_menu_favourite">Favourites</string>
     <string name="drawer_menu_add">Add environment</string>

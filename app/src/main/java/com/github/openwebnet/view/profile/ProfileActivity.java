@@ -20,6 +20,8 @@ import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Lists;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,6 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.swipeRefreshLayoutProfile)
     SwipeRefreshLayout swipeRefreshLayoutProfile;
 
+    @BindView(R.id.speedDialProfile)
+    SpeedDialView speedDialProfile;
+
     @BindString(R.string.validation_required)
     String labelValidationRequired;
 
@@ -65,7 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<UserProfileModel> profileItems = new ArrayList<>();
-    private boolean actionBarMenuVisibility = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,54 @@ public class ProfileActivity extends AppCompatActivity {
 
         swipeRefreshLayoutProfile.setColorSchemeResources(R.color.primary, R.color.yellow_a400, R.color.accent);
         swipeRefreshLayoutProfile.setOnRefreshListener(this::refreshProfiles);
+
+        initSpeedDial();
+    }
+
+    private void initSpeedDial() {
+        // create
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+            R.id.fab_profile_create,
+            R.drawable.account_plus
+        ).setLabel(R.string.fab_profile_label_create).create());
+
+        // reset
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+                R.id.fab_profile_reset,
+                R.drawable.delete
+        ).setLabel(R.string.fab_profile_label_reset).create());
+
+        speedDialProfile.setOnActionSelectedListener(actionItem -> {
+            switch (actionItem.getId()) {
+                case R.id.fab_profile_create:
+
+                    int profileSize = mRecyclerView.getAdapter().getItemCount();
+                    log.info("profileSize: {}", mRecyclerView.getAdapter().getItemCount());
+
+                    // client side check
+                    if (profileSize < MAX_PROFILE) {
+                        showCreateDialog();
+                    } else {
+                        showSnackbar(R.string.error_profile_max);
+                    }
+
+                    speedDialProfile.close();
+                    return true;
+                case R.id.fab_profile_reset:
+
+                    showConfirmationDialog(
+                        R.string.dialog_profile_reset_title,
+                        R.string.dialog_profile_reset_message,
+                        this::resetProfile);
+
+                    speedDialProfile.close();
+                    return true;
+                default:
+                    break;
+            }
+            // keep open
+            return true;
+        });
     }
 
     @Override
@@ -106,23 +158,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_profile_create:
-                int profileSize = mRecyclerView.getAdapter().getItemCount();
-                log.info("profileSize: {}", mRecyclerView.getAdapter().getItemCount());
-
-                // client side check
-                if (profileSize < MAX_PROFILE) {
-                    showCreateDialog();
-                } else {
-                    showSnackbar(R.string.error_profile_max);
-                }
-                return true;
-            case R.id.action_profile_reset:
-                showConfirmationDialog(
-                    R.string.dialog_profile_reset_title,
-                    R.string.dialog_profile_reset_message,
-                    this::resetProfile);
-                return true;
             case R.id.action_profile_logout:
                 showConfirmationDialog(
                     R.string.dialog_profile_logout_title,
@@ -138,12 +173,6 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.setGroupVisible(R.id.action_profile_group, actionBarMenuVisibility);
-        return super.onPrepareOptionsMenu(menu);
     }
 
     private void showConfirmationDialog(int titleStringId, int messageStringId, Action0 actionOk) {
@@ -185,15 +214,10 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    private void toggleActionBarMenu(boolean visibility) {
-        actionBarMenuVisibility = visibility;
-        invalidateOptionsMenu();
-    }
-
     private void hideActions() {
         // hide everything
         mRecyclerView.setVisibility(View.INVISIBLE);
-        toggleActionBarMenu(false);
+        speedDialProfile.hide();
         swipeRefreshLayoutProfile.setRefreshing(true);
     }
 
@@ -202,7 +226,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileItems.addAll(profiles);
         mAdapter.notifyDataSetChanged();
         swipeRefreshLayoutProfile.setRefreshing(false);
-        toggleActionBarMenu(true);
+        speedDialProfile.show();
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -226,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
             // show empty list
             updateProfiles(Lists.newArrayList());
             // hide
-            toggleActionBarMenu(false);
+            speedDialProfile.hide();
             log.warn("requestAction: connection unavailable");
             showSnackbar(R.string.error_connection);
         }

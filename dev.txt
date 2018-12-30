@@ -1,19 +1,9 @@
->>> cleanup all issue on GitHub
-  - bug
-  - new feature by priority
-
 # TODO
 * update store listing (en) and images on play store
 * test firestore collection not-defined in security roles
 * bump libs
 
---- priority
-
-* security restrictions
-  - add firestore rules
-  - query/test for security rule with admin sdk
-
-* link tos and privacy in navbar + padding bottom
+---
 
 * firestore backups
   - import/export
@@ -22,7 +12,6 @@
 * profile
   - show empty list
   - use FAB instead of actionbar
-  - (?) show with color if profile was modified
   - (?) use context actionbar + onClick instead of menu on each element
 
 * share profiles
@@ -30,14 +19,7 @@
   - color + hide share again
   - add security rule to block if userId is different (already shared/non owner) you can't share it again
 
-* automation
-  - general / group / area
-
-* add BUS support
-
---- nice to have
-
-* improve coverage on profile and firebase
+---
 
 * list of testers by feature
 
@@ -47,27 +29,6 @@
 
 * analytics
   - (?) custom events
-
-* (?) add createdAt/modifiedAt to each model
-  - ordering by last modified
-
-* search in all environments
-  - no need ordering
-
-* light
-  - blink
-  - dimmer
-
-* delete gateway
-
-* ip camera
-  - verify how many use it
-  - remove activity and show in list
-  - snapshot
-
-* translate changelog
-
-* rate directly from the app
 
 ---------- OLD
 
