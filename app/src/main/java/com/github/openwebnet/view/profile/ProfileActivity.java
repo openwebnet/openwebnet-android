@@ -20,6 +20,8 @@ import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Lists;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,6 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.swipeRefreshLayoutProfile)
     SwipeRefreshLayout swipeRefreshLayoutProfile;
 
+    @BindView(R.id.speedDialProfile)
+    SpeedDialView speedDialProfile;
+
     @BindString(R.string.validation_required)
     String labelValidationRequired;
 
@@ -83,6 +88,32 @@ public class ProfileActivity extends AppCompatActivity {
 
         swipeRefreshLayoutProfile.setColorSchemeResources(R.color.primary, R.color.yellow_a400, R.color.accent);
         swipeRefreshLayoutProfile.setOnRefreshListener(this::refreshProfiles);
+
+        initSpeedDial();
+    }
+
+    // TODO
+    private void initSpeedDial() {
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+            R.id.fab_no_label,
+            R.drawable.plus
+        ).setLabel("aaa").create());
+
+        speedDialProfile.setOnActionSelectedListener(actionItem -> {
+            switch (actionItem.getId()) {
+                case R.id.fab_no_label:
+                    Snackbar.make(findViewById(android.R.id.content), "hello", Snackbar.LENGTH_LONG).show();
+                    // close with animation
+                    speedDialProfile.close();
+                    break;
+                default:
+                    break;
+            }
+            // keep open
+            return true;
+        });
+
+        speedDialProfile.hide();
     }
 
     @Override
@@ -193,6 +224,9 @@ public class ProfileActivity extends AppCompatActivity {
     private void hideActions() {
         // hide everything
         mRecyclerView.setVisibility(View.INVISIBLE);
+        // TODO
+        // speedDialProfile.hide();
+        //speedDialProfile.setVisibility(View.INVISIBLE);
         toggleActionBarMenu(false);
         swipeRefreshLayoutProfile.setRefreshing(true);
     }
@@ -203,6 +237,9 @@ public class ProfileActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
         swipeRefreshLayoutProfile.setRefreshing(false);
         toggleActionBarMenu(true);
+        // TODO
+        //speedDialProfile.show();
+        //speedDialProfile.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 

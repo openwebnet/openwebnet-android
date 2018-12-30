@@ -93,6 +93,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.3.0'
     implementation 'com.firebaseui:firebase-ui-firestore:4.3.0'
 
+    implementation "com.leinardi.android:speed-dial:2.0.1"
     implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     implementation 'com.github.scottyab:secure-preferences:v0.1.6'
 
