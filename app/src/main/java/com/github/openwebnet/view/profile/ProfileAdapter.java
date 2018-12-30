@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /*
  * https://developer.android.com/guide/topics/ui/layout/recyclerview
  */
-public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder> {
+public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileAdapter.class);
 
@@ -54,7 +54,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     /**
      *
      */
-    public static class ProfileViewHolder extends RecyclerView.ViewHolder {
+    static class ProfileViewHolder extends RecyclerView.ViewHolder {
+
+        static final int VIEW_TYPE = 100;
 
         @BindView(R.id.textViewProfileName)
         TextView textViewProfileName;
@@ -71,29 +73,71 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
         }
     }
 
-    @NonNull
-    @Override
-    public ProfileViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ProfileViewHolder(LayoutInflater.from(viewGroup.getContext())
-            .inflate(R.layout.profile_item, viewGroup, false));
+    /**
+     *
+     */
+    static class EmptyViewHolder extends RecyclerView.ViewHolder {
+
+        static final int VIEW_TYPE = -1;
+
+        public EmptyViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProfileViewHolder profileViewHolder, int i) {
+    public int getItemViewType(int position) {
+        if (mProfiles.isEmpty()) {
+            return EmptyViewHolder.VIEW_TYPE;
+        } else {
+            return ProfileViewHolder.VIEW_TYPE;
+        }
+    }
 
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        switch (viewType) {
+            case ProfileViewHolder.VIEW_TYPE:
+                return new ProfileViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.profile_item, parent, false));
+            case EmptyViewHolder.VIEW_TYPE:
+                return new EmptyViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_empty, parent, false));
+            default:
+                throw new IllegalStateException("invalid view type");
+        }
+
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        switch (viewHolder.getItemViewType()) {
+            case ProfileViewHolder.VIEW_TYPE:
+                initProfileViewHolder((ProfileViewHolder) viewHolder, position);
+                break;
+            case EmptyViewHolder.VIEW_TYPE:
+                break;
+            default:
+                throw new IllegalStateException("invalid view type");
+        }
+    }
+
+    private void initProfileViewHolder(ProfileViewHolder profileViewHolder, int position) {
         profileViewHolder.textViewProfileName.setText(
-            mProfiles.get(i).getName());
+            mProfiles.get(position).getName());
 
         profileViewHolder.textViewProfileDate.setText(
-            utilityService.formatDate(mProfiles.get(i).getCreatedAt()));
+            utilityService.formatDate(mProfiles.get(position).getCreatedAt()));
 
         profileViewHolder.imageButtonProfileCardMenu.setOnClickListener(v ->
-            showProfileCardMenu(v, mProfiles.get(i)));
+            showProfileCardMenu(v, mProfiles.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return mProfiles.size();
+        // to show empty list
+        return mProfiles.size() > 0 ? mProfiles.size() : 1;
     }
 
     private void showProfileCardMenu(View view, UserProfileModel profile) {
@@ -110,8 +154,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
                         R.string.dialog_profile_switch_message,
                         () -> switchProfile(profile)));
                     break;
-                case R.id.action_profile_card_share: shareProfile(profile);
+                case R.id.action_profile_card_share:
                     // TODO
+                    shareProfile(profile);
                     break;
                 case R.id.action_profile_card_delete:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
