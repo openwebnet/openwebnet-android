@@ -18,9 +18,9 @@
     <string name="menu_debug">Отладка</string>
     <string name="menu_apply">Применять</string>
     <string name="menu_share">Поделиться</string>
-    <string name="menu_profile_create">Создайте</string>
-    <string name="menu_profile_reset">Сброс</string>
     <string name="menu_profile_logout">Выход</string>
+    <string name="fab_profile_label_create">Создайте</string>
+    <string name="fab_profile_label_reset">Сброс</string>
 
     <string name="drawer_menu_favourite">Избранное</string>
     <string name="drawer_menu_add">Добавить окружение</string>

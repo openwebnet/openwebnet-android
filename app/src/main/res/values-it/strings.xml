@@ -18,9 +18,9 @@
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Applica</string>
     <string name="menu_share">Condividi</string>
-    <string name="menu_profile_create">Crea</string>
-    <string name="menu_profile_reset">Reset</string>
     <string name="menu_profile_logout">Disconneti</string>
+    <string name="fab_profile_label_create">Crea</string>
+    <string name="fab_profile_label_reset">Reset</string>
 
     <string name="drawer_menu_favourite">Preferiti</string>
     <string name="drawer_menu_add">Aggiungi ambiente</string>

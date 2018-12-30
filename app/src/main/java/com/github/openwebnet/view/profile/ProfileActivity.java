@@ -70,7 +70,6 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<UserProfileModel> profileItems = new ArrayList<>();
-    private boolean actionBarMenuVisibility = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,28 +91,50 @@ public class ProfileActivity extends AppCompatActivity {
         initSpeedDial();
     }
 
-    // TODO
     private void initSpeedDial() {
+        // create
         speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
-            R.id.fab_no_label,
-            R.drawable.plus
-        ).setLabel("aaa").create());
+            R.id.fab_profile_create,
+            R.drawable.account_plus
+        ).setLabel(R.string.fab_profile_label_create).create());
+
+        // reset
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+                R.id.fab_profile_reset,
+                R.drawable.delete
+        ).setLabel(R.string.fab_profile_label_reset).create());
 
         speedDialProfile.setOnActionSelectedListener(actionItem -> {
             switch (actionItem.getId()) {
-                case R.id.fab_no_label:
-                    Snackbar.make(findViewById(android.R.id.content), "hello", Snackbar.LENGTH_LONG).show();
-                    // close with animation
+                case R.id.fab_profile_create:
+
+                    int profileSize = mRecyclerView.getAdapter().getItemCount();
+                    log.info("profileSize: {}", mRecyclerView.getAdapter().getItemCount());
+
+                    // client side check
+                    if (profileSize < MAX_PROFILE) {
+                        showCreateDialog();
+                    } else {
+                        showSnackbar(R.string.error_profile_max);
+                    }
+
                     speedDialProfile.close();
-                    break;
+                    return true;
+                case R.id.fab_profile_reset:
+
+                    showConfirmationDialog(
+                        R.string.dialog_profile_reset_title,
+                        R.string.dialog_profile_reset_message,
+                        this::resetProfile);
+
+                    speedDialProfile.close();
+                    return true;
                 default:
                     break;
             }
             // keep open
             return true;
         });
-
-        speedDialProfile.hide();
     }
 
     @Override
@@ -137,23 +158,6 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_profile_create:
-                int profileSize = mRecyclerView.getAdapter().getItemCount();
-                log.info("profileSize: {}", mRecyclerView.getAdapter().getItemCount());
-
-                // client side check
-                if (profileSize < MAX_PROFILE) {
-                    showCreateDialog();
-                } else {
-                    showSnackbar(R.string.error_profile_max);
-                }
-                return true;
-            case R.id.action_profile_reset:
-                showConfirmationDialog(
-                    R.string.dialog_profile_reset_title,
-                    R.string.dialog_profile_reset_message,
-                    this::resetProfile);
-                return true;
             case R.id.action_profile_logout:
                 showConfirmationDialog(
                     R.string.dialog_profile_logout_title,
@@ -169,12 +173,6 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.setGroupVisible(R.id.action_profile_main, actionBarMenuVisibility);
-        return super.onPrepareOptionsMenu(menu);
     }
 
     private void showConfirmationDialog(int titleStringId, int messageStringId, Action0 actionOk) {
@@ -216,18 +214,10 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    private void toggleActionBarMenu(boolean visibility) {
-        actionBarMenuVisibility = visibility;
-        invalidateOptionsMenu();
-    }
-
     private void hideActions() {
         // hide everything
         mRecyclerView.setVisibility(View.INVISIBLE);
-        // TODO
-        // speedDialProfile.hide();
-        //speedDialProfile.setVisibility(View.INVISIBLE);
-        toggleActionBarMenu(false);
+        speedDialProfile.hide();
         swipeRefreshLayoutProfile.setRefreshing(true);
     }
 
@@ -236,10 +226,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileItems.addAll(profiles);
         mAdapter.notifyDataSetChanged();
         swipeRefreshLayoutProfile.setRefreshing(false);
-        toggleActionBarMenu(true);
-        // TODO
-        //speedDialProfile.show();
-        //speedDialProfile.setVisibility(View.VISIBLE);
+        speedDialProfile.show();
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -263,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
             // show empty list
             updateProfiles(Lists.newArrayList());
             // hide
-            toggleActionBarMenu(false);
+            speedDialProfile.hide();
             log.warn("requestAction: connection unavailable");
             showSnackbar(R.string.error_connection);
         }
