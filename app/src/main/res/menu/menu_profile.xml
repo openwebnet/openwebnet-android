@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group
-        android:id="@+id/action_profile_group"
+        android:id="@+id/action_profile_main"
         android:checkableBehavior="none">
 
         <item
@@ -16,11 +16,16 @@
             android:id="@+id/action_profile_reset"
             android:title="@string/menu_profile_reset"
             app:showAsAction="never|withText" />
+    </group>
+
+    <group
+        android:id="@+id/action_profile_other"
+        android:checkableBehavior="none"
+        android:visible="false">
 
         <item
             android:id="@+id/action_profile_logout"
             android:title="@string/menu_profile_logout"
-            android:visible="false"
             app:showAsAction="never|withText" />
     </group>
 

@@ -142,7 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        menu.setGroupVisible(R.id.action_profile_group, actionBarMenuVisibility);
+        menu.setGroupVisible(R.id.action_profile_main, actionBarMenuVisibility);
         return super.onPrepareOptionsMenu(menu);
     }
 
