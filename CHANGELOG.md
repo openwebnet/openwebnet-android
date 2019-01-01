@@ -1,6 +1,6 @@
 #### v3.1.0 (December 30, 2018)
 
-- Update profiles
+- Update profile UI
 
 #### v3.0.0 (December 29, 2018)
 
