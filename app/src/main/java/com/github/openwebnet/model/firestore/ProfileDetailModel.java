@@ -100,88 +100,44 @@ public class ProfileDetailModel {
         return profileVersion;
     }
 
-    public void setProfileVersion(int profileVersion) {
-        this.profileVersion = profileVersion;
-    }
-
     public String getUserId() {
         return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public int getDatabaseVersion() {
         return databaseVersion;
     }
 
-    public void setDatabaseVersion(int databaseVersion) {
-        this.databaseVersion = databaseVersion;
-    }
-
     public int getAppVersionCode() {
         return appVersionCode;
-    }
-
-    public void setAppVersionCode(int appVersionCode) {
-        this.appVersionCode = appVersionCode;
     }
 
     public String getAppVersionName() {
         return appVersionName;
     }
 
-    public void setAppVersionName(String appVersionName) {
-        this.appVersionName = appVersionName;
-    }
-
     public String getAndroidManufacturer() {
         return androidManufacturer;
-    }
-
-    public void setAndroidManufacturer(String androidManufacturer) {
-        this.androidManufacturer = androidManufacturer;
     }
 
     public String getAndroidModel() {
         return androidModel;
     }
 
-    public void setAndroidModel(String androidModel) {
-        this.androidModel = androidModel;
-    }
-
     public int getAndroidVersionSdk() {
         return androidVersionSdk;
     }
 
-    public void setAndroidVersionSdk(int androidVersionSdk) {
-        this.androidVersionSdk = androidVersionSdk;
-    }
-
     public String getAndroidVersionRelease() {
         return androidVersionRelease;
-    }
-
-    public void setAndroidVersionRelease(String androidVersionRelease) {
-        this.androidVersionRelease = androidVersionRelease;
     }
 
 }

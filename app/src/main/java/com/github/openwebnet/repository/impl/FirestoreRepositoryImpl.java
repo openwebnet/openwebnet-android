@@ -223,6 +223,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                                 List<UserProfileModel> userProfileModels =
                                     Stream.of((List<Map<String, Object>>) document.getData().get(COLLECTION_USER_PROFILES))
                                         .map(userProfileMap -> new UserProfileModel.Builder(userProfileMap).build())
+                                        // filter deleted
+                                        .filterNot(userProfile -> userProfile.getStatus() == UserProfileModel.Status.DELETED)
                                         .toList();
 
                                 log.info("user profiles: size={}", userProfileModels.size());
@@ -310,11 +312,16 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             .flatMap(userProfiles -> {
                 log.info("soft delete profile: userId={} profileRef={}", userId, profileRef.getPath());
 
-                // remove element from array
+                // update status
                 List<UserProfileModel> updatedUserProfiles = Stream
                     .of(userProfiles)
-                    .filterNot(userProfile ->
-                        userProfile.getProfileRef().getPath().equals(profileRef.getPath()))
+                    .map(userProfile -> {
+                        if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
+                            return new UserProfileModel.Builder(userProfile)
+                                .status(UserProfileModel.Status.DELETED).build();
+                        }
+                        return userProfile;
+                    })
                     .toList();
 
                 return updateUserProfile(userId, updatedUserProfiles);
