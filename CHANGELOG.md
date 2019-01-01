@@ -1,3 +1,7 @@
+#### v3.1.1 (January 1, 2019)
+
+- Minor fixes
+
 #### v3.1.0 (December 30, 2018)
 
 - Update profile UI
