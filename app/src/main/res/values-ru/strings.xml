@@ -46,7 +46,7 @@
     <string name="dialog_profile_delete_title">Удалить профиль</string>
     <string name="dialog_profile_delete_message">Вы больше не сможете получить доступ и применять этот профиль.\n\nВы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
-    <string name="dialog_donation_tax">Пожертвования исключены налог и может варьироваться от одной страны в другую</string>
+    <string name="dialog_donation_tax">Пожертвования не включают налоги и могут варьироваться в зависимости от страны</string>
 
     <string name="error_load_navigation_drawer">Ошибка загрузки меню</string>
     <string name="error_authentication">Ошибка аутентификации</string>
@@ -55,7 +55,7 @@
     <string name="error_profile_max">Превышено максимально допустимое количество профилей</string>
 
     <string name="validation_required">Обязательно поле</string>
-    <string name="validation_host">Неверный адрес IP или домен</string>
+    <string name="validation_host">Неверный домен или IP адрес</string>
     <string name="validation_port">Некорректный порт</string>
     <string name="validation_url">Некорректный url</string>
     <string name="validation_bad_value">Значение не допускается</string>
@@ -154,9 +154,9 @@
     <string name="card_device_debug_clipboard_copied">Ответ скопирован</string>
 
     <string name="donation_coffee_name">Кофе</string>
-    <string name="donation_coffee_description">Кофе, чтобы держать меня разбудила, когда я программу в течение ночи!</string>
+    <string name="donation_coffee_description">Кофе, чтобы будить меня, когда я программирую по ночам!</string>
     <string name="donation_beer_name">Пиво</string>
-    <string name="donation_beer_description">Холодное пиво, чтобы увеличить свою производительность!</string>
+    <string name="donation_beer_description">Холодное пиво, чтобы увеличить мою производительность!</string>
     <string name="donation_pizza_name">Пицца</string>
-    <string name="donation_pizza_description">Пицца, чтобы сделать меня счастливым!</string>
+    <string name="donation_pizza_description">Пицца, для полного счастья!</string>
 </resources>
