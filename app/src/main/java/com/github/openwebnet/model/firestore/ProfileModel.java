@@ -159,88 +159,44 @@ public class ProfileModel {
         return details;
     }
 
-    public void setDetails(ProfileDetailModel details) {
-        this.details = details;
-    }
-
     public List<Map<String, Object>> getAutomations() {
         return automations;
-    }
-
-    public void setAutomations(List<Map<String, Object>> automations) {
-        this.automations = automations;
     }
 
     public List<Map<String, Object>> getDevices() {
         return devices;
     }
 
-    public void setDevices(List<Map<String, Object>> devices) {
-        this.devices = devices;
-    }
-
     public List<Map<String, Object>> getEnergies() {
         return energies;
-    }
-
-    public void setEnergies(List<Map<String, Object>> energies) {
-        this.energies = energies;
     }
 
     public List<Map<String, Object>> getEnvironments() {
         return environments;
     }
 
-    public void setEnvironments(List<Map<String, Object>> environments) {
-        this.environments = environments;
-    }
-
     public List<Map<String, Object>> getGateways() {
         return gateways;
-    }
-
-    public void setGateways(List<Map<String, Object>> gateways) {
-        this.gateways = gateways;
     }
 
     public List<Map<String, Object>> getIpcams() {
         return ipcams;
     }
 
-    public void setIpcams(List<Map<String, Object>> ipcams) {
-        this.ipcams = ipcams;
-    }
-
     public List<Map<String, Object>> getLights() {
         return lights;
-    }
-
-    public void setLights(List<Map<String, Object>> lights) {
-        this.lights = lights;
     }
 
     public List<Map<String, Object>> getScenarios() {
         return scenarios;
     }
 
-    public void setScenarios(List<Map<String, Object>> scenarios) {
-        this.scenarios = scenarios;
-    }
-
     public List<Map<String, Object>> getSounds() {
         return sounds;
     }
 
-    public void setSounds(List<Map<String, Object>> sounds) {
-        this.sounds = sounds;
-    }
-
     public List<Map<String, Object>> getTemperatures() {
         return temperatures;
-    }
-
-    public void setTemperatures(List<Map<String, Object>> temperatures) {
-        this.temperatures = temperatures;
     }
 
 }

@@ -5,6 +5,10 @@
 
 ---
 
+* verify if size(ACTIVE + DELETED + shared) max of 10 isn't too restrictive
+
+* firestore limit price to free quota
+
 * firestore backups
   - import/export
   - (?) cron

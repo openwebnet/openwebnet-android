@@ -12,10 +12,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class UserProfileModel implements FirestoreModel<UserProfileModel> {
 
+    public enum Status {
+        ACTIVE,
+        DELETED
+    }
+
     private static final String FIELD_PROFILE_REF = "profileRef";
     private static final String FIELD_PROFILE_USER_ID = "userId";
     private static final String FIELD_PROFILE_NAME = "name";
     private static final String FIELD_PROFILE_CREATED_AT = "createdAt";
+    private static final String FIELD_PROFILE_STATUS = "status";
 
     private DocumentReference profileRef;
 
@@ -26,6 +32,8 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     @ServerTimestamp
     private Date createdAt;
 
+    private Status status;
+
     public UserProfileModel() {}
 
     private UserProfileModel(Builder builder) {
@@ -33,6 +41,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
         this.userId = builder.userId;
         this.name = builder.name;
         this.createdAt = builder.createdAt;
+        this.status = builder.status;
     }
 
     public static class Builder {
@@ -41,12 +50,14 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
         private String name;
         private Date createdAt;
         private String userId;
+        private Status status;
 
         public Builder(ProfileModel profile) {
             ProfileDetailModel details = profile.getDetails();
             this.userId = details.getUserId();
             this.name = details.getName();
             this.createdAt = details.getCreatedAt();
+            this.status = Status.ACTIVE;
         }
 
         public Builder(Map<String, Object> map) {
@@ -54,10 +65,26 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
             this.userId = (String) map.get(FIELD_PROFILE_USER_ID);
             this.name = (String) map.get(FIELD_PROFILE_NAME);
             this.createdAt = ((Timestamp) map.get(FIELD_PROFILE_CREATED_AT)).toDate();
+            this.status = Status.valueOf((String) map.get(FIELD_PROFILE_STATUS));
+        }
+
+        // copy: can't use Builder(userProfile.toMap())
+        // because createdAt is casted to Timestamp from firestore
+        public Builder(UserProfileModel userProfile) {
+            this.profileRef = userProfile.getProfileRef();
+            this.userId = userProfile.getUserId();
+            this.name = userProfile.getName();
+            this.createdAt = userProfile.getCreatedAt();
+            this.status = userProfile.getStatus();
         }
 
         public Builder profileRef(DocumentReference profileRef) {
             this.profileRef = profileRef;
+            return this;
+        }
+
+        public Builder status(Status status) {
+            this.status = status;
             return this;
         }
 
@@ -66,6 +93,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
             checkNotNull(userId, "profileRef is null");
             checkNotNull(name, "profileRef is null");
             checkNotNull(createdAt, "createdAt is null");
+            checkNotNull(status, "status is null");
 
             return new UserProfileModel(this);
         }
@@ -78,6 +106,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
         map.put(FIELD_PROFILE_USER_ID, getUserId());
         map.put(FIELD_PROFILE_NAME, getName());
         map.put(FIELD_PROFILE_CREATED_AT, getCreatedAt());
+        map.put(FIELD_PROFILE_STATUS, getStatus().name());
         return map;
     }
 
@@ -90,32 +119,20 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
         return profileRef;
     }
 
-    public void setProfileRef(DocumentReference profileRef) {
-        this.profileRef = profileRef;
-    }
-
     public String getUserId() {
         return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public Status getStatus() {
+        return status;
     }
 
 }
