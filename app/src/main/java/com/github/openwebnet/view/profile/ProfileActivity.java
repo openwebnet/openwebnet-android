@@ -92,17 +92,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initSpeedDial() {
-        // create
-        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
-            R.id.fab_profile_create,
-            R.drawable.account_plus
-        ).setLabel(R.string.fab_profile_label_create).create());
-
         // reset
         speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
                 R.id.fab_profile_reset,
                 R.drawable.delete
         ).setLabel(R.string.fab_profile_label_reset).create());
+
+        // create
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+            R.id.fab_profile_create,
+            R.drawable.account_plus
+        ).setLabel(R.string.fab_profile_label_create).create());
 
         speedDialProfile.setOnActionSelectedListener(actionItem -> {
             switch (actionItem.getId()) {
