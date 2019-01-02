@@ -20,6 +20,7 @@ import com.github.openwebnet.service.FirebaseService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Lists;
+import com.google.firebase.firestore.DocumentReference;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
@@ -214,6 +215,30 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
+    // TODO
+    private void showShareDialog(DocumentReference profileRef) {
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_share, null);
+        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileShareName);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setView(layout)
+            .setTitle(R.string.dialog_profile_share_title)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                if (utilityService.isBlankText(editTextName)) {
+                    editTextName.setError(labelValidationRequired);
+                } else {
+                    // TODO utilityService.sanitizedText(editTextName)
+                    dialog.dismiss();
+                }
+            });
+    }
+
     private void hideActions() {
         // hide everything
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -328,6 +353,24 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnShowConfirmationDialogEvent event) {
         showConfirmationDialog(event.titleStringId, event.messageStringId, event.actionOk);
+    }
+
+    /**
+     *
+     */
+    public static class OnShowShareDialogEvent {
+
+        private final DocumentReference profileRef;
+
+        public OnShowShareDialogEvent(DocumentReference profileRef) {
+            this.profileRef = profileRef;
+        }
+    }
+
+    // fired by ProfileAdapter
+    @Subscribe
+    public void onEvent(OnShowShareDialogEvent event) {
+        showShareDialog(event.profileRef);
     }
 
     /**

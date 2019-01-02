@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dialog_margin">
+
+    <!-- https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address -->
+    <!-- {64}@{255} -->
+    <EditText
+        android:id="@+id/editTextDialogProfileShareName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/dialog_profile_share_email_prefix"
+        android:inputType="text"
+        android:maxLength="64" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="@string/dialog_profile_share_email_suffix" />
+
+</LinearLayout>

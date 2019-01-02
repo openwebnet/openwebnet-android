@@ -155,8 +155,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         () -> switchProfile(profile)));
                     break;
                 case R.id.action_profile_card_share:
-                    // TODO
-                    shareProfile(profile);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowShareDialogEvent(profile.getProfileRef()));
                     break;
                 case R.id.action_profile_card_delete:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
@@ -176,10 +175,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             mActivity.setResult(MainActivity.RESULT_CODE_PROFILE_RESET);
             mActivity.finish();
         }));
-    }
-
-    private void shareProfile(UserProfileModel profile) {
-        log.info("TODO onClick: imageButtonProfileShare");
     }
 
     private void deleteProfile(UserProfileModel profile) {

@@ -43,6 +43,8 @@
     <string name="dialog_profile_logout_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_switch_title">Profil anwenden</string>
     <string name="dialog_profile_switch_message">Alle nicht gespeicherten Änderungen am aktuellen Profil werden gelöscht und überschrieben.\n\nSind Sie sicher?</string>
+    <string name="dialog_profile_share_title">Profil teilen</string>
+    <string name="dialog_profile_share_email_prefix">Email</string>
     <string name="dialog_profile_delete_title">Profil löschen</string>
     <string name="dialog_profile_delete_message">Sie können dieses Profil nicht mehr aufrufen und anwenden.\n\nSind Sie sicher?</string>
     <string name="dialog_donation_title">Spenden</string>

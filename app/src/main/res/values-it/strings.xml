@@ -43,6 +43,8 @@
     <string name="dialog_profile_logout_message">\nSei sicuro?</string>
     <string name="dialog_profile_switch_title">Applica profilo</string>
     <string name="dialog_profile_switch_message">Tutti i cambiamenti non salvati al profilo corrente verranno cancellati e sovrascritti.\n\nSei sicuro?</string>
+    <string name="dialog_profile_share_title">Condividi profilo</string>
+    <string name="dialog_profile_share_email_prefix">Email</string>
     <string name="dialog_profile_delete_title">Cancella profilo</string>
     <string name="dialog_profile_delete_message">Non sarai piu\' in grado di accedere e applicare questo profilo.\n\nSei sicuro?</string>
     <string name="dialog_donation_title">Donazione</string>

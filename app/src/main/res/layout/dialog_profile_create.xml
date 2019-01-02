@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/dialog_margin"
-        android:hint="@string/dialog_environment_name"
+        android:hint="@string/dialog_profile_create_name"
         android:inputType="text"
         android:maxLength="50"/>
 
