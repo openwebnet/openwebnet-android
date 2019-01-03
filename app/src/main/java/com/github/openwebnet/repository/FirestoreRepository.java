@@ -23,7 +23,7 @@ public interface FirestoreRepository {
 
     Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef);
 
-    Observable<Void> shareProfile(String email);
+    Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email);
 
     Observable<Void> deleteLocalProfile();
 

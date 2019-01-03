@@ -21,7 +21,9 @@
 * share profiles
   - dialog with "@gmail.com"
   - color + hide share again
-  - add security rule to block if userId is different (already shared/non owner) you can't share it again
+  - make sure only a shared profile is accessible by someone else: SECURITY_RULE <<<
+  NO user can still copy and share a new profile:
+  - (?) add security rule to block if userId is different (already shared/non owner) you can't share it again
 
 ---
 

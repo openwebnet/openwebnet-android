@@ -329,9 +329,18 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<Void> shareProfile(String email) {
-        // TODO don't expose mapping userId/email
-        return null;
+    public Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email) {
+        return Observable.create(subscriber -> {
+            try {
+                log.info("share profile to email: {}", email);
+
+                subscriber.onNext(null);
+                subscriber.onCompleted();
+            } catch (Exception e) {
+                log.error("FirestoreRepository#shareProfile", e);
+                subscriber.onError(e);
+            }
+        });
     }
 
     private Observable<Void> updateUserProfile(String userId, List<UserProfileModel> userProfiles) {

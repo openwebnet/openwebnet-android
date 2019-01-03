@@ -18,10 +18,12 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     }
 
     private static final String FIELD_PROFILE_REF = "profileRef";
+    // TODO remove
     private static final String FIELD_PROFILE_USER_ID = "userId";
     private static final String FIELD_PROFILE_NAME = "name";
     private static final String FIELD_PROFILE_CREATED_AT = "createdAt";
     private static final String FIELD_PROFILE_STATUS = "status";
+    // TODO add shared_to
 
     private DocumentReference profileRef;
 

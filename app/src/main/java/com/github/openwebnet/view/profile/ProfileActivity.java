@@ -215,10 +215,9 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    // TODO
     private void showShareDialog(DocumentReference profileRef) {
         View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_share, null);
-        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileShareName);
+        EditText editTextEmailPrefix = layout.findViewById(R.id.editTextDialogProfileShareEmailPrefix);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setView(layout)
@@ -230,10 +229,10 @@ public class ProfileActivity extends AppCompatActivity {
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {
-                if (utilityService.isBlankText(editTextName)) {
-                    editTextName.setError(labelValidationRequired);
+                if (utilityService.isBlankText(editTextEmailPrefix)) {
+                    editTextEmailPrefix.setError(labelValidationRequired);
                 } else {
-                    // TODO utilityService.sanitizedText(editTextName)
+                    shareProfile(profileRef, utilityService.sanitizedText(editTextEmailPrefix));
                     dialog.dismiss();
                 }
             });
@@ -310,6 +309,18 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    private void shareProfile(DocumentReference profileRef, String emailPrefix) {
+        String email = String.format("%s%s", emailPrefix,
+            utilityService.getString(R.string.dialog_profile_share_email_suffix));
+
+        requestAction(() -> firebaseService.shareProfile(profileRef, email)
+                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+            log.info("shareProfile succeeded: refreshing");
+            updateProfiles(profiles);
+        });
+    }
+
 
     private void showSnackbar(int stringId) {
         Snackbar.make(findViewById(android.R.id.content), utilityService.getString(stringId), Snackbar.LENGTH_LONG).show();

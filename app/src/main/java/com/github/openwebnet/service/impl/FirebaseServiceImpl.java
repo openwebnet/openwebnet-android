@@ -96,6 +96,11 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
+    public Observable<Void> shareProfile(DocumentReference profileRef, String email) {
+        return firestoreRepository.shareProfile(getUser().getUserId(), profileRef, email);
+    }
+
+    @Override
     public Observable<Void> resetLocalProfile() {
         return safeDeleteLocalProfile()
             .flatMap(aVoid -> addDefaultEnvironment());
