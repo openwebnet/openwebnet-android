@@ -45,6 +45,9 @@
     <string name="dialog_profile_switch_message">Alle nicht gespeicherten Änderungen am aktuellen Profil werden gelöscht und überschrieben.\n\nSind Sie sicher?</string>
     <string name="dialog_profile_share_title">Profil teilen</string>
     <string name="dialog_profile_share_email_prefix">Email</string>
+    <string name="dialog_profile_share_info">Um dieses Profil freigeben zu können, muss sich der andere Benutzer zuerst anmelden\n\nEinmal freigegeben, kann der andere Benutzer auch dann auf dieses Profil zugreifen, wenn Sie dieses Profil löschen</string>
+    <string name="dialog_profile_share_checkbox">Ich übernehme jede Verantwortung dafür, dieses Profil mit allen Personen zu teilen, die Zugriff auf die oben genannte E-Mail haben</string>
+    <string name="dialog_profile_share_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_delete_title">Profil löschen</string>
     <string name="dialog_profile_delete_message">Sie können dieses Profil nicht mehr aufrufen und anwenden.\n\nSind Sie sicher?</string>
     <string name="dialog_donation_title">Spenden</string>

@@ -5,7 +5,6 @@
 ---
 
 TODOs
-strings: translate 2 labels
 menu_profile: add rename
 dialog_profile_share: add disclaimer with checkbox
 ProfileAdapter: disable card if version is incompatible

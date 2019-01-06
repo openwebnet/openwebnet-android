@@ -45,6 +45,9 @@
     <string name="dialog_profile_switch_message">Tutti i cambiamenti non salvati al profilo corrente verranno cancellati e sovrascritti.\n\nSei sicuro?</string>
     <string name="dialog_profile_share_title">Condividi profilo</string>
     <string name="dialog_profile_share_email_prefix">Email</string>
+    <string name="dialog_profile_share_info">Per poter condividere questo profilo, l\'altro utente dovrà prima effettuare almeno un accesso\n\nUna volta condiviso, anche se eliminerai questo profilo, l\'altro utente sarà comunque in grado di accedervi</string>
+    <string name="dialog_profile_share_checkbox">Mi assumo ogni responsabilita per condividere questo profilo con chiunque abbia accesso all\'email sopra</string>
+    <string name="dialog_profile_share_message">Sei sicuro?</string>
     <string name="dialog_profile_delete_title">Cancella profilo</string>
     <string name="dialog_profile_delete_message">Non sarai piu\' in grado di accedere e applicare questo profilo.\n\nSei sicuro?</string>
     <string name="dialog_donation_title">Donazione</string>

@@ -45,6 +45,9 @@
     <string name="dialog_profile_switch_message">Все несохраненные изменения в текущем профиле будут удалены и перезаписаны.\n\nВы уверены?</string>
     <string name="dialog_profile_share_title">Поделиться профилем</string>
     <string name="dialog_profile_share_email_prefix">Эл. адрес</string>
+    <string name="dialog_profile_share_info">Чтобы иметь возможность поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ</string>
+    <string name="dialog_profile_share_checkbox">Я принимаю на себя всю ответственность, чтобы поделиться этим профилем с любым, у кого есть доступ к вышеупомянутой электронной почте</string>
+    <string name="dialog_profile_share_message">Вы уверены?</string>
     <string name="dialog_profile_delete_title">Удалить профиль</string>
     <string name="dialog_profile_delete_message">Вы больше не сможете получить доступ и применять этот профиль.\n\nВы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
