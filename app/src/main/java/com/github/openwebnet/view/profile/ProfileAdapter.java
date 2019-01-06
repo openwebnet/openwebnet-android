@@ -123,6 +123,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    // TODO disable apply if appVersion is higher than current version
     private void initProfileViewHolder(ProfileViewHolder profileViewHolder, int position) {
         profileViewHolder.textViewProfileName.setText(
             mProfiles.get(position).getName());

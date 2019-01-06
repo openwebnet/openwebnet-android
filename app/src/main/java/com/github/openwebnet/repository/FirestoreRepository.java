@@ -21,7 +21,9 @@ public interface FirestoreRepository {
 
     Observable<List<Integer>> applyProfile(ProfileModel profile);
 
-    Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef);
+    Observable<Void> renameUserProfile(String userId, DocumentReference profileRef);
+
+    Observable<Void> deleteUserProfile(String userId, DocumentReference profileRef);
 
     Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email);
 

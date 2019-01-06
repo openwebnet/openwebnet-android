@@ -2,6 +2,7 @@ package com.github.openwebnet.model.firestore;
 
 import android.text.TextUtils;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
@@ -39,7 +40,7 @@ public class UserModel {
         this.modifiedAt = builder.modifiedAt;
     }
 
-    public static class Builder {
+    private static class Builder {
 
         private String userId;
         private String email;
@@ -49,43 +50,15 @@ public class UserModel {
         private Date createdAt;
         private Date modifiedAt;
 
-        public Builder() {
+        private Builder(FirebaseUser firebaseUser) {
+            this.userId = firebaseUser.getUid();
+            this.email = firebaseUser.getEmail();
+            this.name = firebaseUser.getDisplayName();
+            this.phoneNumber = firebaseUser.getPhoneNumber();
+            this.photoUrl = firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString();
+            this.createdAt = firebaseUser.getMetadata() != null ?
+                new Date(firebaseUser.getMetadata().getCreationTimestamp()) : new Date();
             this.modifiedAt = new Date();
-        }
-
-        public Builder userId(String userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder phoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
-        public Builder photoUrl(String photoUrl) {
-            this.photoUrl = photoUrl;
-            return this;
-        }
-
-        public Builder createdAt(Date createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder modifiedAt(Date modifiedAt) {
-            this.modifiedAt = modifiedAt;
-            return this;
         }
 
         public UserModel build() {
@@ -97,6 +70,10 @@ public class UserModel {
 
             return new UserModel(this);
         }
+    }
+
+    public static UserModel newInstance(FirebaseUser firebaseUser) {
+        return new Builder(firebaseUser).build();
     }
 
     public String getUserId() {

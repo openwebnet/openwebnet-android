@@ -5,6 +5,22 @@
 
 ---
 
+TODOs
+menu_profile: add rename
+dialog_profile_share: add disclaimer with checkbox
+ProfileAdapter: disable card if version is incompatible
+ProfileActivity: first time init profile and add check in preference
+FirebaseServiceImpl: rename softDeleteProfile
+FirestoreRepositoryImpl:
+(1) verify path replace
+(2) add version to apply profile
+(3) implement rename
+(4) implement share
+for each model make Builder private and add version to map
+
+
+* verify what happen when apply different version
+
 * add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
 
 * verify if size(ACTIVE + DELETED + shared) max of 10 isn't too restrictive

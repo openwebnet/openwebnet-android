@@ -20,8 +20,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ProfileModel {
 
-    public static final int PROFILE_VERSION = 1;
-
     private ProfileDetailModel details;
 
     // FIXME used maps ;-( due to serialization and inheritance issues
@@ -69,7 +67,7 @@ public class ProfileModel {
         private List<Map<String, Object>> sounds;
         private List<Map<String, Object>> temperatures;
 
-        public Builder() {
+        private Builder() {
             this.automations = new ArrayList<>();
             this.devices = new ArrayList<>();
             this.energies = new ArrayList<>();
@@ -153,6 +151,10 @@ public class ProfileModel {
 
             return new ProfileModel(this);
         }
+    }
+
+    public static Builder addBuilder() {
+        return new Builder();
     }
 
     public ProfileDetailModel getDetails() {

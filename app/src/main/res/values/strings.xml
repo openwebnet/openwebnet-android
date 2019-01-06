@@ -53,6 +53,7 @@
     <string name="dialog_profile_share_title">Share profile</string>
     <string name="dialog_profile_share_email_prefix">Email</string>
     <string name="dialog_profile_share_email_suffix" translatable="false">\@gmail.com</string>
+    <!-- TODO translate -->
     <string name="dialog_profile_share_disclaimer">To be able to share this profile, the other user need to login first.\n\nOnce shared, even if you delete it, the other user will still be able to access it.\n\nAre you sure?</string>
     <string name="dialog_profile_delete_title">Delete profile</string>
     <string name="dialog_profile_delete_message">You won\'t be able to access and apply this profile anymore.\n\nAre you sure?</string>

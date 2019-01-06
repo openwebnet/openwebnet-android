@@ -310,6 +310,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    // TODO first time setup preference for login to activate user (create user with no profile)
     private void shareProfile(DocumentReference profileRef, String emailPrefix) {
         String email = String.format("%s%s", emailPrefix,
             utilityService.getString(R.string.dialog_profile_share_email_suffix));

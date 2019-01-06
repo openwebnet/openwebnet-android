@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             log.debug("initHeader: valid firebase session");
             // update profile image
             String photoUrl = firebaseService.getUserPhotoUrl();
-            if (photoUrl != null) {
+            if (!TextUtils.isEmpty(photoUrl)) {
                 Picasso.get()
                     .load(photoUrl)
                     .placeholder(R.drawable.github_circle)
