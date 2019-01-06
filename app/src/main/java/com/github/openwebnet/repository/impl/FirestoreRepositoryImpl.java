@@ -12,9 +12,9 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
-import com.github.openwebnet.model.firestore.ProfileDetailModel;
 import com.github.openwebnet.model.firestore.ProfileInfoModel;
 import com.github.openwebnet.model.firestore.ProfileModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 import com.github.openwebnet.model.firestore.UserModel;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.AutomationRepository;
@@ -155,7 +155,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
         // Observable.zip support only up to 9 parameters, use Iterable
         return Observable.zip(findAll, results ->
             ProfileModel.addBuilder()
-                .details(ProfileDetailModel.newInstance())
+                .version(ProfileVersionModel.newInstance())
                 .automations((List<AutomationModel>) results[0])
                 .devices((List<DeviceModel>) results[1])
                 .energies((List<EnergyModel>) results[2])
@@ -296,31 +296,29 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     @Override
     public Observable<List<Integer>> applyProfile(ProfileModel profile) {
-
-        // TODO versioning ??? private Builder use fromMapBuilder
-        ProfileDetailModel details = profile.getDetails();
+        ProfileVersionModel version = profile.getVersion();
 
         List<Observable<?>> addAll = Lists.newArrayList(
             automationRepository.addAll(Stream.of(profile.getAutomations())
-                .map(automationMap -> new AutomationModel.Builder(automationMap).build()).toList()),
+                .map(automationMap -> AutomationModel.newInstance(automationMap, version)).toList()),
             deviceRepository.addAll(Stream.of(profile.getDevices())
-                .map(deviceMap -> new DeviceModel.Builder(deviceMap).build()).toList()),
+                .map(deviceMap -> DeviceModel.newInstance(deviceMap, version)).toList()),
             energyRepository.addAll(Stream.of(profile.getEnergies())
-                .map(energyMap -> new EnergyModel.Builder(energyMap).build()).toList()),
+                .map(energyMap -> EnergyModel.newInstance(energyMap, version)).toList()),
             environmentRepository.addAll(Stream.of(profile.getEnvironments())
-                .map(environmentMap -> new EnvironmentModel().fromMap(environmentMap)).toList()),
+                .map(environmentMap -> EnvironmentModel.newInstance(environmentMap, version)).toList()),
             gatewayRepository.addAll(Stream.of(profile.getGateways())
-                .map(gatewayMap -> new GatewayModel().fromMap(gatewayMap)).toList()),
+                .map(gatewayMap -> GatewayModel.newInstance(gatewayMap, version)).toList()),
             ipcamRepository.addAll(Stream.of(profile.getIpcams())
-                .map(ipcamMap -> new IpcamModel.Builder(ipcamMap).build()).toList()),
+                .map(ipcamMap -> IpcamModel.newInstance(ipcamMap, version)).toList()),
             lightRepository.addAll(Stream.of(profile.getLights())
-                .map(lightMap -> new LightModel.Builder(lightMap).build()).toList()),
+                .map(lightMap -> LightModel.newInstance(lightMap, version)).toList()),
             scenarioRepository.addAll(Stream.of(profile.getScenarios())
-                .map(scenarioMap -> new ScenarioModel.Builder(scenarioMap).build()).toList()),
+                .map(scenarioMap -> ScenarioModel.newInstance(scenarioMap, version)).toList()),
             soundRepository.addAll(Stream.of(profile.getSounds())
-                .map(soundMap -> new SoundModel.Builder(soundMap).build()).toList()),
+                .map(soundMap -> SoundModel.newInstance(soundMap, version)).toList()),
             temperatureRepository.addAll(Stream.of(profile.getTemperatures())
-                .map(temperatureMap -> new TemperatureModel.Builder(temperatureMap).build()).toList())
+                .map(temperatureMap -> TemperatureModel.newInstance(temperatureMap, version)).toList())
         );
 
         // count of each model

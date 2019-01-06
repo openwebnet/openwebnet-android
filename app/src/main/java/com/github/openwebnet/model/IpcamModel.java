@@ -2,6 +2,7 @@ package com.github.openwebnet.model;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -114,11 +115,11 @@ public class IpcamModel extends RealmObject
         private String password;
         private boolean favourite;
 
-        public Builder(String uuid) {
+        private Builder(String uuid) {
             this.uuid = uuid;
         }
 
-        public Builder(Map<String, Object> map) {
+        private Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
             this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.name = (String) map.get(FIELD_NAME);
@@ -182,6 +183,10 @@ public class IpcamModel extends RealmObject
         return new Builder(uuid);
     }
 
+    public static IpcamModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new IpcamModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -197,7 +202,7 @@ public class IpcamModel extends RealmObject
     }
 
     @Override
-    public IpcamModel fromMap(Map<String, Object> map) {
+    public IpcamModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

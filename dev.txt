@@ -18,7 +18,6 @@ FirestoreRepositoryImpl:
 (4) implement share
 for each model make Builder private and add version to map
 
-
 * verify what happen when apply different version
 
 * add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber

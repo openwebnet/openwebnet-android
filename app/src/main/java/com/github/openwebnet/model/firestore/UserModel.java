@@ -61,7 +61,7 @@ public class UserModel {
             this.modifiedAt = new Date();
         }
 
-        public UserModel build() {
+        private UserModel build() {
             checkArgument(!TextUtils.isEmpty(userId), "userId is empty");
             checkArgument(!TextUtils.isEmpty(email), "email is empty");
 

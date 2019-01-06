@@ -3,7 +3,7 @@ package com.github.openwebnet.model.firestore;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.database.DatabaseRealmConfig;
 
-public class ProfileDetailModel {
+public class ProfileVersionModel {
 
     private int appVersionCode;
 
@@ -13,9 +13,9 @@ public class ProfileDetailModel {
 
     private int databaseRealmVersion;
 
-    public ProfileDetailModel() {}
+    public ProfileVersionModel() {}
 
-    private ProfileDetailModel(Builder builder) {
+    private ProfileVersionModel(Builder builder) {
         this.appVersionCode = builder.appVersionCode;
         this.appVersionName = builder.appVersionName;
         this.databaseFirestoreVersion = builder.databaseFirestoreVersion;
@@ -36,13 +36,13 @@ public class ProfileDetailModel {
             this.databaseRealmVersion = DatabaseRealmConfig.DATABASE_VERSION;
         }
 
-        private ProfileDetailModel build() {
-            return new ProfileDetailModel(this);
+        private ProfileVersionModel build() {
+            return new ProfileVersionModel(this);
         }
     }
 
-    public static ProfileDetailModel newInstance() {
-        return new ProfileDetailModel.Builder().build();
+    public static ProfileVersionModel newInstance() {
+        return new ProfileVersionModel.Builder().build();
     }
 
     public int getAppVersionCode() {

@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,11 +62,11 @@ public class AutomationModel extends RealmObject
         private String where;
         private boolean favourite;
 
-        public Builder(String uuid) {
+        private Builder(String uuid) {
             this.uuid = uuid;
         }
 
-        public Builder(Map<String, Object> map) {
+        private Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
             this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
@@ -117,6 +118,10 @@ public class AutomationModel extends RealmObject
         return new Builder(uuid);
     }
 
+    public static AutomationModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new AutomationModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -130,7 +135,7 @@ public class AutomationModel extends RealmObject
     }
 
     @Override
-    public AutomationModel fromMap(Map<String, Object> map) {
+    public AutomationModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ProfileModel {
 
-    private ProfileDetailModel details;
+    private ProfileVersionModel version;
 
     // FIXME used maps ;-( due to serialization and inheritance issues
     // https://realm.io/docs/java/latest/#other-libraries
@@ -41,7 +41,7 @@ public class ProfileModel {
     public ProfileModel() {}
 
     private ProfileModel(Builder builder) {
-        this.details = builder.details;
+        this.version = builder.version;
         this.automations = builder.automations;
         this.devices = builder.devices;
         this.energies = builder.energies;
@@ -55,7 +55,7 @@ public class ProfileModel {
     }
 
     public static class Builder {
-        private ProfileDetailModel details;
+        private ProfileVersionModel version;
         private List<Map<String, Object>> automations;
         private List<Map<String, Object>> devices;
         private List<Map<String, Object>> energies;
@@ -80,8 +80,8 @@ public class ProfileModel {
             this.temperatures = new ArrayList<>();
         }
 
-        public Builder details(ProfileDetailModel details) {
-            this.details = details;
+        public Builder version(ProfileVersionModel version) {
+            this.version = version;
             return this;
         }
 
@@ -136,7 +136,7 @@ public class ProfileModel {
         }
 
         public ProfileModel build() {
-            checkNotNull(details, "details is null");
+            checkNotNull(version, "version is null");
 
             checkNotNull(automations, "automations is null");
             checkNotNull(devices, "devices is null");
@@ -157,8 +157,8 @@ public class ProfileModel {
         return new Builder();
     }
 
-    public ProfileDetailModel getDetails() {
-        return details;
+    public ProfileVersionModel getVersion() {
+        return version;
     }
 
     public List<Map<String, Object>> getAutomations() {

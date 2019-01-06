@@ -160,7 +160,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     }
 
     @Override
-    public UserProfileModel fromMap(Map<String, Object> map) {
+    public UserProfileModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

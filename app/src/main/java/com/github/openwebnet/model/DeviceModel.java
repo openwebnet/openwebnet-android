@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import org.threeten.bp.Instant;
 
@@ -66,7 +67,7 @@ public class DeviceModel extends RealmObject
 
     public DeviceModel() {}
 
-    public DeviceModel(Builder builder) {
+    private DeviceModel(Builder builder) {
         this.uuid = builder.uuid;
         this.environmentId = builder.environmentId;
         this.gatewayUuid = builder.gatewayUuid;
@@ -90,11 +91,11 @@ public class DeviceModel extends RealmObject
         private boolean runOnLoad;
         private boolean showConfirmation;
 
-        public Builder(String uuid) {
+        private Builder(String uuid) {
             this.uuid = uuid;
         }
 
-        public Builder(Map<String, Object> map) {
+        private Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
             this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
@@ -165,6 +166,10 @@ public class DeviceModel extends RealmObject
         return new Builder(uuid);
     }
 
+    public static DeviceModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new DeviceModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -181,7 +186,7 @@ public class DeviceModel extends RealmObject
     }
 
     @Override
-    public DeviceModel fromMap(Map<String, Object> map) {
+    public DeviceModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

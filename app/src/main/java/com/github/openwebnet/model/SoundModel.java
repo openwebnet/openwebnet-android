@@ -2,6 +2,7 @@ package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.SoundSystem;
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,11 +82,11 @@ public class SoundModel extends RealmObject
         private String type;
         private boolean favourite;
 
-        public Builder(String uuid) {
+        private Builder(String uuid) {
             this.uuid = uuid;
         }
 
-        public Builder(Map<String, Object> map) {
+        private Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
             this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
@@ -151,6 +152,10 @@ public class SoundModel extends RealmObject
         return new Builder(uuid);
     }
 
+    public static SoundModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new SoundModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -166,7 +171,7 @@ public class SoundModel extends RealmObject
     }
 
     @Override
-    public SoundModel fromMap(Map<String, Object> map) {
+    public SoundModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

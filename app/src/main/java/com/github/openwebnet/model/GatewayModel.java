@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 import com.google.common.base.Strings;
 
 import java.util.HashMap;
@@ -44,6 +45,10 @@ public class GatewayModel extends RealmObject
         return gateway;
     }
 
+    public static GatewayModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new GatewayModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -55,7 +60,7 @@ public class GatewayModel extends RealmObject
     }
 
     @Override
-    public GatewayModel fromMap(Map<String, Object> map) {
+    public GatewayModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         checkNotNull(map.get(FIELD_UUID), "uuid is null");
         checkNotNull(map.get(FIELD_HOST), "host is null");
         checkNotNull(map.get(FIELD_PORT), "port is null");
