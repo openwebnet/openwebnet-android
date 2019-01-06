@@ -195,12 +195,10 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .userId(userId)
                     .build();
 
-                // TODO verify path
-                // same documentRef
-                String documentPath = profileRef.getPath().replace(COLLECTION_PROFILES, COLLECTION_PROFILES_INFO);
+                String profileKey = profileRef.getPath().replace(COLLECTION_PROFILES + "/", "");
 
                 // add profiles_info/{profileRef}/[ProfileInfoModel]
-                DocumentReference profileInfoRef = db.collection(COLLECTION_PROFILES_INFO).document(documentPath);
+                DocumentReference profileInfoRef = db.collection(COLLECTION_PROFILES_INFO).document(profileKey);
                 batch.set(profileInfoRef, profileInfo, SetOptions.merge());
 
                 batch.commit()

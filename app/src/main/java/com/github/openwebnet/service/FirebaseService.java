@@ -27,7 +27,7 @@ public interface FirebaseService {
 
     Observable<Void> switchProfile(DocumentReference profileRef);
 
-    Observable<Void> softDeleteProfile(DocumentReference profileRef);
+    Observable<Void> deleteUserProfile(DocumentReference profileRef);
 
     Observable<Void> shareProfile(DocumentReference profileRef, String email);
 

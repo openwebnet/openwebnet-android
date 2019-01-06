@@ -1,22 +1,19 @@
 # TODO
 * update store listing (en) and images on play store
-* test firestore collection not-defined in security roles
 * bump libs
 
 ---
 
 TODOs
+strings: translate 2 labels
 menu_profile: add rename
 dialog_profile_share: add disclaimer with checkbox
 ProfileAdapter: disable card if version is incompatible
 ProfileActivity: first time init profile and add check in preference
-FirebaseServiceImpl: rename softDeleteProfile
 FirestoreRepositoryImpl:
 (1) verify path replace
-(2) add version to apply profile
 (3) implement rename
 (4) implement share
-for each model make Builder private and add version to map
 
 * verify what happen when apply different version
 

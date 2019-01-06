@@ -1,6 +1,5 @@
 package com.github.openwebnet.model.firestore;
 
-import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.common.collect.Lists;
@@ -10,14 +9,13 @@ import java.util.Date;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ProfileInfoModel {
 
     private String ownerId;
 
-    private List<String> userIds;
-
-    private String name;
+    private List<String> allowedUserIds;
 
     @ServerTimestamp
     private Date createdAt;
@@ -25,60 +23,42 @@ public class ProfileInfoModel {
     @ServerTimestamp
     private Date modifiedAt;
 
-    private String androidManufacturer;
-
-    private String androidModel;
-
-    private int androidVersionSdk;
-
-    private String androidVersionRelease;
+    private ProfileSnapshot snapshot;
 
     public ProfileInfoModel() {}
 
     private ProfileInfoModel(Builder builder) {
         this.ownerId = builder.ownerId;
-        this.userIds = builder.userIds;
-        this.name = builder.name;
+        this.allowedUserIds = builder.allowedUserIds;
         this.createdAt = builder.createdAt;
         this.modifiedAt = builder.modifiedAt;
-        this.androidManufacturer = builder.androidManufacturer;
-        this.androidModel = builder.androidModel;
-        this.androidVersionSdk = builder.androidVersionSdk;
-        this.androidVersionRelease = builder.androidVersionRelease;
+        this.snapshot = new ProfileSnapshot(builder.name);
     }
 
     public static class Builder {
 
         private String ownerId;
-        private List<String> userIds;
+        private List<String> allowedUserIds;
         private String name;
         private Date createdAt;
         private Date modifiedAt;
-        private String androidManufacturer;
-        private String androidModel;
-        private int androidVersionSdk;
-        private String androidVersionRelease;
 
         private Builder(UserProfileModel userProfile) {
             this.name = userProfile.getName();
             this.createdAt = userProfile.getCreatedAt();
             this.modifiedAt = userProfile.getModifiedAt();
-
-            this.androidManufacturer = Build.MANUFACTURER;
-            this.androidModel = Build.MODEL;
-            this.androidVersionSdk = Build.VERSION.SDK_INT;
-            this.androidVersionRelease = Build.VERSION.RELEASE;
         }
 
         public Builder userId(String userId) {
             this.ownerId = userId;
-            this.userIds = Lists.newArrayList(userId);
+            this.allowedUserIds = Lists.newArrayList(userId);
             return this;
         }
 
         public ProfileInfoModel build() {
             checkArgument(!TextUtils.isEmpty(ownerId), "ownerId is empty");
-            checkArgument(userIds.size() == 1, "missing userId");
+            checkArgument(allowedUserIds.size() == 1, "missing userId");
+            checkNotNull(name, "name is null");
 
             return new ProfileInfoModel(this);
         }
@@ -86,6 +66,26 @@ public class ProfileInfoModel {
 
     public static Builder builder(UserProfileModel userProfile) {
         return new ProfileInfoModel.Builder(userProfile);
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public List<String> getAllowedUserIds() {
+        return allowedUserIds;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public ProfileSnapshot getSnapshot() {
+        return snapshot;
     }
 
 }

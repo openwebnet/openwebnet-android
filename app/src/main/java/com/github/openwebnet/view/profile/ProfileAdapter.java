@@ -180,7 +180,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void deleteProfile(UserProfileModel profile) {
         EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent<>(
-            () -> firebaseService.softDeleteProfile(profile.getProfileRef())
+            () -> firebaseService.deleteUserProfile(profile.getProfileRef())
                 .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
             log.info("deleteProfile succeeded: refreshing");
             EventBus.getDefault().post(new ProfileActivity.OnUpdateProfilesEvent(profiles));

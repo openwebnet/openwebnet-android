@@ -34,7 +34,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     private DocumentReference profileRef;
 
     // databaseFirestoreVersion
-    private int version;
+    private Integer version;
 
     private String name;
 
@@ -66,7 +66,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     public static class Builder {
 
         private DocumentReference profileRef;
-        private int version;
+        private Integer version;
         private String name;
         private Date createdAt;
         private Date modifiedAt;
@@ -84,7 +84,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
 
         private Builder(Map<String, Object> map) {
             this.profileRef = (DocumentReference) map.get(FIELD_PROFILE_REF);
-            this.version = (Integer) map.get(FIELD_VERSION);
+            this.version = toInt(map.get(FIELD_VERSION));
             this.name = (String) map.get(FIELD_NAME);
             this.createdAt = toDate(map.get(FIELD_CREATED_AT));
             this.modifiedAt = toDate(map.get(FIELD_MODIFIED_AT));
@@ -93,9 +93,23 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
             this.sharedTo = (List<String>) map.get(FIELD_SHARED_TO);
         }
 
+        // Integer is converted to Long from firestore
+        private Integer toInt(Object i) {
+            if (i == null) {
+                return null;
+            } else if (i instanceof Long) {
+                return ((Long) i).intValue();
+            } else if (i instanceof Integer) {
+                return (Integer) i;
+            }
+            throw new IllegalArgumentException("invalid integer");
+        }
+
+        // Date is converted to Timestamp from firestore
         private Date toDate(Object timestamp) {
-            // date is casted to Timestamp from firestore
-            if (timestamp instanceof Timestamp) {
+            if (timestamp == null) {
+                return null;
+            } else if (timestamp instanceof Timestamp) {
                 return ((Timestamp) timestamp).toDate();
             } else if (timestamp instanceof Date) {
                 return (Date) timestamp;
@@ -172,11 +186,15 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
         return sharedTo.size() > 0;
     }
 
+    public boolean isCompatibleVersion() {
+        return version <= FirestoreModel.DATABASE_VERSION;
+    }
+
     public DocumentReference getProfileRef() {
         return profileRef;
     }
 
-    public int getVersion() {
+    public Integer getVersion() {
         return version;
     }
 

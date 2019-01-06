@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dialog_margin"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/dialog_margin"
         android:orientation="horizontal">
 
         <!-- https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address -->
@@ -29,13 +29,23 @@
 
     </LinearLayout>
 
-    <!-- TODO disclaimer with checkbox -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dialog_margin"
-        android:layout_marginRight="@dimen/dialog_margin"
-        android:layout_marginBottom="@dimen/dialog_margin"
-        android:text="@string/dialog_profile_share_disclaimer" />
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_info" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDialogProfileShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_checkbox" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_message" />
 
 </LinearLayout>

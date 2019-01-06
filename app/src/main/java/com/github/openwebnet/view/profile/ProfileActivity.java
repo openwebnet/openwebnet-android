@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.github.openwebnet.R;
@@ -218,6 +219,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void showShareDialog(DocumentReference profileRef) {
         View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_share, null);
         EditText editTextEmailPrefix = layout.findViewById(R.id.editTextDialogProfileShareEmailPrefix);
+        CheckBox checkBox = layout.findViewById(R.id.checkBoxDialogProfileShare);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setView(layout)
@@ -228,6 +230,8 @@ public class ProfileActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setEnabled(false);
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener(v -> {
                 if (utilityService.isBlankText(editTextEmailPrefix)) {
                     editTextEmailPrefix.setError(labelValidationRequired);
@@ -236,6 +240,9 @@ public class ProfileActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) ->
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(isChecked));
     }
 
     private void hideActions() {

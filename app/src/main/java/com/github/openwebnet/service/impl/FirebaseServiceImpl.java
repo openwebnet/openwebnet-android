@@ -89,9 +89,8 @@ public class FirebaseServiceImpl implements FirebaseService {
             .map(counts -> null);
     }
 
-    // TODO rename
     @Override
-    public Observable<Void> softDeleteProfile(DocumentReference profileRef) {
+    public Observable<Void> deleteUserProfile(DocumentReference profileRef) {
         return firestoreRepository.deleteUserProfile(getUser().getUserId(), profileRef);
     }
 
