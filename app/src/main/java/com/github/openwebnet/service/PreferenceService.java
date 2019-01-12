@@ -10,6 +10,10 @@ public interface PreferenceService {
 
     void initFirstRun();
 
+    boolean isFirstLogin();
+
+    void initFirstLogin();
+
     String getDefaultGateway();
 
     TemperatureScale getDefaultTemperatureScale();

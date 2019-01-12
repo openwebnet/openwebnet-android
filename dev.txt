@@ -6,8 +6,6 @@
 
 TODOs
 menu_profile: add rename
-ProfileActivity: first time init profile and add check in preference
-FirestoreRepositoryImpl:
 (3) implement rename
 
 * verify what happen when apply different version

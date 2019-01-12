@@ -18,6 +18,7 @@ import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Lists;
@@ -65,6 +66,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Inject
     FirebaseService firebaseService;
+
+    @Inject
+    PreferenceService preferenceService;
 
     @Inject
     UtilityService utilityService;
@@ -288,8 +292,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void refreshProfiles() {
-        requestAction(() -> firebaseService.getUserProfiles(), profiles -> {
+        Func0<Observable<List<UserProfileModel>>> observableAction = () ->
+            preferenceService.isFirstLogin() ?
+                firebaseService.updateUser().flatMap(aVoid -> firebaseService.getUserProfiles()) :
+                firebaseService.getUserProfiles();
+
+        requestAction(observableAction, profiles -> {
             log.info("refreshProfiles: size={}", profiles.size());
+            if (preferenceService.isFirstLogin()) {
+                log.info("initFirstLogin");
+                preferenceService.initFirstLogin();
+            }
             updateProfiles(profiles);
         });
     }
@@ -317,7 +330,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    // TODO first time setup preference for login to activate user (create user with no profile)
     private void shareProfile(DocumentReference profileRef, String emailPrefix) {
         String email = String.format("%s%s", emailPrefix,
             utilityService.getString(R.string.dialog_profile_share_email_suffix));
