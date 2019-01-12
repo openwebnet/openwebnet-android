@@ -58,6 +58,7 @@
     <string name="error_connection">Connessione non disponibile</string>
     <string name="error_request">Richiesta fallita</string>
     <string name="error_profile_max">Superato il numero massimo di profili consentiti</string>
+    <string name="error_profile_incompatible">Si prega di aggiornare l\'app, questo profilo è stato creato con una versione più recente e potrebbe essere incompatibile</string>
 
     <string name="validation_required">Campo obbligatorio</string>
     <string name="validation_host">Indirizzo ip o dominio non valido</string>

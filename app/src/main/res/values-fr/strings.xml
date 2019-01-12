@@ -58,6 +58,7 @@
     <string name="error_connection">Connexion indisponible</string>
     <string name="error_request">Demande échoué</string>
     <string name="error_profile_max">Nombre maximal de profils autorisés dépassé</string>
+    <string name="error_profile_incompatible">S\'il vous plaît mettre à jour l\'application, ce profil a été créé avec une version plus récente et il pourrait être incompatible</string>
 
     <string name="validation_required">Champ obbligatoire</string>
     <string name="validation_host">Adresse IP ou le domaine invalide</string>

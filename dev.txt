@@ -6,7 +6,6 @@
 
 TODOs
 menu_profile: add rename
-ProfileAdapter: disable card if version is incompatible
 ProfileActivity: first time init profile and add check in preference
 FirestoreRepositoryImpl:
 (3) implement rename
