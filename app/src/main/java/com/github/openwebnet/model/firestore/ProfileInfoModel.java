@@ -32,7 +32,7 @@ public class ProfileInfoModel {
         this.allowedUserIds = builder.allowedUserIds;
         this.createdAt = builder.createdAt;
         this.modifiedAt = builder.modifiedAt;
-        this.snapshot = new ProfileSnapshot(builder.name);
+        this.snapshot = new ProfileSnapshot();
     }
 
     public static class Builder {

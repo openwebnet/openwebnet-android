@@ -6,13 +6,10 @@
 
 TODOs
 menu_profile: add rename
-dialog_profile_share: add disclaimer with checkbox
 ProfileAdapter: disable card if version is incompatible
 ProfileActivity: first time init profile and add check in preference
 FirestoreRepositoryImpl:
-(1) verify path replace
 (3) implement rename
-(4) implement share
 
 * verify what happen when apply different version
 

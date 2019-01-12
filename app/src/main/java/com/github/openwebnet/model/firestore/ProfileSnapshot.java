@@ -4,8 +4,6 @@ import android.os.Build;
 
 public class ProfileSnapshot {
 
-    private String name;
-
     private String androidManufacturer;
 
     private String androidModel;
@@ -14,18 +12,11 @@ public class ProfileSnapshot {
 
     private String androidVersionRelease;
 
-    public ProfileSnapshot() {}
-
-    public ProfileSnapshot(String name) {
-        this.name = name;
+    public ProfileSnapshot() {
         this.androidManufacturer = Build.MANUFACTURER;
         this.androidModel = Build.MODEL;
         this.androidVersionSdk = Build.VERSION.SDK_INT;
         this.androidVersionRelease = Build.VERSION.RELEASE;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getAndroidManufacturer() {

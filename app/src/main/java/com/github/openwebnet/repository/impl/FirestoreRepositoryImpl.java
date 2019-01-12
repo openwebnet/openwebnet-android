@@ -15,6 +15,7 @@ import com.github.openwebnet.model.TemperatureModel;
 import com.github.openwebnet.model.firestore.ProfileInfoModel;
 import com.github.openwebnet.model.firestore.ProfileModel;
 import com.github.openwebnet.model.firestore.ProfileVersionModel;
+import com.github.openwebnet.model.firestore.ShareProfileRequest;
 import com.github.openwebnet.model.firestore.UserModel;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.AutomationRepository;
@@ -28,6 +29,7 @@ import com.github.openwebnet.repository.LightRepository;
 import com.github.openwebnet.repository.ScenarioRepository;
 import com.github.openwebnet.repository.SoundRepository;
 import com.github.openwebnet.repository.TemperatureRepository;
+import com.google.android.gms.tasks.Task;
 import com.google.common.collect.Lists;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,6 +45,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,9 +63,9 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private static final String COLLECTION_USERS = ENVIRONMENT + "users";
     private static final String COLLECTION_USER_PROFILES = "profiles";
     private static final String COLLECTION_PROFILES = ENVIRONMENT + "profiles";
-    // TODO
     private static final String COLLECTION_PROFILES_INFO = ENVIRONMENT + "profiles_info";
-    private static final String COLLECTION_SHARED_REQUESTS = ENVIRONMENT + "shared_requests";
+    private static final String COLLECTION_REQUESTS = ENVIRONMENT + "requests";
+    private static final String COLLECTION_REQUEST_SHARE_PROFILE = "share_profile";
 
     @Inject
     AutomationRepository automationRepository;
@@ -170,6 +173,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             .flatMap(profile -> addProfile(user.getUserId(), name, profile));
     }
 
+    // issue: if there are too many DELETED profiles
+    // user might be blocked to add more due to maxProfile restriction
     private Observable<String> addProfile(String userId, String name, ProfileModel profile) {
         return Observable.create(subscriber -> {
             try {
@@ -336,8 +341,6 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             .flatMap(userProfiles -> {
                 log.info("delete user profile: userId={} profileRef={}", userId, profileRef.getPath());
 
-                // issue: if there are too many DELETED profiles
-                // user might be blocked to add more due to maxProfile restriction
                 List<UserProfileModel> updatedUserProfiles = Stream
                     .of(userProfiles)
                     .map(userProfile -> {
@@ -357,15 +360,51 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             });
     }
 
+    // immutable append-only
     @Override
     public Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email) {
         return Observable.create(subscriber -> {
             try {
-                log.info("share profile to email: {}", email);
+                log.info("share [userId={}|profileRef={}] to email [{}]", userId, profileRef.getPath(), email);
 
-                // TODO insert COLLECTION_SHARED_REQUESTS
-                subscriber.onNext(null);
-                subscriber.onCompleted();
+                ShareProfileRequest shareProfileRequest = ShareProfileRequest.addBuilder()
+                    .profileRef(profileRef)
+                    .email(email)
+                    .build();
+
+                DocumentReference requestRef = getDb()
+                    .collection(COLLECTION_REQUESTS)
+                    .document(userId);
+
+                Task<Void> updateTask = requestRef.update(COLLECTION_REQUEST_SHARE_PROFILE, FieldValue.arrayUnion(shareProfileRequest.toMap()));
+
+                updateTask.addOnSuccessListener(aVoid -> {
+                    log.info("request created with success (1)");
+                    subscriber.onNext(null);
+                    subscriber.onCompleted();
+                });
+
+                updateTask.addOnFailureListener(e1 -> {
+                    if (e1.getMessage().contains("NOT_FOUND")) {
+                        Map requestMap = new HashMap<String, Object>();
+                        requestMap.put(COLLECTION_REQUEST_SHARE_PROFILE, Lists.newArrayList(shareProfileRequest.toMap()));
+
+                        requestRef
+                            .set(requestMap)
+                            .addOnSuccessListener(aVoid -> {
+                                log.info("request created with success (2)");
+                                subscriber.onNext(null);
+                                subscriber.onCompleted();
+                            })
+                            .addOnFailureListener(e2 -> {
+                                log.error("failed to create request (2)", e2);
+                                subscriber.onError(e2);
+                            });
+                    } else {
+                        log.error("failed to create request (1)", e1);
+                        subscriber.onError(e1);
+                    }
+                });
             } catch (Exception e) {
                 log.error("FirestoreRepository#shareProfile", e);
                 subscriber.onError(e);
