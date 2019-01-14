@@ -17,6 +17,7 @@
     <string name="menu_delete">Löschen</string>
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Anwenden</string>
+    <string name="menu_rename">Umbenennen</string>
     <string name="menu_share">Aktie</string>
     <string name="menu_profile_logout">Ausloggen</string>
     <string name="fab_profile_label_create">Erstellen</string>
@@ -36,7 +37,8 @@
     <string name="dialog_device_confirmation_title">Bestätigung</string>
     <string name="dialog_device_confirmation_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_create_title">Profil erstellen</string>
-    <string name="dialog_profile_create_name">Name</string>
+    <string name="dialog_profile_rename_title">Profil umbenennen</string>
+    <string name="dialog_profile_edit_name">Name</string>
     <string name="dialog_profile_reset_title">Profil zurücksetzen</string>
     <string name="dialog_profile_reset_message">Ihr aktuelles Profil und alle nicht gespeicherten Änderungen werden dauerhaft vom Telefon gelöscht.\n\nSind Sie sicher?</string>
     <string name="dialog_profile_logout_title">Ausloggen</string>

@@ -17,6 +17,7 @@
     <string name="menu_delete">Удалить</string>
     <string name="menu_debug">Отладка</string>
     <string name="menu_apply">Применять</string>
+    <string name="menu_rename">Переименовывать</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_profile_logout">Выход</string>
     <string name="fab_profile_label_create">Создайте</string>
@@ -36,7 +37,8 @@
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">\nВы уверены?</string>
     <string name="dialog_profile_create_title">Создать профиль</string>
-    <string name="dialog_profile_create_name">Имя</string>
+    <string name="dialog_profile_rename_title">Переименовать профиль</string>
+    <string name="dialog_profile_edit_name">Имя</string>
     <string name="dialog_profile_reset_title">Сбросить профиль</string>
     <string name="dialog_profile_reset_message">Ваш текущий профиль и все несохраненные изменения будут навсегда удалены с телефона.\n\nВы уверены?</string>
     <string name="dialog_profile_logout_title">Выйти</string>

@@ -17,6 +17,7 @@
     <string name="menu_delete">Cancella</string>
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Applica</string>
+    <string name="menu_rename">Rinomina</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_profile_logout">Disconneti</string>
     <string name="fab_profile_label_create">Crea</string>
@@ -36,7 +37,8 @@
     <string name="dialog_device_confirmation_title">Conferma</string>
     <string name="dialog_device_confirmation_message">\nSei sicuro?</string>
     <string name="dialog_profile_create_title">Crea profilo</string>
-    <string name="dialog_profile_create_name">Nome</string>
+    <string name="dialog_profile_rename_title">Rinomina profilo</string>
+    <string name="dialog_profile_edit_name">Nome</string>
     <string name="dialog_profile_reset_title">Reset profilo</string>
     <string name="dialog_profile_reset_message">Il tuo profilo corrente e tutti i cambiamenti non salvati verranno cancellati in modo permanente dal telefono.\n\nSei sicuro?</string>
     <string name="dialog_profile_logout_title">Logout</string>

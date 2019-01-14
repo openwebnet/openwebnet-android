@@ -197,13 +197,14 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    private void showCreateDialog() {
-        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_create, null);
-        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileCreateName);
+    private void showEditDialog(int titleId, String name, Action1<String> editProfileAction) {
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_edit, null);
+        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileEditName);
+        editTextName.setText(name);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setView(layout)
-            .setTitle(R.string.dialog_profile_create_title)
+            .setTitle(titleId)
             .setPositiveButton(android.R.string.ok, null)
             .setNeutralButton(android.R.string.cancel, null);
 
@@ -214,10 +215,24 @@ public class ProfileActivity extends AppCompatActivity {
                 if (utilityService.isBlankText(editTextName)) {
                     editTextName.setError(labelValidationRequired);
                 } else {
-                    createProfile(utilityService.sanitizedText(editTextName));
+                    editProfileAction.call(utilityService.sanitizedText(editTextName));
                     dialog.dismiss();
                 }
             });
+    }
+
+    private void showCreateDialog() {
+        showEditDialog(
+            R.string.dialog_profile_create_title,
+            null,
+            this::createProfile);
+    }
+
+    private void showRenameDialog(UserProfileModel profile) {
+        showEditDialog(
+            R.string.dialog_profile_rename_title,
+            profile.getName(),
+            name -> renameProfile(profile.getProfileRef(), name));
     }
 
     private void showShareDialog(DocumentReference profileRef) {
@@ -315,6 +330,10 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void renameProfile(DocumentReference profileRef, String name) {
+        // TODO
+    }
+
     private void resetProfile() {
         requestAction(() -> firebaseService.resetLocalProfile(), profileId -> {
             log.info("resetProfile succeeded: terminating");
@@ -389,19 +408,33 @@ public class ProfileActivity extends AppCompatActivity {
     /**
      *
      */
-    public static class OnShowShareDialogEvent {
+    public static class OnShowEditDialogEvent {
 
-        private final DocumentReference profileRef;
+        public enum Type {
+            RENAME,
+            SHARE
+        }
 
-        public OnShowShareDialogEvent(DocumentReference profileRef) {
-            this.profileRef = profileRef;
+        private final UserProfileModel profile;
+        private final Type type;
+
+        public OnShowEditDialogEvent(UserProfileModel profile, Type type) {
+            this.profile = profile;
+            this.type = type;
         }
     }
 
     // fired by ProfileAdapter
     @Subscribe
-    public void onEvent(OnShowShareDialogEvent event) {
-        showShareDialog(event.profileRef);
+    public void onEvent(OnShowEditDialogEvent event) {
+        switch (event.type) {
+            case RENAME:
+                showRenameDialog(event.profile);
+                break;
+            case SHARE:
+                showShareDialog(event.profile.getProfileRef());
+                break;
+        }
     }
 
     /**

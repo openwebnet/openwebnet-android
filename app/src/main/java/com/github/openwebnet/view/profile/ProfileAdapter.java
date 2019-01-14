@@ -165,8 +165,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         R.string.dialog_profile_switch_message,
                         () -> switchProfile(profile)));
                     break;
+                case R.id.action_profile_card_rename:
+                    EventBus.getDefault().post(new ProfileActivity.OnShowEditDialogEvent(profile,
+                        ProfileActivity.OnShowEditDialogEvent.Type.RENAME));
+                    break;
                 case R.id.action_profile_card_share:
-                    EventBus.getDefault().post(new ProfileActivity.OnShowShareDialogEvent(profile.getProfileRef()));
+                    EventBus.getDefault().post(new ProfileActivity.OnShowEditDialogEvent(profile,
+                        ProfileActivity.OnShowEditDialogEvent.Type.SHARE));
                     break;
                 case R.id.action_profile_card_delete:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
