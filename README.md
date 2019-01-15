@@ -66,7 +66,7 @@ How to run [tests](images/how-to-run-tests.png) in Android Studio
 
 ### Other contributors
 - [Nicolas Moreau](https://github.com/moreau-nicolas)
-- [terranum](https://github.com/terranum)
+- [Vadim Bakaev](https://github.com/vadimbakaev)
 - [Denis Paris](https://github.com/parideis)
 
 Thanks to:
