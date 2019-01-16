@@ -231,7 +231,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<List<UserProfileModel>> getUserProfiles(String userId) {
+    public Observable<List<UserProfileModel>> getProfiles(String userId) {
         return Observable.create(subscriber -> {
             try {
                 getDb()
@@ -330,25 +330,19 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<Void> renameUserProfile(String userId, DocumentReference profileRef) {
-        // TODO + update modifiedAt
-        return null;
-    }
-
-    @Override
-    public Observable<Void> deleteUserProfile(String userId, DocumentReference profileRef) {
-        return getUserProfiles(userId)
+    public Observable<Void> renameProfile(String userId, DocumentReference profileRef, String name) {
+        return getProfiles(userId)
             .flatMap(userProfiles -> {
-                log.info("delete user profile: userId={} profileRef={}", userId, profileRef.getPath());
+                log.info("rename user profile: userId={} profileRef={} name={}", userId, profileRef.getPath(), name);
 
                 List<UserProfileModel> updatedUserProfiles = Stream
                     .of(userProfiles)
                     .map(userProfile -> {
-                        // update status
+                        // update name
                         if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
                             return UserProfileModel
                                 .getBuilder(userProfile.toMap())
-                                .status(UserProfileModel.Status.DELETED)
+                                .name(name)
                                 .modifiedAt(new Date())
                                 .build();
                         }
@@ -410,6 +404,31 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 subscriber.onError(e);
             }
         });
+    }
+
+    @Override
+    public Observable<Void> deleteProfile(String userId, DocumentReference profileRef) {
+        return getProfiles(userId)
+            .flatMap(userProfiles -> {
+                log.info("delete user profile: userId={} profileRef={}", userId, profileRef.getPath());
+
+                List<UserProfileModel> updatedUserProfiles = Stream
+                    .of(userProfiles)
+                    .map(userProfile -> {
+                        // update status
+                        if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
+                            return UserProfileModel
+                                    .getBuilder(userProfile.toMap())
+                                    .status(UserProfileModel.Status.DELETED)
+                                    .modifiedAt(new Date())
+                                    .build();
+                        }
+                        return userProfile;
+                    })
+                    .toList();
+
+                return updateUserProfile(userId, updatedUserProfiles);
+            });
     }
 
     private Observable<Void> updateUserProfile(String userId, List<UserProfileModel> userProfiles) {

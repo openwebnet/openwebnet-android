@@ -25,13 +25,15 @@ public interface FirebaseService {
 
     Observable<String> addProfile(String name);
 
-    Observable<List<UserProfileModel>> getUserProfiles();
+    Observable<List<UserProfileModel>> getProfiles();
 
     Observable<Void> switchProfile(DocumentReference profileRef);
 
-    Observable<Void> deleteUserProfile(DocumentReference profileRef);
+    Observable<Void> renameProfile(DocumentReference profileRef, String name);
 
     Observable<Void> shareProfile(DocumentReference profileRef, String email);
+
+    Observable<Void> deleteProfile(DocumentReference profileRef);
 
     Observable<Void> resetLocalProfile();
 

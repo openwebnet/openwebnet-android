@@ -80,8 +80,8 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Observable<List<UserProfileModel>> getUserProfiles() {
-        return firestoreRepository.getUserProfiles(getUser().getUserId());
+    public Observable<List<UserProfileModel>> getProfiles() {
+        return firestoreRepository.getProfiles(getUser().getUserId());
     }
 
     @Override
@@ -94,13 +94,18 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Observable<Void> deleteUserProfile(DocumentReference profileRef) {
-        return firestoreRepository.deleteUserProfile(getUser().getUserId(), profileRef);
+    public Observable<Void> renameProfile(DocumentReference profileRef, String name) {
+        return firestoreRepository.renameProfile(getUser().getUserId(), profileRef, name);
     }
 
     @Override
     public Observable<Void> shareProfile(DocumentReference profileRef, String email) {
         return firestoreRepository.shareProfile(getUser().getUserId(), profileRef, email);
+    }
+
+    @Override
+    public Observable<Void> deleteProfile(DocumentReference profileRef) {
+        return firestoreRepository.deleteProfile(getUser().getUserId(), profileRef);
     }
 
     @Override

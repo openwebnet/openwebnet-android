@@ -1,12 +1,7 @@
 # TODO
 * update store listing (en) and images on play store
-* bump libs
 
 ---
-
-TODOs
-menu_profile: add rename
-(3) implement rename
 
 * verify what happen when apply different version
 
@@ -24,11 +19,8 @@ menu_profile: add rename
   - (?) use context actionbar + onClick instead of menu on each element
 
 * share profiles
-  - dialog with "@gmail.com"
-  - color + hide share again
-  - make sure only a shared profile is accessible by someone else: SECURITY_RULE <<<
-  NO user can still copy and share a new profile:
-  - (?) add security rule to block if userId is different (already shared/non owner) you can't share it again
+  - show last applied not modified with color
+  - list shared from/to
 
 ---
 

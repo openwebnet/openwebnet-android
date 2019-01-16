@@ -309,8 +309,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void refreshProfiles() {
         Func0<Observable<List<UserProfileModel>>> observableAction = () ->
             preferenceService.isFirstLogin() ?
-                firebaseService.updateUser().flatMap(aVoid -> firebaseService.getUserProfiles()) :
-                firebaseService.getUserProfiles();
+                firebaseService.updateUser().flatMap(aVoid -> firebaseService.getProfiles()) :
+                firebaseService.getProfiles();
 
         requestAction(observableAction, profiles -> {
             log.info("refreshProfiles: size={}", profiles.size());
@@ -324,14 +324,18 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void createProfile(String name) {
         requestAction(() -> firebaseService.addProfile(name)
-                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
             log.info("createProfile succeeded: refreshing");
             updateProfiles(profiles);
         });
     }
 
     private void renameProfile(DocumentReference profileRef, String name) {
-        // TODO
+        requestAction(() -> firebaseService.renameProfile(profileRef, name)
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
+            log.info("renameProfile succeeded: refreshing");
+            updateProfiles(profiles);
+        });
     }
 
     private void resetProfile() {
@@ -354,7 +358,7 @@ public class ProfileActivity extends AppCompatActivity {
             utilityService.getString(R.string.dialog_profile_share_email_suffix));
 
         requestAction(() -> firebaseService.shareProfile(profileRef, email)
-                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
             log.info("shareProfile succeeded: refreshing");
             updateProfiles(profiles);
         });
