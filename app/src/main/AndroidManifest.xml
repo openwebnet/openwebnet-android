@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.github.openwebnet"
     android:versionCode="41"
     android:versionName="@string/app_version_number">
@@ -9,6 +11,8 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         android:name=".OpenWebNetApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
