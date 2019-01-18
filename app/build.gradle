@@ -124,7 +124,6 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
     }
     compileOnly 'javax.annotation:jsr250-api:1.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
