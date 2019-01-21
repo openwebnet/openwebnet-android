@@ -20,15 +20,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
     private static final String FIELD_PROFILE_REF = "profileRef";
     private static final String FIELD_EMAIL = "email";
     private static final String FIELD_CREATED_AT = "createdAt";
-    private static final String FIELD_MODIFIED_AT = "modifiedAt";
-    private static final String FIELD_STATUS = "status";
-
-    public enum Status {
-        CREATED,
-        // never used
-        SUCCEEDED,
-        FAILED
-    }
 
     private UUID requestId;
 
@@ -39,11 +30,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
     @ServerTimestamp
     private Date createdAt;
 
-    @ServerTimestamp
-    private Date modifiedAt;
-
-    private Status status;
-
     public ShareProfileRequest() {}
 
     private ShareProfileRequest(Builder builder) {
@@ -51,8 +37,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
         this.profileRef = builder.profileRef;
         this.email = builder.email;
         this.createdAt = builder.createdAt;
-        this.modifiedAt = builder.modifiedAt;
-        this.status = builder.status;
     }
 
     public static class Builder {
@@ -61,15 +45,11 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
         private DocumentReference profileRef;
         private String email;
         private final Date createdAt;
-        private final Date modifiedAt;
-        private final Status status;
 
         private Builder() {
             this.requestId = UUID.randomUUID();
             Date timestamp = new Date();
             this.createdAt = timestamp;
-            this.modifiedAt = timestamp;
-            this.status = Status.CREATED;
         }
 
         public Builder profileRef(DocumentReference profileRef) {
@@ -100,8 +80,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
         map.put(FIELD_PROFILE_REF, getProfileRef());
         map.put(FIELD_EMAIL, getEmail());
         map.put(FIELD_CREATED_AT, getCreatedAt());
-        map.put(FIELD_MODIFIED_AT, getModifiedAt());
-        map.put(FIELD_STATUS, getStatus().name());
         return map;
     }
 
@@ -112,8 +90,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
         request.profileRef = (DocumentReference) map.get(FIELD_PROFILE_REF);
         request.email = (String) map.get(FIELD_EMAIL);
         request.createdAt = ((Timestamp) map.get(FIELD_CREATED_AT)).toDate();
-        request.modifiedAt = ((Timestamp) map.get(FIELD_MODIFIED_AT)).toDate();
-        request.status = Status.valueOf((String) map.get(FIELD_STATUS));
         return request;
     }
 
@@ -131,14 +107,6 @@ public class ShareProfileRequest implements FirestoreModel<ShareProfileRequest> 
 
     public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public Date getModifiedAt() {
-        return modifiedAt;
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
 }

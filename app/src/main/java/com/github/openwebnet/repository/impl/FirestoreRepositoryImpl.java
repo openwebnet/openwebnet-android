@@ -418,10 +418,10 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                         // update status
                         if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
                             return UserProfileModel
-                                    .getBuilder(userProfile.toMap())
-                                    .status(UserProfileModel.Status.DELETED)
-                                    .modifiedAt(new Date())
-                                    .build();
+                                .getBuilder(userProfile.toMap())
+                                .status(UserProfileModel.Status.DELETED)
+                                .modifiedAt(new Date())
+                                .build();
                         }
                         return userProfile;
                     })
