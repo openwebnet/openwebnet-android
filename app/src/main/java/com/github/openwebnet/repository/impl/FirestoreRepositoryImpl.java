@@ -64,8 +64,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private static final String COLLECTION_USER_PROFILES = "profiles";
     private static final String COLLECTION_PROFILES = ENVIRONMENT + "profiles";
     private static final String COLLECTION_PROFILES_INFO = ENVIRONMENT + "profiles_info";
-    private static final String COLLECTION_REQUESTS = ENVIRONMENT + "requests";
-    private static final String COLLECTION_REQUEST_SHARE_PROFILE = "share_profile";
+    private static final String COLLECTION_SHARE_PROFILE = ENVIRONMENT + "share_profile";
+    private static final String COLLECTION_SHARE_PROFILE_REQUESTS = "requests";
 
     @Inject
     AutomationRepository automationRepository;
@@ -367,10 +367,10 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                     .build();
 
                 DocumentReference requestRef = getDb()
-                    .collection(COLLECTION_REQUESTS)
+                    .collection(COLLECTION_SHARE_PROFILE)
                     .document(userId);
 
-                Task<Void> updateTask = requestRef.update(COLLECTION_REQUEST_SHARE_PROFILE, FieldValue.arrayUnion(shareProfileRequest.toMap()));
+                Task<Void> updateTask = requestRef.update(COLLECTION_SHARE_PROFILE_REQUESTS, FieldValue.arrayUnion(shareProfileRequest.toMap()));
 
                 updateTask.addOnSuccessListener(aVoid -> {
                     log.info("request created with success (1)");
@@ -381,7 +381,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 updateTask.addOnFailureListener(e1 -> {
                     if (e1.getMessage().contains("NOT_FOUND")) {
                         Map requestMap = new HashMap<String, Object>();
-                        requestMap.put(COLLECTION_REQUEST_SHARE_PROFILE, Lists.newArrayList(shareProfileRequest.toMap()));
+                        requestMap.put(COLLECTION_SHARE_PROFILE_REQUESTS, Lists.newArrayList(shareProfileRequest.toMap()));
 
                         requestRef
                             .set(requestMap)
