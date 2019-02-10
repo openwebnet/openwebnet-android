@@ -1,15 +1,15 @@
 <resources>
     <string name="app_version">версия</string>
 
-    <string name="activity_device">Устройства</string>
+    <string name="activity_device">Устройство</string>
     <string name="activity_light">Освещение</string>
     <string name="activity_automation">Электропривод</string>
-    <string name="activity_ipcam">IP-камеры</string>
+    <string name="activity_ipcam">IP-камера</string>
     <string name="activity_temperature">Термоконтроль</string>
-    <string name="activity_scenario">Сценарии</string>
+    <string name="activity_scenario">Сценарий</string>
     <string name="activity_energy">Потребление энергии</string>
     <string name="activity_sound">Аудиосистема</string>
-    <string name="activity_profiles">Профили</string>
+    <string name="activity_profiles">Профиль</string>
     <string name="activity_settings">Настройки</string>
 
     <string name="menu_save">Сохранить</string>
@@ -44,7 +44,7 @@
     <string name="dialog_profile_logout_title">Выйти</string>
     <string name="dialog_profile_logout_message">\nВы уверены?</string>
     <string name="dialog_profile_switch_title">Применить профиль</string>
-    <string name="dialog_profile_switch_message">Выйти без сохраненения изменений в текущем профиле?\n\nВы уверены?</string>
+    <string name="dialog_profile_switch_message">Все не сохранененые изменения текущего профиля будут удалены и перезаписаны\n\nВы уверены?</string>
     <string name="dialog_profile_share_title">Поделиться профилем</string>
     <string name="dialog_profile_share_email_prefix">Эл. адрес</string>
     <string name="dialog_profile_share_info">Чтобы поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ\n\nВ случае успеха оба пользователя получат уведомление по почте</string>
