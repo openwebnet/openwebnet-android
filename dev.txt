@@ -1,7 +1,6 @@
 # TODO
 * update store listing (en) and images on play store
 
-* add info about email notification in dialog
 * show changelog on startup
 
 // above -> provided email
