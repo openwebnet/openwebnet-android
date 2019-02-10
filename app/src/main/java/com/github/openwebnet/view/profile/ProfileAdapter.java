@@ -27,6 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,6 +60,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     static class ProfileViewHolder extends RecyclerView.ViewHolder {
 
         static final int VIEW_TYPE = 100;
+
+        @BindColor(R.color.gold)
+        int colorSharedTo;
+        @BindColor(R.color.silver)
+        int colorSharedFrom;
+        @BindColor(R.color.white)
+        int colorDefault;
 
         @BindView(R.id.cardViewProfile)
         CardView cardViewProfile;
@@ -137,6 +145,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         profileViewHolder.imageButtonProfileCardMenu.setOnClickListener(v ->
             showProfileCardMenu(v, mProfiles.get(position)));
+
+        if (mProfiles.get(position).isSharedTo()) {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorSharedTo);
+        } else if (mProfiles.get(position).isSharedFrom()) {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorSharedFrom);
+        } else {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorDefault);
+        }
 
         if (!mProfiles.get(position).isCompatibleVersion()) {
             profileViewHolder.imageButtonProfileCardMenu.setVisibility(View.INVISIBLE);

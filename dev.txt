@@ -1,11 +1,14 @@
 # TODO
 * update store listing (en) and images on play store
 
+* add info about email notification in dialog
+* show changelog on startup
+
+// above -> provided email
+
 ---
 
-* verify what happen when apply different version
-
-* add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
+* (?) add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
 
 * verify if size(ACTIVE + DELETED + shared) max of 10 isn't too restrictive
 
@@ -20,7 +23,7 @@
 
 * share profiles
   - show last applied not modified with color
-  - list shared from/to
+  - list of shared from/to
 
 ---
 

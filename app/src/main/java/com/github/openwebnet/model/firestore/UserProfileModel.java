@@ -179,7 +179,7 @@ public class UserProfileModel implements FirestoreModel<UserProfileModel> {
     }
 
     public boolean isSharedFrom() {
-        return TextUtils.isEmpty(sharedFrom);
+        return !TextUtils.isEmpty(sharedFrom);
     }
 
     public boolean isSharedTo() {
