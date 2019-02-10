@@ -46,7 +46,7 @@ Additional links
 
 <img src="images/en/screenshot-environment-fab.png" alt="environment-fab" height="600" /> <img src="images/en/screenshot-device-debug.png" alt="device-debug" height="600" />
 
-<img src="images/en/screenshot-ipcam.png" alt="ipcam" height="600" /> <img src="images/en/screenshot-add-edit-device.png" alt="add-edit-device" height="600" />
+<img src="images/en/screenshot-ipcam.png" alt="ipcam" height="600" /> <img src="images/en/screenshot-profile.png" alt="profile" height="600" />
 
 <a href="https://play.google.com/store/apps/details?id=com.github.openwebnet&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" width="200"/></a>
 
