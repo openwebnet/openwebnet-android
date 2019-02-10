@@ -2,6 +2,7 @@ package com.github.openwebnet.service.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import com.github.niqdev.openwebnet.message.Heating.TemperatureScale;
 import com.github.openwebnet.component.Injector;
@@ -21,6 +22,7 @@ public class PreferenceServiceImpl implements PreferenceService {
     public static final String PREFERENCE_MAIN = "com.github.openwebnet.MAIN";
     public static final String KEY_FIRST_RUN = "com.github.openwebnet.MAIN.FIRST_RUN";
     public static final String KEY_FIRST_LOGIN = "com.github.openwebnet.MAIN.FIRST_LOGIN";
+    public static final String KEY_APP_VERSION = "com.github.openwebnet.MAIN.APP_VERSION";
 
     private static final String PREFERENCE_SECURE = "com.github.openwebnet.secure_preferences";
     private static final String PREFERENCE_SECURE_PWD = "NO_PWD";
@@ -42,6 +44,16 @@ public class PreferenceServiceImpl implements PreferenceService {
     @Override
     public void initFirstRun() {
         getMainSharedPreferences().edit().putBoolean(KEY_FIRST_RUN, false).apply();
+    }
+
+    @Override
+    public boolean isNewVersion() {
+        return getMainSharedPreferences().getInt(KEY_APP_VERSION, 0) != Build.VERSION.SDK_INT;
+    }
+
+    @Override
+    public void initVersion() {
+        getMainSharedPreferences().edit().putInt(KEY_APP_VERSION, Build.VERSION.SDK_INT).apply();
     }
 
     @Override

@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         IabUtil.newInstance(this).init();
 
-        commonService.initApplication();
+        commonService.initApplication(this);
         initNavigationDrawer(savedInstanceState);
     }
 
