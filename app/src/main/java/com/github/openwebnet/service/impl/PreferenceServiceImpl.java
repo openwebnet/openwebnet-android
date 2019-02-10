@@ -2,9 +2,9 @@ package com.github.openwebnet.service.impl;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import com.github.niqdev.openwebnet.message.Heating.TemperatureScale;
+import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.PreferenceService;
 import com.securepreferences.SecurePreferences;
@@ -48,12 +48,12 @@ public class PreferenceServiceImpl implements PreferenceService {
 
     @Override
     public boolean isNewVersion() {
-        return getMainSharedPreferences().getInt(KEY_APP_VERSION, 0) != Build.VERSION.SDK_INT;
+        return getMainSharedPreferences().getInt(KEY_APP_VERSION, 0) != BuildConfig.VERSION_CODE;
     }
 
     @Override
     public void initVersion() {
-        getMainSharedPreferences().edit().putInt(KEY_APP_VERSION, Build.VERSION.SDK_INT).apply();
+        getMainSharedPreferences().edit().putInt(KEY_APP_VERSION, BuildConfig.VERSION_CODE).apply();
     }
 
     @Override
