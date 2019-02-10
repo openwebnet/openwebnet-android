@@ -1,3 +1,9 @@
+#### v3.2.0 (February 10, 2019)
+
+- Share profiles
+- Translate changelogs
+- Minor style changes
+
 #### v3.1.1 (January 1, 2019)
 
 - Minor fixes

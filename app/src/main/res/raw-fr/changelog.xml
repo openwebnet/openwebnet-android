@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="Février 10, 2019" versionName="3.2.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neuf!</font></b> Partager des profils]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neuf!</font></b> Traduire les changelogs]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neuf!</font></b> Changements mineurs de style]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="Janvier 1, 2019" versionName="3.1.1">
         <changelogtext>
             <![CDATA[<b><font color=red>Neuf!</font></b> Corrections mineures]]>

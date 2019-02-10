@@ -1,8 +1,3 @@
-# TODO
-* update store listing (en) and images on play store
-
----
-
 * (?) add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
 
 * verify if size(ACTIVE + DELETED + shared) max of 10 isn't too restrictive

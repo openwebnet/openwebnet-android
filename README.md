@@ -8,7 +8,7 @@
 
 OpenWebNet Android client for My Home [BTicino](http://www.bticino.it/domotica-casa-connessa) and [Legrand](http://www.myopen-legrandgroup.com/) home automation system
 
-My Home is the BTicino and Legrand home domotic system that let you manage your house from smartphones through [OpenWebNet](https://en.wikipedia.org/wiki/OpenWebNet) protocol.
+My Home is the BTicino and Legrand home domotic system that let you manage your house from smartphones through [OpenWebNet](https://en.wikipedia.org/wiki/OpenWebNet) protocol
 
 Manages:
 - Lighting
@@ -20,19 +20,19 @@ Manages:
 - any OpenWebNet frame/message
 - IP Camera (MJPEG)
 
-Handle multiple gateways simultaneously with IP or Domain and password.
+Handle multiple gateways simultaneously with IP or Domain and password
 
-Backup of multiple profiles.
+Backup and share profiles
 
-It isn't mandatory, but it's highly recommended that you access your domotic system using a VPN connection.
+It isn't mandatory, but it's highly recommended that you access your domotic system using a VPN connection
 
-Database encrypted to increase security.
+Database encrypted to increase security
 
-This Android application is an unofficial free and Open Source client under MIT license.
+This Android application is an unofficial free and Open Source client under MIT license
 
-If you find a bug or have any suggestions feel free to open an issue.
+If you find a bug or have any suggestions feel free to open an issue
 
-If you like this app and find it useful please consider making a donation.
+If you like this app and find it useful please consider making a donation
 
 Additional links
 * Tutorial in French [Contrôler votre système domotique MyHome de Legrand](https://devotics.fr/controler-domotique-myhome-legrand) by Jérémy Paris
