@@ -121,9 +121,10 @@ public class MainActivityTest {
 
         when(environmentService.findAll()).thenReturn(Observable.just(environments));
 
-        ButterKnife.bind(this, Robolectric.setupActivity(MainActivity.class));
+        MainActivity mainActivity = Robolectric.setupActivity(MainActivity.class);
+        ButterKnife.bind(this, mainActivity);
 
-        verify(commonService).initApplication();
+        verify(commonService).initApplication(mainActivity);
         verify(environmentService).findAll();
 
         Menu menu = navigationView.getMenu();
@@ -150,7 +151,7 @@ public class MainActivityTest {
         assertEquals("invalid menu order", 900, menu.getItem(8).getOrder());
         assertEquals("invalid menu title", "Donation", menu.getItem(9).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(9).getOrder());
-        assertEquals("invalid menu title", "Changelogs", menu.getItem(10).getTitle());
+        assertEquals("invalid menu title", "Info", menu.getItem(10).getTitle());
         assertEquals("invalid menu order", 900, menu.getItem(10).getOrder());
     }
 
