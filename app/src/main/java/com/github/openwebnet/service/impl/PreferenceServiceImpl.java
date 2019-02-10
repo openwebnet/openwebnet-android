@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.github.niqdev.openwebnet.message.Heating.TemperatureScale;
+import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.service.PreferenceService;
 import com.securepreferences.SecurePreferences;
@@ -20,6 +21,8 @@ public class PreferenceServiceImpl implements PreferenceService {
     public static final String PREFERENCE_DEFAULT = "com.github.openwebnet_preferences";
     public static final String PREFERENCE_MAIN = "com.github.openwebnet.MAIN";
     public static final String KEY_FIRST_RUN = "com.github.openwebnet.MAIN.FIRST_RUN";
+    public static final String KEY_FIRST_LOGIN = "com.github.openwebnet.MAIN.FIRST_LOGIN";
+    public static final String KEY_APP_VERSION = "com.github.openwebnet.MAIN.APP_VERSION";
 
     private static final String PREFERENCE_SECURE = "com.github.openwebnet.secure_preferences";
     private static final String PREFERENCE_SECURE_PWD = "NO_PWD";
@@ -41,6 +44,26 @@ public class PreferenceServiceImpl implements PreferenceService {
     @Override
     public void initFirstRun() {
         getMainSharedPreferences().edit().putBoolean(KEY_FIRST_RUN, false).apply();
+    }
+
+    @Override
+    public boolean isNewVersion() {
+        return getMainSharedPreferences().getInt(KEY_APP_VERSION, 0) != BuildConfig.VERSION_CODE;
+    }
+
+    @Override
+    public void initVersion() {
+        getMainSharedPreferences().edit().putInt(KEY_APP_VERSION, BuildConfig.VERSION_CODE).apply();
+    }
+
+    @Override
+    public boolean isFirstLogin() {
+        return getMainSharedPreferences().getBoolean(KEY_FIRST_LOGIN, true);
+    }
+
+    @Override
+    public void initFirstLogin() {
+        getMainSharedPreferences().edit().putBoolean(KEY_FIRST_LOGIN, false).apply();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.openwebnet.service.impl;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.openwebnet.R;
@@ -10,7 +11,7 @@ import com.github.openwebnet.service.EnvironmentService;
 import com.github.openwebnet.service.GatewayService;
 import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
-import com.google.common.base.Strings;
+import com.github.openwebnet.view.ChangeLogDialogFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,15 +49,17 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void initApplication() {
+    public void initApplication(AppCompatActivity activity) {
         if (preferenceService.isFirstRun()) {
             environmentService.add(utilityService.getString(R.string.drawer_menu_example))
-                .subscribe(id -> {
-                    log.debug("initApplication with success");
-                }, throwable -> {
-                    log.error("initApplication", throwable);
-                });
+                .subscribe(
+                    id -> log.debug("initApplication with success"),
+                    throwable -> log.error("initApplication", throwable));
             preferenceService.initFirstRun();
+        }
+        if (preferenceService.isNewVersion()) {
+            ChangeLogDialogFragment.show(activity);
+            preferenceService.initVersion();
         }
         CLIENT_CACHE = new HashMap<>();
     }

@@ -1,11 +1,4 @@
-# TODO
-* update store listing (en) and images on play store
-* test firestore collection not-defined in security roles
-* bump libs
-
----
-
-* add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
+* (?) add "unique" serialNumber from SecurePreferences#getDeviceSerialNumber
 
 * verify if size(ACTIVE + DELETED + shared) max of 10 isn't too restrictive
 
@@ -19,9 +12,8 @@
   - (?) use context actionbar + onClick instead of menu on each element
 
 * share profiles
-  - dialog with "@gmail.com"
-  - color + hide share again
-  - add security rule to block if userId is different (already shared/non owner) you can't share it again
+  - show last applied not modified with color
+  - list of shared from/to
 
 ---
 

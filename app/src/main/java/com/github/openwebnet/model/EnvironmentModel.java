@@ -1,6 +1,7 @@
 package com.github.openwebnet.model;
 
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,10 @@ public class EnvironmentModel extends RealmObject
     @Required
     private String name;
 
+    public static EnvironmentModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new EnvironmentModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -33,7 +38,7 @@ public class EnvironmentModel extends RealmObject
     }
 
     @Override
-    public EnvironmentModel fromMap(Map<String, Object> map) {
+    public EnvironmentModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         checkNotNull(map.get(FIELD_ID), "id is null");
         checkNotNull(map.get(FIELD_NAME), "name is null");
 

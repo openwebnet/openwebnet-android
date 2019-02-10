@@ -11,15 +11,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.service.FirebaseService;
+import com.github.openwebnet.service.PreferenceService;
 import com.github.openwebnet.service.UtilityService;
 import com.github.openwebnet.view.MainActivity;
 import com.google.common.collect.Lists;
+import com.google.firebase.firestore.DocumentReference;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
@@ -65,6 +68,9 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseService firebaseService;
 
     @Inject
+    PreferenceService preferenceService;
+
+    @Inject
     UtilityService utilityService;
 
     private RecyclerView.Adapter mAdapter;
@@ -92,17 +98,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initSpeedDial() {
-        // create
-        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
-            R.id.fab_profile_create,
-            R.drawable.account_plus
-        ).setLabel(R.string.fab_profile_label_create).create());
-
         // reset
         speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
                 R.id.fab_profile_reset,
                 R.drawable.delete
         ).setLabel(R.string.fab_profile_label_reset).create());
+
+        // create
+        speedDialProfile.addActionItem(new SpeedDialActionItem.Builder(
+            R.id.fab_profile_create,
+            R.drawable.account_plus
+        ).setLabel(R.string.fab_profile_label_create).create());
 
         speedDialProfile.setOnActionSelectedListener(actionItem -> {
             switch (actionItem.getId()) {
@@ -191,13 +197,14 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    private void showCreateDialog() {
-        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_create, null);
-        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileCreateName);
+    private void showEditDialog(int titleId, String name, Action1<String> editProfileAction) {
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_edit, null);
+        EditText editTextName = layout.findViewById(R.id.editTextDialogProfileEditName);
+        editTextName.setText(name);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setView(layout)
-            .setTitle(R.string.dialog_profile_create_title)
+            .setTitle(titleId)
             .setPositiveButton(android.R.string.ok, null)
             .setNeutralButton(android.R.string.cancel, null);
 
@@ -208,10 +215,53 @@ public class ProfileActivity extends AppCompatActivity {
                 if (utilityService.isBlankText(editTextName)) {
                     editTextName.setError(labelValidationRequired);
                 } else {
-                    createProfile(utilityService.sanitizedText(editTextName));
+                    editProfileAction.call(utilityService.sanitizedText(editTextName));
                     dialog.dismiss();
                 }
             });
+    }
+
+    private void showCreateDialog() {
+        showEditDialog(
+            R.string.dialog_profile_create_title,
+            null,
+            this::createProfile);
+    }
+
+    private void showRenameDialog(UserProfileModel profile) {
+        showEditDialog(
+            R.string.dialog_profile_rename_title,
+            profile.getName(),
+            name -> renameProfile(profile.getProfileRef(), name));
+    }
+
+    private void showShareDialog(DocumentReference profileRef) {
+        View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_share, null);
+        EditText editTextEmailPrefix = layout.findViewById(R.id.editTextDialogProfileShareEmailPrefix);
+        CheckBox checkBox = layout.findViewById(R.id.checkBoxDialogProfileShare);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setView(layout)
+            .setTitle(R.string.dialog_profile_share_title)
+            .setPositiveButton(android.R.string.ok, null)
+            .setNeutralButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setEnabled(false);
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(v -> {
+                if (utilityService.isBlankText(editTextEmailPrefix)) {
+                    editTextEmailPrefix.setError(labelValidationRequired);
+                } else {
+                    shareProfile(profileRef, utilityService.sanitizedText(editTextEmailPrefix));
+                    dialog.dismiss();
+                }
+            });
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) ->
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(isChecked));
     }
 
     private void hideActions() {
@@ -257,16 +307,33 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void refreshProfiles() {
-        requestAction(() -> firebaseService.getUserProfiles(), profiles -> {
+        Func0<Observable<List<UserProfileModel>>> observableAction = () ->
+            preferenceService.isFirstLogin() ?
+                firebaseService.updateUser().flatMap(aVoid -> firebaseService.getProfiles()) :
+                firebaseService.getProfiles();
+
+        requestAction(observableAction, profiles -> {
             log.info("refreshProfiles: size={}", profiles.size());
+            if (preferenceService.isFirstLogin()) {
+                log.info("initFirstLogin");
+                preferenceService.initFirstLogin();
+            }
             updateProfiles(profiles);
         });
     }
 
     private void createProfile(String name) {
         requestAction(() -> firebaseService.addProfile(name)
-                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
             log.info("createProfile succeeded: refreshing");
+            updateProfiles(profiles);
+        });
+    }
+
+    private void renameProfile(DocumentReference profileRef, String name) {
+        requestAction(() -> firebaseService.renameProfile(profileRef, name)
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
+            log.info("renameProfile succeeded: refreshing");
             updateProfiles(profiles);
         });
     }
@@ -285,6 +352,18 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    private void shareProfile(DocumentReference profileRef, String emailPrefix) {
+        String email = String.format("%s%s", emailPrefix,
+            utilityService.getString(R.string.dialog_profile_share_email_suffix));
+
+        requestAction(() -> firebaseService.shareProfile(profileRef, email)
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
+            log.info("shareProfile succeeded: refreshing");
+            updateProfiles(profiles);
+        });
+    }
+
 
     private void showSnackbar(int stringId) {
         Snackbar.make(findViewById(android.R.id.content), utilityService.getString(stringId), Snackbar.LENGTH_LONG).show();
@@ -328,6 +407,38 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(OnShowConfirmationDialogEvent event) {
         showConfirmationDialog(event.titleStringId, event.messageStringId, event.actionOk);
+    }
+
+    /**
+     *
+     */
+    public static class OnShowEditDialogEvent {
+
+        public enum Type {
+            RENAME,
+            SHARE
+        }
+
+        private final UserProfileModel profile;
+        private final Type type;
+
+        public OnShowEditDialogEvent(UserProfileModel profile, Type type) {
+            this.profile = profile;
+            this.type = type;
+        }
+    }
+
+    // fired by ProfileAdapter
+    @Subscribe
+    public void onEvent(OnShowEditDialogEvent event) {
+        switch (event.type) {
+            case RENAME:
+                showRenameDialog(event.profile);
+                break;
+            case SHARE:
+                showShareDialog(event.profile.getProfileRef());
+                break;
+        }
     }
 
     /**

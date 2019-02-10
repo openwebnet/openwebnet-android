@@ -17,6 +17,7 @@
     <string name="menu_delete">Удалить</string>
     <string name="menu_debug">Отладка</string>
     <string name="menu_apply">Применять</string>
+    <string name="menu_rename">Переименовывать</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_profile_logout">Выход</string>
     <string name="fab_profile_label_create">Создайте</string>
@@ -27,7 +28,7 @@
     <string name="drawer_menu_profile">Профили</string>
     <string name="drawer_menu_settings">Настройки</string>
     <string name="drawer_menu_donation">Пожертвование</string>
-    <string name="drawer_menu_changelog">Список изменений</string>
+    <string name="drawer_menu_changelog">Информация</string>
     <string name="drawer_menu_example">Пример окружения</string>
 
     <string name="dialog_add_environment_title">Добавьте окружение</string>
@@ -36,13 +37,19 @@
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">\nВы уверены?</string>
     <string name="dialog_profile_create_title">Создать профиль</string>
-    <string name="dialog_profile_create_name">Имя</string>
+    <string name="dialog_profile_rename_title">Переименовать профиль</string>
+    <string name="dialog_profile_edit_name">Имя</string>
     <string name="dialog_profile_reset_title">Сбросить профиль</string>
     <string name="dialog_profile_reset_message">Ваш текущий профиль и все несохраненные изменения будут навсегда удалены с телефона.\n\nВы уверены?</string>
     <string name="dialog_profile_logout_title">Выйти</string>
     <string name="dialog_profile_logout_message">\nВы уверены?</string>
     <string name="dialog_profile_switch_title">Применить профиль</string>
     <string name="dialog_profile_switch_message">Все несохраненные изменения в текущем профиле будут удалены и перезаписаны.\n\nВы уверены?</string>
+    <string name="dialog_profile_share_title">Поделиться профилем</string>
+    <string name="dialog_profile_share_email_prefix">Эл. адрес</string>
+    <string name="dialog_profile_share_info">Чтобы иметь возможность поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ\n\nВ случае успеха оба пользователя получат уведомление по почте</string>
+    <string name="dialog_profile_share_checkbox">Я принимаю на себя всю ответственность, чтобы поделиться этим профилем со всеми, кто имеет доступ к предоставленной электронной почте</string>
+    <string name="dialog_profile_share_message">Вы уверены?</string>
     <string name="dialog_profile_delete_title">Удалить профиль</string>
     <string name="dialog_profile_delete_message">Вы больше не сможете получить доступ и применять этот профиль.\n\nВы уверены?</string>
     <string name="dialog_donation_title">Пожертвование</string>
@@ -53,6 +60,7 @@
     <string name="error_connection">Соединение недоступно</string>
     <string name="error_request">Запрос не выполнен</string>
     <string name="error_profile_max">Превышено максимально допустимое количество профилей</string>
+    <string name="error_profile_incompatible">Пожалуйста, обновите приложение, этот профиль был создан с более новой версией, и он может быть несовместим</string>
 
     <string name="validation_required">Обязательно поле</string>
     <string name="validation_host">Неверный домен или IP адрес</string>
@@ -82,6 +90,8 @@
     <string name="settings_category_info">Информация</string>
     <string name="settings_info_terms_conditions">Условия и положения</string>
     <string name="settings_info_privacy_policy">Политика конфиденциальности</string>
+    <string name="changelog_title">Информация</string>
+    <string name="changelog_header_version">"Версия "</string>
 
     <string name="button_add">Добавить</string>
     <string name="button_edit">Изменить</string>

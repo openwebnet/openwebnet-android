@@ -12,8 +12,10 @@ import com.github.openwebnet.model.LightModel;
 import com.github.openwebnet.model.ScenarioModel;
 import com.github.openwebnet.model.SoundModel;
 import com.github.openwebnet.model.TemperatureModel;
-import com.github.openwebnet.model.firestore.ProfileDetailModel;
+import com.github.openwebnet.model.firestore.ProfileInfoModel;
 import com.github.openwebnet.model.firestore.ProfileModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
+import com.github.openwebnet.model.firestore.ShareProfileRequest;
 import com.github.openwebnet.model.firestore.UserModel;
 import com.github.openwebnet.model.firestore.UserProfileModel;
 import com.github.openwebnet.repository.AutomationRepository;
@@ -27,6 +29,7 @@ import com.github.openwebnet.repository.LightRepository;
 import com.github.openwebnet.repository.ScenarioRepository;
 import com.github.openwebnet.repository.SoundRepository;
 import com.github.openwebnet.repository.TemperatureRepository;
+import com.google.android.gms.tasks.Task;
 import com.google.common.collect.Lists;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,6 +44,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +63,9 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     private static final String COLLECTION_USERS = ENVIRONMENT + "users";
     private static final String COLLECTION_USER_PROFILES = "profiles";
     private static final String COLLECTION_PROFILES = ENVIRONMENT + "profiles";
+    private static final String COLLECTION_PROFILES_INFO = ENVIRONMENT + "profiles_info";
+    private static final String COLLECTION_SHARE_PROFILE = ENVIRONMENT + "share_profile";
+    private static final String COLLECTION_SHARE_PROFILE_REQUESTS = "requests";
 
     @Inject
     AutomationRepository automationRepository;
@@ -109,6 +117,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     public Observable<Void> updateUser(UserModel user) {
         return Observable.create(subscriber -> {
             try {
+                log.info("updating user: userId={}", user.getUserId());
+
                 getDb()
                     .collection(COLLECTION_USERS)
                     .document(user.getUserId())
@@ -147,11 +157,8 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
         // Observable.zip support only up to 9 parameters, use Iterable
         return Observable.zip(findAll, results ->
-            new ProfileModel.Builder()
-                .details(new ProfileDetailModel.Builder()
-                    .userId(user.getUserId())
-                    .name(name)
-                    .build())
+            ProfileModel.addBuilder()
+                .version(ProfileVersionModel.newInstance())
                 .automations((List<AutomationModel>) results[0])
                 .devices((List<DeviceModel>) results[1])
                 .energies((List<EnergyModel>) results[2])
@@ -163,25 +170,41 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
                 .sounds((List<SoundModel>) results[8])
                 .temperatures((List<TemperatureModel>) results[9])
                 .build())
-            .flatMap(this::addProfile);
+            .flatMap(profile -> addProfile(user.getUserId(), name, profile));
     }
 
-
-    private Observable<String> addProfile(ProfileModel profile) {
+    // issue: if there are too many DELETED profiles
+    // user might be blocked to add more due to maxProfile restriction
+    private Observable<String> addProfile(String userId, String name, ProfileModel profile) {
         return Observable.create(subscriber -> {
             try {
                 FirebaseFirestore db = getDb();
                 WriteBatch batch = db.batch();
 
-                // FIRESTORE_SECURITY_RULE: max size
+                // add profile/{profileRef}/[ProfileModel + ProfileDetailModel]
                 DocumentReference profileRef = db.collection(COLLECTION_PROFILES).document();
                 batch.set(profileRef, profile, SetOptions.merge());
 
-                UserProfileModel userProfile = new UserProfileModel.Builder(profile)
-                    .profileRef(profileRef).build();
+                UserProfileModel userProfile = UserProfileModel
+                    .addBuilder()
+                    .profileRef(profileRef)
+                    .name(name)
+                    .build();
 
-                DocumentReference userRef = db.collection(COLLECTION_USERS).document(profile.getDetails().getUserId());
+                // add user/{userId}/.../profiles/[UserProfileModel]
+                DocumentReference userRef = db.collection(COLLECTION_USERS).document(userId);
                 batch.update(userRef, COLLECTION_USER_PROFILES, FieldValue.arrayUnion(userProfile.toMap()));
+
+                ProfileInfoModel profileInfo = ProfileInfoModel
+                    .builder(userProfile)
+                    .userId(userId)
+                    .build();
+
+                String profileKey = profileRef.getPath().replace(COLLECTION_PROFILES + "/", "");
+
+                // add profiles_info/{profileRef}/[ProfileInfoModel]
+                DocumentReference profileInfoRef = db.collection(COLLECTION_PROFILES_INFO).document(profileKey);
+                batch.set(profileInfoRef, profileInfo, SetOptions.merge());
 
                 batch.commit()
                     .addOnSuccessListener(aVoid -> {
@@ -208,7 +231,7 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<List<UserProfileModel>> getUserProfiles(String userId) {
+    public Observable<List<UserProfileModel>> getProfiles(String userId) {
         return Observable.create(subscriber -> {
             try {
                 getDb()
@@ -222,12 +245,12 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
                                 List<UserProfileModel> userProfileModels =
                                     Stream.of((List<Map<String, Object>>) document.getData().get(COLLECTION_USER_PROFILES))
-                                        .map(userProfileMap -> new UserProfileModel.Builder(userProfileMap).build())
+                                        .map(userProfileMap -> UserProfileModel.getBuilder(userProfileMap).build())
                                         // filter deleted
                                         .filterNot(userProfile -> userProfile.getStatus() == UserProfileModel.Status.DELETED)
                                         .toList();
 
-                                log.info("user profiles: size={}", userProfileModels.size());
+                                log.info("active user profiles: size={}", userProfileModels.size());
 
                                 subscriber.onNext(userProfileModels);
                                 subscriber.onCompleted();
@@ -254,17 +277,16 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             try {
                 getDb()
                     .collection(COLLECTION_PROFILES)
-                    // FIRESTORE_SECURITY_RULE: only owner
                     .document(profileRef.getId())
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {
-                        log.info("profile model retrieved with success");
+                        log.info("profile retrieved with success");
                         ProfileModel profileModel = documentSnapshot.toObject(ProfileModel.class);
                         subscriber.onNext(profileModel);
                         subscriber.onCompleted();
                     })
                     .addOnFailureListener(e -> {
-                        log.error("failed to retrieve profile model", e);
+                        log.error("failed to retrieve profile", e);
                         subscriber.onError(e);
                     });
 
@@ -277,28 +299,29 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
 
     @Override
     public Observable<List<Integer>> applyProfile(ProfileModel profile) {
+        ProfileVersionModel version = profile.getVersion();
 
         List<Observable<?>> addAll = Lists.newArrayList(
             automationRepository.addAll(Stream.of(profile.getAutomations())
-                .map(automationMap -> new AutomationModel.Builder(automationMap).build()).toList()),
+                .map(automationMap -> AutomationModel.newInstance(automationMap, version)).toList()),
             deviceRepository.addAll(Stream.of(profile.getDevices())
-                .map(deviceMap -> new DeviceModel.Builder(deviceMap).build()).toList()),
+                .map(deviceMap -> DeviceModel.newInstance(deviceMap, version)).toList()),
             energyRepository.addAll(Stream.of(profile.getEnergies())
-                .map(energyMap -> new EnergyModel.Builder(energyMap).build()).toList()),
+                .map(energyMap -> EnergyModel.newInstance(energyMap, version)).toList()),
             environmentRepository.addAll(Stream.of(profile.getEnvironments())
-                .map(environmentMap -> new EnvironmentModel().fromMap(environmentMap)).toList()),
+                .map(environmentMap -> EnvironmentModel.newInstance(environmentMap, version)).toList()),
             gatewayRepository.addAll(Stream.of(profile.getGateways())
-                .map(gatewayMap -> new GatewayModel().fromMap(gatewayMap)).toList()),
+                .map(gatewayMap -> GatewayModel.newInstance(gatewayMap, version)).toList()),
             ipcamRepository.addAll(Stream.of(profile.getIpcams())
-                .map(ipcamMap -> new IpcamModel.Builder(ipcamMap).build()).toList()),
+                .map(ipcamMap -> IpcamModel.newInstance(ipcamMap, version)).toList()),
             lightRepository.addAll(Stream.of(profile.getLights())
-                .map(lightMap -> new LightModel.Builder(lightMap).build()).toList()),
+                .map(lightMap -> LightModel.newInstance(lightMap, version)).toList()),
             scenarioRepository.addAll(Stream.of(profile.getScenarios())
-                .map(scenarioMap -> new ScenarioModel.Builder(scenarioMap).build()).toList()),
+                .map(scenarioMap -> ScenarioModel.newInstance(scenarioMap, version)).toList()),
             soundRepository.addAll(Stream.of(profile.getSounds())
-                .map(soundMap -> new SoundModel.Builder(soundMap).build()).toList()),
+                .map(soundMap -> SoundModel.newInstance(soundMap, version)).toList()),
             temperatureRepository.addAll(Stream.of(profile.getTemperatures())
-                .map(temperatureMap -> new TemperatureModel.Builder(temperatureMap).build()).toList())
+                .map(temperatureMap -> TemperatureModel.newInstance(temperatureMap, version)).toList())
         );
 
         // count of each model
@@ -307,18 +330,21 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
     }
 
     @Override
-    public Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef) {
-        return getUserProfiles(userId)
+    public Observable<Void> renameProfile(String userId, DocumentReference profileRef, String name) {
+        return getProfiles(userId)
             .flatMap(userProfiles -> {
-                log.info("soft delete profile: userId={} profileRef={}", userId, profileRef.getPath());
+                log.info("rename user profile: userId={} profileRef={} name={}", userId, profileRef.getPath(), name);
 
-                // update status
                 List<UserProfileModel> updatedUserProfiles = Stream
                     .of(userProfiles)
                     .map(userProfile -> {
+                        // update name
                         if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
-                            return new UserProfileModel.Builder(userProfile)
-                                .status(UserProfileModel.Status.DELETED).build();
+                            return UserProfileModel
+                                .getBuilder(userProfile.toMap())
+                                .name(name)
+                                .modifiedAt(new Date())
+                                .build();
                         }
                         return userProfile;
                     })
@@ -328,10 +354,81 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             });
     }
 
+    // immutable append-only
     @Override
-    public Observable<Void> shareProfile(String email) {
-        // TODO don't expose mapping userId/email
-        return null;
+    public Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email) {
+        return Observable.create(subscriber -> {
+            try {
+                log.info("share [userId={}|profileRef={}] to email [{}]", userId, profileRef.getPath(), email);
+
+                ShareProfileRequest shareProfileRequest = ShareProfileRequest.addBuilder()
+                    .profileRef(profileRef)
+                    .email(email)
+                    .build();
+
+                DocumentReference requestRef = getDb()
+                    .collection(COLLECTION_SHARE_PROFILE)
+                    .document(userId);
+
+                Task<Void> updateTask = requestRef.update(COLLECTION_SHARE_PROFILE_REQUESTS, FieldValue.arrayUnion(shareProfileRequest.toMap()));
+
+                updateTask.addOnSuccessListener(aVoid -> {
+                    log.info("request created with success (1)");
+                    subscriber.onNext(null);
+                    subscriber.onCompleted();
+                });
+
+                updateTask.addOnFailureListener(e1 -> {
+                    if (e1.getMessage().contains("NOT_FOUND")) {
+                        Map requestMap = new HashMap<String, Object>();
+                        requestMap.put(COLLECTION_SHARE_PROFILE_REQUESTS, Lists.newArrayList(shareProfileRequest.toMap()));
+
+                        requestRef
+                            .set(requestMap)
+                            .addOnSuccessListener(aVoid -> {
+                                log.info("request created with success (2)");
+                                subscriber.onNext(null);
+                                subscriber.onCompleted();
+                            })
+                            .addOnFailureListener(e2 -> {
+                                log.error("failed to create request (2)", e2);
+                                subscriber.onError(e2);
+                            });
+                    } else {
+                        log.error("failed to create request (1)", e1);
+                        subscriber.onError(e1);
+                    }
+                });
+            } catch (Exception e) {
+                log.error("FirestoreRepository#shareProfile", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
+    @Override
+    public Observable<Void> deleteProfile(String userId, DocumentReference profileRef) {
+        return getProfiles(userId)
+            .flatMap(userProfiles -> {
+                log.info("delete user profile: userId={} profileRef={}", userId, profileRef.getPath());
+
+                List<UserProfileModel> updatedUserProfiles = Stream
+                    .of(userProfiles)
+                    .map(userProfile -> {
+                        // update status
+                        if (userProfile.getProfileRef().getPath().equals(profileRef.getPath())) {
+                            return UserProfileModel
+                                .getBuilder(userProfile.toMap())
+                                .status(UserProfileModel.Status.DELETED)
+                                .modifiedAt(new Date())
+                                .build();
+                        }
+                        return userProfile;
+                    })
+                    .toList();
+
+                return updateUserProfile(userId, updatedUserProfiles);
+            });
     }
 
     private Observable<Void> updateUserProfile(String userId, List<UserProfileModel> userProfiles) {

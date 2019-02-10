@@ -2,6 +2,7 @@ package com.github.openwebnet.model;
 
 import com.github.niqdev.openwebnet.message.Lighting;
 import com.github.openwebnet.model.firestore.FirestoreModel;
+import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,11 +77,11 @@ public class LightModel extends RealmObject
         private String type;
         private boolean favourite;
 
-        public Builder(String uuid) {
+        private Builder(String uuid) {
             this.uuid = uuid;
         }
 
-        public Builder(Map<String, Object> map) {
+        private Builder(Map<String, Object> map) {
             this.uuid = (String) map.get(FIELD_UUID);
             this.environmentId = ((Long) map.get(FIELD_ENVIRONMENT_ID)).intValue();
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
@@ -139,6 +140,10 @@ public class LightModel extends RealmObject
         return new Builder(uuid);
     }
 
+    public static LightModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        return new LightModel().fromMap(map, version);
+    }
+
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
@@ -153,7 +158,7 @@ public class LightModel extends RealmObject
     }
 
     @Override
-    public LightModel fromMap(Map<String, Object> map) {
+    public LightModel fromMap(Map<String, Object> map, ProfileVersionModel version) {
         return new Builder(map).build();
     }
 

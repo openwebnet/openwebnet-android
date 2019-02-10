@@ -1,6 +1,7 @@
 package com.github.openwebnet.service;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 import com.github.niqdev.openwebnet.OpenWebNet;
 import com.github.openwebnet.BuildConfig;
@@ -144,7 +145,7 @@ public class CommonServiceTest {
         when(utilityService.getString(ID_LABEL)).thenReturn(LABEL_ENVIRONMENT);
         when(environmentService.add(LABEL_ENVIRONMENT)).thenReturn(Observable.just(ID_ENVIRONMENT));
 
-        commonService.initApplication();
+        commonService.initApplication(mock(AppCompatActivity.class));
 
         verify(environmentService, times(1)).add(LABEL_ENVIRONMENT);
         verify(preferenceService, times(1)).initFirstRun();
@@ -154,7 +155,7 @@ public class CommonServiceTest {
     public void commonService_initApplication_isNotFirstTime() {
         when(preferenceService.isFirstRun()).thenReturn(false);
 
-        commonService.initApplication();
+        commonService.initApplication(mock(AppCompatActivity.class));
 
         verify(environmentService, never()).add(anyString());
         verify(preferenceService, never()).initFirstRun();
@@ -171,7 +172,7 @@ public class CommonServiceTest {
         when(preferenceService.isFirstRun()).thenReturn(false);
         when(gatewayService.findById(GATEWAY_UUID)).thenReturn(Observable.just(gateway));
 
-        commonService.initApplication();
+        commonService.initApplication(mock(AppCompatActivity.class));
         OpenWebNet client = commonService.findClient(GATEWAY_UUID);
 
         assertNotNull("null client", client);

@@ -10,6 +10,14 @@ public interface PreferenceService {
 
     void initFirstRun();
 
+    boolean isNewVersion();
+
+    void initVersion();
+
+    boolean isFirstLogin();
+
+    void initFirstLogin();
+
     String getDefaultGateway();
 
     TemperatureScale getDefaultTemperatureScale();

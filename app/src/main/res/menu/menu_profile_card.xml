@@ -5,9 +5,11 @@
         android:id="@+id/action_profile_card_switch"
         android:title="@string/menu_apply" />
     <item
+        android:id="@+id/action_profile_card_rename"
+        android:title="@string/menu_rename" />
+    <item
         android:id="@+id/action_profile_card_share"
-        android:title="@string/menu_share"
-        android:visible="false"/>
+        android:title="@string/menu_share" />
     <item
         android:id="@+id/action_profile_card_delete"
         android:title="@string/menu_delete" />

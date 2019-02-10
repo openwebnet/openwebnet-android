@@ -15,15 +15,17 @@ public interface FirestoreRepository {
 
     Observable<String> addProfile(UserModel user, String name);
 
-    Observable<List<UserProfileModel>> getUserProfiles(String userId);
+    Observable<List<UserProfileModel>> getProfiles(String userId);
 
     Observable<ProfileModel> getProfile(DocumentReference profileRef);
 
     Observable<List<Integer>> applyProfile(ProfileModel profile);
 
-    Observable<Void> softDeleteProfile(String userId, DocumentReference profileRef);
+    Observable<Void> renameProfile(String userId, DocumentReference profileRef, String name);
 
-    Observable<Void> shareProfile(String email);
+    Observable<Void> shareProfile(String userId, DocumentReference profileRef, String email);
+
+    Observable<Void> deleteProfile(String userId, DocumentReference profileRef);
 
     Observable<Void> deleteLocalProfile();
 

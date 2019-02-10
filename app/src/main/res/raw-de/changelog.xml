@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog bulletedList="true">
+
+    <changelogversion changeDate="Februar 10, 2019" versionName="3.2.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Profile teilen]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Changelogs übersetzen]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Stiländerungen]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Januar 1, 2019" versionName="3.1.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Korrekturen]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Dezember 30, 2018" versionName="3.1.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Profilstile aktualisieren]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Dezember 29, 2018" versionName="3.0.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Sicherungsprofile]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Juli 25, 2018" versionName="2.12.8">
+        <changelogtext>Kleinere Korrekturen</changelogtext>
+    </changelogversion>
+
+</changelog>

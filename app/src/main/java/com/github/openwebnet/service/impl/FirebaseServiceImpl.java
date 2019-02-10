@@ -17,7 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,14 +70,18 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Observable<String> addProfile(String name) {
-        return firestoreRepository.updateUser(getUser())
-            .flatMap(aVoid -> firestoreRepository.addProfile(getUser(), name));
+    public Observable<Void> updateUser() {
+        return firestoreRepository.updateUser(getUser());
     }
 
     @Override
-    public Observable<List<UserProfileModel>> getUserProfiles() {
-        return firestoreRepository.getUserProfiles(getUser().getUserId());
+    public Observable<String> addProfile(String name) {
+        return updateUser().flatMap(aVoid -> firestoreRepository.addProfile(getUser(), name));
+    }
+
+    @Override
+    public Observable<List<UserProfileModel>> getProfiles() {
+        return firestoreRepository.getProfiles(getUser().getUserId());
     }
 
     @Override
@@ -91,8 +94,18 @@ public class FirebaseServiceImpl implements FirebaseService {
     }
 
     @Override
-    public Observable<Void> softDeleteProfile(DocumentReference profileRef) {
-        return firestoreRepository.softDeleteProfile(getUser().getUserId(), profileRef);
+    public Observable<Void> renameProfile(DocumentReference profileRef, String name) {
+        return firestoreRepository.renameProfile(getUser().getUserId(), profileRef, name);
+    }
+
+    @Override
+    public Observable<Void> shareProfile(DocumentReference profileRef, String email) {
+        return firestoreRepository.shareProfile(getUser().getUserId(), profileRef, email);
+    }
+
+    @Override
+    public Observable<Void> deleteProfile(DocumentReference profileRef) {
+        return firestoreRepository.deleteProfile(getUser().getUserId(), profileRef);
     }
 
     @Override
@@ -107,20 +120,7 @@ public class FirebaseServiceImpl implements FirebaseService {
 
     private UserModel getUser() {
         checkArgument(isAuthenticated(), "user not authenticated");
-
-        FirebaseUser firebaseUser = getCurrentUser();
-        Date createdAtDate = firebaseUser.getMetadata() != null ?
-            new Date(firebaseUser.getMetadata().getCreationTimestamp()) : new Date();
-
-        return new UserModel.Builder()
-            // FIRESTORE_SECURITY_RULE: only owner
-            .userId(firebaseUser.getUid())
-            .email(firebaseUser.getEmail())
-            .name(firebaseUser.getDisplayName())
-            .phoneNumber(firebaseUser.getPhoneNumber())
-            .photoUrl(firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString())
-            .createdAt(createdAtDate)
-            .build();
+        return UserModel.newInstance(getCurrentUser());
     }
 
     private Observable<Void> addDefaultEnvironment() {

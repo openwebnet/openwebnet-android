@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dialog_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <!-- https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address -->
+        <!-- {64}@{255} -->
+        <EditText
+            android:id="@+id/editTextDialogProfileShareEmailPrefix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/dialog_profile_share_email_prefix"
+            android:inputType="text"
+            android:maxLength="64" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/dialog_profile_share_email_suffix" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_info" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDialogProfileShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_checkbox" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_share_message" />
+
+</LinearLayout>

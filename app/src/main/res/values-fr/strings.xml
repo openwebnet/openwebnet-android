@@ -17,6 +17,7 @@
     <string name="menu_delete">Supprimer</string>
     <string name="menu_debug">Débogage</string>
     <string name="menu_apply">Appliquer</string>
+    <string name="menu_rename">Renommer</string>
     <string name="menu_share">Partager</string>
     <string name="menu_profile_logout">Déconnexion</string>
     <string name="fab_profile_label_create">Créer</string>
@@ -27,7 +28,7 @@
     <string name="drawer_menu_profile">Profils</string>
     <string name="drawer_menu_settings">Paramètres</string>
     <string name="drawer_menu_donation">Don</string>
-    <string name="drawer_menu_changelog">Changelog</string>
+    <string name="drawer_menu_changelog">Info</string>
     <string name="drawer_menu_example">Environnement d\'exemple</string>
 
     <string name="dialog_add_environment_title">Ajouter environnement</string>
@@ -36,13 +37,19 @@
     <string name="dialog_device_confirmation_title">Confirmer</string>
     <string name="dialog_device_confirmation_message">\nÊtes-vous sûr?</string>
     <string name="dialog_profile_create_title">Créer un profil</string>
-    <string name="dialog_profile_create_name">Nom</string>
+    <string name="dialog_profile_rename_title">Renommer le profil</string>
+    <string name="dialog_profile_edit_name">Nom</string>
     <string name="dialog_profile_reset_title">Réinitialiser le profil</string>
     <string name="dialog_profile_reset_message">Votre profil actuel et toutes les modifications non enregistrées seront définitivement supprimés du téléphone.\n\nÊtes-vous sûr?</string>
     <string name="dialog_profile_logout_title">Connectez-Out</string>
     <string name="dialog_profile_logout_message">\nÊtes-vous sûr?</string>
     <string name="dialog_profile_switch_title">Appliquer le profil</string>
     <string name="dialog_profile_switch_message">Toutes les modifications non enregistrées dans le profil actuel seront supprimées et écrasées.\n\nÊtes-vous sûr?</string>
+    <string name="dialog_profile_share_title">Partager le profil</string>
+    <string name="dialog_profile_share_email_prefix">Email</string>
+    <string name="dialog_profile_share_info">Pour pouvoir partager ce profil, l’autre utilisateur doit d’abord se connecter\n\nUne fois partagé, même si vous supprimez ce profil, l\'autre utilisateur pourra toujours y accéder\n\nEn cas de succès, les deux utilisateurs recevront une notification par courrier</string>
+    <string name="dialog_profile_share_checkbox">Je prends toute responsabilité de partager ce profil avec toute personne ayant accès au courrier électronique fourni</string>
+    <string name="dialog_profile_share_message">\nÊtes-vous sûr?</string>
     <string name="dialog_profile_delete_title">Supprimer le profil</string>
     <string name="dialog_profile_delete_message">Vous ne pourrez plus accéder et appliquer ce profil.\n\nÊtes-vous sûr?</string>
     <string name="dialog_donation_title">Don</string>
@@ -53,6 +60,7 @@
     <string name="error_connection">Connexion indisponible</string>
     <string name="error_request">Demande échoué</string>
     <string name="error_profile_max">Nombre maximal de profils autorisés dépassé</string>
+    <string name="error_profile_incompatible">S\'il vous plaît mettre à jour l\'application, ce profil a été créé avec une version plus récente et il pourrait être incompatible</string>
 
     <string name="validation_required">Champ obbligatoire</string>
     <string name="validation_host">Adresse IP ou le domaine invalide</string>
@@ -82,6 +90,8 @@
     <string name="settings_category_info">Information</string>
     <string name="settings_info_terms_conditions">Termes et Conditions</string>
     <string name="settings_info_privacy_policy">Politique de confidentialité</string>
+    <string name="changelog_title">Info</string>
+    <string name="changelog_header_version">"Version "</string>
 
     <string name="button_add">Ajouter</string>
     <string name="button_edit">Modifier</string>

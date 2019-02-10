@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">3.1.1</string>
+    <string name="app_version_number" translatable="false">3.2.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
     <string name="url_terms_conditions" translatable="false">https://termsfeed.com/terms-conditions/f21f31b35e4569354fe47c11345ede48</string>
     <string name="url_privacy_policy" translatable="false">https://termsfeed.com/privacy-policy/774d76cf112e2cfe571eafc89f70de15</string>
@@ -24,6 +24,7 @@
     <string name="menu_delete">Delete</string>
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Apply</string>
+    <string name="menu_rename">Rename</string>
     <string name="menu_share">Share</string>
     <string name="menu_profile_logout">Logout</string>
     <string name="fab_profile_label_create">Create</string>
@@ -34,7 +35,7 @@
     <string name="drawer_menu_profile">Profiles</string>
     <string name="drawer_menu_settings">Settings</string>
     <string name="drawer_menu_donation">Donation</string>
-    <string name="drawer_menu_changelog">Changelogs</string>
+    <string name="drawer_menu_changelog">Info</string>
     <string name="drawer_menu_example">Example environment</string>
 
     <string name="dialog_add_environment_title">Add environment</string>
@@ -43,13 +44,20 @@
     <string name="dialog_device_confirmation_title">Confirmation request</string>
     <string name="dialog_device_confirmation_message">\nAre you sure?</string>
     <string name="dialog_profile_create_title">Create profile</string>
-    <string name="dialog_profile_create_name">Name</string>
+    <string name="dialog_profile_rename_title">Rename profile</string>
+    <string name="dialog_profile_edit_name">Name</string>
     <string name="dialog_profile_reset_title">Reset profile</string>
     <string name="dialog_profile_reset_message">Your current profile and all unsaved changes will be permanently deleted from the phone.\n\nAre you sure?</string>
     <string name="dialog_profile_logout_title">Logout</string>
     <string name="dialog_profile_logout_message">\nAre you sure?</string>
     <string name="dialog_profile_switch_title">Apply profile</string>
     <string name="dialog_profile_switch_message">All unsaved changes to the current profile will be deleted and overwritten.\n\nAre you sure?</string>
+    <string name="dialog_profile_share_title">Share profile</string>
+    <string name="dialog_profile_share_email_prefix">Email</string>
+    <string name="dialog_profile_share_email_suffix" translatable="false">\@gmail.com</string>
+    <string name="dialog_profile_share_info">To be able to share this profile, the other user need to login first\n\nOnce shared, even if you delete this profile, the other user will still be able to access it\n\nUpon success, both users will receive a notification via mail</string>
+    <string name="dialog_profile_share_checkbox">I take every responsibility to share this profile with anyone who has access to the provided email</string>
+    <string name="dialog_profile_share_message">Are you sure?</string>
     <string name="dialog_profile_delete_title">Delete profile</string>
     <string name="dialog_profile_delete_message">You won\'t be able to access and apply this profile anymore.\n\nAre you sure?</string>
     <string name="dialog_donation_title">Donation</string>
@@ -60,6 +68,7 @@
     <string name="error_connection">Connection unavailable</string>
     <string name="error_request">Request failed</string>
     <string name="error_profile_max">Maximum number of allowed profiles exceeded</string>
+    <string name="error_profile_incompatible">Please update the app, this profile was created with a more recent version and it might be incompatible</string>
 
     <string name="validation_required">Required field</string>
     <string name="validation_host">Invalid ip address or domain</string>
@@ -89,7 +98,8 @@
     <string name="settings_category_info">Information</string>
     <string name="settings_info_terms_conditions">Terms and Conditions</string>
     <string name="settings_info_privacy_policy">Privacy Policy</string>
-    <string name="changelog_title" translatable="false">What\'s new</string>
+    <string name="changelog_title">Info</string>
+    <string name="changelog_header_version">"Version "</string>
 
     <string name="button_add">Add</string>
     <string name="button_edit">Edit</string>

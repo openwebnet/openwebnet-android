@@ -2,6 +2,7 @@ package com.github.openwebnet.view.profile;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -25,6 +27,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -57,6 +60,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     static class ProfileViewHolder extends RecyclerView.ViewHolder {
 
         static final int VIEW_TYPE = 100;
+
+        @BindColor(R.color.gold)
+        int colorSharedTo;
+        @BindColor(R.color.silver)
+        int colorSharedFrom;
+        @BindColor(R.color.white)
+        int colorDefault;
+
+        @BindView(R.id.cardViewProfile)
+        CardView cardViewProfile;
 
         @BindView(R.id.textViewProfileName)
         TextView textViewProfileName;
@@ -132,6 +145,20 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         profileViewHolder.imageButtonProfileCardMenu.setOnClickListener(v ->
             showProfileCardMenu(v, mProfiles.get(position)));
+
+        if (mProfiles.get(position).isSharedTo()) {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorSharedTo);
+        } else if (mProfiles.get(position).isSharedFrom()) {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorSharedFrom);
+        } else {
+            profileViewHolder.cardViewProfile.setCardBackgroundColor(profileViewHolder.colorDefault);
+        }
+
+        if (!mProfiles.get(position).isCompatibleVersion()) {
+            profileViewHolder.imageButtonProfileCardMenu.setVisibility(View.INVISIBLE);
+            profileViewHolder.cardViewProfile.setOnClickListener(v ->
+                Toast.makeText(mActivity, utilityService.getString(R.string.error_profile_incompatible), Toast.LENGTH_LONG).show());
+        }
     }
 
     @Override
@@ -154,9 +181,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         R.string.dialog_profile_switch_message,
                         () -> switchProfile(profile)));
                     break;
+                case R.id.action_profile_card_rename:
+                    EventBus.getDefault().post(new ProfileActivity.OnShowEditDialogEvent(profile,
+                        ProfileActivity.OnShowEditDialogEvent.Type.RENAME));
+                    break;
                 case R.id.action_profile_card_share:
-                    // TODO
-                    shareProfile(profile);
+                    EventBus.getDefault().post(new ProfileActivity.OnShowEditDialogEvent(profile,
+                        ProfileActivity.OnShowEditDialogEvent.Type.SHARE));
                     break;
                 case R.id.action_profile_card_delete:
                     EventBus.getDefault().post(new ProfileActivity.OnShowConfirmationDialogEvent(
@@ -178,14 +209,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }));
     }
 
-    private void shareProfile(UserProfileModel profile) {
-        log.info("TODO onClick: imageButtonProfileShare");
-    }
-
     private void deleteProfile(UserProfileModel profile) {
         EventBus.getDefault().post(new ProfileActivity.OnRequestActionEvent<>(
-            () -> firebaseService.softDeleteProfile(profile.getProfileRef())
-                .flatMap(profileId -> firebaseService.getUserProfiles()), profiles -> {
+            () -> firebaseService.deleteProfile(profile.getProfileRef())
+                .flatMap(profileId -> firebaseService.getProfiles()), profiles -> {
             log.info("deleteProfile succeeded: refreshing");
             EventBus.getDefault().post(new ProfileActivity.OnUpdateProfilesEvent(profiles));
         }));
