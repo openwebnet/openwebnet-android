@@ -76,7 +76,7 @@ dependencies {
     testImplementation 'org.powermock:powermock-module-junit4-rule:1.6.6'
     testImplementation 'org.powermock:powermock-api-mockito:1.6.6'
     testImplementation 'org.powermock:powermock-classloading-xstream:1.6.6'
-    testCompileOnly('com.google.dagger:dagger-compiler:2.20') {
+    testCompileOnly('com.google.dagger:dagger-compiler:2.21') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     testCompileOnly('com.jakewharton:butterknife-compiler:9.0.0') {
@@ -117,10 +117,10 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
     }
 
-    implementation('com.google.dagger:dagger:2.20') {
+    implementation('com.google.dagger:dagger:2.21') {
         exclude group: 'com.google.guava', module: 'guava'
     }
-    annotationProcessor('com.google.dagger:dagger-compiler:2.20') {
+    annotationProcessor('com.google.dagger:dagger-compiler:2.21') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     compileOnly 'javax.annotation:jsr250-api:1.0'
