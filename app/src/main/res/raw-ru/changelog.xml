@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog bulletedList="true">
+
+    <changelogversion changeDate="1 января 2019 г." versionName="3.1.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Новый!</font></b> Незначительные исправления]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="30 декабря 2018 г." versionName="3.1.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Новый!</font></b> Обновить стили профиля]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="29 декабря 2018 г." versionName="3.0.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Новый!</font></b> Резервные профили]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="25 июля 2018 г." versionName="2.12.8">
+        <changelogtext>Незначительные исправления</changelogtext>
+    </changelogversion>
+
+</changelog>

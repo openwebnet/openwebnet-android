@@ -28,7 +28,7 @@
     <string name="drawer_menu_profile">Профили</string>
     <string name="drawer_menu_settings">Настройки</string>
     <string name="drawer_menu_donation">Пожертвование</string>
-    <string name="drawer_menu_changelog">Список изменений</string>
+    <string name="drawer_menu_changelog">Информация</string>
     <string name="drawer_menu_example">Пример окружения</string>
 
     <string name="dialog_add_environment_title">Добавьте окружение</string>
@@ -90,6 +90,8 @@
     <string name="settings_category_info">Информация</string>
     <string name="settings_info_terms_conditions">Условия и положения</string>
     <string name="settings_info_privacy_policy">Политика конфиденциальности</string>
+    <string name="changelog_title">Информация</string>
+    <string name="changelog_header_version">"Версия "</string>
 
     <string name="button_add">Добавить</string>
     <string name="button_edit">Изменить</string>

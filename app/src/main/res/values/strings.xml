@@ -35,7 +35,7 @@
     <string name="drawer_menu_profile">Profiles</string>
     <string name="drawer_menu_settings">Settings</string>
     <string name="drawer_menu_donation">Donation</string>
-    <string name="drawer_menu_changelog">Changelogs</string>
+    <string name="drawer_menu_changelog">Info</string>
     <string name="drawer_menu_example">Example environment</string>
 
     <string name="dialog_add_environment_title">Add environment</string>
@@ -98,7 +98,8 @@
     <string name="settings_category_info">Information</string>
     <string name="settings_info_terms_conditions">Terms and Conditions</string>
     <string name="settings_info_privacy_policy">Privacy Policy</string>
-    <string name="changelog_title" translatable="false">What\'s new</string>
+    <string name="changelog_title">Info</string>
+    <string name="changelog_header_version">"Version "</string>
 
     <string name="button_add">Add</string>
     <string name="button_edit">Edit</string>
