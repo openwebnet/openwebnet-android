@@ -1,12 +1,12 @@
 <resources>
     <string name="app_version">версия</string>
 
-    <string name="activity_device">Устройство</string>
-    <string name="activity_light">Свет</string>
+    <string name="activity_device">Устройства</string>
+    <string name="activity_light">Освещение</string>
     <string name="activity_automation">Электропривод</string>
-    <string name="activity_ipcam">IP-камера</string>
-    <string name="activity_temperature">Температура</string>
-    <string name="activity_scenario">Сценарий</string>
+    <string name="activity_ipcam">IP-камеры</string>
+    <string name="activity_temperature">Термоконтроль</string>
+    <string name="activity_scenario">Сценарии</string>
     <string name="activity_energy">Потребление энергии</string>
     <string name="activity_sound">Аудиосистема</string>
     <string name="activity_profiles">Профили</string>
@@ -16,8 +16,8 @@
     <string name="menu_edit">Изменить</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_debug">Отладка</string>
-    <string name="menu_apply">Применять</string>
-    <string name="menu_rename">Переименовывать</string>
+    <string name="menu_apply">Применить</string>
+    <string name="menu_rename">Переименовать</string>
     <string name="menu_share">Поделиться</string>
     <string name="menu_profile_logout">Выход</string>
     <string name="fab_profile_label_create">Создайте</string>
@@ -31,8 +31,8 @@
     <string name="drawer_menu_changelog">Информация</string>
     <string name="drawer_menu_example">Пример окружения</string>
 
-    <string name="dialog_add_environment_title">Добавьте окружение</string>
-    <string name="dialog_edit_environment_title">Измените окружение</string>
+    <string name="dialog_add_environment_title">Добавить окружение</string>
+    <string name="dialog_edit_environment_title">Изменить окружение</string>
     <string name="dialog_environment_name">Имя</string>
     <string name="dialog_device_confirmation_title">Подтверждение</string>
     <string name="dialog_device_confirmation_message">\nВы уверены?</string>
@@ -40,15 +40,15 @@
     <string name="dialog_profile_rename_title">Переименовать профиль</string>
     <string name="dialog_profile_edit_name">Имя</string>
     <string name="dialog_profile_reset_title">Сбросить профиль</string>
-    <string name="dialog_profile_reset_message">Ваш текущий профиль и все несохраненные изменения будут навсегда удалены с телефона.\n\nВы уверены?</string>
+    <string name="dialog_profile_reset_message">Текущий профиль и все его изменения будут удалены.\n\nВы уверены?</string>
     <string name="dialog_profile_logout_title">Выйти</string>
     <string name="dialog_profile_logout_message">\nВы уверены?</string>
     <string name="dialog_profile_switch_title">Применить профиль</string>
-    <string name="dialog_profile_switch_message">Все несохраненные изменения в текущем профиле будут удалены и перезаписаны.\n\nВы уверены?</string>
+    <string name="dialog_profile_switch_message">Выйти без сохраненения изменений в текущем профиле?\n\nВы уверены?</string>
     <string name="dialog_profile_share_title">Поделиться профилем</string>
     <string name="dialog_profile_share_email_prefix">Эл. адрес</string>
-    <string name="dialog_profile_share_info">Чтобы иметь возможность поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ\n\nВ случае успеха оба пользователя получат уведомление по почте</string>
-    <string name="dialog_profile_share_checkbox">Я принимаю на себя всю ответственность, чтобы поделиться этим профилем со всеми, кто имеет доступ к предоставленной электронной почте</string>
+    <string name="dialog_profile_share_info">Чтобы поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ\n\nВ случае успеха оба пользователя получат уведомление по почте</string>
+    <string name="dialog_profile_share_checkbox">Я понимаю и принимаю на себя всю ответственность по данному профилю, делясь им со всеми, кто имеет доступ к предоставленной электронной почте</string>
     <string name="dialog_profile_share_message">Вы уверены?</string>
     <string name="dialog_profile_delete_title">Удалить профиль</string>
     <string name="dialog_profile_delete_message">Вы больше не сможете получить доступ и применять этот профиль.\n\nВы уверены?</string>
@@ -164,9 +164,9 @@
     <string name="card_device_debug_clipboard_copied">Ответ скопирован</string>
 
     <string name="donation_coffee_name">Кофе</string>
-    <string name="donation_coffee_description">Кофе, чтобы будить меня, когда я программирую по ночам!</string>
+    <string name="donation_coffee_description">Кофе, чтобы будить меня, когда я пишу программы по ночам!</string>
     <string name="donation_beer_name">Пиво</string>
-    <string name="donation_beer_description">Холодное пиво, чтобы увеличить мою производительность!</string>
+    <string name="donation_beer_description">Холодное пиво, для увеличения моей производительности!</string>
     <string name="donation_pizza_name">Пицца</string>
     <string name="donation_pizza_description">Пицца, для полного счастья!</string>
 </resources>
