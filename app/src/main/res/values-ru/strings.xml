@@ -39,6 +39,8 @@
     <string name="dialog_profile_create_title">Создать профиль</string>
     <string name="dialog_profile_rename_title">Переименовать профиль</string>
     <string name="dialog_profile_edit_name">Имя</string>
+    <string name="dialog_profile_create_message_1">Создает резервную копию текущих настроек на этом устройстве</string>
+    <string name="dialog_profile_create_message_2">После этого вы сможете восстановить его также на другом устройстве с той же учетной записью Google или поделиться им с другими пользователями</string>
     <string name="dialog_profile_reset_title">Сбросить профиль</string>
     <string name="dialog_profile_reset_message">Текущий профиль и все его изменения будут удалены.\n\nВы уверены?</string>
     <string name="dialog_profile_logout_title">Выйти</string>
@@ -46,8 +48,11 @@
     <string name="dialog_profile_switch_title">Применить профиль</string>
     <string name="dialog_profile_switch_message">Все не сохранененые изменения текущего профиля будут удалены и перезаписаны\n\nВы уверены?</string>
     <string name="dialog_profile_share_title">Поделиться профилем</string>
-    <string name="dialog_profile_share_email_prefix">Эл. адрес</string>
-    <string name="dialog_profile_share_info">Чтобы поделиться этим профилем, другой пользователь должен войти в систему первым\n\nПосле публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ\n\nВ случае успеха оба пользователя получат уведомление по почте</string>
+    <string name="dialog_profile_share_email_prefix">Электронный префикс</string>
+    <string name="dialog_profile_share_info_1">Пример: если вы хотите поделиться этим профилем с other.user@gmail.com, введите только \"other.user\"</string>
+    <string name="dialog_profile_share_info_2">Чтобы поделиться этим профилем, другой пользователь должен хотя бы один раз войти в систему со своей учетной записью Google на своем устройстве</string>
+    <string name="dialog_profile_share_info_3">После публикации, даже если вы удалите этот профиль, другой пользователь все равно сможет получить к нему доступ и поделиться им с другими пользователями</string>
+    <string name="dialog_profile_share_info_4">В случае успеха оба пользователя получат уведомление по почте</string>
     <string name="dialog_profile_share_checkbox">Я понимаю и принимаю на себя всю ответственность по данному профилю, делясь им со всеми, кто имеет доступ к предоставленной электронной почте</string>
     <string name="dialog_profile_share_message">Вы уверены?</string>
     <string name="dialog_profile_delete_title">Удалить профиль</string>

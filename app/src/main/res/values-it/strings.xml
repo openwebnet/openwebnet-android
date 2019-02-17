@@ -39,6 +39,8 @@
     <string name="dialog_profile_create_title">Crea profilo</string>
     <string name="dialog_profile_rename_title">Rinomina profilo</string>
     <string name="dialog_profile_edit_name">Nome</string>
+    <string name="dialog_profile_create_message_1">Crea un backup delle configurazioni attuali su questo dispositivo</string>
+    <string name="dialog_profile_create_message_2">Potrai poi ripristinarlo anche su un altro dispositivo con lo stesso account Google o condividerlo con altri utenti</string>
     <string name="dialog_profile_reset_title">Reset profilo</string>
     <string name="dialog_profile_reset_message">Il tuo profilo corrente e tutti i cambiamenti non salvati verranno cancellati in modo permanente dal telefono.\n\nSei sicuro?</string>
     <string name="dialog_profile_logout_title">Logout</string>
@@ -46,8 +48,11 @@
     <string name="dialog_profile_switch_title">Applica profilo</string>
     <string name="dialog_profile_switch_message">Tutti i cambiamenti non salvati al profilo corrente verranno cancellati e sovrascritti.\n\nSei sicuro?</string>
     <string name="dialog_profile_share_title">Condividi profilo</string>
-    <string name="dialog_profile_share_email_prefix">Email</string>
-    <string name="dialog_profile_share_info">Per poter condividere questo profilo, l\'altro utente dovrà prima effettuare almeno un accesso\n\nUna volta condiviso, anche se eliminerai questo profilo, l\'altro utente sarà comunque in grado di accedervi\n\nAl successo, entrambi gli utenti riceveranno una notifica via mail</string>
+    <string name="dialog_profile_share_email_prefix">Prefisso email</string>
+    <string name="dialog_profile_share_info_1">Esempio: se desideri condividere questo profilo con altro.utente@gmail.com, scrivi solo \"altro.utente\"</string>
+    <string name="dialog_profile_share_info_2">Per poter condividere questo profilo, l\'altro utente dovrà effettuare l\'accesso almeno una volta con il suo account Google sul suo dispositivo</string>
+    <string name="dialog_profile_share_info_3">Una volta condiviso, anche se elimini questo profilo, l\'altro utente sarà comunque in grado di accedervi e condividerlo con altri utenti</string>
+    <string name="dialog_profile_share_info_4">Al successo, entrambi gli utenti riceveranno una notifica via mail</string>
     <string name="dialog_profile_share_checkbox">Mi assumo ogni responsabilita per condividere questo profilo con chiunque abbia accesso all\'email fornita</string>
     <string name="dialog_profile_share_message">Sei sicuro?</string>
     <string name="dialog_profile_delete_title">Cancella profilo</string>

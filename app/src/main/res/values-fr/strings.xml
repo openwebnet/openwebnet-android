@@ -39,6 +39,8 @@
     <string name="dialog_profile_create_title">Créer un profil</string>
     <string name="dialog_profile_rename_title">Renommer le profil</string>
     <string name="dialog_profile_edit_name">Nom</string>
+    <string name="dialog_profile_create_message_1">Crée une sauvegarde des configurations actuelles sur ce périphérique</string>
+    <string name="dialog_profile_create_message_2">Vous pourrez ensuite le restaurer également sur un autre appareil avec le même compte Google ou le partager avec d\'autres utilisateurs</string>
     <string name="dialog_profile_reset_title">Réinitialiser le profil</string>
     <string name="dialog_profile_reset_message">Votre profil actuel et toutes les modifications non enregistrées seront définitivement supprimés du téléphone.\n\nÊtes-vous sûr?</string>
     <string name="dialog_profile_logout_title">Connectez-Out</string>
@@ -46,8 +48,11 @@
     <string name="dialog_profile_switch_title">Appliquer le profil</string>
     <string name="dialog_profile_switch_message">Toutes les modifications non enregistrées dans le profil actuel seront supprimées et écrasées.\n\nÊtes-vous sûr?</string>
     <string name="dialog_profile_share_title">Partager le profil</string>
-    <string name="dialog_profile_share_email_prefix">Email</string>
-    <string name="dialog_profile_share_info">Pour pouvoir partager ce profil, l’autre utilisateur doit d’abord se connecter\n\nUne fois partagé, même si vous supprimez ce profil, l\'autre utilisateur pourra toujours y accéder\n\nEn cas de succès, les deux utilisateurs recevront une notification par courrier</string>
+    <string name="dialog_profile_share_email_prefix">Préfixe email</string>
+    <string name="dialog_profile_share_info_1">Exemple: si vous souhaitez partager ce profil avec autre.utilisateur@gmail.com, saisissez \"autre.utilisateur\" uniquement</string>
+    <string name="dialog_profile_share_info_2">Pour pouvoir partager ce profil, l\'autre utilisateur doit se connecter au moins une fois avec son compte Google sur son appareil</string>
+    <string name="dialog_profile_share_info_3">Une fois partagé, même si vous supprimez ce profil, l\'autre utilisateur pourra toujours y accéder et le partager avec d\'autres utilisateurs</string>
+    <string name="dialog_profile_share_info_4">En cas de succès, les deux utilisateurs recevront une notification par courrier</string>
     <string name="dialog_profile_share_checkbox">Je prends toute responsabilité de partager ce profil avec toute personne ayant accès au courrier électronique fourni</string>
     <string name="dialog_profile_share_message">\nÊtes-vous sûr?</string>
     <string name="dialog_profile_delete_title">Supprimer le profil</string>

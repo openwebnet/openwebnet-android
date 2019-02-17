@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/dialog_margin"
     android:orientation="vertical">
 
     <EditText
@@ -10,9 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/dialog_margin"
         android:hint="@string/dialog_profile_edit_name"
         android:inputType="text"
-        android:maxLength="50"/>
+        android:maxLength="50" />
+
+    <TextView
+        android:id="@+id/textViewDialogProfileEditNameDescription1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:textStyle="italic"
+        android:text="@string/dialog_profile_create_message_1" />
+
+    <TextView
+        android:id="@+id/textViewDialogProfileEditNameDescription2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_margin"
+        android:text="@string/dialog_profile_create_message_2" />
 
 </LinearLayout>

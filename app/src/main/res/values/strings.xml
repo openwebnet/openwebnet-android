@@ -46,6 +46,8 @@
     <string name="dialog_profile_create_title">Create profile</string>
     <string name="dialog_profile_rename_title">Rename profile</string>
     <string name="dialog_profile_edit_name">Name</string>
+    <string name="dialog_profile_create_message_1">Creates a backup of the current configurations on this device</string>
+    <string name="dialog_profile_create_message_2">You will be then able to restore it also on a different device with the same Google account or share it with other users</string>
     <string name="dialog_profile_reset_title">Reset profile</string>
     <string name="dialog_profile_reset_message">Your current profile and all unsaved changes will be permanently deleted from the phone.\n\nAre you sure?</string>
     <string name="dialog_profile_logout_title">Logout</string>
@@ -53,9 +55,12 @@
     <string name="dialog_profile_switch_title">Apply profile</string>
     <string name="dialog_profile_switch_message">All unsaved changes to the current profile will be deleted and overwritten.\n\nAre you sure?</string>
     <string name="dialog_profile_share_title">Share profile</string>
-    <string name="dialog_profile_share_email_prefix">Email</string>
+    <string name="dialog_profile_share_email_prefix">Email prefix</string>
     <string name="dialog_profile_share_email_suffix" translatable="false">\@gmail.com</string>
-    <string name="dialog_profile_share_info">To be able to share this profile, the other user need to login first\n\nOnce shared, even if you delete this profile, the other user will still be able to access it\n\nUpon success, both users will receive a notification via mail</string>
+    <string name="dialog_profile_share_info_1">Example: if you want to share this profile with other.user@gmail.com, type \"other.user\" only</string>
+    <string name="dialog_profile_share_info_2">To be able to share this profile, the other user need to login at least once with his Google account on his device</string>
+    <string name="dialog_profile_share_info_3">Once shared, even if you delete this profile, the other user will still be able to access it and share it with other users</string>
+    <string name="dialog_profile_share_info_4">Upon success, both users will receive a notification via mail</string>
     <string name="dialog_profile_share_checkbox">I take every responsibility to share this profile with anyone who has access to the provided email</string>
     <string name="dialog_profile_share_message">Are you sure?</string>
     <string name="dialog_profile_delete_title">Delete profile</string>

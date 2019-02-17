@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
@@ -197,10 +198,15 @@ public class ProfileActivity extends AppCompatActivity {
             });
     }
 
-    private void showEditDialog(int titleId, String name, Action1<String> editProfileAction) {
+    private void showEditDialog(int titleId, String name, int descriptionVisibility, Action1<String> editProfileAction) {
         View layout = LayoutInflater.from(this).inflate(R.layout.dialog_profile_edit, null);
         EditText editTextName = layout.findViewById(R.id.editTextDialogProfileEditName);
         editTextName.setText(name);
+
+        TextView textViewDescription1 = layout.findViewById(R.id.textViewDialogProfileEditNameDescription1);
+        TextView textViewDescription2 = layout.findViewById(R.id.textViewDialogProfileEditNameDescription2);
+        textViewDescription1.setVisibility(descriptionVisibility);
+        textViewDescription2.setVisibility(descriptionVisibility);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
             .setView(layout)
@@ -225,6 +231,7 @@ public class ProfileActivity extends AppCompatActivity {
         showEditDialog(
             R.string.dialog_profile_create_title,
             null,
+            View.VISIBLE,
             this::createProfile);
     }
 
@@ -232,6 +239,7 @@ public class ProfileActivity extends AppCompatActivity {
         showEditDialog(
             R.string.dialog_profile_rename_title,
             profile.getName(),
+            View.GONE,
             name -> renameProfile(profile.getProfileRef(), name));
     }
 
