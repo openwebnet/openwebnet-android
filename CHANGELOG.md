@@ -1,3 +1,7 @@
+#### v3.2.1 (February 17, 2019)
+
+- Minor fixes
+
 #### v3.2.0 (February 10, 2019)
 
 - Share profiles

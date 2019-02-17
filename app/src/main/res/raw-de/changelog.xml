@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="Februar 17, 2019" versionName="3.2.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Korrekturen]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="Februar 10, 2019" versionName="3.2.0">
         <changelogtext>
             <![CDATA[<b><font color=red>Neu!</font></b> Profile teilen]]>
