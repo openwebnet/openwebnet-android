@@ -4,7 +4,7 @@ import java.util.Map;
 
 public interface FirestoreModel<T> {
 
-    int DATABASE_VERSION = 2;
+    int DATABASE_VERSION = 3;
 
     Map<String, Object> toMap();
 
