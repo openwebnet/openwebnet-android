@@ -153,6 +153,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //testQuery();
         refreshProfiles();
     }
 
@@ -312,6 +313,12 @@ public class ProfileActivity extends AppCompatActivity {
             log.warn("requestAction: connection unavailable");
             showSnackbar(R.string.error_connection);
         }
+    }
+
+    private void testQuery() {
+        requestAction(() -> firebaseService.testQuery(), aVoid -> {
+            log.info("testQuery succeeded");
+        });
     }
 
     private void refreshProfiles() {

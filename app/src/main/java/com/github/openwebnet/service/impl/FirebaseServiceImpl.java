@@ -114,6 +114,11 @@ public class FirebaseServiceImpl implements FirebaseService {
             .flatMap(aVoid -> addDefaultEnvironment());
     }
 
+    @Override
+    public Observable<Void> testQuery() {
+        return firestoreRepository.testQuery(getUser().getUserId());
+    }
+
     private FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }

@@ -29,4 +29,6 @@ public interface FirestoreRepository {
 
     Observable<Void> deleteLocalProfile();
 
+    Observable<Void> testQuery(String userId);
+
 }

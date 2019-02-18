@@ -37,4 +37,6 @@ public interface FirebaseService {
 
     Observable<Void> resetLocalProfile();
 
+    Observable<Void> testQuery();
+
 }

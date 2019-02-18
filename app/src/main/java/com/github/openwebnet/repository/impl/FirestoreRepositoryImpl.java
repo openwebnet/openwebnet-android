@@ -465,4 +465,31 @@ public class FirestoreRepositoryImpl implements FirestoreRepository {
             .flatMap(aVoid -> gatewayRepository.deleteAll());
     }
 
+    @Override
+    public Observable<Void> testQuery(String userId) {
+        return Observable.create(subscriber -> {
+            try {
+                log.info("test query: userId={}", userId);
+
+                // verify PERMISSION_DENIED
+
+                getDb().collection(COLLECTION_USERS).document("USER_ID").get()
+                //getDb().collection(COLLECTION_PROFILES).document("PROFILE_ID").get()
+                //getDb().collection(COLLECTION_PROFILES_INFO).document("PROFILE_ID").get()
+                    .addOnSuccessListener(result -> {
+                        log.info("test query succeeded: {}", result);
+                        subscriber.onNext(null);
+                        subscriber.onCompleted();
+                    })
+                    .addOnFailureListener(e -> {
+                        log.error("failed to test query", e);
+                        subscriber.onError(e);
+                    });
+            } catch (Exception e) {
+                log.error("FirestoreRepository#testQuery", e);
+                subscriber.onError(e);
+            }
+        });
+    }
+
 }
