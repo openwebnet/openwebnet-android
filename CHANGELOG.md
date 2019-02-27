@@ -1,3 +1,7 @@
+#### v3.2.2 (February 27, 2019)
+
+- Minor fixes
+
 #### v3.2.1 (February 17, 2019)
 
 - Minor fixes

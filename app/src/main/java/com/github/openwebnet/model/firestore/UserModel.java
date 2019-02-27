@@ -72,7 +72,7 @@ public class UserModel {
             this.phoneNumber = firebaseUser.getPhoneNumber();
             this.photoUrl = firebaseUser.getPhotoUrl() == null ? null : firebaseUser.getPhotoUrl().toString();
 
-            // TODO https://stackoverflow.com/questions/4212320/get-the-current-language-in-device
+            // https://stackoverflow.com/questions/4212320/get-the-current-language-in-device
             this.iso3Language = Locale.getDefault().getISO3Language();
             this.iso3Country = Locale.getDefault().getISO3Country();
             this.locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).toLanguageTags();
@@ -117,14 +117,6 @@ public class UserModel {
         return photoUrl;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getModifiedAt() {
-        return modifiedAt;
-    }
-
     public String getIso3Language() {
         return iso3Language;
     }
@@ -135,6 +127,14 @@ public class UserModel {
 
     public String getLocale() {
         return locale;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
     }
 
 }
