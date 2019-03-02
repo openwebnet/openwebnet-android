@@ -211,10 +211,12 @@ public class LightActivity extends AbstractDeviceActivity {
         return isValidRequired((TextView) spinnerLightType.getSelectedView());
     }
 
+    // TODO bus
     private boolean isValidWhereRange() {
         boolean isValid = Lighting.isValidRangeType(
             utilityService.sanitizedText(editTextLightWhere),
-            getSelectedLightType()
+            getSelectedLightType(),
+            Lighting.NO_BUS
         );
         if (!isValid) {
             editTextLightWhere.setError(validationBadValue);

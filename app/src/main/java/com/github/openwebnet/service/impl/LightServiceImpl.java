@@ -20,6 +20,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.functions.Func3;
 import rx.schedulers.Schedulers;
 
 import static com.github.openwebnet.model.LightModel.Status.OFF;
@@ -109,17 +110,18 @@ public class LightServiceImpl implements LightService {
         return Observable.just(light).flatMap(requestLight(Lighting::requestTurnOff, handleResponse(OFF)));
     }
 
+    // TODO bus
     private Func1<LightModel, Observable<LightModel>> requestLight(
-        Func2<String, Lighting.Type, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
+        Func3<String, Lighting.Type, String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
 
         return light -> commonService.findClient(light.getGatewayUuid())
-            .send(request.call(light.getWhere(), light.getLightingType()))
+            .send(request.call(light.getWhere(), light.getLightingType(), Lighting.NO_BUS))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, light))
             .onErrorReturn(throwable -> {
                 log.warn("light={} | failing request={}", light.getUuid(),
-                    request.call(light.getWhere(), light.getLightingType()).getValue());
+                    request.call(light.getWhere(), light.getLightingType(), Lighting.NO_BUS).getValue());
                 // unreadable status
                 return light;
             });
