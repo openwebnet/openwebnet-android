@@ -19,6 +19,7 @@ public class LightModel extends RealmObject
         implements RealmModel, DomoticModel, FirestoreModel<LightModel> {
 
     public static final String FIELD_TYPE = "type";
+    public static final String FIELD_BUS = "bus";
 
     public enum Status {
         ON, OFF
@@ -46,6 +47,9 @@ public class LightModel extends RealmObject
     @Required
     private String type;
 
+    @Required
+    private String bus;
+
     private boolean favourite;
 
     @Ignore
@@ -64,6 +68,7 @@ public class LightModel extends RealmObject
         this.name = builder.name;
         this.where = builder.where;
         this.type = builder.type;
+        this.bus = builder.bus;
         this.favourite = builder.favourite;
     }
 
@@ -75,6 +80,7 @@ public class LightModel extends RealmObject
         private String name;
         private String where;
         private String type;
+        private String bus;
         private boolean favourite;
 
         private Builder(String uuid) {
@@ -88,6 +94,7 @@ public class LightModel extends RealmObject
             this.name = (String) map.get(FIELD_NAME);
             this.where = (String) map.get(FIELD_WHERE);
             this.type = (String) map.get(FIELD_TYPE);
+            this.bus = (String) map.get(FIELD_BUS);
             this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
         }
 
@@ -116,6 +123,11 @@ public class LightModel extends RealmObject
             return this;
         }
 
+        public Builder bus(String bus) {
+            this.bus = bus;
+            return this;
+        }
+
         public Builder favourite(boolean favourite) {
             this.favourite = favourite;
             return this;
@@ -127,6 +139,7 @@ public class LightModel extends RealmObject
             checkNotNull(name, "name is null");
             checkNotNull(where, "where is null");
             checkNotNull(type, "type is null");
+            checkNotNull(bus, "bus is null");
 
             return new LightModel(this);
         }
@@ -141,6 +154,9 @@ public class LightModel extends RealmObject
     }
 
     public static LightModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        if (version.getDatabaseFirestoreVersion() < 4) {
+            map.put(FIELD_BUS, Lighting.NO_BUS);
+        }
         return new LightModel().fromMap(map, version);
     }
 
@@ -153,6 +169,7 @@ public class LightModel extends RealmObject
         map.put(FIELD_NAME, getName());
         map.put(FIELD_WHERE, getWhere());
         map.put(FIELD_TYPE, getLightingType());
+        map.put(FIELD_BUS, getBus());
         map.put(FIELD_FAVOURITE, isFavourite());
         return map;
     }
@@ -212,6 +229,14 @@ public class LightModel extends RealmObject
 
     public void setType(String type) {
         throw new UnsupportedOperationException("method not implemented: use LightModel#setLightingType()");
+    }
+
+    public String getBus() {
+        return bus;
+    }
+
+    public void setBus(String bus) {
+        this.bus = bus;
     }
 
     @Override

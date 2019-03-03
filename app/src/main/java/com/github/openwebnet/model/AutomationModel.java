@@ -1,5 +1,6 @@
 package com.github.openwebnet.model;
 
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.model.firestore.FirestoreModel;
 import com.github.openwebnet.model.firestore.ProfileVersionModel;
 
@@ -16,6 +17,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class AutomationModel extends RealmObject
         implements RealmModel, DomoticModel, FirestoreModel<AutomationModel> {
+
+    public static final String FIELD_TYPE = "type";
+    public static final String FIELD_BUS = "bus";
 
     public enum Status {
         STOP, UP, DOWN
@@ -37,10 +41,20 @@ public class AutomationModel extends RealmObject
     @Required
     private String where;
 
+    @Required
+    private String type;
+
+    @Required
+    private String bus;
+
     private boolean favourite;
 
     @Ignore
     private Status status;
+
+    // NOT USED: realm error otherwise
+    @Ignore
+    private Automation.Type automationType;
 
     public AutomationModel() {}
 
@@ -50,6 +64,8 @@ public class AutomationModel extends RealmObject
         this.gatewayUuid = builder.gatewayUuid;
         this.name = builder.name;
         this.where = builder.where;
+        this.type = builder.type;
+        this.bus = builder.bus;
         this.favourite = builder.favourite;
     }
 
@@ -60,6 +76,8 @@ public class AutomationModel extends RealmObject
         private String gatewayUuid;
         private String name;
         private String where;
+        private String type;
+        private String bus;
         private boolean favourite;
 
         private Builder(String uuid) {
@@ -72,6 +90,8 @@ public class AutomationModel extends RealmObject
             this.gatewayUuid = (String) map.get(FIELD_GATEWAY_UUID);
             this.name = (String) map.get(FIELD_NAME);
             this.where = (String) map.get(FIELD_WHERE);
+            this.type = (String) map.get(FIELD_TYPE);
+            this.bus = (String) map.get(FIELD_BUS);
             this.favourite = (Boolean) map.get(FIELD_FAVOURITE);
         }
 
@@ -95,6 +115,16 @@ public class AutomationModel extends RealmObject
             return this;
         }
 
+        public Builder type(Automation.Type type) {
+            this.type = type.name();
+            return this;
+        }
+
+        public Builder bus(String bus) {
+            this.bus = bus;
+            return this;
+        }
+
         public Builder favourite(boolean favourite) {
             this.favourite = favourite;
             return this;
@@ -105,6 +135,8 @@ public class AutomationModel extends RealmObject
             checkNotNull(gatewayUuid, "gatewayUuid is null");
             checkNotNull(name, "name is null");
             checkNotNull(where, "where is null");
+            checkNotNull(type, "type is null");
+            checkNotNull(bus, "bus is null");
 
             return new AutomationModel(this);
         }
@@ -119,6 +151,10 @@ public class AutomationModel extends RealmObject
     }
 
     public static AutomationModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
+        if (version.getDatabaseFirestoreVersion() < 4) {
+            map.put(FIELD_TYPE, Automation.Type.POINT.name());
+            map.put(FIELD_BUS, Automation.NO_BUS);
+        }
         return new AutomationModel().fromMap(map, version);
     }
 
@@ -130,6 +166,8 @@ public class AutomationModel extends RealmObject
         map.put(FIELD_GATEWAY_UUID, getGatewayUuid());
         map.put(FIELD_NAME, getName());
         map.put(FIELD_WHERE, getWhere());
+        map.put(FIELD_TYPE, getAutomationType());
+        map.put(FIELD_BUS, getBus());
         map.put(FIELD_FAVOURITE, isFavourite());
         return map;
     }
@@ -182,6 +220,22 @@ public class AutomationModel extends RealmObject
         this.where = where;
     }
 
+    public String getType() {
+        throw new UnsupportedOperationException("method not implemented: use AutomationModel#getAutomationType()");
+    }
+
+    public void setType(String type) {
+        throw new UnsupportedOperationException("method not implemented: use AutomationModel#setAutomationType()");
+    }
+
+    public String getBus() {
+        return bus;
+    }
+
+    public void setBus(String bus) {
+        this.bus = bus;
+    }
+
     @Override
     public boolean isFavourite() {
         return favourite;
@@ -198,6 +252,14 @@ public class AutomationModel extends RealmObject
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Automation.Type getAutomationType() {
+        return Automation.Type.valueOf(this.type);
+    }
+
+    public void setAutomationType(Automation.Type automationType) {
+        this.type = automationType.name();
     }
 
 }

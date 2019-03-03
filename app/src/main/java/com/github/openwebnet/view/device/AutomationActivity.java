@@ -3,6 +3,7 @@ package com.github.openwebnet.view.device;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.R;
 import com.github.openwebnet.component.Injector;
 import com.github.openwebnet.model.AutomationModel;
@@ -87,10 +88,13 @@ public class AutomationActivity extends AbstractDeviceActivity {
             isValidDeviceGateway();
     }
 
+    // TODO type + bus
     private AutomationModel parseAutomation() {
         return (automationUuid == null ? AutomationModel.addBuilder() : AutomationModel.updateBuilder(automationUuid))
             .name(utilityService.sanitizedText(editTextAutomationName))
             .where(editTextAutomationWhere.getText().toString())
+            .type(Automation.Type.POINT)
+            .bus(Automation.NO_BUS)
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())

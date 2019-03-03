@@ -225,11 +225,13 @@ public class LightActivity extends AbstractDeviceActivity {
         return isValid;
     }
 
+    // TODO bus
     private LightModel parseLight() {
         return (lightUuid == null ? LightModel.addBuilder() : LightModel.updateBuilder(lightUuid))
             .name(utilityService.sanitizedText(editTextLightName))
             .where(editTextLightWhere.getText().toString())
             .type(getSelectedLightType())
+            .bus(Lighting.NO_BUS)
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())
