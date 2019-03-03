@@ -266,6 +266,7 @@ public class LightServiceTest {
             .name("light")
             .where("21")
             .type(Lighting.Type.POINT_TO_POINT)
+            .bus(Lighting.NO_BUS)
             .build();
     }
 

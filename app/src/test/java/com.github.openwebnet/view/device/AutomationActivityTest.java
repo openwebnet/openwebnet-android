@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.OpenWebNetApplicationTest;
 import com.github.openwebnet.R;
@@ -356,6 +357,8 @@ public class AutomationActivityTest {
         String AUTOMATION_WHERE = "08";
         Integer AUTOMATION__ENVIRONMENT_SELECTED = 108;
         boolean AUTOMATION_FAVOURITE = true;
+        Automation.Type AUTOMATION_TYPE = Automation.Type.POINT;
+        String AUTOMATION_BUS = Automation.NO_BUS;
 
         List<EnvironmentModel> environments = Arrays.
             asList(newEnvironment(100, "env1"), newEnvironment(AUTOMATION__ENVIRONMENT_SELECTED, "env8"));
@@ -372,6 +375,8 @@ public class AutomationActivityTest {
             .environment(AUTOMATION__ENVIRONMENT_SELECTED)
             .gateway(AUTOMATION_GATEWAY_SELECTED)
             .favourite(AUTOMATION_FAVOURITE)
+            .type(AUTOMATION_TYPE)
+            .bus(AUTOMATION_BUS)
             .build();
 
         when(automationService.findById(anyString())).thenReturn(Observable.just(automationModel));

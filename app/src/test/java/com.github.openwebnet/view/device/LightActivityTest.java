@@ -375,6 +375,7 @@ public class LightActivityTest {
         String LIGHT_GATEWAY_SELECTED = "uuid2";
         String LIGHT_WHERE = "08";
         Lighting.Type LIGHT_TYPE = Lighting.Type.POINT_TO_POINT;
+        String LIGHT_BUS = Lighting.NO_BUS;
         Integer LIGHT_ENVIRONMENT_SELECTED = 108;
         boolean LIGHT_FAVOURITE = true;
 
@@ -391,6 +392,7 @@ public class LightActivityTest {
                 .name(LIGHT_NAME)
                 .where(LIGHT_WHERE)
                 .type(LIGHT_TYPE)
+                .bus(LIGHT_BUS)
                 .environment(LIGHT_ENVIRONMENT_SELECTED)
                 .gateway(LIGHT_GATEWAY_SELECTED)
                 .favourite(LIGHT_FAVOURITE)
