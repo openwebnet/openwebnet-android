@@ -132,10 +132,15 @@
     <string name="light_info_area">Допустимые значения: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Допустимые значения: 1&#8211;255</string>
     <string name="light_info_point_to_point">где: Область + свет Id</string>
+    <string name="light_info_bus">Допустимые значения шины: 0[1&#8211;9] или же 1[1&#8211;5]</string>
     <string name="light_label_general">Генеральная</string>
+    <string name="light_label_general_bus">Генеральная (автобус)</string>
     <string name="light_label_area">Область</string>
+    <string name="light_label_area_bus">Область (автобус)</string>
     <string name="light_label_group">группа</string>
-    <string name="light_label_point_to_point">свет Id</string>
+    <string name="light_label_group_bus">группа (автобус)</string>
+    <string name="light_label_point_to_point">Точка освещения</string>
+    <string name="light_label_point_to_point_bus">Точка освещения (автобус)</string>
     <string name="automation_request">Запрос</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Пример <i>http://192.168.1.100:2222/videostream.cgi</i>\nЕсли вам необходима помощь для определения Url, воспользуйтесь данной<a href='https://github.com/niqdev/ipcam-view/wiki'>инструкцией</a></string>

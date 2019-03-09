@@ -130,6 +130,7 @@
 
     <string name="list_empty">No items found</string>
     <string name="device_where">where</string>
+    <string name="device_bus">bus</string>
     <string name="device_favourite">Favourite</string>
     <string name="device_confirm">Show confirmation alert</string>
     <string name="device_on_load">Send request on load event</string>
@@ -144,15 +145,22 @@
     <string name="light_request">Request Turn On</string>
     <string name="light_prefix_default" translatable="false">*1*1*</string>
     <string name="light_prefix_group" translatable="false">*1*1*#</string>
+    <string name="light_prefix_bus" translatable="false">#4#</string>
     <string name="light_suffix" translatable="false">##</string>
     <string name="light_value_general" translatable="false">*1*1*0##</string>
+    <string name="light_value_general_bus" translatable="false">*1*1*0</string>
     <string name="light_info_area">Allowed values: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Allowed values: 1&#8211;255</string>
     <string name="light_info_point_to_point">Where = Area + Light Id</string>
+    <string name="light_info_bus">Allowed Bus values: 0[1&#8211;9] or 1[1&#8211;5]</string>
     <string name="light_label_general">General</string>
+    <string name="light_label_general_bus">General (Bus)</string>
     <string name="light_label_area">Area</string>
+    <string name="light_label_area_bus">Area (Bus)</string>
     <string name="light_label_group">Group</string>
-    <string name="light_label_point_to_point">Point to Point</string>
+    <string name="light_label_group_bus">Group (Bus)</string>
+    <string name="light_label_point_to_point">Lighting point</string>
+    <string name="light_label_point_to_point_bus">Lighting point (Bus)</string>
     <string name="automation_request">Request Stop</string>
     <string name="automation_prefix" translatable="false">*2*0*</string>
     <string name="automation_suffix" translatable="false">##</string>

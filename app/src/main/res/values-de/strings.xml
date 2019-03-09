@@ -132,10 +132,15 @@
     <string name="light_info_area">Erlaubte Werte: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Erlaubte Werte: 1&#8211;255</string>
     <string name="light_info_point_to_point">Wo = Bereich + Licht Id</string>
+    <string name="light_info_bus">Zulässige Buswerte: 0[1&#8211;9] oder 1[1&#8211;5]</string>
     <string name="light_label_general">Allgemein</string>
+    <string name="light_label_general_bus">Allgemeines (Bus)</string>
     <string name="light_label_area">Bereich</string>
+    <string name="light_label_area_bus">Bereich (Bus)</string>
     <string name="light_label_group">Gruppe</string>
-    <string name="light_label_point_to_point">Punkt zu Punkt</string>
+    <string name="light_label_group_bus">Gruppe (Bus)</string>
+    <string name="light_label_point_to_point">Beleuchtungspunkt</string>
+    <string name="light_label_point_to_point_bus">Beleuchtungspunkt (Bus)</string>
     <string name="automation_request">Stop anfordern</string>
     <string name="ipcam_url">URL</string>
     <string name="ipcam_url_help">Beispiel: <i>http://192.168.1.100:2222/videostream.cgi</i>\nWenn Sie Hilfe bei der Identifizierung der Url benötigen, lesen Sie bitte diese <a href='https://github.com/niqdev/ipcam-view/wiki'>Anleitung</a></string>

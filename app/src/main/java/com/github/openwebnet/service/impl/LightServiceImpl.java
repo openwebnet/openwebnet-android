@@ -110,18 +110,17 @@ public class LightServiceImpl implements LightService {
         return Observable.just(light).flatMap(requestLight(Lighting::requestTurnOff, handleResponse(OFF)));
     }
 
-    // TODO bus
     private Func1<LightModel, Observable<LightModel>> requestLight(
         Func3<String, Lighting.Type, String, Lighting> request, Func2<OpenSession, LightModel, LightModel> handler) {
 
         return light -> commonService.findClient(light.getGatewayUuid())
-            .send(request.call(light.getWhere(), light.getLightingType(), Lighting.NO_BUS))
+            .send(request.call(light.getWhere(), light.getLightingType(), light.getBus()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, light))
             .onErrorReturn(throwable -> {
                 log.warn("light={} | failing request={}", light.getUuid(),
-                    request.call(light.getWhere(), light.getLightingType(), Lighting.NO_BUS).getValue());
+                    request.call(light.getWhere(), light.getLightingType(), light.getBus()).getValue());
                 // unreadable status
                 return light;
             });

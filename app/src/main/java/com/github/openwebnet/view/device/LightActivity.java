@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action0;
 import rx.functions.Action1;
 
 public class LightActivity extends AbstractDeviceActivity {
@@ -41,14 +42,23 @@ public class LightActivity extends AbstractDeviceActivity {
     @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
+    @BindView(R.id.editTextLightBus)
+    EditText editTextLightBus;
+
     @BindView(R.id.textViewLightPrefix)
     TextView textViewLightPrefix;
 
     @BindView(R.id.textViewLightSuffix)
     TextView textViewLightSuffix;
 
+    @BindView(R.id.textViewLightPrefixBus)
+    TextView textViewLightPrefixBus;
+
     @BindView(R.id.textViewLightInfo)
     TextView textViewLightInfo;
+
+    @BindView(R.id.textViewLightInfoBus)
+    TextView textViewLightInfoBus;
 
     @BindView(R.id.spinnerLightType)
     Spinner spinnerLightType;
@@ -66,6 +76,7 @@ public class LightActivity extends AbstractDeviceActivity {
      * the first time when initEditLight is invoked
      */
     private boolean initLightTypeFirstTime = true;
+    private boolean initBusFirstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,13 +95,25 @@ public class LightActivity extends AbstractDeviceActivity {
 
     private void initSpinnerLightType() {
         lightTypeArray = initSparseArray(Lists.newArrayList(
-            Lighting.Type.GENERAL, Lighting.Type.AREA,
-            Lighting.Type.GROUP, Lighting.Type.POINT_TO_POINT
+            Lighting.Type.GENERAL,
+            Lighting.Type.GENERAL_BUS,
+            Lighting.Type.AREA,
+            Lighting.Type.AREA_BUS,
+            Lighting.Type.GROUP,
+            Lighting.Type.GROUP_BUS,
+            Lighting.Type.POINT_TO_POINT,
+            Lighting.Type.POINT_TO_POINT_BUS
         ));
 
         List<String> lightTypeLabels = Lists.newArrayList(
-            getString(R.string.light_label_general), getString(R.string.light_label_area),
-            getString(R.string.light_label_group), getString(R.string.light_label_point_to_point)
+            getString(R.string.light_label_general),
+            getString(R.string.light_label_general_bus),
+            getString(R.string.light_label_area),
+            getString(R.string.light_label_area_bus),
+            getString(R.string.light_label_group),
+            getString(R.string.light_label_group_bus),
+            getString(R.string.light_label_point_to_point),
+            getString(R.string.light_label_point_to_point_bus)
         );
         initSpinnerAdapter(spinnerLightType, lightTypeLabels);
 
@@ -123,30 +146,92 @@ public class LightActivity extends AbstractDeviceActivity {
             initLightTypeFirstTime = false;
         };
 
+        Action1<Integer> initViewBus = visibility -> {
+            editTextLightBus.setVisibility(visibility);
+            textViewLightPrefixBus.setVisibility(visibility);
+            textViewLightInfoBus.setVisibility(visibility);
+
+            editTextLightBus.setError(null);
+
+            // initialize all subsequent calls except the first time
+            if (!initBusFirstTime) {
+                editTextLightBus.setText(Lighting.NO_BUS);
+            }
+            // from now on every time reset editTextLightBus
+            initBusFirstTime = false;
+        };
+
+        Action0 hideBusView = () -> {
+            initViewBus.call(View.GONE);
+            textViewLightInfoBus.setVisibility(View.INVISIBLE);
+            editTextLightBus.setText(Lighting.NO_BUS);
+        };
+
         switch (type) {
             case GENERAL:
                 textViewLightPrefix.setText(getString(R.string.light_value_general));
                 initView.call(View.GONE);
                 textViewLightInfo.setVisibility(View.INVISIBLE);
                 initWhereValue.call(Lighting.WHERE_GENERAL_VALUE);
+
+                hideBusView.call();
+                break;
+            case GENERAL_BUS:
+                textViewLightPrefix.setText(getString(R.string.light_value_general_bus));
+                initView.call(View.GONE);
+                textViewLightInfo.setVisibility(View.INVISIBLE);
+                initWhereValue.call(Lighting.WHERE_GENERAL_VALUE);
+                textViewLightSuffix.setVisibility(View.VISIBLE);
+
+                initViewBus.call(View.VISIBLE);
                 break;
             case AREA:
                 textViewLightPrefix.setText(getString(R.string.light_prefix_default));
                 textViewLightInfo.setText(getString(R.string.light_info_area));
                 initView.call(View.VISIBLE);
                 initWhereValue.call("");
+
+                hideBusView.call();
+                break;
+            case AREA_BUS:
+                textViewLightPrefix.setText(getString(R.string.light_prefix_default));
+                textViewLightInfo.setText(getString(R.string.light_info_area));
+                initView.call(View.VISIBLE);
+                initWhereValue.call("");
+
+                initViewBus.call(View.VISIBLE);
                 break;
             case GROUP:
                 textViewLightPrefix.setText(getString(R.string.light_prefix_group));
                 textViewLightInfo.setText(getString(R.string.light_info_group));
                 initView.call(View.VISIBLE);
                 initWhereValue.call("");
+
+                hideBusView.call();
+                break;
+            case GROUP_BUS:
+                textViewLightPrefix.setText(getString(R.string.light_prefix_group));
+                textViewLightInfo.setText(getString(R.string.light_info_group));
+                initView.call(View.VISIBLE);
+                initWhereValue.call("");
+
+                initViewBus.call(View.VISIBLE);
                 break;
             case POINT_TO_POINT:
                 textViewLightPrefix.setText(getString(R.string.light_prefix_default));
                 textViewLightInfo.setText(getString(R.string.light_info_point_to_point));
                 initView.call(View.VISIBLE);
                 initWhereValue.call("");
+
+                hideBusView.call();
+                break;
+            case POINT_TO_POINT_BUS:
+                textViewLightPrefix.setText(getString(R.string.light_prefix_default));
+                textViewLightInfo.setText(getString(R.string.light_info_point_to_point));
+                initView.call(View.VISIBLE);
+                initWhereValue.call("");
+
+                initViewBus.call(View.VISIBLE);
                 break;
             default: {
                 throw new IllegalArgumentException("invalid lighting type");
@@ -163,6 +248,7 @@ public class LightActivity extends AbstractDeviceActivity {
 
                 editTextLightName.setText(String.valueOf(light.getName()));
                 editTextLightWhere.setText(String.valueOf(light.getWhere()));
+                editTextLightBus.setText(String.valueOf(light.getBus()));
 
                 selectEnvironment(light.getEnvironmentId());
                 selectGateway(light.getGatewayUuid());
@@ -170,7 +256,7 @@ public class LightActivity extends AbstractDeviceActivity {
             });
         } else {
             // default must be "Point to Point"
-            spinnerLightType.setSelection(3);
+            spinnerLightType.setSelection(6);
         }
     }
 
@@ -180,12 +266,13 @@ public class LightActivity extends AbstractDeviceActivity {
 
     @Override
     protected void onMenuSave() {
-        log.debug("name: {}", editTextLightName.getText());
-        log.debug("where: {}", editTextLightWhere.getText());
-        log.debug("type: {}", getSelectedLightType());
-        log.debug("environment: {}", getSelectedEnvironment());
-        log.debug("gateway: {}", getSelectedGateway());
-        log.debug("favourite: {}", isFavourite());
+        log.info("name: {}", editTextLightName.getText());
+        log.info("where: {}", editTextLightWhere.getText());
+        log.info("type: {}", getSelectedLightType());
+        log.info("bus: {}", editTextLightBus.getText());
+        log.info("environment: {}", getSelectedEnvironment());
+        log.info("gateway: {}", getSelectedGateway());
+        log.info("favourite: {}", isFavourite());
 
         if (isValidLight()) {
             if (lightUuid == null) {
@@ -211,27 +298,27 @@ public class LightActivity extends AbstractDeviceActivity {
         return isValidRequired((TextView) spinnerLightType.getSelectedView());
     }
 
-    // TODO bus
     private boolean isValidWhereRange() {
         boolean isValid = Lighting.isValidRangeType(
             utilityService.sanitizedText(editTextLightWhere),
             getSelectedLightType(),
-            Lighting.NO_BUS
+            utilityService.sanitizedText(editTextLightBus)
         );
         if (!isValid) {
             editTextLightWhere.setError(validationBadValue);
+            editTextLightBus.setError(validationBadValue);
             editTextLightWhere.requestFocus();
+            editTextLightBus.requestFocus();
         }
         return isValid;
     }
 
-    // TODO bus
     private LightModel parseLight() {
         return (lightUuid == null ? LightModel.addBuilder() : LightModel.updateBuilder(lightUuid))
             .name(utilityService.sanitizedText(editTextLightName))
             .where(editTextLightWhere.getText().toString())
             .type(getSelectedLightType())
-            .bus(Lighting.NO_BUS)
+            .bus(editTextLightBus.getText().toString())
             .environment(getSelectedEnvironment().getId())
             .gateway(getSelectedGateway().getUuid())
             .favourite(isFavourite())
