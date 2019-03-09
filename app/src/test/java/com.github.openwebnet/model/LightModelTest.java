@@ -15,6 +15,7 @@ public class LightModelTest {
     private final String LIGHT_NAME = "name";
     private final String LIGHT_WHERE = "08";
     private final Lighting.Type LIGHT_TYPE = Lighting.Type.POINT_TO_POINT;
+    private final String LIGHT_BUS = Lighting.NO_BUS;
     private final boolean LIGHT_FAVOURITE = true;
 
     @Test(expected = NullPointerException.class)
@@ -57,6 +58,7 @@ public class LightModelTest {
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .type(LIGHT_TYPE)
+            .bus(LIGHT_BUS)
             .favourite(LIGHT_FAVOURITE)
             .build();
 
@@ -73,6 +75,7 @@ public class LightModelTest {
             .name(LIGHT_NAME)
             .where(LIGHT_WHERE)
             .type(LIGHT_TYPE)
+            .bus(LIGHT_BUS)
             .favourite(LIGHT_FAVOURITE)
             .build();
 

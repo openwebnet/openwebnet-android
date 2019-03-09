@@ -2,6 +2,7 @@ package com.github.openwebnet.service;
 
 import com.github.niqdev.openwebnet.OpenSession;
 import com.github.niqdev.openwebnet.OpenWebNet;
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.niqdev.openwebnet.message.OpenMessage;
 import com.github.openwebnet.BuildConfig;
 import com.github.openwebnet.OpenWebNetApplicationTest;
@@ -151,6 +152,10 @@ public class AutomationServiceTest {
         String AUTOMATION_UUID = "myUuid";
         AutomationModel automationModel = new AutomationModel();
         automationModel.setUuid(AUTOMATION_UUID);
+        // filter invalid where
+        automationModel.setWhere("11");
+        automationModel.setAutomationType(Automation.Type.POINT_TO_POINT);
+        automationModel.setBus("");
 
         when(automationRepository.findById(AUTOMATION_UUID)).thenReturn(Observable.just(automationModel));
 
@@ -279,6 +284,8 @@ public class AutomationServiceTest {
             .gateway(GATEWAY_UUID)
             .name("automation")
             .where("21")
+            .type(Automation.Type.POINT_TO_POINT)
+            .bus(Automation.NO_BUS)
             .build();
     }
 

@@ -26,6 +26,8 @@ public class AutomationModelMatcher extends ArgumentMatcher<AutomationModel> {
         AutomationModel actual = (AutomationModel) argument;
         return actual.getName().equals(expected.getName()) &&
             actual.getWhere().equals(expected.getWhere()) &&
+            actual.getAutomationType().equals(expected.getAutomationType()) &&
+            actual.getBus().equals(expected.getBus()) &&
             actual.getEnvironmentId().equals(expected.getEnvironmentId()) &&
             actual.getGatewayUuid().equals(expected.getGatewayUuid()) &&
             (actual.isFavourite() == expected.isFavourite());

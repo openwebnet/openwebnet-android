@@ -10,8 +10,8 @@ Client OpenWebNet Android pour système domotique MyHome BTicino et Legrand
 My Home est le système domotique de BTicino et Legrand. Ce système vous permet de piloter votre domicile depuis votre smartphone grâce au protocole OpenWebNet
 
 Gère:
-- Éclairage
-- Automatisme
+- Éclairage aussi avec bus
+- Automatisme aussi avec bus
 - Température
 - Système audio / Radio
 - Consommation d'énergie

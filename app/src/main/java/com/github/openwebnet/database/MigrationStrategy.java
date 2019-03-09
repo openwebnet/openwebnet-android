@@ -1,6 +1,8 @@
 package com.github.openwebnet.database;
 
+import com.github.niqdev.openwebnet.message.Automation;
 import com.github.niqdev.openwebnet.message.Lighting;
+import com.github.openwebnet.model.AutomationModel;
 import com.github.openwebnet.model.EnergyModel;
 import com.github.openwebnet.model.GatewayModel;
 import com.github.openwebnet.model.IpcamModel;
@@ -131,6 +133,21 @@ public class MigrationStrategy implements RealmMigration {
         if (oldVersion == 9) {
             schema.get("LightModel")
                 .removeField(LightModel.FIELD_DIMMER);
+
+            ++oldVersion;
+        }
+
+        // migrate to version 11
+        if (oldVersion == 10) {
+            schema.get("AutomationModel")
+                .addField(AutomationModel.FIELD_TYPE, String.class, FieldAttribute.REQUIRED)
+                .transform(obj -> obj.set(AutomationModel.FIELD_TYPE, Automation.Type.POINT_TO_POINT.name()))
+                .addField(AutomationModel.FIELD_BUS, String.class, FieldAttribute.REQUIRED)
+                .transform(obj -> obj.set(AutomationModel.FIELD_BUS, Automation.NO_BUS));
+
+            schema.get("LightModel")
+                .addField(LightModel.FIELD_BUS, String.class, FieldAttribute.REQUIRED)
+                .transform(obj -> obj.set(LightModel.FIELD_BUS, Lighting.NO_BUS));
 
             ++oldVersion;
         }

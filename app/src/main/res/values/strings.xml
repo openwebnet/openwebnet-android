@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">3.2.2</string>
+    <string name="app_version_number" translatable="false">3.3.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
     <string name="url_terms_conditions" translatable="false">https://termsfeed.com/terms-conditions/f21f31b35e4569354fe47c11345ede48</string>
     <string name="url_privacy_policy" translatable="false">https://termsfeed.com/privacy-policy/774d76cf112e2cfe571eafc89f70de15</string>
@@ -130,6 +130,7 @@
 
     <string name="list_empty">No items found</string>
     <string name="device_where">where</string>
+    <string name="device_bus">bus</string>
     <string name="device_favourite">Favourite</string>
     <string name="device_confirm">Show confirmation alert</string>
     <string name="device_on_load">Send request on load event</string>
@@ -141,21 +142,38 @@
     <string name="device_expected_value">expected value</string>
     <string name="device_debug_label" translatable="false">Debug response</string>
     <string name="device_debug_label_invalid">Invalid paste</string>
+    <string name="device_label_general">General</string>
+    <string name="device_label_general_bus">General (Bus)</string>
+    <string name="device_label_area">Area</string>
+    <string name="device_label_area_bus">Area (Bus)</string>
+    <string name="device_label_group">Group</string>
+    <string name="device_label_group_bus">Group (Bus)</string>
     <string name="light_request">Request Turn On</string>
     <string name="light_prefix_default" translatable="false">*1*1*</string>
     <string name="light_prefix_group" translatable="false">*1*1*#</string>
+    <string name="light_prefix_bus" translatable="false">#4#</string>
     <string name="light_suffix" translatable="false">##</string>
     <string name="light_value_general" translatable="false">*1*1*0##</string>
+    <string name="light_value_general_bus" translatable="false">*1*1*0</string>
     <string name="light_info_area">Allowed values: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Allowed values: 1&#8211;255</string>
     <string name="light_info_point_to_point">Where = Area + Light Id</string>
-    <string name="light_label_general">General</string>
-    <string name="light_label_area">Area</string>
-    <string name="light_label_group">Group</string>
-    <string name="light_label_point_to_point">Point to Point</string>
+    <string name="light_info_bus">Allowed Bus values: 0[1&#8211;9] or 1[1&#8211;5]</string>
+    <string name="light_label_point_to_point">Lighting point</string>
+    <string name="light_label_point_to_point_bus">Lighting point (Bus)</string>
     <string name="automation_request">Request Stop</string>
-    <string name="automation_prefix" translatable="false">*2*0*</string>
+    <string name="automation_prefix_default" translatable="false">*2*0*</string>
+    <string name="automation_prefix_group" translatable="false">*2*0*#</string>
+    <string name="automation_prefix_bus" translatable="false">#4#</string>
     <string name="automation_suffix" translatable="false">##</string>
+    <string name="automation_value_general" translatable="false">*2*0*0##</string>
+    <string name="automation_value_general_bus" translatable="false">*2*0*0</string>
+    <string name="automation_info_area">Allowed values: 1&#8211;9</string>
+    <string name="automation_info_group">Allowed values: 1&#8211;9</string>
+    <string name="automation_info_point_to_point">Allowed values: 11&#8211;99</string>
+    <string name="automation_info_bus">Allowed Bus values: 0[1&#8211;9] or 1[1&#8211;5]</string>
+    <string name="automation_label_point_to_point">Automation point</string>
+    <string name="automation_label_point_to_point_bus">Automation point (Bus)</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Example <i>http://192.168.1.100:2222/videostream.cgi</i>\nIf you need help to identify the Url, read this <a href='https://github.com/niqdev/ipcam-view/wiki'>guide</a></string>
     <string name="ipcam_authentication">Authentication</string>

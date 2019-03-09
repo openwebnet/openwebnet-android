@@ -10,8 +10,8 @@ OpenWebNet Android client for My Home BTicino and Legrand home automation system
 My Home is the BTicino and Legrand home domotic system that let you manage your house from smartphones through OpenWebNet protocol
 
 Manages:
-- Lighting
-- Automation
+- Lighting also with bus
+- Automation also with bus
 - Temperature
 - Sound System / Radio
 - Power Consumption

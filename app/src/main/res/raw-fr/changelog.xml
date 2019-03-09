@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="Février 27, 2019" versionName="3.2.2">
+    <changelogversion changeDate="Mars 9, 2019" versionName="3.3.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Corrections mineures]]>
+            <![CDATA[<b><font color=red>New!</font></b> Ajout du support pour tous les types d'automation]]>
         </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Ajout du support de bus pour les automatisations]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Ajout du support de bus pour les lumières]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Février 27, 2019" versionName="3.2.2">
+        <changelogtext>Corrections mineures</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Février 17, 2019" versionName="3.2.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Corrections mineures]]>
-        </changelogtext>
+        <changelogtext>Corrections mineures</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Février 10, 2019" versionName="3.2.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Partager des profils]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Traduire les changelogs]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Changements mineurs de style]]>
-        </changelogtext>
+        <changelogtext>Partager des profils</changelogtext>
+        <changelogtext>Traduire les changelogs</changelogtext>
+        <changelogtext>Changements mineurs de style</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Janvier 1, 2019" versionName="3.1.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Corrections mineures]]>
-        </changelogtext>
+        <changelogtext>Corrections mineures</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Décembre 30, 2018" versionName="3.1.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Mettre à jour les styles de profil]]>
-        </changelogtext>
+        <changelogtext>Mettre à jour les styles de profil</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Décembre 29, 2018" versionName="3.0.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neuf!</font></b> Profils de sauvegarde]]>
-        </changelogtext>
+        <changelogtext>Profils de sauvegarde</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Juillet 25, 2018" versionName="2.12.8">

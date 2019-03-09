@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="27 февраля 2019 г." versionName="3.2.2">
+    <changelogversion changeDate="9 марш 2019 г." versionName="3.3.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Незначительные исправления]]>
+            <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка всех типов автоматизации]]>
         </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка шины для автоматизации]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка шины для освещения]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="27 февраля 2019 г." versionName="3.2.2">
+        <changelogtext>Незначительные исправления</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="17 февраля 2019 г." versionName="3.2.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Незначительные исправления]]>
-        </changelogtext>
+        <changelogtext>Незначительные исправления</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="10 февраля 2019 г." versionName="3.2.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Поделиться профилями]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Перевести логи]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Незначительные изменения стиля]]>
-        </changelogtext>
+        <changelogtext>Поделиться профилями</changelogtext>
+        <changelogtext>Перевести логи</changelogtext>
+        <changelogtext>Незначительные изменения стиля</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="1 января 2019 г." versionName="3.1.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Незначительные исправления]]>
-        </changelogtext>
+        <changelogtext>Незначительные исправления</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="30 декабря 2018 г." versionName="3.1.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Обновить стили профиля]]>
-        </changelogtext>
+        <changelogtext>Обновить стили профиля</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="29 декабря 2018 г." versionName="3.0.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Новый!</font></b> Резервные профили]]>
-        </changelogtext>
+        <changelogtext>Резервные профили</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="25 июля 2018 г." versionName="2.12.8">

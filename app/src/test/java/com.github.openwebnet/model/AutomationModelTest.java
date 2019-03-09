@@ -1,5 +1,7 @@
 package com.github.openwebnet.model;
 
+import com.github.niqdev.openwebnet.message.Automation;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,6 +14,8 @@ public class AutomationModelTest {
     private final String AUTOMATION_GATEWAY = "gatewayUuid";
     private final String AUTOMATION_NAME = "name";
     private final String AUTOMATION_WHERE = "08";
+    private final Automation.Type AUTOMATION_TYPE = Automation.Type.POINT_TO_POINT;
+    private final String AUTOMATION_BUS = Automation.NO_BUS;
     private final boolean AUTOMATION_FAVOURITE = true;
 
     @Test(expected = NullPointerException.class)
@@ -41,6 +45,8 @@ public class AutomationModelTest {
             .gateway(AUTOMATION_GATEWAY)
             .name(AUTOMATION_NAME)
             .where(AUTOMATION_WHERE)
+            .type(AUTOMATION_TYPE)
+            .bus(AUTOMATION_BUS)
             .favourite(AUTOMATION_FAVOURITE)
             .build();
 
@@ -56,6 +62,8 @@ public class AutomationModelTest {
             .gateway(AUTOMATION_GATEWAY)
             .name(AUTOMATION_NAME)
             .where(AUTOMATION_WHERE)
+            .type(AUTOMATION_TYPE)
+            .bus(AUTOMATION_BUS)
             .favourite(AUTOMATION_FAVOURITE)
             .build();
 

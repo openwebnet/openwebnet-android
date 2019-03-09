@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
-    <changelogversion changeDate="Februar 27, 2019" versionName="3.2.2">
+    <changelogversion changeDate="März 9, 2019" versionName="3.3.0">
         <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Korrekturen]]>
+            <![CDATA[<b><font color=red>New!</font></b> Unterstützung für alle Automatisierungstypen hinzugefügt]]>
         </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Bus-Unterstützung für Automatisierungen hinzugefügt]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Bus-Unterstützung für Lichter hinzugefügt]]>
+        </changelogtext>
+    </changelogversion>
+
+    <changelogversion changeDate="Februar 27, 2019" versionName="3.2.2">
+        <changelogtext>Kleinere Korrekturen</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Februar 17, 2019" versionName="3.2.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Korrekturen]]>
-        </changelogtext>
+        <changelogtext>Kleinere Korrekturen</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Februar 10, 2019" versionName="3.2.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Profile teilen]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Changelogs übersetzen]]>
-        </changelogtext>
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Stiländerungen]]>
-        </changelogtext>
+        <changelogtext>Profile teilen</changelogtext>
+        <changelogtext>Changelogs übersetzen</changelogtext>
+        <changelogtext>Kleinere Stiländerungen</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Januar 1, 2019" versionName="3.1.1">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Kleinere Korrekturen]]>
-        </changelogtext>
+        <changelogtext>Kleinere Korrekturen</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Dezember 30, 2018" versionName="3.1.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Profilstile aktualisieren]]>
-        </changelogtext>
+        <changelogtext>Profilstile aktualisieren</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Dezember 29, 2018" versionName="3.0.0">
-        <changelogtext>
-            <![CDATA[<b><font color=red>Neu!</font></b> Sicherungsprofile]]>
-        </changelogtext>
+        <changelogtext>Sicherungsprofile</changelogtext>
     </changelogversion>
 
     <changelogversion changeDate="Juli 25, 2018" versionName="2.12.8">

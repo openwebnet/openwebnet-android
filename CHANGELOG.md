@@ -1,3 +1,9 @@
+#### v3.3.0 (March 9, 2019)
+
+- Added the support for all Automation types
+- Added Bus support for Automations
+- Added Bus support for Lights
+
 #### v3.2.2 (February 27, 2019)
 
 - Minor fixes

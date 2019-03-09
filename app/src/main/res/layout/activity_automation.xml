@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:typeface="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,40 +19,90 @@
             android:focusableInTouchMode="true"
             android:hint="@string/label_name"
             android:inputType="text"
-            android:maxLength="50"/>
+            android:maxLength="50" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:text="@string/automation_request"
-            android:textStyle="bold|italic"/>
+            android:textStyle="bold|italic" />
 
         <LinearLayout
-            style="@style/message.linearLayout">
+            style="@style/message.linearLayout"
+            android:layout_marginBottom="6dp">
 
             <com.github.openwebnet.view.custom.TextViewCustom
+                android:id="@+id/textViewAutomationPrefix"
                 style="@style/message.textViewFontCustom"
-                android:text="@string/automation_prefix"
-                typeface:fontCustom="inconsolata"/>
+                android:text="@string/automation_prefix_default"
+                android:textSize="18sp"
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.EditTextCustom
                 android:id="@+id/editTextAutomationWhere"
                 style="@style/message.editText"
+                android:layout_width="80dp"
                 android:hint="@string/device_where"
-                typeface:fontCustom="inconsolata"/>
+                android:maxLength="2"
+                android:textSize="24sp"
+                app:fontCustom="inconsolata" />
 
             <com.github.openwebnet.view.custom.TextViewCustom
+                android:id="@+id/textViewAutomationPrefixBus"
+                style="@style/message.textViewFontCustom"
+                android:text="@string/automation_prefix_bus"
+                android:textSize="18sp"
+                app:fontCustom="inconsolata" />
+
+            <com.github.openwebnet.view.custom.EditTextCustom
+                android:id="@+id/editTextAutomationBus"
+                style="@style/message.editText"
+                android:layout_width="80dp"
+                android:hint="@string/device_bus"
+                android:maxLength="2"
+                android:textSize="24sp"
+                app:fontCustom="inconsolata" />
+
+            <com.github.openwebnet.view.custom.TextViewCustom
+                android:id="@+id/textViewAutomationSuffix"
                 style="@style/message.textViewFontCustom"
                 android:text="@string/automation_suffix"
-                typeface:fontCustom="inconsolata"/>
+                android:textSize="18sp"
+                app:fontCustom="inconsolata" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewAutomationInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textStyle="italic"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textViewAutomationInfoBus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/automation_info_bus"
+            android:textStyle="italic"
+            android:visibility="invisible" />
+
+        <Spinner
+            android:id="@+id/spinnerAutomationType"
+            style="@style/common.focusable"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="8dp" />
 
         <include
             layout="@layout/activity_common_device"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
