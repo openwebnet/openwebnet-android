@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">OpenWebNet</string>
     <string name="app_version">version</string>
-    <string name="app_version_number" translatable="false">3.2.2</string>
+    <string name="app_version_number" translatable="false">3.3.0</string>
     <string name="app_link" translatable="false">https://github.com/openwebnet</string>
     <string name="url_terms_conditions" translatable="false">https://termsfeed.com/terms-conditions/f21f31b35e4569354fe47c11345ede48</string>
     <string name="url_privacy_policy" translatable="false">https://termsfeed.com/privacy-policy/774d76cf112e2cfe571eafc89f70de15</string>

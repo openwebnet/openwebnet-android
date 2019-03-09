@@ -10,8 +10,8 @@ OpenWebNet é l'app per gestire gli impianti domotici My Home BTicino e Legrand
 My Home é il prodotto BTicino e Legrand per gestire gli impianti domotici da dispositivi remoti come smartphone utilizzando il protocollo OpenWebNet
 
 Gestisce:
-- Illuminazione
-- Automatismi
+- Illuminazione anche col Bus
+- Automatismi anche col Bus
 - Temperatura
 - Diffusione sonora / Radio
 - Consumo Energetico

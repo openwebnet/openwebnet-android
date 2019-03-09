@@ -10,8 +10,8 @@ OpenWebNet Android Klient für My Home BTicino und Legrand Hausautomationssystem
 Mein Zuhause ist das BTicino und Legrand Hausautomationssystem, mit dem Sie Ihr Haus über Ihr Smartphone mit dem OpenWebNet Protokoll verwalten können
 
 Verwaltet:
-- Beleuchtung
-- Automatisierung
+- Beleuchtung auch mit bus
+- Automatisierung auch mit bus
 - Temperatur
 - Soundsystem / Radio
 - Stromverbrauch
