@@ -92,7 +92,7 @@ dependencies {
     implementation 'com.github.gabrielemariotti.changeloglib:changelog:2.1.0'
     implementation 'com.github.scottyab:secure-preferences:v0.1.6'
 
-    implementation('com.github.openwebnet:rx-openwebnet:2.0.0') {
+    implementation('com.github.openwebnet:rx-openwebnet:2.1.0') {
         exclude group: 'com.google.guava', module: 'guava'
     }
     implementation 'com.github.niqdev:mjpeg-view:1.6.0'

@@ -117,18 +117,17 @@ public class AutomationServiceImpl implements AutomationService {
         return Observable.just(automation).flatMap(requestAutomation(Automation::requestMoveDown, handleResponse(DOWN)));
     }
 
-    // TODO bus
     private Func1<AutomationModel, Observable<AutomationModel>> requestAutomation(
         Func3<String, Automation.Type, String, Automation> request, Func2<OpenSession, AutomationModel, AutomationModel> handler) {
 
         return automation -> commonService.findClient(automation.getGatewayUuid())
-            .send(request.call(automation.getWhere(), automation.getAutomationType(), Automation.NO_BUS))
+            .send(request.call(automation.getWhere(), automation.getAutomationType(), automation.getBus()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(openSession -> handler.call(openSession, automation))
             .onErrorReturn(throwable -> {
                 log.warn("automation={} | failing request={}", automation.getUuid(),
-                    request.call(automation.getWhere(), automation.getAutomationType(), Automation.NO_BUS).getValue());
+                    request.call(automation.getWhere(), automation.getAutomationType(), automation.getBus()).getValue());
                 // unreadable status
                 return automation;
             });

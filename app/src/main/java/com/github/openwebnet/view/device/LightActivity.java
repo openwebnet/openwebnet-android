@@ -106,12 +106,12 @@ public class LightActivity extends AbstractDeviceActivity {
         ));
 
         List<String> lightTypeLabels = Lists.newArrayList(
-            getString(R.string.light_label_general),
-            getString(R.string.light_label_general_bus),
-            getString(R.string.light_label_area),
-            getString(R.string.light_label_area_bus),
-            getString(R.string.light_label_group),
-            getString(R.string.light_label_group_bus),
+            getString(R.string.device_label_general),
+            getString(R.string.device_label_general_bus),
+            getString(R.string.device_label_area),
+            getString(R.string.device_label_area_bus),
+            getString(R.string.device_label_group),
+            getString(R.string.device_label_group_bus),
             getString(R.string.light_label_point_to_point),
             getString(R.string.light_label_point_to_point_bus)
         );

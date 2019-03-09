@@ -152,7 +152,7 @@ public class AutomationModel extends RealmObject
 
     public static AutomationModel newInstance(Map<String, Object> map, ProfileVersionModel version) {
         if (version.getDatabaseFirestoreVersion() < 4) {
-            map.put(FIELD_TYPE, Automation.Type.POINT.name());
+            map.put(FIELD_TYPE, Automation.Type.POINT_TO_POINT.name());
             map.put(FIELD_BUS, Automation.NO_BUS);
         }
         return new AutomationModel().fromMap(map, version);

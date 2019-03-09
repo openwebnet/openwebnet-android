@@ -128,20 +128,26 @@
     <string name="device_value">valore</string>
     <string name="device_expected_value">valore previsto</string>
     <string name="device_debug_label_invalid">Valore non valido</string>
+    <string name="device_label_general">Generale</string>
+    <string name="device_label_general_bus">Generale (Bus)</string>
+    <string name="device_label_area">Area</string>
+    <string name="device_label_area_bus">Area (Bus)</string>
+    <string name="device_label_group">Gruppo</string>
+    <string name="device_label_group_bus">Gruppo (Bus)</string>
     <string name="light_request">Richiesta</string>
     <string name="light_info_area">Valori consentiti: 00, 1&#8211;9, 100</string>
     <string name="light_info_group">Valori consentiti: 1&#8211;255</string>
     <string name="light_info_point_to_point">Dove = Area + Punto Luce</string>
     <string name="light_info_bus">Valori consentiti del bus: 0[1&#8211;9] o 1[1&#8211;5]</string>
-    <string name="light_label_general">Generale</string>
-    <string name="light_label_general_bus">Generale (Bus)</string>
-    <string name="light_label_area">Area</string>
-    <string name="light_label_area_bus">Area (Bus)</string>
-    <string name="light_label_group">Gruppo</string>
-    <string name="light_label_group_bus">Gruppo (Bus)</string>
     <string name="light_label_point_to_point">Punto luce</string>
     <string name="light_label_point_to_point_bus">Punto luce (Bus)</string>
     <string name="automation_request">Richiesta</string>
+    <string name="automation_info_area">Valori consentiti: 1&#8211;9</string>
+    <string name="automation_info_group">Valori consentiti: 1&#8211;9</string>
+    <string name="automation_info_point_to_point">Valori consentiti: 11&#8211;99</string>
+    <string name="automation_info_bus">Valori consentiti del bus: 0[1&#8211;9] o 1[1&#8211;5]</string>
+    <string name="automation_label_point_to_point">Punto di automazione</string>
+    <string name="automation_label_point_to_point_bus">Punto di automazione (Bus)</string>
     <string name="ipcam_url">Url</string>
     <string name="ipcam_url_help">Esempio <i>http://192.168.1.100:2222/videostream.cgi</i>\nSe hai bisogno di aiuto per identificare l\'Url correttamente, leggi questa <a href='https://github.com/niqdev/ipcam-view/wiki'>guida</a></string>
     <string name="ipcam_authentication">Autenticazione</string>

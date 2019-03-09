@@ -141,7 +141,7 @@ public class MigrationStrategy implements RealmMigration {
         if (oldVersion == 10) {
             schema.get("AutomationModel")
                 .addField(AutomationModel.FIELD_TYPE, String.class, FieldAttribute.REQUIRED)
-                .transform(obj -> obj.set(AutomationModel.FIELD_TYPE, Automation.Type.POINT.name()))
+                .transform(obj -> obj.set(AutomationModel.FIELD_TYPE, Automation.Type.POINT_TO_POINT.name()))
                 .addField(AutomationModel.FIELD_BUS, String.class, FieldAttribute.REQUIRED)
                 .transform(obj -> obj.set(AutomationModel.FIELD_BUS, Automation.NO_BUS));
 
