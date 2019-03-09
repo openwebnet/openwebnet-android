@@ -4,7 +4,11 @@
     <changelogversion changeDate="Marzo 9, 2019" versionName="3.3.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Aggiunto il supporto per tutti i tipi di automazione]]>
+        </changelogtext>
+        <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Aggiunto il supporto del bus per le automazioni]]>
+        </changelogtext>
+        <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Aggiunto il supporto del bus per le luci]]>
         </changelogtext>
     </changelogversion>

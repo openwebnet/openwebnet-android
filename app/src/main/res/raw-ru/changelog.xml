@@ -4,7 +4,11 @@
     <changelogversion changeDate="9 марш 2019 г." versionName="3.3.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка всех типов автоматизации]]>
+        </changelogtext>
+        <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка шины для автоматизации]]>
+        </changelogtext>
+        <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Добавлена поддержка шины для освещения]]>
         </changelogtext>
     </changelogversion>
