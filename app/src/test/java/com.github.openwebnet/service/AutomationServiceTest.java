@@ -154,7 +154,7 @@ public class AutomationServiceTest {
         automationModel.setUuid(AUTOMATION_UUID);
         // filter invalid where
         automationModel.setWhere("11");
-        automationModel.setAutomationType(Automation.Type.POINT);
+        automationModel.setAutomationType(Automation.Type.POINT_TO_POINT);
         automationModel.setBus("");
 
         when(automationRepository.findById(AUTOMATION_UUID)).thenReturn(Observable.just(automationModel));
@@ -284,7 +284,7 @@ public class AutomationServiceTest {
             .gateway(GATEWAY_UUID)
             .name("automation")
             .where("21")
-            .type(Automation.Type.POINT)
+            .type(Automation.Type.POINT_TO_POINT)
             .bus(Automation.NO_BUS)
             .build();
     }

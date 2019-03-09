@@ -117,6 +117,9 @@ public class LightActivityTest {
     @BindView(R.id.editTextLightWhere)
     EditText editTextLightWhere;
 
+    @BindView(R.id.editTextLightBus)
+    EditText editTextLightBus;
+
     @BindView(R.id.spinnerLightType)
     Spinner spinnerLightType;
 
@@ -342,11 +345,15 @@ public class LightActivityTest {
     private void verifyInitSpinnerLightType() {
         SpinnerAdapter adapterLightType = spinnerLightType.getAdapter();
         assertFalse("should not be empty", adapterLightType.isEmpty());
-        assertTrue("should contains 4 item", adapterLightType.getCount() == 4);
-        assertEquals("invalid item", activity.getString(R.string.light_label_general), adapterLightType.getItem(0));
-        assertEquals("invalid item", activity.getString(R.string.light_label_area), adapterLightType.getItem(1));
-        assertEquals("invalid item", activity.getString(R.string.light_label_group), adapterLightType.getItem(2));
-        assertEquals("invalid item", activity.getString(R.string.light_label_point_to_point), adapterLightType.getItem(3));
+        assertTrue("should contains 8 item", adapterLightType.getCount() == 8);
+        assertEquals("invalid item", activity.getString(R.string.device_label_general), adapterLightType.getItem(0));
+        assertEquals("invalid item", activity.getString(R.string.device_label_general_bus), adapterLightType.getItem(1));
+        assertEquals("invalid item", activity.getString(R.string.device_label_area), adapterLightType.getItem(2));
+        assertEquals("invalid item", activity.getString(R.string.device_label_area_bus), adapterLightType.getItem(3));
+        assertEquals("invalid item", activity.getString(R.string.device_label_group), adapterLightType.getItem(4));
+        assertEquals("invalid item", activity.getString(R.string.device_label_group_bus), adapterLightType.getItem(5));
+        assertEquals("invalid item", activity.getString(R.string.light_label_point_to_point), adapterLightType.getItem(6));
+        assertEquals("invalid item", activity.getString(R.string.light_label_point_to_point_bus), adapterLightType.getItem(7));
     }
 
     @Test
@@ -360,12 +367,13 @@ public class LightActivityTest {
 
         assertEquals("invalid value", "", editTextLightName.getText().toString());
         assertEquals("invalid value", "", editTextLightWhere.getText().toString());
+        assertEquals("invalid value", "", editTextLightBus.getText().toString());
 
         assertEquals("invalid value", false, checkBoxDeviceFavourite.isChecked());
 
         assertEquals("invalid value", -1, spinnerDeviceEnvironment.getSelectedItemPosition());
         assertEquals("invalid value", -1, spinnerDeviceGateway.getSelectedItemPosition());
-        assertEquals("invalid value", 3, spinnerLightType.getSelectedItemPosition());
+        assertEquals("invalid value", 6, spinnerLightType.getSelectedItemPosition());
     }
 
     @Test
@@ -407,7 +415,7 @@ public class LightActivityTest {
         //assertEquals("invalid value", String.valueOf(LIGHT_WHERE), editTextLightWhere.getText().toString());
 
         assertEquals("invalid value", LIGHT_NAME, editTextLightName.getText().toString());
-
+        assertEquals("invalid value", String.valueOf(LIGHT_BUS), editTextLightBus.getText().toString());
         assertEquals("invalid value", LIGHT_FAVOURITE, checkBoxDeviceFavourite.isChecked());
 
         EnvironmentModel environmentSelected = environments.get(spinnerDeviceEnvironment.getSelectedItemPosition());
@@ -457,9 +465,9 @@ public class LightActivityTest {
         String LIGHT_NAME = "myName";
         String LIGHT_GATEWAY_SELECTED = "uuid2";
         String LIGHT_WHERE = "08";
+        String LIGHT_BUS = Lighting.NO_BUS;
         Lighting.Type LIGHT_TYPE = Lighting.Type.POINT_TO_POINT;
         Integer LIGHT_ENVIRONMENT_SELECTED = 101;
-        boolean LIGHT_DIMMER = true;
         boolean LIGHT_FAVOURITE = true;
 
         when(environmentService.findAll()).thenReturn(Observable.
@@ -478,10 +486,11 @@ public class LightActivityTest {
         // for simplicity only 1 items
         spinnerDeviceEnvironment.setSelection(0);
         spinnerDeviceGateway.setSelection(0);
-        spinnerLightType.setSelection(3);
+        spinnerLightType.setSelection(6);
 
         editTextLightName.setText(String.valueOf(LIGHT_NAME));
         editTextLightWhere.setText(String.valueOf(LIGHT_WHERE));
+        editTextLightBus.setText(String.valueOf(LIGHT_BUS));
 
         activity.onOptionsItemSelected(new RoboMenuItem(R.id.action_device_save));
 
@@ -490,6 +499,7 @@ public class LightActivityTest {
         lightMock.setName(LIGHT_NAME);
         lightMock.setWhere(LIGHT_WHERE);
         lightMock.setLightingType(LIGHT_TYPE);
+        lightMock.setBus(LIGHT_BUS);
         lightMock.setEnvironmentId(LIGHT_ENVIRONMENT_SELECTED);
         lightMock.setGatewayUuid(LIGHT_GATEWAY_SELECTED);
         lightMock.setFavourite(LIGHT_FAVOURITE);
