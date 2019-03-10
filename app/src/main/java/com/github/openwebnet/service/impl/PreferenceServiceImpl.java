@@ -23,6 +23,7 @@ public class PreferenceServiceImpl implements PreferenceService {
     public static final String KEY_FIRST_RUN = "com.github.openwebnet.MAIN.FIRST_RUN";
     public static final String KEY_FIRST_LOGIN = "com.github.openwebnet.MAIN.FIRST_LOGIN";
     public static final String KEY_APP_VERSION = "com.github.openwebnet.MAIN.APP_VERSION";
+    public static final String KEY_INSECURE_REALM_KEY = "com.github.openwebnet.MAIN.INSECURE_REALM_KEY";
 
     private static final String PREFERENCE_SECURE = "com.github.openwebnet.secure_preferences";
     private static final String PREFERENCE_SECURE_PWD = "NO_PWD";
@@ -91,6 +92,21 @@ public class PreferenceServiceImpl implements PreferenceService {
             this.securePreferences = new SecurePreferences(mContext, PREFERENCE_SECURE_PWD, PREFERENCE_SECURE, null, 10000);
         }
         return securePreferences;
+    }
+
+    @Override
+    public void saveInsecureRealmKey(String key) {
+        getMainSharedPreferences().edit().putString(KEY_INSECURE_REALM_KEY, key).apply();
+    }
+
+    @Override
+    public boolean containsInsecureRealmKey() {
+        return getMainSharedPreferences().contains(KEY_INSECURE_REALM_KEY);
+    }
+
+    @Override
+    public String getInsecureRealmKey() {
+        return getMainSharedPreferences().getString(KEY_INSECURE_REALM_KEY, "");
     }
 
     private SharedPreferences getMainSharedPreferences() {
