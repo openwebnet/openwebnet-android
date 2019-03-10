@@ -1,3 +1,8 @@
+#### v3.4.0 (March 10, 2019)
+
+- Fixed crash at startup
+- Updated translations
+
 #### v3.3.0 (March 9, 2019)
 
 - Added the support for all Automation types

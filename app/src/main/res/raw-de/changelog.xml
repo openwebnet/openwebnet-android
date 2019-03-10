@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="März 10, 2019" versionName="3.4.0">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Absturz beim Start der Anwendung behoben]]>
+        </changelogtext>
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Aktualisierte Übersetzungen]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="März 9, 2019" versionName="3.3.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Unterstützung für alle Automatisierungstypen hinzugefügt]]>
