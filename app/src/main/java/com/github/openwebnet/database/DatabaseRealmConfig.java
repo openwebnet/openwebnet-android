@@ -35,6 +35,7 @@ public class DatabaseRealmConfig {
     private static final boolean DEBUG_DATABASE = false;
     private static final String DEBUG_REALM_KEY = "database.key";
     private static final String PREFERENCE_DATABASE_KEY = "com.github.openwebnet.database.DatabaseRealmConfig.PREFERENCE_DATABASE_KEY";
+    private static final String PREFERENCE_DATABASE_KEY_OLD = "com.github.openwebnet.database.DatabaseRealmConfig.PREFERENCE_DATABASE_KEY_OLD";
 
     @Inject
     Context mContext;
@@ -102,18 +103,40 @@ public class DatabaseRealmConfig {
         return key;
     }
 
+    // https://github.com/openwebnet/openwebnet-android/issues/82
+    // quick fix: REMOVE scottyab/secure-preferences library
+    // long term solution: move to a different library
     private void initRealmKey() {
+        String DEFAULT_DATABASE_KEY = "";
         SharedPreferences securePreferences = preferenceService.getSecurePreferences();
-        if (!securePreferences.contains(PREFERENCE_DATABASE_KEY)) {
+
+        // migrate key
+        if (securePreferences.contains(PREFERENCE_DATABASE_KEY)) {
+            String key = preferenceService.getSecurePreferences().getString(PREFERENCE_DATABASE_KEY, DEFAULT_DATABASE_KEY);
+
+            if (!DEFAULT_DATABASE_KEY.equals(key)) {
+                preferenceService.saveInsecureRealmKey(key);
+            }
+
+            // preserve old key in case the bug is fixed
+            securePreferences.edit().putString(PREFERENCE_DATABASE_KEY_OLD, key).apply();
+            // remove key from bugged library
+            securePreferences.edit().remove(PREFERENCE_DATABASE_KEY).apply();
+            log.info("database key migrated from scottyab/secure-preferences");
+        }
+
+        // new installation
+        if (!preferenceService.containsInsecureRealmKey()) {
             // realm key is a 128-character string in hexadecimal format
             String key = BaseEncoding.base16().lowerCase().encode(generateKey());
-            securePreferences.edit().putString(PREFERENCE_DATABASE_KEY, key).apply();
-            log.debug("new database key stored in preferences");
+            preferenceService.saveInsecureRealmKey(key);
+            log.info("new database key stored in preferences");
         }
     }
 
     private byte[] getRealmKey() {
-        String key = preferenceService.getSecurePreferences().getString(PREFERENCE_DATABASE_KEY, "");
+        String key = preferenceService.getInsecureRealmKey();
+        log.info("getRealmKey: {}", key);
         return BaseEncoding.base16().lowerCase().decode(key);
     }
 
@@ -121,7 +144,7 @@ public class DatabaseRealmConfig {
         try {
             File file = new File(mContext.getFilesDir(), DEBUG_REALM_KEY);
             FileOutputStream stream = new FileOutputStream(file);
-            String key = preferenceService.getSecurePreferences().getString(PREFERENCE_DATABASE_KEY, "");
+            String key = preferenceService.getInsecureRealmKey();
             stream.write(key.getBytes());
             stream.close();
         } catch (IOException e) {

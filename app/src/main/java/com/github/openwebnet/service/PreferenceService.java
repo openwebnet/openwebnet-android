@@ -24,6 +24,13 @@ public interface PreferenceService {
 
     boolean isDeviceDebugEnabled();
 
+    @Deprecated
     SharedPreferences getSecurePreferences();
+
+    void saveInsecureRealmKey(String key);
+
+    boolean containsInsecureRealmKey();
+
+    String getInsecureRealmKey();
 
 }
