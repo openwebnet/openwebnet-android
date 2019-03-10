@@ -4,14 +4,14 @@
 OpenWebNet
 
 ### Kurzbeschreibung
-OpenWebNet Android Klient für My Home BTicino und Legrand Hausautomationssystem
+OpenWebNet Android Klient für MyHome BTicino und Legrand Hausautomationssystem
 
 ### Gesamte Beschreibung
-Mein Zuhause ist das BTicino und Legrand Hausautomationssystem, mit dem Sie Ihr Haus über Ihr Smartphone mit dem OpenWebNet Protokoll verwalten können
+MyHome ist das Hausautomationssystem von BTicino und Legrand, mit dem Sie Ihr Haus über Ihr Smartphone mit dem OpenWebNet Protokoll verwalten können
 
 Verwaltet:
-- Beleuchtung auch mit bus
-- Automatisierung auch mit bus
+- Beleuchtung auch mit Bus
+- Automatisierung auch mit Bus
 - Temperatur
 - Soundsystem / Radio
 - Stromverbrauch
@@ -23,7 +23,7 @@ Handhabt mehrere Gateways gleichzeitig über IP oder Domain und Passwort
 
 Profile sichern und freigeben
 
-Es ist nicht verpflichtend, aber sehr empfehlenswert, dass Sie die Interaktion mit Ihrem Hausautomationssystem über eine VPN Verbindung durchführen
+Es ist dringend angeraten, Remotezugriffe von aussen auf Ihr Hausautomationssystem über eine VPN Verbindung durchzuführen
 
 Verschlüsselte Datenbank für verbesserte Sicherheit
 
@@ -31,7 +31,7 @@ Diese Android App ist ein unoffizieller, kostenfreier Open Source Klient unter d
 
 Der gesamte Quellcode ist online unter https://github.com/openwebnet/openwebnet-android verfügbar.
 
-Sie können alle offenen Probleme und Entwicklungen auf der Seite verfolgen https://github.com/openwebnet/openwebnet-android/issues verfolgen.
+Sie können alle offenen Probleme und Weiterentwicklungen auf GitHub verfolgen: https://github.com/openwebnet/openwebnet-android/issues
 
 Wenn Sie Anregungen oder Feedback haben, wenden Sie sich bitte per E-Mail an mich. Ich werde versuchen, Ihnen zu helfen!
 

@@ -8,7 +8,7 @@
     <string name="activity_temperature">Temperatur</string>
     <string name="activity_scenario">Szenario</string>
     <string name="activity_energy">Stromverbrauch</string>
-    <string name="activity_sound">Lautsprecheranlage</string>
+    <string name="activity_sound">Soundsystem</string>
     <string name="activity_profiles">Profile</string>
     <string name="activity_settings">Einstellungen</string>
 
@@ -18,32 +18,32 @@
     <string name="menu_debug">Debug</string>
     <string name="menu_apply">Anwenden</string>
     <string name="menu_rename">Umbenennen</string>
-    <string name="menu_share">Aktie</string>
-    <string name="menu_profile_logout">Ausloggen</string>
+    <string name="menu_share">Teilen</string>
+    <string name="menu_profile_logout">Abmelden</string>
     <string name="fab_profile_label_create">Erstellen</string>
     <string name="fab_profile_label_reset">Zurücksetzen</string>
 
     <string name="drawer_menu_favourite">Favoriten</string>
-    <string name="drawer_menu_add">Umgebung hinzufügen</string>
+    <string name="drawer_menu_add">Anlage hinzufügen</string>
     <string name="drawer_menu_profile">Profile</string>
     <string name="drawer_menu_settings">Einstellungen</string>
     <string name="drawer_menu_donation">Spenden</string>
     <string name="drawer_menu_changelog">Info</string>
-    <string name="drawer_menu_example">Beispiel Umgebung</string>
+    <string name="drawer_menu_example">Beispielanlage</string>
 
-    <string name="dialog_add_environment_title">Umgebung hinzufügen</string>
-    <string name="dialog_edit_environment_title">Umgebung bearbeiten</string>
+    <string name="dialog_add_environment_title">Anlage hinzufügen</string>
+    <string name="dialog_edit_environment_title">Anlage bearbeiten</string>
     <string name="dialog_environment_name">Name</string>
-    <string name="dialog_device_confirmation_title">Bestätigung</string>
+    <string name="dialog_device_confirmation_title">Bestätigungsanfrage</string>
     <string name="dialog_device_confirmation_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_create_title">Profil erstellen</string>
     <string name="dialog_profile_rename_title">Profil umbenennen</string>
     <string name="dialog_profile_edit_name">Name</string>
     <string name="dialog_profile_create_message_1">Erstellt eine Sicherung der aktuellen Konfigurationen auf diesem Gerät</string>
-    <string name="dialog_profile_create_message_2">Sie können es dann auch auf einem anderen Gerät mit demselben Google-Konto wiederherstellen oder für andere Benutzer freigeben</string>
+    <string name="dialog_profile_create_message_2">Sie können di Konfiguration dann auch auf einem anderen Gerät mit demselben Google-Konto wiederherstellen oder für andere Benutzer freigeben</string>
     <string name="dialog_profile_reset_title">Profil zurücksetzen</string>
     <string name="dialog_profile_reset_message">Ihr aktuelles Profil und alle nicht gespeicherten Änderungen werden dauerhaft vom Telefon gelöscht.\n\nSind Sie sicher?</string>
-    <string name="dialog_profile_logout_title">Ausloggen</string>
+    <string name="dialog_profile_logout_title">Abmelden</string>
     <string name="dialog_profile_logout_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_switch_title">Profil anwenden</string>
     <string name="dialog_profile_switch_message">Alle nicht gespeicherten Änderungen am aktuellen Profil werden gelöscht und überschrieben.\n\nSind Sie sicher?</string>
@@ -51,17 +51,17 @@
     <string name="dialog_profile_share_email_prefix">E-Mail-Präfix</string>
     <string name="dialog_profile_share_info_1">Beispiel: Wenn Sie dieses Profil für other.user@gmail.com freigeben möchten, geben Sie nur \"other.user\" ein</string>
     <string name="dialog_profile_share_info_2">Um dieses Profil freigeben zu können, muss sich der andere Benutzer mindestens einmal mit seinem Google-Konto auf seinem Gerät anmelden</string>
-    <string name="dialog_profile_share_info_3">Nach der Freigabe kann der andere Benutzer auch dann auf ihn zugreifen und ihn mit anderen Benutzern teilen, selbst wenn Sie dieses Profil löschen</string>
+    <string name="dialog_profile_share_info_3">Nach der Freigabe kann der andere Benutzer auch dann auf die Konfiguration zugreifen und mit anderen Benutzern teilen, selbst wenn Sie dieses Profil löschen</string>
     <string name="dialog_profile_share_info_4">Bei Erfolg erhalten beide Benutzer eine Benachrichtigung per E-Mail</string>
-    <string name="dialog_profile_share_checkbox">Ich übernehme jede Verantwortung dafür, dieses Profil mit allen Personen zu teilen, die Zugriff auf die bereitgestellte E-Mail haben</string>
+    <string name="dialog_profile_share_checkbox">Ich übernehme jedwede Verantwortung, dieses Profil mit allen Personen zu teilen die Zugriff auf die angegebene E-Mail haben</string>
     <string name="dialog_profile_share_message">\nSind Sie sicher?</string>
     <string name="dialog_profile_delete_title">Profil löschen</string>
-    <string name="dialog_profile_delete_message">Sie können dieses Profil nicht mehr aufrufen und anwenden.\n\nSind Sie sicher?</string>
+    <string name="dialog_profile_delete_message">Sie werden dieses Profil nicht mehr auswählen und anwenden können.\n\nSind Sie sicher?</string>
     <string name="dialog_donation_title">Spenden</string>
-    <string name="dialog_donation_tax">Spenden sind steuerfrei und können von Land zu Land unterschiedlich sein.</string>
+    <string name="dialog_donation_tax">Spenden sind in der Regel steuerfrei, können jedoch von Land zu Land steuerlich unterschiedlich behandelt werden.</string>
 
     <string name="error_load_navigation_drawer">Fehler beim Laden der Navigationsleiste</string>
-    <string name="error_authentication">Authentifizierung fehlgeschlagen</string>
+    <string name="error_authentication">Anmeldung fehlgeschlagen</string>
     <string name="error_connection">Verbindung nicht verfügbar</string>
     <string name="error_request">Anfrage fehlgeschlagen</string>
     <string name="error_profile_max">Maximale Anzahl zulässiger Profile überschritten</string>
@@ -77,7 +77,7 @@
     <string name="settings_title_wireless">Wireless &amp; Netzwerke</string>
     <string name="settings_category_gateway">Gateway</string>
     <string name="settings_gateway_add">Gateway hinzufügen</string>
-    <string name="settings_gateway_default">Standard Gateway</string>
+    <string name="settings_gateway_default">Standardgateway</string>
     <string name="settings_gateway_default_dialog">Standardgateway wählen</string>
     <string name="dialog_gateway_host">Host*</string>
     <string name="dialog_gateway_host_hint">IP-Adresse oder Domain</string>
@@ -85,15 +85,15 @@
     <string name="dialog_gateway_port_default">20000</string>
     <string name="dialog_gateway_password">Passwort (optional)</string>
     <string name="dialog_gateway_password_hint">Passwort</string>
-    <string name="dialog_gateway_password_default">Lassen Sie dieses Feld leer, falls es nicht benötigt wird. \nDas Standardpasswort ist 12345.</string>
+    <string name="dialog_gateway_password_default">Lassen Sie dieses Feld leer wenn kein Passwort benötigt wird. \nDas Standardpasswort ist 12345.</string>
     <string name="settings_category_debug">Debug</string>
     <string name="settings_debug_device_title">Debugger-Meldungen</string>
-    <string name="settings_debug_device_summary">Anzeige von Verzögerungs- und Ansprechwerte</string>
+    <string name="settings_debug_device_summary">Anzeige von Verzögerungs- und Rückmeldungswerten</string>
     <string name="settings_category_temperature">Temperatur</string>
     <string name="settings_temperature_default">Standard-Temperaturskala</string>
     <string name="settings_temperature_default_dialog">Temperaturskala auswählen</string>
     <string name="settings_category_info">Information</string>
-    <string name="settings_info_terms_conditions">Geschäftsbedingungen</string>
+    <string name="settings_info_terms_conditions">Lizenzbedingungen</string>
     <string name="settings_info_privacy_policy">Datenschutz-Bestimmungen</string>
     <string name="changelog_title">Info</string>
     <string name="changelog_header_version">"Ausführung "</string>
@@ -104,7 +104,7 @@
     <string name="button_close">Schließen</string>
     <string name="label_none">Keines</string>
     <string name="label_name">Name</string>
-    <string name="label_missing_gateway">Fehlender Gateway</string>
+    <string name="label_missing_gateway">Fehlendes Gateway</string>
 
     <string name="bs_title">Hinzufügen</string>
     <string name="bs_device">Gerät</string>
@@ -114,22 +114,22 @@
     <string name="bs_ipcam">IP Kamera</string>
     <string name="bs_scenario">Szenario</string>
     <string name="bs_energy">Stromverbrauch</string>
-    <string name="bs_sound">Lautsprecheranlage</string>
+    <string name="bs_sound">Soundsystem</string>
 
     <string name="list_empty">Keine Einträge gefunden</string>
     <string name="device_where">Wo</string>
     <string name="device_favourite">Favoriten</string>
     <string name="device_confirm">Bestätigungsmeldung anzeigen</string>
-    <string name="device_on_load">Anfragen senden beim On-Load-Ereignis</string>
-    <string name="device_accept">Ich weiß, was ich tue! (Haftungsausschluss)</string>
+    <string name="device_on_load">Anfrage senden bei On-Load-Ereignis</string>
+    <string name="device_accept">Ich weiss was ich tue! (Haftungsausschluss)</string>
     <string name="device_request">Anfrage</string>
     <string name="device_response">Antwort</string>
     <string name="device_response_paste">Einfügen</string>
     <string name="device_value">Wert</string>
-    <string name="device_expected_value">erwarteter Wert</string>
+    <string name="device_expected_value">Erwarteter Wert</string>
     <string name="device_debug_label_invalid">Ungültiger Wert</string>
     <string name="device_label_general">Allgemein</string>
-    <string name="device_label_general_bus">Allgemeines (Bus)</string>
+    <string name="device_label_general_bus">Allgemeine (Bus)</string>
     <string name="device_label_area">Bereich</string>
     <string name="device_label_area_bus">Bereich (Bus)</string>
     <string name="device_label_group">Gruppe</string>
@@ -150,7 +150,7 @@
     <string name="automation_label_point_to_point_bus">Automatisierungspunkt (Bus)</string>
     <string name="ipcam_url">URL</string>
     <string name="ipcam_url_help">Beispiel: <i>http://192.168.1.100:2222/videostream.cgi</i>\nWenn Sie Hilfe bei der Identifizierung der Url benötigen, lesen Sie bitte diese <a href='https://github.com/niqdev/ipcam-view/wiki'>Anleitung</a></string>
-    <string name="ipcam_authentication">Authentifizierung</string>
+    <string name="ipcam_authentication">Anmeldung</string>
     <string name="ipcam_username">Benutzername</string>
     <string name="ipcam_password">Passwort</string>
     <string name="ipcam_stream_mjpeg">MJPEG</string>
@@ -162,7 +162,7 @@
     <string name="energy_instantaneous_power">Momentanleistung:</string>
     <string name="energy_daily_power">Täglicher Strom:</string>
     <string name="energy_monthly_power">Monatlicher Strom:</string>
-    <string name="energy_info_best_effort">Das Gateway reagiert nicht immer korrekt und einige Werte können unvollständig oder fehlerhaft sein. \nAußerdem sollten Sie diese Komponente von der anderen Komponente getrennt halten, um Verzögerungen zu vermeiden.</string>
+    <string name="energy_info_best_effort">Das Gateway reagiert nicht immer korrekt und einige Werte können unvollständig oder fehlerhaft sein. \nAusserdem sollten Sie diese Komponente von der anderen Komponente getrennt halten, um Verzögerungen zu vermeiden.</string>
     <string name="sound_request">Anforderung Einschalten</string>
     <string name="sound_info_amplifier_group">Erlaubte Werte: 0&#8211;9</string>
     <string name="sound_info_amplifier_point_to_point">Erlaubte Werte: 01&#8211;99</string>
@@ -176,11 +176,11 @@
     <string name="card_device_debug_delay">Verzögerung:</string>
     <string name="card_device_debug_timeunit">Millisekunden</string>
     <string name="card_device_debug_copy">Kopieren</string>
-    <string name="card_device_debug_none">keine Antwort</string>
+    <string name="card_device_debug_none">Keine Antwort</string>
     <string name="card_device_debug_clipboard_copied">Antwort kopiert</string>
 
     <string name="donation_coffee_name">Kaffee</string>
-    <string name="donation_coffee_description">Ein Kaffee, um mich wach zu halten, wenn ich nachts programmiere!</string>
+    <string name="donation_coffee_description">Ein Kaffee um mich wach zu halten wenn ich nachts programmiere!</string>
     <string name="donation_beer_name">Bier</string>
     <string name="donation_beer_description">Ein kaltes Bier um meine Produktivität zu steigern!</string>
     <string name="donation_pizza_name">Pizza</string>
