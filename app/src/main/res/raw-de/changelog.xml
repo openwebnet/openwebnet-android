@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="März 14, 2019" versionName="3.4.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Kleinere Korrekturen]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="März 10, 2019" versionName="3.4.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Absturz beim Start der Anwendung behoben]]>

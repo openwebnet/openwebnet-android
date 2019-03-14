@@ -1,3 +1,7 @@
+#### v3.4.1 (March 14, 2019)
+
+- Minor fixes
+
 #### v3.4.0 (March 10, 2019)
 
 - Fixed crash at startup

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog bulletedList="true">
 
+    <changelogversion changeDate="14 марш 2019 г." versionName="3.4.1">
+        <changelogtext>
+            <![CDATA[<b><font color=red>New!</font></b> Незначительные исправления]]>
+        </changelogtext>
+    </changelogversion>
+
     <changelogversion changeDate="10 марш 2019 г." versionName="3.4.0">
         <changelogtext>
             <![CDATA[<b><font color=red>New!</font></b> Исправлен сбой при запуске приложения]]>
