@@ -79,12 +79,12 @@ dependencies {
     testAnnotationProcessor('com.google.dagger:dagger-compiler:2.26') {
         exclude group: 'com.google.guava', module: 'guava'
     }
-    testCompileOnly('com.jakewharton:butterknife-compiler:10.2.1') {
+    testAnnotationProcessor('com.jakewharton:butterknife-compiler:10.2.1') {
         exclude group: 'com.google.guava', module: 'guava'
     }
 
-    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
-    implementation 'com.firebaseui:firebase-ui-firestore:4.3.1'
+    implementation 'com.firebaseui:firebase-ui-auth:5.1.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:5.1.0'
 
     implementation 'com.leinardi.android:speed-dial:2.0.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
